@@ -1,0 +1,163 @@
+1- user  (m done)
+
+id     	int		
+username	varchar(255)	
+full_name	text	
+auth_key	varchar(32)
+password_hash	varchar(255)	
+password_reset_token 	varchar(255)
+email  	varchar(150)
+phone_number	varchar(20)
+status		smallint
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int		
+verification_token
+store_id  int (constant)
+
+=================================
+2- product 
+
+id  int 
+title text 
+category_id int
+count_type 
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int	
+
+==========================
+4- product_category
+
+id int 
+name text
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int	
+
+=================================
+5- customer
+
+id int
+name text
+phone_number varchar(20)
+email  text
+address text
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int	
+
+=========================
+6- order
+
+id int
+customer_id int
+store_id  int (constant)
+total_amount float
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int
+
+===============================
+7- order_product
+
+id int 
+order_id int 
+product_id int 
+count float
+count_type int 
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int
+
+===============================
+8- inventory
+
+id
+product_id
+store_id  int (constant)
+last_product_cost
+count
+
+===============
+9- inventory_order
+
+id
+supplier_id
+store_id  int (constant)
+total_cost
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int
+
+===============
+9- inventory_order_product
+
+id
+inventory_order_id
+product_id
+product_total_cost
+product_cost
+count
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int
+
+
+
+==========================
+10- supplier
+
+id 
+name 
+email 
+phone_number
+adress
+created_at	int	
+updated_at	int
+created_by	int	
+updated_by	int
+
+============================
+media (mhndev/yii2-media)
+
+'id' => $this->primaryKey(),
+'owner' => $this->string(),
+'owner_id' => $this->string(),
+'entity' => $this->string(),
+'entity_id' => $this->string(),
+'mime_type' => $this->string(),
+'file_type' => $this->string(),
+'size' => $this->float(),
+'default' => $this->boolean()->defaultValue(0),
+'path' => $this->string(),
+'link' => $this->string(),
+'type'=> $this->string(),
+'created_at'=> $this->dateTime(),
+'updated_at'=> $this->dateTime()
+
+==============
+
+transfer_order
+
+id 
+from (store_id  int (constant)) 
+to (store_id  int (constant))
+status int
+created_at	int	
+created_by	int	
+
+
+
+
+
+
+add isDeleted to all tables
