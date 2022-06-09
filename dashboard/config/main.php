@@ -12,6 +12,7 @@ return [
     'controllerNamespace' => 'dashboard\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
+    'defaultRoute' => 'user/index',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-dashboard',
