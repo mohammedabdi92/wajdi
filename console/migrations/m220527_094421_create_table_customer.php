@@ -14,10 +14,10 @@ class m220527_094421_create_table_customer extends Migration
     {
         $this->createTable('{{%customer}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->text()->notNull(),
-            'phone_number' => $this->text(),
-            'email' => $this->text(),
-            'address' => $this->text(),
+            'name' => $this->string(255)->notNull(),
+            'phone_number' => $this->string(255),
+            'email' => $this->string(255),
+            'address' => $this->string(255),
             'created_at' => $this->integer()->notNull(),
             'created_by' => $this->integer(),
             'updated_at' => $this->integer()->notNull(),

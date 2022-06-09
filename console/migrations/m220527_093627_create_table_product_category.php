@@ -15,7 +15,7 @@ class m220527_093627_create_table_product_category extends Migration
 
         $this->createTable('{{%product_category}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->text()->notNull(),
+            'name' => $this->string(255)->notNull(),
             'created_at' => $this->integer()->notNull(),
             'created_by' => $this->integer(),
             'updated_at' => $this->integer()->notNull(),

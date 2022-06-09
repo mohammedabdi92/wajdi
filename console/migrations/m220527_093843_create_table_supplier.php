@@ -14,10 +14,10 @@ class m220527_093843_create_table_supplier extends Migration
     {
         $this->createTable('{{%supplier}}', [
             'id' => $this->primaryKey(),
-            'name' => $this->text()->notNull(),
-            'phone_number' => $this->text(),
-            'email' => $this->text(),
-            'address' => $this->text(),
+            'name' => $this->string(255)->notNull(),
+            'phone_number' => $this->string(255),
+            'email' => $this->string(255),
+            'address' => $this->string(255),
             'created_at' => $this->integer()->notNull(),
             'created_by' => $this->integer(),
             'updated_at' => $this->integer()->notNull(),
