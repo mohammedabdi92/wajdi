@@ -69,7 +69,7 @@ class UserController extends BaseController
     public function actionCreate()
     {
         $model = new User();
-
+        $model->scenario="create";
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -97,6 +97,7 @@ class UserController extends BaseController
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
 
         return $this->render('update', [
             'model' => $model,

@@ -12,7 +12,7 @@ return [
     'controllerNamespace' => 'dashboard\controllers',
     'bootstrap' => ['log'],
     'modules' => [],
-    'defaultRoute' => 'user/index',
+    'defaultRoute' => 'site/index',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-dashboard',

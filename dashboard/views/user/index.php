@@ -4,12 +4,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use common\components\Constants;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Users');
+$this->title = Yii::t('app', 'المستخدمين');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create User'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء مستخدم'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,22 +28,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'username',
             'full_name:ntext',
-            'auth_key',
-            'password_hash',
-            //'password_reset_token',
-            //'email:email',
-            'status',
-            //'created_at',
-            //'updated_at',
-            //'verification_token',
-            //'store_id',
-            //'isDeleted',
+            'email:email',
+            [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->getStatusText();
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return $model->getDate('created_at');
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return $model->getDate('updated_at');
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return Constants::getStoreName($model->store_id);
+                },
+                'format' => 'raw',
+            ],
             [
                 'class' => ActionColumn::className(),
+                'template' => '{view} {update}',
                 'urlCreator' => function ($action, \common\models\User $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
