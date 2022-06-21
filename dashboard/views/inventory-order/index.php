@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\InventoryOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Inventory Orders');
+$this->title = Yii::t('app', 'طلبات الموردين');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inventory-order-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Inventory Order'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء طلب توريد'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

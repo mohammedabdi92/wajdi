@@ -68,7 +68,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                         ["label" => ' السلع', "url" => "/product/index", "icon" => "archive"],
                                         ["label" => 'المشتريين', "url" => "/customer/index", "icon" => "male"],
                                         ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
-                                        ["label" => 'طلبات الموردين', "url" => "/supplier/index", "icon" => "handshake-o"],
+                                        ["label" => 'طلبات الموردين', "url" => "/inventory-order/index", "icon" => "handshake-o"],
                                         [
                                             "label" => "المخزن",
                                             "icon" => "th",
