@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
@@ -36,7 +37,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id', 'count_type', 'created_at', 'updated_at'], 'required'],
+            [['title', 'category_id', 'count_type'], 'required'],
             [['title'], 'string'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
@@ -52,6 +53,7 @@ class Product extends \yii\db\ActiveRecord
                 ],
             ],
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -61,15 +63,14 @@ class Product extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'category_id' => Yii::t('app', 'Category ID'),
-            'count_type' => Yii::t('app', 'Count Type'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'isDeleted' => Yii::t('app', 'Is Deleted'),
+            'id' => Yii::t('app', 'الرقم'),
+            'title' => Yii::t('app', 'الاسم'),
+            'category_id' => Yii::t('app', 'نوع'),
+            'count_type' => Yii::t('app', 'نوع العد'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
 
@@ -82,5 +83,13 @@ class Product extends \yii\db\ActiveRecord
         $query = new \common\models\query\ProductQuery(get_called_class());
         $query->attachBehavior('softDelete', SoftDeleteQueryBehavior::className());
         return $query;
+    }
+
+    public  function getCategory(){
+        return $this->hasOne(ProductCategory::className(), ['id' => 'category_id']);
+    }
+
+    public  function getCategoryTitle(){
+        return $this->category?$this->category->name:'';
     }
 }

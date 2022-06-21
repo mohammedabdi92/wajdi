@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\SupplierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Suppliers');
+$this->title = Yii::t('app', 'الموردين');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="supplier-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Supplier'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء المورد'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'isDeleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Supplier $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\Supplier $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

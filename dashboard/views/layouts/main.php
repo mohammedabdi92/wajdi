@@ -10,7 +10,7 @@ use rmrevin\yii\fontawesome\FA;
 
 $bundle = mortezakarimi\gentelellartl\assets\Asset::register($this);
 $user = Yii::$app->user->identity;
-
+Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::POS_END,'depends' => mortezakarimi\gentelellartl\assets\Asset::className()]);
 ?>
 <?php $this->beginPage(); ?>
     <!DOCTYPE html>
@@ -64,6 +64,11 @@ $user = Yii::$app->user->identity;
                                     "items" => [
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
+                                        ["label" => 'انواع السلع', "url" => "/product-category/index", "icon" => "archive"],
+                                        ["label" => ' السلع', "url" => "/product/index", "icon" => "archive"],
+                                        ["label" => 'المشتريين', "url" => "/customer/index", "icon" => "male"],
+                                        ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
+                                        ["label" => 'طلبات الموردين', "url" => "/supplier/index", "icon" => "handshake-o"],
                                         [
                                             "label" => "المخزن",
                                             "icon" => "th",

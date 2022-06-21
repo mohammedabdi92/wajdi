@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ProductCategory */
 
-$this->title = Yii::t('app', 'Update Product Category: {name}', [
-    'name' => $model->name,
+$this->title = Yii::t('app', 'تعديل : {name}', [
+    'name' => $model->id,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="product-category-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

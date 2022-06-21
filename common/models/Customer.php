@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
@@ -37,7 +38,8 @@ class Customer extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'created_at', 'updated_at'], 'required'],
+            [['name' ], 'required'],
+            [['email' ], 'email'],
             [['name', 'phone_number', 'email', 'address'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
@@ -53,6 +55,7 @@ class Customer extends \yii\db\ActiveRecord
                 ],
             ],
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -62,16 +65,15 @@ class Customer extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'phone_number' => Yii::t('app', 'Phone Number'),
-            'email' => Yii::t('app', 'Email'),
-            'address' => Yii::t('app', 'Address'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'isDeleted' => Yii::t('app', 'Is Deleted'),
+            'id' => Yii::t('app', 'الرقم'),
+            'name' => Yii::t('app', 'الاسم'),
+            'phone_number' => Yii::t('app', 'رقم التلفون'),
+            'email' => Yii::t('app', 'الايميل'),
+            'address' => Yii::t('app', 'العنوان'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
 

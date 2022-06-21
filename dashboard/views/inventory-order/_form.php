@@ -8,29 +8,45 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
+
 <div class="inventory-order-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div id="product_container">
+    <?php echo $this->render('_product', ['model' => $model, 'form'=>$form]); ?>
+    </div>
 
-    <?= $form->field($model, 'supplier_id')->textInput() ?>
+    <?php  \demogorgorn\ajax\AjaxSubmitButton::begin([
+                            'label' => 'اضافة +',
+                            'ajaxOptions' => [
+                                'type'=>'POST',
+                                'url'=>'ajax-product',
+                                'success' => new \yii\web\JsExpression('function(html){
+                                
+                                    if(html !== "")
+                                    {
+                                        $("#product_container").append(html);
+                                    }
+                                    
+                                }'),
+                            ],
+                            'options' => ['id'=>'post_price_btn','class' => 'btn btn-info pull-right'],
+                        ]);
+    \demogorgorn\ajax\AjaxSubmitButton::end();?>
+    <div class="col-md-12">
 
-    <?= $form->field($model, 'store_id')->textInput() ?>
+
+    <?= $form->field($model, 'supplier_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')) ?>
+
+    <?= $form->field($model, 'store_id')->dropDownList(\common\components\Constants::storeArray); ?>
 
     <?= $form->field($model, 'total_cost')->textInput() ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'created_by')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_by')->textInput() ?>
-
-    <?= $form->field($model, 'isDeleted')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
+        </div>
     </div>
+
+
 
     <?php ActiveForm::end(); ?>
 

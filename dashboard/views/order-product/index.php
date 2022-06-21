@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-product-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Order Product'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -32,7 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'order_id',
             'product_id',
             'count',
-            'count_type',
+            [
+                'attribute' => 'count_type',
+                'value' => function($model){
+                    return \common\components\Constants::getCountTypesName($model->count_type);
+                },
+                'format' => 'raw',
+            ],
             //'created_at',
             //'created_by',
             //'updated_at',
@@ -40,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'isDeleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, OrderProduct $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\OrderProduct $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

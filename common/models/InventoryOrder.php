@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
@@ -22,6 +23,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class InventoryOrder extends \yii\db\ActiveRecord
 {
+    public $inventoryOrderProducts = [];
     /**
      * {@inheritdoc}
      */
@@ -36,7 +38,7 @@ class InventoryOrder extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['supplier_id', 'store_id', 'total_cost', 'created_at', 'updated_at'], 'required'],
+            [['supplier_id', 'store_id', 'total_cost','inventoryOrderProducts' ], 'required'],
             [['supplier_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
         ];
@@ -52,6 +54,7 @@ class InventoryOrder extends \yii\db\ActiveRecord
                 ],
             ],
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -61,15 +64,14 @@ class InventoryOrder extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'supplier_id' => Yii::t('app', 'Supplier ID'),
-            'store_id' => Yii::t('app', 'Store ID'),
-            'total_cost' => Yii::t('app', 'Total Cost'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'isDeleted' => Yii::t('app', 'Is Deleted'),
+            'id' => Yii::t('app', 'الرقم'),
+            'supplier_id' => Yii::t('app', 'المورد'),
+            'store_id' => Yii::t('app', 'المحل'),
+            'total_cost' => Yii::t('app', 'التكلفة الاجمالية'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cce14df64271665904a452eefdc835de",
+    "content-hash": "9f907775831a58d2ef80a29dad7563c8",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -53,7 +53,7 @@
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "git@github.com:RobinHerbots/Inputmask.git",
+                "url": "https://github.com/RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
@@ -74,7 +74,7 @@
             "version": "3.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "e786e3d9707ffd9b0dd330ca135b66344dcef85a"
             },
             "dist": {
@@ -222,6 +222,51 @@
                 "markdown-extra"
             ],
             "time": "2018-03-26T11:24:36+00:00"
+        },
+        {
+            "name": "demogorgorn/yii2-ajax-submit-button",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/demogorgorn/yii2-ajax-submit-button.git",
+                "reference": "50779a08b0f946e7d385a956d0496e8ddf52b279"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/demogorgorn/yii2-ajax-submit-button/zipball/50779a08b0f946e7d385a956d0496e8ddf52b279",
+                "reference": "50779a08b0f946e7d385a956d0496e8ddf52b279",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "demogorgorn\\ajax\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Oleg Martemjanov",
+                    "email": "demogorgorn@gmail.com",
+                    "homepage": "http://foreign.by"
+                }
+            ],
+            "description": "AjaxSubmitButton renders an ajax button which is very similar to ajaxSubmitButton from Yii1.",
+            "homepage": "https://github.com/demogorgorn/yii2-ajax-submit-button",
+            "keywords": [
+                "ajax",
+                "button",
+                "extension",
+                "submit",
+                "widget"
+            ],
+            "time": "2018-01-30T09:20:52+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -4971,7 +5016,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.0"
+        "php": ">=7.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

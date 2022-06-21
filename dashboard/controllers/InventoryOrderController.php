@@ -77,6 +77,7 @@ class InventoryOrderController extends BaseController
             $model->loadDefaultValues();
         }
 
+        
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -130,5 +131,9 @@ class InventoryOrderController extends BaseController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionAjaxProduct(){
+        $model = new InventoryOrder();
+        return $this->renderAjax('_product',['model'=>$model]);
     }
 }

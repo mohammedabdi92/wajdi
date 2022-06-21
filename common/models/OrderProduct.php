@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii2tech\ar\softdelete\SoftDeleteBehavior;
 use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
@@ -37,7 +38,7 @@ class OrderProduct extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'product_id', 'count', 'count_type', 'created_at', 'updated_at'], 'required'],
+            [['order_id', 'product_id', 'count', 'count_type' ], 'required'],
             [['order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['count'], 'number'],
         ];
@@ -53,6 +54,7 @@ class OrderProduct extends \yii\db\ActiveRecord
                 ],
             ],
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -62,16 +64,15 @@ class OrderProduct extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
+            'id' => Yii::t('app', 'الرقم'),
             'order_id' => Yii::t('app', 'Order ID'),
             'product_id' => Yii::t('app', 'Product ID'),
             'count' => Yii::t('app', 'Count'),
             'count_type' => Yii::t('app', 'Count Type'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
-            'isDeleted' => Yii::t('app', 'Is Deleted'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
 

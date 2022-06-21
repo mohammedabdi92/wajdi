@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ProductCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Product Categories');
+$this->title = Yii::t('app', 'انواع السلع');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-category-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Product Category'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء نوع سلعة'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,14 +30,34 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'name:ntext',
-            'created_at',
-            'created_by',
-            'updated_at',
-            //'updated_by',
+             [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
+                },
+            ],
             //'isDeleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, ProductCategory $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\ProductCategory $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

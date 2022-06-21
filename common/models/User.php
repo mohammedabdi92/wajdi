@@ -5,6 +5,7 @@ namespace common\models;
 use common\components\BaseModel;
 use Yii;
 use yii\base\NotSupportedException;
+use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
@@ -74,6 +75,7 @@ class User extends BaseModel implements IdentityInterface
                 ],
             ],
             TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
     public function attributeLabels()
@@ -101,8 +103,10 @@ class User extends BaseModel implements IdentityInterface
     {
 
         return [
-            [['full_name','username','email','type','store_id','password_text'], 'safe'],
+            [['full_name','username','type','password_text'], 'safe'],
             [['full_name','username','email','type','store_id'], 'required'],
+            [['email'], 'email'],
+            [['email','username'], 'unique'],
             ["password_text", "required", "on" => ['create']],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
@@ -111,6 +115,10 @@ class User extends BaseModel implements IdentityInterface
 
     public function beforeSave($insert)
     {
+        if($this->isNewRecord)
+        {
+            $this->generateAuthKey();
+        }
         if(!empty($this->password_text))
         {
             $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($this->password_text);

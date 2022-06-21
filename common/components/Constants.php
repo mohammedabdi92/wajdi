@@ -16,9 +16,24 @@ class Constants
         self::STORE_4 => "نؤسسة وجدي فرع الشهابية",
     ];
 
-    public static function getStoreName($store)
+    public static function getStoreName($id): string
     {
-        return self::storeArray[$store] ?? '';
+        return self::storeArray[$id] ?? '';
+    }
+
+    const TYPE_PIECE = 1;
+    const TYPE_WُEIGHT = 2;
+    const TYPE_BOX = 3;
+
+    const countTypesArray = [
+        self::TYPE_PIECE => "قطعة",
+        self::TYPE_WُEIGHT => "وزن",
+        self::TYPE_BOX => "صندوق",
+    ];
+
+    public static function getCountTypesName($id): string
+    {
+        return self::countTypesArray[$id] ?? '';
     }
 
 }

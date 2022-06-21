@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="inventory-order-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'Create Inventory Order'), ['create'], ['class' => 'btn btn-success']) ?>
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'isDeleted',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, InventoryOrder $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\InventoryOrder $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
