@@ -91,3 +91,7 @@
 body .container.body .right_col {
     background: #ffffff;
 }
+#w0{
+width: 100%;
+overflow-y: scroll;
+}
