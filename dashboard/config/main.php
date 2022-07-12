@@ -8,6 +8,11 @@ $params = array_merge(
 
 return [
     'id' => 'app-dashboard',
+    // set target language to be Russian
+    'language' => 'ar',
+
+    // set source language to be English
+    'sourceLanguage' => 'en-US',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'dashboard\controllers',
     'bootstrap' => ['log'],

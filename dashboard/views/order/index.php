@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'customer_id',
-            'store_id',
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+            ],
             'total_amount',
             'created_at',
             //'created_by',

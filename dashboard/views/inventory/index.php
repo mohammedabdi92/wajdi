@@ -17,7 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'انشاء سلعة'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,21 +28,47 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'product_id',
-            'store_id',
+            [
+                'attribute' => 'product_id',
+                'value' => function($model){
+                    return $model->productTitle;
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+            ],
             'last_product_cost',
             'count',
-            //'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'isDeleted',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, \common\models\Inventory $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
             ],
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
+                },
+            ],
+
         ],
     ]); ?>
 

@@ -69,11 +69,12 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                         ["label" => 'المشتريين', "url" => "/customer/index", "icon" => "male"],
                                         ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
                                         ["label" => 'طلبات الموردين', "url" => "/inventory-order/index", "icon" => "handshake-o"],
+                                        ["label" => 'بيع', "url" => "/order/index", "icon" => "money"],
                                         [
                                             "label" => "المخزن",
                                             "icon" => "th",
                                             "items" => [
-                                                ["label" => "العناصر", "url" => ["site/menu"]],
+                                                ["label" => "العناصر", "url" => ["inventory/index"]],
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],
@@ -208,14 +209,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                 <?= $content ?>
             </div>
             <!-- footer content -->
-            <footer class="hidden-print">
-                <div class="pull-left">
-                    Gentelella - قالب پنل مدیریت بوت استرپ <a href="https://colorlib.com">Colorlib</a> | پارسی شده توسط
-                    <a
-                            href="https://morteza-karimi.ir">مرتضی کریمی</a>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
+
             <!-- /footer content-->
         </div>
     </div>

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventoryOrder */
+/* @var $model_product common\models\InventoryOrderProduct */
 
 $this->title = Yii::t('app', 'تعديل : {name}', [
     'name' => $model->id,
@@ -18,6 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 
     <?= $this->render('_form', [
         'model' => $model,
+        'model_product' => $model_product,
     ]) ?>
 
 </div>

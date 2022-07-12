@@ -2,11 +2,17 @@
 
 namespace dashboard\controllers;
 
+use Yii;
 use common\models\InventoryOrder;
+use common\models\InventoryOrderProduct;
 use common\models\InventoryOrderSearch;
 use dashboard\components\BaseController;
+use common\base\Model;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * InventoryOrderController implements the CRUD actions for InventoryOrder model.
@@ -63,45 +69,120 @@ class InventoryOrderController extends BaseController
     /**
      * Creates a new InventoryOrder model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|\yii\web\Response|array
      */
     public function actionCreate()
     {
-        $model = new InventoryOrder();
+        $model = new InventoryOrder;
+        $model_product = [new InventoryOrderProduct];
+        if ($model->load(Yii::$app->request->post())) {
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model_product = Model::createMultiple(InventoryOrderProduct::classname());
+            Model::loadMultiple($model_product, Yii::$app->request->post());
+
+            // ajax validation
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($model_product),
+                    ActiveForm::validate($model)
+                );
             }
-        } else {
-            $model->loadDefaultValues();
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($model_product) && $valid;
+
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($model_product as $modelAddress) {
+                            $modelAddress->inventory_order_id = $model->id;
+                            $modelAddress->store_id = $model->store_id;
+                            if (! ($flag = $modelAddress->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
-        
         return $this->render('create', [
             'model' => $model,
+            'model_product' => (empty($model_product)) ? [new InventoryOrderProduct] : $model_product
         ]);
     }
 
-    /**
-     * Updates an existing InventoryOrder model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model_product = $model->products;
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $oldIDs = ArrayHelper::map($model_product, 'id', 'id');
+            $model_product = Model::createMultiple(InventoryOrderProduct::classname(), $model_product);
+            Model::loadMultiple($model_product, Yii::$app->request->post());
+            $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($model_product, 'id', 'id')));
+
+            // ajax validation
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($model_product),
+                    ActiveForm::validate($model)
+                );
+            }
+
+            // validate all models
+            $valid = $model->validate();
+
+            $valid = Model::validateMultiple($model_product) && $valid;
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        if (! empty($deletedIDs)) {
+                            InventoryOrderProduct::deleteAll(['id' => $deletedIDs]);
+                        }
+                        foreach ($model_product as $modelproduct) {
+                            $modelproduct->inventory_order_id = $model->id;
+                            $modelproduct->store_id = $model->store_id;
+                            if (! ($flag = $modelproduct->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (\Exception $e) {
+                    print_r($e->getMessage());die;
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'model_product' => (empty($model_product)) ? [new InventoryOrderProduct] : $model_product
         ]);
     }
+
 
     /**
      * Deletes an existing InventoryOrder model.
@@ -133,7 +214,7 @@ class InventoryOrderController extends BaseController
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
     }
     public function actionAjaxProduct(){
-        $model = new InventoryOrder();
+        $model = new InventoryOrderProduct();
         return $this->renderAjax('_product',['model'=>$model]);
     }
 }

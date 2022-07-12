@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -38,7 +39,7 @@ class Inventory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['product_id', 'store_id', 'last_product_cost', 'count' ], 'required'],
+            [['product_id', 'store_id', 'count' ], 'required'],
             [['product_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
         ];
@@ -85,5 +86,17 @@ class Inventory extends \yii\db\ActiveRecord
         $query = new \common\models\query\InventoryQuery(get_called_class());
         $query->attachBehavior('softDelete', SoftDeleteQueryBehavior::className());
         return $query;
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
     }
 }

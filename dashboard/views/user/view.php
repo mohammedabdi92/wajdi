@@ -37,7 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'created_at',
             'updated_at',
             'verification_token',
-            'store_id',
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+            ],
             'isDeleted',
         ],
     ]) ?>

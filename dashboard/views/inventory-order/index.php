@@ -24,19 +24,50 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'supplier_id',
-            'store_id',
+            [
+                'attribute' => 'supplier_id',
+                'value' => function($model){
+                    return $model->supplierTitle;
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+            ],
             'total_cost',
-            'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'isDeleted',
+            [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, \common\models\InventoryOrder $model, $key, $index, $column) {

@@ -2,12 +2,18 @@
 
 namespace dashboard\controllers;
 
+use Yii;
+use common\base\Model;
 use common\models\Order;
+use common\models\OrderProduct;
 use common\models\OrderSearch;
 use dashboard\components\BaseController;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
+use yii\widgets\ActiveForm;
 
 /**
  * OrderController implements the CRUD actions for Order model.
@@ -61,28 +67,63 @@ class OrderController extends BaseController
         ]);
     }
 
+
     /**
      * Creates a new Order model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return string|\yii\web\Response|array
      */
     public function actionCreate()
     {
-        $model = new Order();
+        $model = new Order;
+        $model_product = [new OrderProduct()];
+        if ($model->load(\Yii::$app->request->post())) {
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $model_product = Model::createMultiple(OrderProduct::classname());
+            Model::loadMultiple($model_product, \Yii::$app->request->post());
+
+            // ajax validation
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($model_product),
+                    ActiveForm::validate($model)
+                );
             }
-        } else {
-            $model->loadDefaultValues();
+
+            // validate all models
+            $valid = $model->validate();
+            $valid = Model::validateMultiple($model_product) && $valid;
+
+
+            if ($valid) {
+                $transaction = \Yii::$app->db->beginTransaction();
+                try {
+                    if ($flag = $model->save(false)) {
+                        foreach ($model_product as $modelAddress) {
+                            $modelAddress->inventory_order_id = $model->id;
+                            $modelAddress->store_id = $model->store_id;
+                            if (! ($flag = $modelAddress->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    }
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'model_product' => (empty($model_product)) ? [new OrderProduct] : $model_product
         ]);
     }
-
     /**
      * Updates an existing Order model.
      * If update is successful, the browser will be redirected to the 'view' page.

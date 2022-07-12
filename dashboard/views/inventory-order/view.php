@@ -27,38 +27,67 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
+    <?php
+    echo DetailView::widget([
         'model' => $model,
         'attributes' => [
             'id',
-            'supplier_id',
-            'store_id',
+            [
+                'attribute' => 'supplier_id',
+                'value' => function ($model) {
+                    return $model->supplierTitle;
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'store_id',
+                'value' => function ($model) {
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+            ],
             'total_cost',
-             [
+            [
                 'attribute' => 'created_at',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
             ],
             [
                 'attribute' => 'created_by',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->created_by);
                 },
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
             ],
             [
                 'attribute' => 'updated_by',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
             ],
         ],
-    ]) ?>
+    ]);
+    $items = $model->products;
+    foreach ($items as $item) {
+        echo "<div>اسم السلعة :    $item->productTitle </div>";
+        echo DetailView::widget([
+            'model' => $item,
+            'attributes' => [
+                'count',
+                'product_cost',
+                'product_total_cost',
+
+            ],
+        ]);
+    }
+
+    ?>
+
 
 </div>

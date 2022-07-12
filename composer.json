@@ -20,7 +20,9 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "mortezakarimi/yii2-gentelella-rtl": "^1.3",
         "yii2tech/ar-softdelete": "^1.0",
-        "demogorgorn/yii2-ajax-submit-button": "^1.2"
+        "demogorgorn/yii2-ajax-submit-button": "^1.2",
+        "kartik-v/yii2-builder": "^1.6",
+        "wbraganca/yii2-dynamicform": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

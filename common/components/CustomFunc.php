@@ -2,6 +2,9 @@
 
 namespace common\components;
 
+use common\models\Inventory;
+use common\models\InventoryOrder;
+use common\models\InventoryOrderProduct;
 use common\models\User;
 
 class CustomFunc
@@ -22,5 +25,26 @@ class CustomFunc
     public static function getUserName($id){
         $user = User::findOne($id);
         return  $user? $user->full_name:'';
+    }
+    public static function calculateProductCount($store_id,$product_id)
+    {
+        $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ;
+        if($item_inventory_count)
+        {
+            $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->one();
+            if(empty($inventory))
+            {
+                $inventory = new Inventory();
+                $inventory->product_id = $product_id;
+                $inventory->store_id = $store_id;
+
+            }
+
+            $inventory->count = $item_inventory_count;
+           return $inventory->save(false);
+
+        }
+        return true;
+
     }
 }
