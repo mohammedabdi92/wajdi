@@ -66,10 +66,10 @@ class Inventory extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'الرقم'),
-            'product_id' => Yii::t('app', 'Product ID'),
+            'product_id' => Yii::t('app', 'المادة'),
             'store_id' => Yii::t('app', 'المحل'),
             'last_product_cost' => Yii::t('app', 'Last Product Cost'),
-            'count' => Yii::t('app', 'Count'),
+            'count' => Yii::t('app', 'العدد'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),

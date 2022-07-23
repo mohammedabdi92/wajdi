@@ -8,6 +8,7 @@ use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use Yii;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -39,6 +40,7 @@ class ProductController extends BaseController
      */
     public function actionIndex()
     {
+
         $searchModel = new ProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 

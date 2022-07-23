@@ -15,11 +15,15 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $customer_id
  * @property int $store_id
  * @property float $total_amount
+ * @property float $total_count
+ * @property float $total_discount
+ * @property float $total_price_discount_product
  * @property int $created_at
  * @property int|null $created_by
  * @property int $updated_at
  * @property int|null $updated_by
  * @property int|null $isDeleted
+ * @property int|null $total_amount_without_discount
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -40,6 +44,8 @@ class Order extends \yii\db\ActiveRecord
             [['customer_id', 'store_id', 'total_amount' ], 'required'],
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
+            [['total_price_discount_product','total_count'],'safe'],
+            [['total_discount','total_amount_without_discount'], 'double'],
         ];
     }
     public function behaviors()
@@ -62,9 +68,13 @@ class Order extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'الرقم'),
-            'customer_id' => Yii::t('app', 'Customer ID'),
+            'customer_id' => Yii::t('app', 'العميل'),
             'store_id' => Yii::t('app', 'المحل'),
-            'total_amount' => Yii::t('app', 'Total Amount'),
+            'total_amount_without_discount' => Yii::t('app', 'السعر الاجمالي'),
+            'total_amount' => Yii::t('app', 'السعر النهائي المطلوب'),
+            'total_discount' => Yii::t('app', 'الخصم الاجمالي'),
+            'total_count' => Yii::t('app', 'العدد الاجمالي'),
+            'total_price_discount_product' => Yii::t('app', 'مجموع الخصم الافرادي'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),

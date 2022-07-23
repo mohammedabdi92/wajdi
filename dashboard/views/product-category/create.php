@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\ProductCategory */
 
-$this->title = Yii::t('app', 'Create Product Category');
+$this->title = Yii::t('app', 'انشاء قسم');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Product Categories'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -9,8 +9,12 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\InventorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Inventories');
+$this->title = Yii::t('app', 'مواد الافرع');
 $this->params['breadcrumbs'][] = $this->title;
+$products = \common\models\Product::find()->all();
+$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+
+
 ?>
 <div class="inventory-index">
 
@@ -25,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             [
@@ -34,15 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->productTitle;
                 },
                 'format' => 'raw',
+                'filter'=>$productList
             ],
             [
                 'attribute' => 'store_id',
                 'value' => function($model){
                     return $model->storeTitle;
                 },
+                'filter'=>\common\components\Constants::storeArray,
                 'format' => 'raw',
             ],
-            'last_product_cost',
             'count',
             [
                 'attribute' => 'created_at',
@@ -55,11 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return \common\components\CustomFunc::getUserName($model->created_by);
                 },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'attribute' => 'updated_at',
                 'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
             ],
             [
@@ -67,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
 
         ],

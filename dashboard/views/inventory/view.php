@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'العودة'), ['index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'updated_at',
                 'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
             ],
             [

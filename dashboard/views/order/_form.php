@@ -9,19 +9,30 @@ use yii\widgets\ActiveForm;
 /* @var $model_product common\models\OrderProduct */
 
 $this->registerJsFile(
-    '@web/js/inventory.js',
+    '@web/js/order.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
+$products = \common\models\Product::find()->all();
+$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+foreach ($products as $product)
+{
+    $productsArray[$product->id] =$product->attributes;
+}
+//print_r($products);die;
 ?>
+<script>
+    var products = <?=\yii\helpers\Json::encode($productsArray);?>;
+
+</script>
 
 <div class="order-form">
 
-    <?php $form = ActiveForm::begin(['enableClientValidation'=>false,'id' => 'dynamic-form']); ?>
+    <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'dynamic-form']); ?>
     <?= $form->field($model, 'customer_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($model, 'store_id')->dropDownList(\common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
 
-    <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
+
 
 
     <div class=" col-md-12">
@@ -65,21 +76,41 @@ $this->registerJsFile(
                             // necessary for update action.
                             if (!$modelAddress->isNewRecord) {
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
+                                $priceList = $modelAddress->getPriceList();
+                            } else {
+                                $priceList = $products[0]->getPriceList();
                             }
+
+
                             ?>
 
                             <div class="row">
-                                <div class="col-sm-3">
-                                    <?= $form->field($modelAddress, "[{$i}]product_id")->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title')) ?>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]product_id")->dropDownList($productList, [
+                                        'onchange' => 'productChange(this)'
+                                    ]) ?>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList) ?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]amount")->textInput(['readonly' => true]) ?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]total_product_amount")->textInput(['readonly' => true])?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
                                 </div>
                             </div><!-- .row -->
 
                         </div>
-                        <?php endforeach; ?>
                     </div>
+                        <?php endforeach; ?>
+
                     <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
                 </div>
             </div>
@@ -88,6 +119,11 @@ $this->registerJsFile(
 
         <div class=" col-md-12">
 
+            <?= $form->field($model, 'total_price_discount_product')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'total_amount_without_discount')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
+            <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>

@@ -16,7 +16,11 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'dashboard\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'settings' => [
+            'class' => 'yii2mod\settings\Module',
+        ],
+    ],
     'defaultRoute' => 'site/index',
     'components' => [
         'request' => [
@@ -26,6 +30,17 @@ return [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-dashboard', 'httpOnly' => true],
+        ],
+        'settings' => [
+            'class' => 'yii2mod\settings\components\Settings',
+        ],
+        'i18n' => [
+            'translations' => [
+                'yii2mod.settings' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@yii2mod/settings/messages',
+                ],
+            ],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the dashboard
@@ -49,6 +64,7 @@ return [
             'rules' => [
             ],
         ],
+
     ],
     'params' => $params,
 ];

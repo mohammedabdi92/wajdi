@@ -16,6 +16,11 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $category_id
  * @property int $count_type
  * @property int $created_at
+ * @property float $price
+ * @property float $price_1
+ * @property float $price_2
+ * @property float $price_3
+ * @property float $min_number
  * @property int|null $created_by
  * @property int $updated_at
  * @property int|null $updated_by
@@ -37,8 +42,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id', 'count_type'], 'required'],
+            [['title', 'category_id', 'count_type','min_number'], 'required'],
             [['title'], 'string'],
+            [['price_1','price_2','price_3','price','min_number'], 'double'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
     }
@@ -65,8 +71,13 @@ class Product extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'الرقم'),
             'title' => Yii::t('app', 'الاسم'),
-            'category_id' => Yii::t('app', 'نوع'),
+            'category_id' => Yii::t('app', 'قسم'),
             'count_type' => Yii::t('app', 'نوع العد'),
+            'price' => Yii::t('app', 'السعر'),
+            'min_number' => Yii::t('app', 'الحد الادنى للعدد'),
+            'price_1' => Yii::t('app', 'السعر الاول'),
+            'price_2' => Yii::t('app', 'السعر الثاني'),
+            'price_3' => Yii::t('app', 'السعر الثالث'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
@@ -91,5 +102,15 @@ class Product extends \yii\db\ActiveRecord
 
     public  function getCategoryTitle(){
         return $this->category?$this->category->name:'';
+    }
+    public function getPriceList()
+    {
+
+            return [
+                1=>1,
+                2=>2,
+                3=>3,
+            ];
+
     }
 }

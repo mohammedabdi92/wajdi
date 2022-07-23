@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Products');
+$this->title = Yii::t('app', 'المواد');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'اشاء سلعة'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء مادة'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -44,24 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-             [
-                'attribute' => 'created_at',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
-                },
-            ],
             [
-                'attribute' => 'created_by',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getUserName($model->created_by);
-                },
+                'attribute' => 'min_number',
+                'format' => 'raw',
             ],
-            [
-                'attribute' => 'updated_at',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
-                },
-            ],
+            'price_1',
+            'price_2',
+            'price_3',
             [
                 'attribute' => 'updated_by',
                 'value' => function($model){

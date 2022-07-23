@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "76ea994d4fb7ebc0dd61bec1c46b9146",
+    "content-hash": "583a00830849fa6b863fde021fdb8b84",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -74,7 +74,7 @@
             "version": "3.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery-dist.git",
+                "url": "git@github.com:jquery/jquery-dist.git",
                 "reference": "e786e3d9707ffd9b0dd330ca135b66344dcef85a"
             },
             "dist": {
@@ -139,6 +139,24 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/mathiasbynens/punycode.js/zipball/38c8d3131a82567bfef18da09f7f4db68c84f8a3",
                 "reference": "38c8d3131a82567bfef18da09f7f4db68c84f8a3"
+            },
+            "type": "bower-asset"
+        },
+        {
+            "name": "bower-asset/x-editable",
+            "version": "1.5.1",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:vitalets/x-editable.git",
+                "reference": "f32802f48a33b8a7ec9cca32eec4ca844b7d39b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vitalets/x-editable/zipball/f32802f48a33b8a7ec9cca32eec4ca844b7d39b2",
+                "reference": "f32802f48a33b8a7ec9cca32eec4ca844b7d39b2"
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
             },
             "type": "bower-asset"
         },
@@ -812,6 +830,120 @@
             "time": "2022-02-26T18:53:51+00:00"
         },
         {
+            "name": "kartik-v/yii2-widget-datepicker",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-datepicker.git",
+                "reference": "04ee13be77790ee14d92c34f3181e521f6457639"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-datepicker/zipball/04ee13be77790ee14d92c34f3181e521f6457639",
+                "reference": "04ee13be77790ee14d92c34f3181e521f6457639",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=2.0.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.4.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\date\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 wrapper for the bootstrap datepicker plugin (sub repo split from yii2-widgets).",
+            "homepage": "https://github.com/kartik-v/yii2-widget-datepicker",
+            "keywords": [
+                "date",
+                "extension",
+                "form",
+                "jquery",
+                "picker",
+                "plugin",
+                "select2",
+                "widget",
+                "yii2"
+            ],
+            "time": "2022-05-23T02:43:34+00:00"
+        },
+        {
+            "name": "kartik-v/yii2-widget-select2",
+            "version": "v2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kartik-v/yii2-widget-select2.git",
+                "reference": "25fbe4b93b8acbac325fa4f594a983be1e84a780"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/25fbe4b93b8acbac325fa4f594a983be1e84a780",
+                "reference": "25fbe4b93b8acbac325fa4f594a983be1e84a780",
+                "shasum": ""
+            },
+            "require": {
+                "kartik-v/yii2-krajee-base": ">=3.0.4",
+                "select2/select2": ">=4.0"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "kartik\\select2\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Kartik Visweswaran",
+                    "email": "kartikv2@gmail.com",
+                    "homepage": "http://www.krajee.com/"
+                }
+            ],
+            "description": "Enhanced Yii2 wrapper for the Select2 jQuery plugin (sub repo split from yii2-widgets).",
+            "homepage": "https://github.com/kartik-v/yii2-widget-select2",
+            "keywords": [
+                "dropdown",
+                "extension",
+                "form",
+                "jquery",
+                "plugin",
+                "select2",
+                "widget",
+                "yii2"
+            ],
+            "funding": [
+                {
+                    "url": "https://opencollective.com/yii2-widget-select2",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2022-03-04T10:11:54+00:00"
+        },
+        {
             "name": "mortezakarimi/yii2-gentelella-rtl",
             "version": "1.3.2",
             "source": {
@@ -993,6 +1125,44 @@
                 "yii"
             ],
             "time": "2017-01-11T14:05:47+00:00"
+        },
+        {
+            "name": "select2/select2",
+            "version": "4.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/select2/select2.git",
+                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/select2/select2/zipball/45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
+                "reference": "45f2b83ceed5231afa7b3d5b12b58ad335edd82e",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "dist/js/select2.js"
+                    ],
+                    "styles": [
+                        "dist/css/select2.css"
+                    ],
+                    "files": [
+                        "dist/js/select2.js",
+                        "dist/js/i18n/*.js",
+                        "dist/css/select2.css"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Select2 is a jQuery based replacement for select boxes.",
+            "homepage": "https://select2.org/",
+            "time": "2020-01-28T05:01:22+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1666,6 +1836,150 @@
                 "yii2-dynamicform"
             ],
             "time": "2015-02-25T15:31:24+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-editable",
+            "version": "1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-editable.git",
+                "reference": "21099a75670b6a406484afadf05ddd415774f4a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-editable/zipball/21099a75670b6a406484afadf05ddd415774f4a6",
+                "reference": "21099a75670b6a406484afadf05ddd415774f4a6",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/x-editable": "*",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\editable\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Chepurnoi",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Yii2 editable field extension",
+            "keywords": [
+                "yii2",
+                "yii2 editable",
+                "yii2 editable column",
+                "yii2 editable field"
+            ],
+            "time": "2018-01-15T15:00:16+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-enum",
+            "version": "1.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-enum.git",
+                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-enum/zipball/7af030e19636ece5fd0adb5d6012d2b03fa63895",
+                "reference": "7af030e19636ece5fd0adb5d6012d2b03fa63895",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "yiisoft/yii2": "*"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\enum\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dmitry Semenov",
+                    "email": "disemx@gmail.com"
+                },
+                {
+                    "name": "Igor Chepurnoi",
+                    "email": "igorzfort@gmail.com"
+                }
+            ],
+            "description": "Yii2 Enumerable helpers",
+            "keywords": [
+                "enumerable helper",
+                "yii2",
+                "yii2 enum"
+            ],
+            "time": "2017-04-19T22:06:46+00:00"
+        },
+        {
+            "name": "yii2mod/yii2-settings",
+            "version": "2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yii2mod/yii2-settings.git",
+                "reference": "a336b5a38143999f275f023702790b3838acc214"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yii2mod/yii2-settings/zipball/a336b5a38143999f275f023702790b3838acc214",
+                "reference": "a336b5a38143999f275f023702790b3838acc214",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.0",
+                "yii2mod/yii2-editable": "*",
+                "yii2mod/yii2-enum": "*",
+                "yiisoft/yii2": "~2.0.10"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.0",
+                "phpunit/phpunit": "^7.3"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "yii2mod\\settings\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Igor Chepurnoi",
+                    "email": "chepurnoi.igor@gmail.com"
+                }
+            ],
+            "description": "Yii2 Settings Module",
+            "keywords": [
+                "Settings",
+                "config",
+                "storage",
+                "yii2"
+            ],
+            "time": "2018-08-20T19:39:14+00:00"
         },
         {
             "name": "yii2tech/ar-softdelete",
@@ -5390,7 +5704,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "kartik-v/yii2-widget-datepicker": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

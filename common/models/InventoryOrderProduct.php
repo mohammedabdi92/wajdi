@@ -24,6 +24,9 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $updated_at
  * @property int|null $updated_by
  * @property int|null $isDeleted
+ * @property float|null $tax
+ * @property float|null $discount_percentage
+ * @property float|null $discount
  */
 class InventoryOrderProduct extends \yii\db\ActiveRecord
 {
@@ -43,7 +46,8 @@ class InventoryOrderProduct extends \yii\db\ActiveRecord
         return [
             [[ 'product_id', 'product_total_cost', 'product_cost', 'count' ], 'required'],
             [['inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
-            [['product_total_cost', 'product_cost', 'count'], 'number'],
+            [[ 'count','tax_percentage','discount_percentage'], 'number'],
+            [['product_total_cost', 'product_cost','tax','discount','product_total_cost_final','product_cost_final'], 'double'],
         ];
     }
 
@@ -76,8 +80,10 @@ class InventoryOrderProduct extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'الرقم'),
             'inventory_order_id' => Yii::t('app', 'رقم طلب التوريد'),
-            'product_id' => Yii::t('app', 'السلعة'),
+            'product_id' => Yii::t('app', 'المادة'),
             'product_total_cost' => Yii::t('app', 'السعر الاجمالي'),
+            'product_cost_final' => Yii::t('app', 'سعر الوحدة النهائي'),
+            'product_total_cost_final' => Yii::t('app', 'السعر الاجمالي النهائي'),
             'product_cost' => Yii::t('app', 'سعر الوحدة'),
             'count' => Yii::t('app', 'العدد'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),

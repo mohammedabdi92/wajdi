@@ -37,7 +37,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
             <div class="col-md-3 left_col hidden-print">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' وجدي لمواد البناء'), Yii::$app->homeUrl,["class"=>"site_title"]) ?>
+                        <b><?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' مجموعة وجدي للاعمار '), Yii::$app->homeUrl,["class"=>"site_title"]) ?></b>
                     </div>
 
                     <div class="clearfix"></div>
@@ -64,17 +64,17 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                     "items" => [
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
-                                        ["label" => 'انواع السلع', "url" => "/product-category/index", "icon" => "archive"],
-                                        ["label" => ' السلع', "url" => "/product/index", "icon" => "archive"],
-                                        ["label" => 'المشتريين', "url" => "/customer/index", "icon" => "male"],
+                                        ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
+                                        ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
+                                        ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
                                         ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
-                                        ["label" => 'طلبات الموردين', "url" => "/inventory-order/index", "icon" => "handshake-o"],
-                                        ["label" => 'بيع', "url" => "/order/index", "icon" => "money"],
+                                        ["label" => ' فواتير المشتريات', "url" => "/inventory-order/index", "icon" => "handshake-o"],
+                                        ["label" => 'فواتير المبيعات', "url" => "/order/index", "icon" => "money"],
                                         [
                                             "label" => "المخزن",
                                             "icon" => "th",
                                             "items" => [
-                                                ["label" => "العناصر", "url" => ["inventory/index"]],
+                                                ["label" => "مواد الافرع", "url" => ["inventory/index"]],
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],

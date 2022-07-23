@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model common\models\InventoryOrder */
 /* @var $model_product common\models\InventoryOrderProduct */
 
-$this->title = Yii::t('app', 'انشاء طلب مورد');
+$this->title = Yii::t('app', 'انشاء فاتورة مشتريات');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Inventory Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

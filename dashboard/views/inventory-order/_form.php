@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventoryOrder */
@@ -18,11 +19,22 @@ $this->registerJsFile(
 <div class="inventory-order-form">
     <?php $form = ActiveForm::begin(['enableClientValidation'=>false,'id' => 'dynamic-form']); ?>
     <div class=" col-md-12">
-        <?= $form->field($model, 'supplier_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')) ?>
 
+
+        <?= $form->field($model, 'supplier_name')->textInput() ?>
+
+        <?= $form->field($model, 'supplier_id')->dropDownList([''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')) ?>
+        <?= $form->field($model, 'inventory_order_id')->textInput() ?>
+        <label>تاريخ الفاتورة الورقي</label>
+        <?=   DatePicker::widget([
+              'model' => $model,
+              'attribute' => 'inventory_order_date',
+//              'language' => 'en',
+      //'dateFormat' => 'yyyy-MM-dd',
+  ]); ?>
         <?= $form->field($model, 'store_id')->dropDownList(\common\components\Constants::storeArray); ?>
 
-        <?= $form->field($model, 'total_cost')->textInput(['readonly' => true]) ?>
+
     </div>
 
 
@@ -67,23 +79,30 @@ $this->registerJsFile(
                             ?>
 
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]product_id")->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title')) ?>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]product_cost")->textInput() ?>
                                 </div>
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]product_total_cost")->textInput() ?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]product_cost_final")->textInput(['readonly' => true]) ?>
+                                </div>
+                                <div class="col-sm-2">
+                                    <?= $form->field($modelAddress, "[{$i}]product_total_cost_final")->textInput(['readonly' => true]) ?>
                                 </div>
                             </div><!-- .row -->
 
                     </div>
+                    </div>
                 <?php endforeach; ?>
-            </div>
+
             <?php DynamicFormWidget::end(); ?>
         </div>
     </div>
@@ -92,7 +111,14 @@ $this->registerJsFile(
 
     <div class=" col-md-12">
 
+        <?= $form->field($model, 'discount_percentage')->textInput() ?>
+        <?= $form->field($model, 'discount')->textInput() ?>
 
+        <?= $form->field($model, 'tax_percentage')->textInput() ?>
+        <?= $form->field($model, 'tax')->textInput() ?>
+
+        <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+        <?= $form->field($model, 'total_cost')->textInput(['readonly' => true]) ?>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
         </div>

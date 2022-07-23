@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\models\Product;
 use Yii;
 use common\base\Model;
 use common\models\Order;
@@ -156,6 +157,19 @@ class OrderController extends BaseController
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionPriceList($key,$id)
+    {
+        $key = explode('-',$key)[1];
+        $product = Product::findOne($id);
+
+        if (!empty($product)) {
+            $prices = $product->getPriceList();
+            foreach($prices as $value=>$price) {
+                echo '<label><input type="radio" name="OrderProduct['.$key.'][price_number]" value="'.$value.'"> '.$price.'</label>';
+            }
+        }
     }
 
     /**

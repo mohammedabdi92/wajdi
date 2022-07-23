@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ProductCategorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'انواع السلع');
+$this->title = Yii::t('app', 'اقسام المواد');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-category-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'انشاء نوع سلعة'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء قسم'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'updated_at',
                 'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
             ],
             [

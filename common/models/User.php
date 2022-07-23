@@ -82,8 +82,8 @@ class User extends BaseModel implements IdentityInterface
     {
         return [
             'id' => Yii::t('app', 'رقم المستخدم'),
-            'username' => Yii::t('app', 'اسم الدخول'),
-            'full_name' => Yii::t('app', 'كنية'),
+            'username' => Yii::t('app', 'اسم المستخدم'),
+            'full_name' => Yii::t('app', 'الاسم'),
             'status' => Yii::t('app', 'الحالة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'المونشيء'),
@@ -92,6 +92,7 @@ class User extends BaseModel implements IdentityInterface
             'email' => Yii::t('app', 'الايميل'),
             'store_id' => Yii::t('app', 'المحل'),
             'type' => Yii::t('app', 'صلاحيات'),
+            'password_text' => Yii::t('app', 'كلمة السر'),
         ];
     }
 
@@ -104,7 +105,7 @@ class User extends BaseModel implements IdentityInterface
 
         return [
             [['full_name','username','type','password_text'], 'safe'],
-            [['full_name','username','email','type','store_id'], 'required'],
+            [['full_name','username','type'], 'required'],
             [['email'], 'email'],
             [['email','username'], 'unique'],
             ["password_text", "required", "on" => ['create']],
