@@ -27,9 +27,9 @@ $this->registerJsFile(
     <?= $form->field($model, 'title')->textInput() ?>
 
 
-    <?= $form->field($model, 'category_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'category_id')->dropDownList([''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($model, 'count_type')->dropDownList(\common\components\Constants::countTypesArray); ?>
+    <?= $form->field($model, 'count_type')->dropDownList([''=>'اختر ......']+\common\components\Constants::countTypesArray); ?>
 
     <?= $form->field($model, 'price')->textInput()->label('السعر ') ?>
 

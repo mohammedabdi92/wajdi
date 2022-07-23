@@ -42,9 +42,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id', 'count_type','min_number'], 'required'],
+            [['price_1','price_2','price_3','price','title', 'category_id', 'count_type','min_number'], 'required'],
             [['title'], 'string'],
-            [['price_1','price_2','price_3','price','min_number'], 'double'],
+            [['min_number'], 'double'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
     }
