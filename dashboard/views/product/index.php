@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return $model->categoryTitle;
                 },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             [
@@ -42,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return \common\components\Constants::getCountTypesName($model->count_type);
                 },
+                'filter'=>\common\components\Constants::countTypesArray,
                 'format' => 'raw',
             ],
             [
@@ -56,6 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
 //            'isDeleted',
             [
