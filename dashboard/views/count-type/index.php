@@ -24,13 +24,18 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'id',
             'name',
-            'status',
+            [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->getStatusText();
+                },
+                'format' => 'raw',
+            ],
             'created_at',
 //            'created_by',
             'updated_at',

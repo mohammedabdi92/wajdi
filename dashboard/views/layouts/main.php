@@ -65,6 +65,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
                                         ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
+                                        ["label" => 'انواع المواد', "url" => "/count-type/index", "icon" => "archive"],
                                         ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
                                         ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
                                         ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
