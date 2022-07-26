@@ -26,7 +26,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  */
-class OrderProduct extends \yii\db\ActiveRecord
+class OrderProduct extends \common\components\BaseModel
 {
     public $price_number;
 

@@ -29,7 +29,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float|null $discount_percentage
  * @property float|null $discount
  */
-class InventoryOrder extends \yii\db\ActiveRecord
+class InventoryOrder extends \common\components\BaseModel
 {
     public $supplier_name ;
     /**

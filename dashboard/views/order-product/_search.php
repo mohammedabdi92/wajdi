@@ -23,7 +23,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'count') ?>
 
-    <?= $form->field($model, 'count_type') ?>
+    <?= $form->field($model, 'count_type')->dropDownList([''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name')); ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

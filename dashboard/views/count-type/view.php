@@ -4,16 +4,16 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Product */
+/* @var $model common\models\CountType */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
+$this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Count Types'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="product-view">
+<div class="count-type-view">
 
-    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
@@ -31,31 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title:ntext',
+            'name',
             [
-                'attribute' => 'category_id',
+                'attribute' => 'status',
                 'value' => function($model){
-                    return $model->categoryTitle;
+                    return $model->getStatusText();
                 },
                 'format' => 'raw',
             ],
             [
-                'attribute' => 'count_type',
-                'value' => function($model){
-                    return $model->getCountTypeName('count_type');
-                },
-                'format' => 'raw',
-            ],
-            'price',
-            'price_1',
-            'price_2',
-            'price_3',
-            [
-                'attribute' => 'min_number',
-
-                'format' => 'raw',
-            ],
-             [
                 'attribute' => 'created_at',
                 'value' => function($model){
                     return \common\components\CustomFunc::getFullDate($model->created_at);

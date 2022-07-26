@@ -21,7 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  */
-class TransferOrder extends \yii\db\ActiveRecord
+class TransferOrder extends \common\components\BaseModel
 {
     /**
      * {@inheritdoc}

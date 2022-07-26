@@ -22,7 +22,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  */
-class Customer extends \yii\db\ActiveRecord
+class Customer extends \common\components\BaseModel
 {
     /**
      * {@inheritdoc}

@@ -25,7 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  */
-class InventoryOrderProduct extends \yii\db\ActiveRecord
+class InventoryOrderProduct extends \common\components\BaseModel
 {
     /**
      * {@inheritdoc}

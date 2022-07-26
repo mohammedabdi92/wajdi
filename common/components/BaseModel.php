@@ -2,6 +2,7 @@
 
 namespace common\components;
 
+use common\models\CountType;
 use common\models\User;
 
 class BaseModel extends \yii\db\ActiveRecord
@@ -17,5 +18,10 @@ class BaseModel extends \yii\db\ActiveRecord
         return $user->full_name??'';
     }
 
+    public function getCountTypeName($att): string
+    {
+        $CountType =  CountType::findOne($this->$att);
+        return $CountType->name??'';
+    }
 
 }

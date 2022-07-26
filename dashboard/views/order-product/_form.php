@@ -18,7 +18,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'count')->textInput() ?>
 
-    <?= $form->field($model, 'count_type')->textInput() ?>
+    <?= $form->field($model, 'count_type')->dropDownList([''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name')); ?>
 
 
 

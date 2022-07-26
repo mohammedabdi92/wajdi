@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'count_type',
                 'value' => function($model){
-                    return \common\components\Constants::getCountTypesName($model->count_type);
+                    return $model->getCountTypeName('count_type');
                 },
                 'format' => 'raw',
             ],

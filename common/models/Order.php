@@ -26,7 +26,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $isDeleted
  * @property int|null $total_amount_without_discount
  */
-class Order extends \yii\db\ActiveRecord
+class Order extends \common\components\BaseModel
 {
     /**
      * {@inheritdoc}

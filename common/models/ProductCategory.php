@@ -19,7 +19,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  */
-class ProductCategory extends \yii\db\ActiveRecord
+class ProductCategory extends \common\components\BaseModel
 {
     /**
      * {@inheritdoc}

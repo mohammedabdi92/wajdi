@@ -41,9 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'count_type',
                 'value' => function($model){
-                    return \common\components\Constants::getCountTypesName($model->count_type);
+                    return $model->getCountTypeName('count_type');
                 },
-                'filter'=>\common\components\Constants::countTypesArray,
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             [
