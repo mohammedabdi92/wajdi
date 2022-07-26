@@ -24,7 +24,6 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $updated_at
  * @property int|null $updated_by
  * @property int|null $isDeleted
- * @property float|null $tax
  * @property float|null $discount_percentage
  * @property float|null $discount
  */
@@ -47,7 +46,7 @@ class InventoryOrderProduct extends \yii\db\ActiveRecord
             [[ 'product_id', 'product_total_cost', 'product_cost', 'count' ], 'required'],
             [['inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [[ 'count','tax_percentage','discount_percentage'], 'number'],
-            [['product_total_cost', 'product_cost','tax','discount','product_total_cost_final','product_cost_final'], 'double'],
+            [['product_total_cost', 'product_cost','discount','product_total_cost_final','product_cost_final'], 'double'],
         ];
     }
 

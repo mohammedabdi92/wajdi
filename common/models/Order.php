@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -91,5 +92,9 @@ class Order extends \yii\db\ActiveRecord
         $query = new \common\models\query\OrderQuery(get_called_class());
         $query->attachBehavior('softDelete', SoftDeleteQueryBehavior::className());
         return $query;
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
     }
 }

@@ -102,8 +102,8 @@ class OrderController extends BaseController
                 try {
                     if ($flag = $model->save(false)) {
                         foreach ($model_product as $modelAddress) {
-                            $modelAddress->inventory_order_id = $model->id;
-                            $modelAddress->store_id = $model->store_id;
+                            $modelAddress->order_id = $model->id;
+
                             if (! ($flag = $modelAddress->save(false))) {
                                 $transaction->rollBack();
                                 break;
@@ -115,6 +115,7 @@ class OrderController extends BaseController
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
+                    die($e);
                     $transaction->rollBack();
                 }
             }
