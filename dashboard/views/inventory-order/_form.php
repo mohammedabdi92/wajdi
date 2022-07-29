@@ -22,6 +22,7 @@ $this->registerJsFile(
 
 
         <?= $form->field($model, 'supplier_name')->textInput() ?>
+        <?= $form->field($model, 'phone_number')->textInput() ?>
 
         <?= $form->field($model, 'supplier_id')->dropDownList([''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')) ?>
         <?= $form->field($model, 'inventory_order_id')->textInput() ?>

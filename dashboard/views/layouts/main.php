@@ -65,7 +65,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
                                         ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
-                                        ["label" => 'انواع العد', "url" => "/count-type/index", "icon" => "archive"],
+
                                         ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
                                         ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
                                         ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
@@ -76,6 +76,15 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                             "icon" => "th",
                                             "items" => [
                                                 ["label" => "مواد الافرع", "url" => ["inventory/index"]],
+//                                                ["label" => "پنل", "url" => ["site/panel"]],
+                                            ],
+                                        ],
+                                        [
+                                            "label" => "اعدادات",
+                                            "icon" => "th",
+                                            "items" => [
+                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
+                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],
@@ -207,6 +216,13 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
             <!-- /top navigation -->
             <!-- /header content -->
             <div class="right_col" role="main">
+                <?php if (Yii::$app->session->hasFlash('success')): ?>
+                    <div class="alert alert-success alert-dismissable">
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <h4><i class="icon fa fa-check"></i></h4>
+                        <?= Yii::$app->session->getFlash('success') ?>
+                    </div>
+                <?php endif; ?>
                 <?= $content ?>
             </div>
             <!-- footer content -->

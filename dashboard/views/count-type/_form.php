@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success'])  ?>
     </div>
 
     <?php ActiveForm::end(); ?>

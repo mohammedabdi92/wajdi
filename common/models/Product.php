@@ -20,6 +20,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float $price_1
  * @property float $price_2
  * @property float $price_3
+ * @property float $price_4
  * @property float $min_number
  * @property int|null $created_by
  * @property int $updated_at
@@ -42,7 +43,7 @@ class Product extends \common\components\BaseModel
     public function rules()
     {
         return [
-            [['price_1','price_2','price_3','price','title', 'category_id', 'count_type','min_number'], 'required'],
+            [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type','min_number'], 'required'],
             [['title'], 'string'],
             [['min_number'], 'double'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
@@ -78,6 +79,7 @@ class Product extends \common\components\BaseModel
             'price_1' => Yii::t('app', 'السعر الاول'),
             'price_2' => Yii::t('app', 'السعر الثاني'),
             'price_3' => Yii::t('app', 'السعر الثالث'),
+            'price_4' => Yii::t('app', 'السعر الرابع'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
@@ -110,6 +112,7 @@ class Product extends \common\components\BaseModel
                 1=>1,
                 2=>2,
                 3=>3,
+                4=>4,
             ];
 
     }

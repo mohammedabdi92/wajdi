@@ -10,6 +10,7 @@ $settings = Yii::$app->settings;
 $price1 = $settings->get('price', 'price_profit_rate_1');
 $price2 = $settings->get('price', 'price_profit_rate_2');
 $price3 = $settings->get('price', 'price_profit_rate_3');
+$price4 = $settings->get('price', 'price_profit_rate_4');
 $this->registerJsFile(
     '@web/js/product.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
@@ -19,6 +20,7 @@ $this->registerJsFile(
     var price_profit_rate_1 = <?=$price1?>;
     var price_profit_rate_2 = <?=$price2?>;
     var price_profit_rate_3 = <?=$price3?>;
+    var price_profit_rate_4 = <?=$price4?>;
 </script>
 <div class="product-form">
 
@@ -27,9 +29,26 @@ $this->registerJsFile(
     <?= $form->field($model, 'title')->textInput() ?>
 
 
-    <?= $form->field($model, 'category_id')->dropDownList([''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name')) ?>
+    <?php
+    echo $form->field($model, 'category_id')->widget(\kartik\select2\Select2::classname(), [
+        'data' => [''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر القسم .....'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
 
-    <?= $form->field($model, 'count_type')->dropDownList([''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name')); ?>
+    <?php
+    echo $form->field($model, 'count_type')->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+
 
     <?= $form->field($model, 'price')->textInput()->label('السعر ') ?>
 
@@ -38,6 +57,8 @@ $this->registerJsFile(
     <?= $form->field($model, 'price_2')->textInput()->label('السعر الثاني '.($price2*100).'%') ?>
 
     <?= $form->field($model, 'price_3')->textInput()->label('السعر الثالث '.($price3*100).'%') ?>
+
+    <?= $form->field($model, 'price_4')->textInput()->label('السعر الرابع '.($price4*100).'%') ?>
 
     <?= $form->field($model, 'min_number')->textInput() ?>
 

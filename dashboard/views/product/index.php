@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+
 
             'id',
             'title:ntext',
@@ -53,6 +53,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'price_1',
             'price_2',
             'price_3',
+            'price_4',
             [
                 'attribute' => 'updated_by',
                 'value' => function($model){

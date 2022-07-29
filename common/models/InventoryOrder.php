@@ -32,6 +32,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
 class InventoryOrder extends \common\components\BaseModel
 {
     public $supplier_name ;
+    public $phone_number ;
     /**
      * {@inheritdoc}
      */
@@ -50,7 +51,7 @@ class InventoryOrder extends \common\components\BaseModel
             [['store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
             [['supplier_id'],'validateSupplierRequired'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number'],'safe']
         ];
     }
 
@@ -67,6 +68,7 @@ class InventoryOrder extends \common\components\BaseModel
         {
             $supplier = new Supplier();
             $supplier->name = $this->supplier_name;
+            $supplier->phone_number = $this->phone_number;
             $supplier->save();
             $this->supplier_id = $supplier->id;
         }
@@ -95,6 +97,7 @@ class InventoryOrder extends \common\components\BaseModel
         return [
             'id' => Yii::t('app', 'الرقم'),
             'supplier_id' => Yii::t('app', 'المورد'),
+            'phone_number' => Yii::t('app', 'رقم الهاتف'),
             'supplier_name' => Yii::t('app', 'اسم المورد'),
             'inventory_order_id' => Yii::t('app', 'رقم الفاتورة الورقي'),
             'inventory_order_date' => Yii::t('app', 'تاريخ الفاتورة الورقي'),
