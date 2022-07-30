@@ -13,7 +13,7 @@ $this->registerJsFile(
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
 $products = \common\models\Product::find()->all();
-$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+$productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
 foreach ($products as $product)
 {
     $productsArray[$product->id] =$product->attributes;
@@ -28,10 +28,28 @@ foreach ($products as $product)
 <div class="order-form">
 
     <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'dynamic-form']); ?>
-    <?= $form->field($model, 'customer_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name')) ?>
 
-    <?= $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
-
+    <?= $form->field($model, 'customer_name')->textInput() ?>
+    <?= $form->field($model, 'phone_number')->textInput() ?>
+    <?php
+    echo $form->field($model, "customer_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر نوع العد .....'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+    <?php
+    echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>'اختر المحل ....']+\common\components\Constants::storeArray,
+        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
 
 
 
@@ -86,9 +104,17 @@ foreach ($products as $product)
 
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <?= $form->field($modelAddress, "[{$i}]product_id")->dropDownList($productList, [
-                                        'onchange' => 'productChange(this)'
-                                    ]) ?>
+
+                                    <?php
+                                    echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
+                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+                                        'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
+                                        ],
+                                        'pluginOptions' => [
+                                            'allowClear' => true
+                                        ],
+                                    ]);
+                                    ?>
                                 </div>
                                 <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
@@ -126,6 +152,9 @@ foreach ($products as $product)
             <?= $form->field($model, 'debt')->textInput() ?>
             <?= $form->field($model, 'repayment')->textInput() ?>
             <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'paid')->textInput() ?>
+            <?= $form->field($model, 'remaining')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>

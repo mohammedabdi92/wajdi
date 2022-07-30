@@ -3,6 +3,7 @@
 namespace dashboard\controllers;
 
 use common\models\LoginForm;
+use common\models\Presence;
 use common\models\User;
 use Yii;
 use yii\filters\VerbFilter;
@@ -66,6 +67,7 @@ class SiteController extends Controller
 
         return $this->render('index');
     }
+
 
     /**
      * Login action.

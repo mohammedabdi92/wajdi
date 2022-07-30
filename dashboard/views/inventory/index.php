@@ -28,6 +28,17 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' =>function ($model){
+            if(!empty($model->count) && $model->count < $model->product->min_number ){
+                return [
+                    'class' => 'danger  time-set',
+                    'data-text' => ' '
+                ];
+            }
+            return ['class' => 'time-set-notSet'];
+
+
+        },
         'columns' => [
 
             'id',

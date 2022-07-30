@@ -103,6 +103,7 @@ class OrderController extends BaseController
                     if ($flag = $model->save(false)) {
                         foreach ($model_product as $modelAddress) {
                             $modelAddress->order_id = $model->id;
+                            $modelAddress->store_id = $model->store_id;
 
                             if (! ($flag = $modelAddress->save(false))) {
                                 $transaction->rollBack();
@@ -133,6 +134,7 @@ class OrderController extends BaseController
 
         if ($model->load(Yii::$app->request->post())) {
 
+
             $oldIDs = ArrayHelper::map($model_product, 'id', 'id');
             $model_product = Model::createMultiple(OrderProduct::classname(), $model_product);
             Model::loadMultiple($model_product, Yii::$app->request->post());
@@ -162,6 +164,7 @@ class OrderController extends BaseController
                         foreach ($model_product as $modelproduct) {
                             $modelproduct->order_id = $model->id;
                             $modelproduct->store_id = $model->store_id;
+
                             if (! ($flag = $modelproduct->save(false))) {
                                 $transaction->rollBack();
                                 break;
@@ -174,6 +177,7 @@ class OrderController extends BaseController
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
+
                     print_r($e->getMessage());die;
                     $transaction->rollBack();
                 }

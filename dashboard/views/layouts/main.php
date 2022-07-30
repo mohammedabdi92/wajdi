@@ -63,6 +63,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                 [
                                     "items" => [
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
+                                        ["label" => 'بصمة دوام', "url" => "/user/presence", "icon" => "hand-pointer-o"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
                                         ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
 
@@ -76,6 +77,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                             "icon" => "th",
                                             "items" => [
                                                 ["label" => "مواد الافرع", "url" => ["inventory/index"]],
+                                                ["label" => "النقليات", "url" => ["transfer-order/index"]],
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],

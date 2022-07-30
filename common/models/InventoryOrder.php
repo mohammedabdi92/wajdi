@@ -22,6 +22,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $inventory_order_date
  * @property int|null $created_by
  * @property int $updated_at
+ * @property string $note
  * @property int|null $updated_by
  * @property int|null $isDeleted
  * @property float|null $tax
@@ -54,7 +55,7 @@ class InventoryOrder extends \common\components\BaseModel
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
             [['supplier_id'],'validateSupplierRequired'],
             [['debt','repayment'],'double'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note'],'safe']
         ];
     }
 
@@ -67,8 +68,10 @@ class InventoryOrder extends \common\components\BaseModel
     }
     public function beforeSave($insert)
     {
+        dei;
         if(!empty($this->supplier_name))
         {
+
             $supplier = new Supplier();
             $supplier->name = $this->supplier_name;
             $supplier->phone_number = $this->phone_number;
@@ -117,6 +120,7 @@ class InventoryOrder extends \common\components\BaseModel
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
+            'note' => Yii::t('app', 'ملاحظة'),
         ];
     }
 

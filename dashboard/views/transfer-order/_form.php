@@ -12,11 +12,22 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'from')->textInput() ?>
+    <?= $form->field($model, 'from')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
 
-    <?= $form->field($model, 'to')->textInput() ?>
+    <?= $form->field($model, 'to')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
+    <?php
+    echo $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+        'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
+    <?= $form->field($model, 'count')->textInput() ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+
 
 
 

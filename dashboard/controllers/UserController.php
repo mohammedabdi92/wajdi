@@ -2,6 +2,8 @@
 
 namespace dashboard\controllers;
 
+use Yii;
+use common\models\Presence;
 use common\models\User;
 use common\models\UserSearch;
 use dashboard\components\BaseController;
@@ -132,5 +134,37 @@ class UserController extends BaseController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+    public function actionPresence()
+    {
+        $user =  Yii::$app->getUser();
+        $last_login =  Presence::find()->where(['user_id'=>$user->id])->orderBy(['id' => SORT_DESC])->andWhere('`time` LIKE \''.date('Y-m-d').'%\'')->one();
+        $submit = \Yii::$app->request->get('submit');
+        if ($submit) {
+
+            $Presence = new Presence();
+            $Presence->user_id = $user->id;
+
+            $Presence->time = date('Y-m-d H:i:s');
+            if($submit == "in" && (empty($last_login) || (!empty($last_login) && $last_login->type == Presence::TYPE_OUT)))
+            {
+                $Presence->type = Presence::TYPE_IN;
+                $Presence->save(false);
+                Yii::$app->session->setFlash('success', "تم تسجيل دخول");
+            }
+            if($submit == "out" && ( $last_login->type == Presence::TYPE_IN))
+            {
+                $Presence->type = Presence::TYPE_OUT;
+                $Presence->save(false);
+                Yii::$app->session->setFlash('success', "تم تسجيل خروج");
+            }
+
+        }
+        $last_login =  Presence::find()->where(['user_id'=>$user->id])->orderBy(['id' => SORT_DESC])->andWhere('`time` LIKE \''.date('Y-m-d').'%\'')->one();
+
+        return $this->render('presence',[
+            'user'=>$user,
+            'last_login'=>$last_login
+        ]);
     }
 }

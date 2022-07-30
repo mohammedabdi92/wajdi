@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\TransferOrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Transfer Orders');
+$this->title = Yii::t('app', 'النقليات');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="transfer-order-index">
@@ -26,23 +26,38 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-
-
             'id',
-            'from',
-            'to',
-            'status',
-            'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'isDeleted',
             [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, \common\models\TransferOrder $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                'attribute' => 'from',
+                'value' => function($model){
+                    return $model->fromTitle;
+                },
+                'filter'=>\common\components\Constants::storeArray,
+                'format' => 'raw',
             ],
+            [
+                'attribute' => 'to',
+                'value' => function($model){
+                    return $model->toTitle;
+                },
+                'filter'=>\common\components\Constants::storeArray,
+                'format' => 'raw',
+            ],
+            'count',
+            [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+
+
         ],
     ]); ?>
 

@@ -5,6 +5,7 @@ namespace common\components;
 use common\models\Inventory;
 use common\models\InventoryOrder;
 use common\models\InventoryOrderProduct;
+use common\models\OrderProduct;
 use common\models\User;
 
 class CustomFunc
@@ -28,9 +29,10 @@ class CustomFunc
     }
     public static function calculateProductCount($store_id,$product_id)
     {
-        $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ;
-        if($item_inventory_count)
-        {
+        $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
+        $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count')?? 0 ;
+        $total = $item_inventory_count- $item_order_count;
+
             $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->one();
             if(empty($inventory))
             {
@@ -40,11 +42,19 @@ class CustomFunc
 
             }
 
-            $inventory->count = $item_inventory_count;
+            if($inventory->count >= $inventory->product->min_number &&  $total < $inventory->product->min_number  ){
+                \Yii::$app->mailer->compose()
+                    ->setFrom(['info@mohammedabadi.com' => 'وجدي للاعمار'])
+                    ->setTo("mohammed.abadi92@gmail.com")
+                    ->setSubject("العنصر $product_id اصبح $total")
+                    ->setHtmlBody("العنصر $product_id اصبح $total")
+                    ->send();
+            }
+            $inventory->count = $total;
+
            return $inventory->save(false);
 
-        }
-        return true;
+
 
     }
 }

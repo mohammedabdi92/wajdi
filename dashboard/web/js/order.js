@@ -1,7 +1,6 @@
 
 
 $(document).on('change', '[id$=count]', function (item) {
-    debugger;
     $('.item').each(function (index, element) {
         calculateSupTotals(element);
     });
@@ -45,6 +44,9 @@ $(document).on('change', '[id$=debt]', function (item) {
 $(document).on('change', '[id$=repayment]', function (item) {
     calculateTotal();
 });
+$(document).on('change', '[id$=paid]', function (item) {
+    calculateTotal();
+});
 function calculateTotal() {
     var total = 0;
     $('[id$=total_product_amount]').each(function (index, element) {
@@ -65,7 +67,6 @@ function calculateTotal() {
     {
         total=total-ordertotaldiscount;
     }
-    debugger;
     var debt = $('[id$=debt]').val();
     if(debt)
     {
@@ -76,7 +77,17 @@ function calculateTotal() {
     {
         total =  total+parseFloat(repayment);
     }
+
     $('[id=order-total_amount]').val(total);
+    var paid = $('[id$=paid]').val();
+    if(paid)
+    {
+        total =  parseFloat(paid)-total;
+        $('[id$=remaining]').val(total);
+    }else {
+        $('[id$=remaining]').val(0);
+    }
+
     var supdis = 0;
     $('[id$=-count]').each(function (index, element) {
         var svalue =$(element).val();

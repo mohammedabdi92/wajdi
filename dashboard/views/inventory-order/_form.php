@@ -24,7 +24,15 @@ $this->registerJsFile(
         <?= $form->field($model, 'supplier_name')->textInput() ?>
         <?= $form->field($model, 'phone_number')->textInput() ?>
 
-        <?= $form->field($model, 'supplier_id')->dropDownList([''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')) ?>
+        <?php
+        echo $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' =>[''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name'),
+            'options' => ['placeholder' => 'اختر نوع العد .....'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+        ?>
         <?= $form->field($model, 'inventory_order_id')->textInput() ?>
         <label>تاريخ الفاتورة الورقي</label>
         <?=   DatePicker::widget([
@@ -81,7 +89,16 @@ $this->registerJsFile(
 
                             <div class="row">
                                 <div class="col-sm-2">
-                                    <?= $form->field($modelAddress, "[{$i}]product_id")->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title')) ?>
+                                    <?php
+                                    echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
+                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+                                        'options' => ['placeholder' => 'اختر نوع العد .....'],
+                                        'pluginOptions' => [
+                                            'allowClear' => true
+                                        ],
+                                    ]);
+                                    ?>
+                                    <div > <label> اخر سعر</label> <br><label class="last_price" > </label></div>
                                 </div>
                                 <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
@@ -123,6 +140,7 @@ $this->registerJsFile(
         <?= $form->field($model, 'debt')->textInput() ?>
         <?= $form->field($model, 'repayment')->textInput() ?>
         <?= $form->field($model, 'total_cost')->textInput(['readonly' => true]) ?>
+        <?= $form->field($model, 'note')->textarea() ?>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
         </div>

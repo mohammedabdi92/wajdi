@@ -102,6 +102,8 @@ class InventoryController extends BaseController
         ]);
     }
 
+
+
     /**
      * Deletes an existing Inventory model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

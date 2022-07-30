@@ -92,8 +92,8 @@ body .container.body .right_col {
     background: #ffffff;
 }
 #w0{
-width: 100%;
-overflow-y: scroll;
+/*width: 100%;*/
+/*overflow-y: scroll;*/
 }
 .site_title{
     font-size: 18px !important;

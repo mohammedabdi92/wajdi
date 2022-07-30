@@ -173,4 +173,25 @@ function calculateTotTotals(item) {
         }
         mainBox.find(productCostItemfinal).val(suptotal);
     }
+
+}
+
+$(document).on('change', '[id$=product_id]', function (item) {
+    $('.item').each(function (index, element) {
+        getProductDetails(element);
+    });
+
+});
+function getProductDetails(item) {
+    var mainBox = $(item);
+    var product_id_item = $("[id$=product_id]");
+    var product_id = mainBox.find(product_id_item).val();
+    $.post( "/product/get-details?id="+product_id, function( data ) {
+        data = jQuery.parseJSON( data );
+        if(data)
+        {
+            $('.last_price').html(data.last_price)
+
+        }
+    });
 }

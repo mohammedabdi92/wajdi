@@ -2,6 +2,8 @@
 
 namespace dashboard\controllers;
 
+use common\models\InventoryOrder;
+use common\models\InventoryOrderProduct;
 use common\models\Product;
 use common\models\ProductSearch;
 use dashboard\components\BaseController;
@@ -144,5 +146,16 @@ class ProductController extends BaseController
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionGetDetails($id){
+        $response = ['last_price'=>''];
+        $Product = $this->findModel($id);
+        $InventoryOrderProduct = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['id' => SORT_DESC])->one();
+        if($InventoryOrderProduct)
+        {
+            $response['last_price'] =$InventoryOrderProduct->product_cost;
+        }
+        return json_encode($response);
     }
 }
