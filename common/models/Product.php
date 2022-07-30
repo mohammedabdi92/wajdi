@@ -13,6 +13,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  *
  * @property int $id
  * @property string $title
+ * @property string $image_name
  * @property int $category_id
  * @property int $count_type
  * @property int $created_at
@@ -29,6 +30,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class Product extends \common\components\BaseModel
 {
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
@@ -80,6 +82,7 @@ class Product extends \common\components\BaseModel
             'price_2' => Yii::t('app', 'السعر الثاني'),
             'price_3' => Yii::t('app', 'السعر الثالث'),
             'price_4' => Yii::t('app', 'السعر الرابع'),
+            'image_name' => Yii::t('app', 'الصورة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
@@ -104,6 +107,29 @@ class Product extends \common\components\BaseModel
 
     public  function getCategoryTitle(){
         return $this->category?$this->category->name:'';
+    }
+    public function upload()
+    {
+        if ($this->validate()) {
+
+            if(!empty($this->imageFile))
+            {
+                $dir = dirname(dirname(__DIR__)) . '/dashboard'.'/web/uploads/main-category' ;
+                if(!file_exists($dir)){
+                    mkdir("$dir", 0777, true);
+                }
+                $this->imageFile->saveAs($dir .'/'. $this->id.'-'.time() . '.' . $this->imageFile->extension);
+                $this->image_name =   $this->id.'-'.time() . '.' . $this->imageFile->extension;
+                $this->save(false);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getImageUrl()
+    {
+        return $this->image_name?'/uploads/main-category/'.$this->image_name:null;
     }
     public function getPriceList()
     {

@@ -51,6 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'price_2',
             'price_3',
             [
+                'attribute'=>'image_name',
+                'value'=>$model->getImageUrl(),
+                'format' => ['image',['width'=>'100','height'=>'100']],
+            ],
+            [
                 'attribute' => 'min_number',
 
                 'format' => 'raw',

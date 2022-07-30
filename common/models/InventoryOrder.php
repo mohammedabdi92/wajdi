@@ -25,6 +25,8 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int|null $updated_by
  * @property int|null $isDeleted
  * @property float|null $tax
+ * @property float|null $debt
+ * @property float|null $repayment
  * @property float|null $tax_percentage
  * @property float|null $discount_percentage
  * @property float|null $discount
@@ -51,6 +53,7 @@ class InventoryOrder extends \common\components\BaseModel
             [['store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
             [['supplier_id'],'validateSupplierRequired'],
+            [['debt','repayment'],'double'],
             [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number'],'safe']
         ];
     }
@@ -103,6 +106,8 @@ class InventoryOrder extends \common\components\BaseModel
             'inventory_order_date' => Yii::t('app', 'تاريخ الفاتورة الورقي'),
             'store_id' => Yii::t('app', 'المحل'),
             'tax' => Yii::t('app', 'قيمة الضريبة'),
+            'debt' => Yii::t('app', 'الدين'),
+            'repayment' => Yii::t('app', 'السداد'),
             'total_count' => Yii::t('app', 'العدد الاجمالي'),
             'tax_percentage' => Yii::t('app', 'نسبة الضريبة %'),
             'discount_percentage' => Yii::t('app', ' نسبة الخصم %'),

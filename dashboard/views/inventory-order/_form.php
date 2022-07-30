@@ -119,6 +119,9 @@ $this->registerJsFile(
         <?= $form->field($model, 'tax')->textInput() ?>
 
         <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+
+        <?= $form->field($model, 'debt')->textInput() ?>
+        <?= $form->field($model, 'repayment')->textInput() ?>
         <?= $form->field($model, 'total_cost')->textInput(['readonly' => true]) ?>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>

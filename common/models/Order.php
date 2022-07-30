@@ -19,6 +19,8 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float $total_count
  * @property float $total_discount
  * @property float $total_price_discount_product
+ * @property float|null $debt
+ * @property float|null $repayment
  * @property int $created_at
  * @property int|null $created_by
  * @property int $updated_at
@@ -46,7 +48,7 @@ class Order extends \common\components\BaseModel
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['total_price_discount_product','total_count'],'safe'],
-            [['total_discount','total_amount_without_discount'], 'double'],
+            [['total_discount','total_amount_without_discount','debt','repayment'], 'double'],
         ];
     }
     public function behaviors()
@@ -75,6 +77,8 @@ class Order extends \common\components\BaseModel
             'total_amount' => Yii::t('app', 'السعر النهائي المطلوب'),
             'total_discount' => Yii::t('app', 'الخصم الاجمالي'),
             'total_count' => Yii::t('app', 'العدد الاجمالي'),
+            'debt' => Yii::t('app', 'الدين'),
+            'repayment' => Yii::t('app', 'السداد'),
             'total_price_discount_product' => Yii::t('app', 'مجموع الخصم الافرادي'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),

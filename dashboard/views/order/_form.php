@@ -123,6 +123,8 @@ foreach ($products as $product)
             <?= $form->field($model, 'total_amount_without_discount')->textInput(['readonly' => true]) ?>
             <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
             <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+            <?= $form->field($model, 'debt')->textInput() ?>
+            <?= $form->field($model, 'repayment')->textInput() ?>
             <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
 
             <div class="form-group">

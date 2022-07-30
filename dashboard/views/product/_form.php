@@ -62,6 +62,19 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'min_number')->textInput() ?>
 
+    <?php
+    echo $form->field($model, 'imageFile')->widget(\kartik\file\FileInput::classname(), [
+        'options' => ['accept' => 'image/*'],
+        'pluginOptions' => [
+            'initialPreview'=>$model->getImageUrl()??false,
+            'initialPreviewAsData' => true,
+            'showCaption' => true ,
+            'showRemove' => false ,
+            'showUpload' => false ,
+        ]
+    ]);
+    ?>
+
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
     </div>

@@ -29,6 +29,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             'id',
+            [
+                'attribute'=>'image_name',
+                'value'=>function($model){
+                    return $model->getImageUrl();
+                },
+                'format' => ['image',['width'=>'100','height'=>'100']],
+            ],
             'title:ntext',
             [
                 'attribute' => 'category_id',
