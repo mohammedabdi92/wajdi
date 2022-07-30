@@ -101,4 +101,8 @@ class Order extends \common\components\BaseModel
     {
         return Constants::getStoreName($this->store_id);
     }
+    public function getProducts()
+    {
+        return $this->hasMany(OrderProduct::className(), ['order_id' => 'id']);
+    }
 }

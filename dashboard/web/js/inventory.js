@@ -44,6 +44,7 @@ $(document).on('change', '[id$=tax_percentage]', function (item) {
     calculateTotals();
 
 });
+
 $(document).on('change', '[id$=tax]', function (item) {
     var total = getTotalWithoutVat();
     var tax = parseFloat($(item.target).val());
@@ -67,7 +68,12 @@ $(document).on('change', '[id$=discount]', function (item) {
     $("[id$=discount_percentage]").trigger("change");
 
 });
-
+$(document).on('change', '[id$=debt]', function (item) {
+    calculateTotals();
+});
+$(document).on('change', '[id$=repayment]', function (item) {
+    calculateTotals();
+});
 function calculateTotals() {
     var total = getTotalWithoutVat();
 
@@ -84,6 +90,16 @@ function calculateTotals() {
         tax = parseFloat(tax.toFixed(2));
         total = tax + total;
         $('[id$=tax]').val(tax);
+    }
+    var debt = $('[id$=debt]').val();
+    if(debt)
+    {
+        total =  total-parseFloat(debt);
+    }
+    var repayment = $('[id$=repayment]').val();
+    if(repayment)
+    {
+        total =  total+parseFloat(repayment);
     }
 
     $('[id$=inventoryorder-total_cost]').val(total);

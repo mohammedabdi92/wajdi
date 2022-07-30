@@ -39,6 +39,12 @@ function checkDiscount(){
         $('#order-total_discount').attr('readonly', false);
     }
 }
+$(document).on('change', '[id$=debt]', function (item) {
+    calculateTotal();
+});
+$(document).on('change', '[id$=repayment]', function (item) {
+    calculateTotal();
+});
 function calculateTotal() {
     var total = 0;
     $('[id$=total_product_amount]').each(function (index, element) {
@@ -59,6 +65,17 @@ function calculateTotal() {
     {
         total=total-ordertotaldiscount;
     }
+    debugger;
+    var debt = $('[id$=debt]').val();
+    if(debt)
+    {
+        total =  total-parseFloat(debt);
+    }
+    var repayment = $('[id$=repayment]').val();
+    if(repayment)
+    {
+        total =  total+parseFloat(repayment);
+    }
     $('[id=order-total_amount]').val(total);
     var supdis = 0;
     $('[id$=-count]').each(function (index, element) {
@@ -68,6 +85,7 @@ function calculateTotal() {
             supdis += parseFloat(svalue);
         }
     });
+
     $('#order-total_count').val(supdis);
 }
 
