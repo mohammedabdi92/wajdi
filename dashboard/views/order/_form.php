@@ -80,7 +80,7 @@ foreach ($products as $product)
                                    as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
-                            <h3 class="panel-title pull-right">مادة</h3>
+                            <h3 class="panel-title pull-right"> مادة</h3>
                             <div class="pull-left">
                                 <button type="button" class="add-item btn btn-success btn-xs"><i
                                             class="glyphicon glyphicon-plus"></i></button>
@@ -91,6 +91,7 @@ foreach ($products as $product)
                         </div>
                         <div class="panel-body">
                             <?php
+
                             // necessary for update action.
                             if (!$modelAddress->isNewRecord) {
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
@@ -103,7 +104,7 @@ foreach ($products as $product)
                             ?>
 
                             <div class="row">
-                                <div class="col-sm-2">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 " >
 
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
@@ -116,19 +117,19 @@ foreach ($products as $product)
                                     ]);
                                     ?>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
                                 </div>
-                                <div class="col-sm-2">
-                                    <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList) ?>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 " style=" height: 69px; ">
+                                    <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList)->label('اختر') ?>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]amount")->textInput(['readonly' => true]) ?>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]total_product_amount")->textInput(['readonly' => true])?>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
                                 </div>
                             </div><!-- .row -->

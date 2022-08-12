@@ -29,7 +29,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'rowOptions' =>function ($model){
-            if(!empty($model->count) && $model->count < $model->product->min_number ){
+            if(!empty($model->count) && $model->product && $model->count < $model->product->min_number ){
                 return [
                     'class' => 'danger  time-set',
                     'data-text' => ' '

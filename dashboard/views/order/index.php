@@ -29,7 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
             'id',
-            'customer_id',
+            [
+                'attribute' => 'customer_id',
+                'value' => function($model){
+                    return $model->customerTitle;
+                },
+                'format' => 'raw',
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name')
+            ],
             [
                 'attribute' => 'store_id',
                 'value' => function($model){
@@ -47,7 +54,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, \common\models\Order $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
+                'template' => '{view} {update} {delete} {pdf}',  // the default buttons + your custom button
+                'buttons' => [
+                    'pdf' => function ($url, $model, $key) {     // render your custom button
+                        return Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',"report?id=".$model->id,['target'=>'_blank']);
+                    }
+                ]
             ],
         ],
     ]); ?>

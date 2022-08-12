@@ -17,7 +17,7 @@ class TransferOrderSearch extends TransferOrder
     public function rules()
     {
         return [
-            [['id', 'from', 'to', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'from', 'product_id','to', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
     }
 
@@ -60,6 +60,7 @@ class TransferOrderSearch extends TransferOrder
             'id' => $this->id,
             'from' => $this->from,
             'to' => $this->to,
+            'product_id' => $this->product_id,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,

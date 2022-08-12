@@ -30,7 +30,6 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class OrderProduct extends \common\components\BaseModel
 {
-    public $price_number;
 
     /**
      * {@inheritdoc}

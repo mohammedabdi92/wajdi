@@ -154,4 +154,13 @@ class TransferOrder extends \common\components\BaseModel
     {
         return Constants::getStoreName($this->to);
     }
+
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
+    }
 }

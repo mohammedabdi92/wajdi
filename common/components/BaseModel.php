@@ -10,7 +10,7 @@ class BaseModel extends \yii\db\ActiveRecord
 
     public function getDate($att)
     {
-        return date('Y-m-d H:i:s', $this->$att);
+        return date('s:i:H d-m-Y ', $this->$att);
     }
     public function getUserName($att): string
     {

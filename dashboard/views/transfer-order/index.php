@@ -11,6 +11,9 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'النقليات');
 $this->params['breadcrumbs'][] = $this->title;
+$products = \common\models\Product::find()->all();
+$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+
 ?>
 <div class="transfer-order-index">
 
@@ -27,6 +30,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             'id',
+            [
+                'attribute' => 'product_id',
+                'value' => function($model) {
+                    return $model->productTitle;
+                },
+                'format' => 'raw',
+                'filter'=>$productList
+            ],
             [
                 'attribute' => 'from',
                 'value' => function($model){

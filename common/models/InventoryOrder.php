@@ -68,7 +68,6 @@ class InventoryOrder extends \common\components\BaseModel
     }
     public function beforeSave($insert)
     {
-        dei;
         if(!empty($this->supplier_name))
         {
 
