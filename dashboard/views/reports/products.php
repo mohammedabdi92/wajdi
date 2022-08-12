@@ -27,7 +27,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'rowOptions' =>function ($model){
             if(!empty($model->count) && $model->product && $model->count < $model->product->min_number ){
                 return [

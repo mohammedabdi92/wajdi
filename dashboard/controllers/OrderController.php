@@ -292,4 +292,39 @@ class OrderController extends BaseController
         // return the pdf output as per the destination setting
         return $pdf->render();
     }
+    public function actionOrderProducts()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $order_id = $parents[0];
+
+                $OrderProducts = OrderProduct::find()->where(['order_id'=>$order_id])->all();
+
+                $dataArray = array();
+                $count = 0;
+                foreach ($OrderProducts as $model){
+                    $dataArray[$count]['id'] = $model->product_id;
+                    $dataArray[$count]['name'] = $model->product->title;
+                    $count ++;
+                }
+
+
+                return ['output' => $dataArray, 'selected' => ''];
+            }
+        }
+        return ['output' => '', 'selected' => ''];
+    }
+
+    public function actionGetProductPrice($order_id,$product_id,$count)
+    {
+        $orderProduct = OrderProduct::find()->where(['order_id'=>$order_id,'product_id'=>$product_id])->one();
+
+        $product_price =  !empty($orderProduct->discount)?($orderProduct->amount - ($orderProduct->discount/$orderProduct->count)):$orderProduct->amount;
+        $product_price_for_count =  $product_price * $count;
+
+        return $product_price_for_count;
+    }
 }

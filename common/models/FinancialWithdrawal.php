@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "financial_withdrawals".
@@ -26,6 +28,17 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
         return 'financial_withdrawals';
     }
 
+    const STATUS_NOT_PAYED = 1;
+    const STATUS_PAYED = 2;
+    const statusArray = [
+        self::STATUS_NOT_PAYED=>"غير مدفوع",
+        self::STATUS_PAYED=>"مدفوع",
+    ];
+
+    public  function getStatusText(){
+        return self::statusArray[$this->status];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +48,15 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
             [['amount'], 'number'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['note'], 'string'],
-            [['created_at', 'updated_at'], 'required'],
+            ['status', 'default', 'value' => self::STATUS_NOT_PAYED],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            BlameableBehavior::className(),
         ];
     }
 
@@ -45,15 +66,16 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'amount' => Yii::t('app', 'Amount'),
-            'status' => Yii::t('app', 'Status'),
-            'note' => Yii::t('app', 'Note'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'id' => Yii::t('app', 'الرقم'),
+            'amount' => Yii::t('app', 'القيمة'),
+            'status' => Yii::t('app', 'الحالة'),
+            'note' => Yii::t('app', 'الملاحظة'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
+
     }
 
     /**

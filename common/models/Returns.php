@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "returns".
@@ -27,6 +29,14 @@ class Returns extends \yii\db\ActiveRecord
         return 'returns';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -35,7 +45,6 @@ class Returns extends \yii\db\ActiveRecord
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
-            [['created_at', 'updated_at'], 'required'],
         ];
     }
 
@@ -44,18 +53,20 @@ class Returns extends \yii\db\ActiveRecord
      */
     public function attributeLabels()
     {
+
         return [
-            'id' => Yii::t('app', 'ID'),
-            'order_id' => Yii::t('app', 'Order ID'),
-            'product_id' => Yii::t('app', 'Product ID'),
-            'count' => Yii::t('app', 'Count'),
-            'amount' => Yii::t('app', 'Amount'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'id' => Yii::t('app', 'الرقم'),
+            'order_id' => Yii::t('app', 'الطلب'),
+            'product_id' => Yii::t('app', 'المادة'),
+            'count' => Yii::t('app', 'العدد'),
+            'amount' => Yii::t('app', 'القيمة'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -64,5 +75,13 @@ class Returns extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \common\models\query\ReturnsQuery(get_called_class());
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
     }
 }

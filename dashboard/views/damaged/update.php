@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Damaged */
 
-$this->title = Yii::t('app', 'Update Damaged: {name}', [
+$this->title = Yii::t('app', 'تعديل الطلب: {name}', [
     'name' => $model->id,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Damageds'), 'url' => ['index']];

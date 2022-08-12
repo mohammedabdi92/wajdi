@@ -90,7 +90,19 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],
-
+                                        [
+                                            "label" => "التقارير",
+                                            "icon" => "th",
+                                            "items" => [
+                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
+                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
+//                                                ["label" => "پنل", "url" => ["site/panel"]],
+                                            ],
+                                        ],
+                                        ["label" => 'البضاعة التالفة', "url" => "/damaged/index", "icon" => "exclamation-triangle"],
+                                        ["label" => 'المرجع', "url" => "/returns/index", "icon" => "retweet"],
+                                        ["label" => 'المصروفات', "url" => "/outlay/index", "icon" => "money"],
+                                        ["label" => 'المسحوبات من الصندوق', "url" => "/financial-withdrawal/index", "icon" => "money"],
                                     ],
                                 ]
                             )

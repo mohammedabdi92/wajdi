@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Outlay */
 
-$this->title = Yii::t('app', 'Update Outlay: {name}', [
+$this->title = Yii::t('app', 'تعديل : {name}', [
     'name' => $model->id,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Outlays'), 'url' => ['index']];

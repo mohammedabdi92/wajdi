@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\FinancialWithdrawal */
 
-$this->title = Yii::t('app', 'Create Financial Withdrawal');
+$this->title = Yii::t('app', 'انشاء مسحوبات من الصندوق');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Financial Withdrawals'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

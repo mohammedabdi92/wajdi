@@ -9,15 +9,18 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\ReturnsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Returns');
+$this->title = Yii::t('app', 'المرجع');
 $this->params['breadcrumbs'][] = $this->title;
+$products = \common\models\Product::find()->all();
+$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+
 ?>
 <div class="returns-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Returns'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء مرجع'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,7 +33,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'order_id',
-            'product_id',
+            [
+                'attribute' => 'product_id',
+                'value' => function($model){
+                    return $model->productTitle;
+                },
+                'format' => 'raw',
+                'filter'=>$productList
+            ],
             'count',
             'amount',
             //'created_at',
@@ -39,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'updated_by',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Returns $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\Returns $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

@@ -45,7 +45,7 @@ class m220812_145614_create_table_financial_withdrawals extends Migration
         ]);
         $this->createTable('{{%damaged}}', [
             'id' => $this->primaryKey(),
-            'status' => $this->integer(),
+            'status' => $this->integer(2),
             'order_id' => $this->integer(),
             'product_id' => $this->double(),
             'count' => $this->double(),

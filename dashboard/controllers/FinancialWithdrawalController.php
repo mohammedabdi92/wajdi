@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use Yii;
 use common\models\FinancialWithdrawal;
 use common\models\FinancialWithdrawalSearch;
 use yii\web\Controller;

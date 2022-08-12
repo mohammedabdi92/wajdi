@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "outlays".
@@ -26,6 +28,14 @@ class Outlay extends \yii\db\ActiveRecord
         return 'outlays';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+            BlameableBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +44,6 @@ class Outlay extends \yii\db\ActiveRecord
         return [
             [['amount'], 'number'],
             [['note'], 'string'],
-            [['created_at', 'updated_at'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['image_name'], 'string', 'max' => 255],
         ];
@@ -46,16 +55,18 @@ class Outlay extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'amount' => Yii::t('app', 'Amount'),
-            'note' => Yii::t('app', 'Note'),
-            'image_name' => Yii::t('app', 'Image Name'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'created_by' => Yii::t('app', 'Created By'),
-            'updated_at' => Yii::t('app', 'Updated At'),
-            'updated_by' => Yii::t('app', 'Updated By'),
+            'id' => Yii::t('app', 'الرقم'),
+            'amount' => Yii::t('app', 'القيمة'),
+            'note' => Yii::t('app', 'الملاحظة'),
+            'image_name' => Yii::t('app', 'الصورة'),
+            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
+            'created_by' => Yii::t('app', 'الشخص المنشئ'),
+            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
+            'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
     }
+
+
 
     /**
      * {@inheritdoc}

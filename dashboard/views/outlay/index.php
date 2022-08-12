@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\OutlaySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Outlays');
+$this->title = Yii::t('app', 'المصروفات');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="outlay-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create Outlay'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('app', 'انشاء مصروفات'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,14 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'amount',
             'note:ntext',
-            'image_name',
-            'created_at',
+//            'image_name',
+//            'created_at',
             //'created_by',
             //'updated_at',
             //'updated_by',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Outlay $model, $key, $index, $column) {
+                'urlCreator' => function ($action, \common\models\Outlay $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
