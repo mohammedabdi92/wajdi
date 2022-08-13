@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use common\components\CustomFunc;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -15,9 +16,9 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $id
  * @property int $inventory_order_id
  * @property int $product_id
+ * @property int $store_id
  * @property float $product_total_cost
  * @property float $product_cost
- * @property float $store_id
  * @property float $count
  * @property int $created_at
  * @property int|null $created_by
@@ -44,6 +45,7 @@ class InventoryOrderProduct extends \common\components\BaseModel
             [[ 'product_id', 'product_total_cost', 'product_cost', 'count' ], 'required'],
             [['inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [[ 'count','tax_percentage'], 'number'],
+            [[ 'store_id'], 'safe'],
             [['product_total_cost', 'product_cost','product_total_cost_final','product_cost_final'], 'double'],
         ];
     }
@@ -77,8 +79,9 @@ class InventoryOrderProduct extends \common\components\BaseModel
     {
         return [
             'id' => Yii::t('app', 'الرقم'),
-            'inventory_order_id' => Yii::t('app', 'رقم طلب التوريد'),
+            'inventory_order_id' => Yii::t('app', 'رقم طلب المشتريات'),
             'product_id' => Yii::t('app', 'المادة'),
+            'store_id' => Yii::t('app', 'المحل'),
             'product_total_cost' => Yii::t('app', 'السعر الاجمالي'),
             'product_cost_final' => Yii::t('app', 'سعر الوحدة النهائي'),
             'product_total_cost_final' => Yii::t('app', 'السعر الاجمالي النهائي'),
@@ -105,14 +108,17 @@ class InventoryOrderProduct extends \common\components\BaseModel
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
+    }
     public function getInventoryOrder()
     {
         return $this->hasOne(InventoryOrder::className(), ['id' => 'inventory_order_id']);
     }
 
-
-    public function getProductTitle()
+    public function getStoreTitle()
     {
-        return $this->product ? $this->product->title : '';
+        return Constants::getStoreName($this->store_id);
     }
 }

@@ -11,14 +11,18 @@ use common\models\InventoryOrderProduct;
  */
 class InventoryOrderProductSearch extends InventoryOrderProduct
 {
+    public $sum_product_total_cost_final;
+    public $sum_count;
+    public $supplier_id;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['product_total_cost', 'product_cost', 'count'], 'number'],
+            [['sum_product_total_cost_final','sum_count','supplier_id'], 'safe'],
         ];
     }
 
@@ -38,10 +42,12 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$getSums=false)
     {
         $query = InventoryOrderProduct::find();
 
+        $query->joinWith('inventoryOrder');
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -58,18 +64,24 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'inventory_order_id' => $this->inventory_order_id,
-            'product_id' => $this->product_id,
-            'product_total_cost' => $this->product_total_cost,
-            'product_cost' => $this->product_cost,
-            'count' => $this->count,
+            'inventory_order_product.id' => $this->id,
+            'inventory_order_product.inventory_order_id' => $this->inventory_order_id,
+            'inventory_order_product.product_id' => $this->product_id,
+            'inventory_order_product.product_total_cost' => $this->product_total_cost,
+            'inventory_order_product.product_cost' => $this->product_cost,
+            'inventory_order_product.count' => $this->count,
+            'inventory_order_product.store_id' => $this->store_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
+            'inventory_order.supplier_id' => $this->supplier_id,
         ]);
+        if($getSums) {
+            $this->sum_count = $query->sum('count');
+            $this->sum_product_total_cost_final = $query->sum('product_total_cost_final');
+        }
 
         return $dataProvider;
     }

@@ -15,18 +15,23 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'product_id') ?>
+    <?=  $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \common\components\Constants::storeArray); ?>
 
-    
-    <?php  echo $form->field($model, 'created_by')->dropDownList([''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+
 
 
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton(Yii::t('app', 'بحث'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app', 'حذف'), ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

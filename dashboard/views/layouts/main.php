@@ -11,6 +11,7 @@ use rmrevin\yii\fontawesome\FA;
 $bundle = mortezakarimi\gentelellartl\assets\Asset::register($this);
 $user = Yii::$app->user->identity;
 Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::POS_END,'depends' => mortezakarimi\gentelellartl\assets\Asset::className()]);
+Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View::POS_END,'depends' => mortezakarimi\gentelellartl\assets\Asset::className()]);
 ?>
 <?php $this->beginPage(); ?>
     <!DOCTYPE html>
@@ -63,6 +64,15 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
                                 [
                                     "items" => [
                                         ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
+                                        [
+                                            "label" => "التقارير",
+                                            "icon" => "th",
+                                            "items" => [
+                                                ["label" => "المخزن", "url" => ["reports/products"]],
+                                                ["label" => "البيع", "url" => ["reports/order-product"]],
+                                                ["label" => "المشتريات", "url" => ["reports/inventory-order-product"]],
+                                            ],
+                                        ],
                                         ["label" => 'بصمة دوام', "url" => "/user/presence", "icon" => "hand-pointer-o"],
                                         ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
                                         ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
@@ -90,15 +100,7 @@ Yii::$app->view->registerCssFile( '/css/site.css',['position' => \yii\web\View::
 //                                                ["label" => "پنل", "url" => ["site/panel"]],
                                             ],
                                         ],
-                                        [
-                                            "label" => "التقارير",
-                                            "icon" => "th",
-                                            "items" => [
-                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
-                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
-//                                                ["label" => "پنل", "url" => ["site/panel"]],
-                                            ],
-                                        ],
+
                                         ["label" => 'البضاعة التالفة', "url" => "/damaged/index", "icon" => "exclamation-triangle"],
                                         ["label" => 'المرجع', "url" => "/returns/index", "icon" => "retweet"],
                                         ["label" => 'المصروفات', "url" => "/outlay/index", "icon" => "money"],

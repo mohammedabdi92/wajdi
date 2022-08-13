@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use common\components\CustomFunc;
 use Yii;
 use yii\behaviors\BlameableBehavior;
@@ -96,6 +97,7 @@ class OrderProduct extends \common\components\BaseModel
             'price_number' => Yii::t('app', 'السعر'),
             'amount' => Yii::t('app', 'السعر الفردي'),
             'count' => Yii::t('app', 'العدد'),
+            'store_id' => Yii::t('app', 'المحل'),
             'count_type' => Yii::t('app', 'نوع العدد'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
@@ -121,7 +123,10 @@ class OrderProduct extends \common\components\BaseModel
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
-
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
+    }
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
@@ -138,6 +143,10 @@ class OrderProduct extends \common\components\BaseModel
             ];
         }
         return [];
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
     }
 
 }

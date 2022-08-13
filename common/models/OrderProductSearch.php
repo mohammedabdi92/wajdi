@@ -11,6 +11,12 @@ use common\models\OrderProduct;
  */
 class OrderProductSearch extends OrderProduct
 {
+    public $sum_product_price;
+    public $sum_count;
+    public $sum_total_product_amount;
+    public $sum_discount;
+    public $sum_total_amount_w_discount;
+    public $sum_profit;
     /**
      * {@inheritdoc}
      */
@@ -38,11 +44,12 @@ class OrderProductSearch extends OrderProduct
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params,$getSums=false)
     {
         $query = OrderProduct::find();
 
         // add conditions that should always apply here
+        $query->joinWith('product');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -69,6 +76,21 @@ class OrderProductSearch extends OrderProduct
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+
+        if($getSums)
+        {
+            $this->sum_product_price = $query->sum('(product.price * count )');
+
+            $this->sum_count = $query->sum('count');
+            $this->sum_total_product_amount = $query->sum('total_product_amount');
+            $this->sum_discount = $query->sum('discount');
+
+            $this->sum_total_amount_w_discount = $this->sum_total_product_amount - $this->sum_discount;
+            $this->sum_profit = $this->sum_total_amount_w_discount - $this->sum_product_price;
+
+
+
+        }
 
         return $dataProvider;
     }

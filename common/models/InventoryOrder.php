@@ -108,7 +108,7 @@ class InventoryOrder extends \common\components\BaseModel
             'inventory_order_date' => Yii::t('app', 'تاريخ الفاتورة الورقي'),
             'store_id' => Yii::t('app', 'المحل'),
             'tax' => Yii::t('app', 'قيمة الضريبة'),
-            'debt' => Yii::t('app', 'الدين'),
+            'debt' => Yii::t('app', 'ذمم للمورد'),
             'repayment' => Yii::t('app', 'السداد'),
             'total_count' => Yii::t('app', 'العدد الاجمالي'),
             'tax_percentage' => Yii::t('app', 'نسبة الضريبة %'),

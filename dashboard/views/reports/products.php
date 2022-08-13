@@ -39,6 +39,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
 
 
         },
+
         'columns' => [
 
             'id',
@@ -58,36 +59,43 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 'filter'=>\common\components\Constants::storeArray,
                 'format' => 'raw',
             ],
+            'product.price_1',
+            'product.price_2',
+            'product.price_3',
+            'product.price_4',
             'count',
-            [
-                'attribute' => 'created_at',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
-                },
-            ],
-            [
-                'attribute' => 'created_by',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getUserName($model->created_by);
-                },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
-            ],
-            [
-                'attribute' => 'updated_at',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->updated_at);
-                },
-            ],
-            [
-                'attribute' => 'updated_by',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getUserName($model->updated_by);
-                },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
-            ],
+
 
         ],
     ]); ?>
-
+    <div class="col-xs-6">
+        <p class="lead">المجموع</p>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th style="width:50%">السعر الاول :</th>
+                    <td><?= $searchModel->sum_price_1?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">السعر الثاني :</th>
+                    <td><?= $searchModel->sum_price_2?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">السعر الثالث :</th>
+                    <td><?= $searchModel->sum_price_3?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">السعر الرابع :</th>
+                    <td><?= $searchModel->sum_price_4?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">العدد :</th>
+                    <td><?= $searchModel->sum_count?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>

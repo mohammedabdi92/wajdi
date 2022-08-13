@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use dashboard\admin\components\MenuHelper;
 use Yii;
 use common\models\Presence;
 use common\models\User;
@@ -10,6 +11,7 @@ use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * UserController implements the CRUD actions for User model.
@@ -166,5 +168,98 @@ class UserController extends BaseController
             'user'=>$user,
             'last_login'=>$last_login
         ]);
+    }
+    /**
+     * Search roles of user
+     * @param  integer $id
+     * @param  string  $target
+     * @param  string  $term
+     * @return string
+     */
+    public function actionSearch($id, $target, $term = '')
+    {
+        Yii::$app->response->format = 'json';
+        $authManager = Yii::$app->authManager;
+        $roles = $authManager->getRoles();
+        $permissions = $authManager->getPermissions();
+
+        $avaliable = [];
+        $assigned = [];
+        foreach ($authManager->getAssignments($id) as $assigment) {
+            if (isset($roles[$assigment->roleName])) {
+                if (empty($term) || strpos($assigment->roleName, $term) !== false) {
+                    $assigned['Dealers'][$assigment->roleName] = $assigment->roleName;
+                }
+                unset($roles[$assigment->roleName]);
+            } elseif (isset($permissions[$assigment->roleName]) && $assigment->roleName[0] != '/') {
+                if (empty($term) || strpos($assigment->roleName, $term) !== false) {
+                    $assigned['Dealers'][$assigment->roleName] = $assigment->roleName;
+                }
+                unset($permissions[$assigment->roleName]);
+            }
+        }
+
+        if ($target == 'avaliable') {
+            if (count($roles)) {
+                foreach ($roles as $role) {
+                    if (empty($term) || strpos($role->name, $term) !== false) {
+                        $avaliable['Dealers'][$role->name] = $role->name;
+                    }
+                }
+            }
+            if (count($permissions)) {
+                foreach ($permissions as $role) {
+                    if ($role->name[0] != '/' && (empty($term) || strpos($role->name, $term) !== false)) {
+                        $avaliable['Dealers'][$role->name] = $role->name;
+                    }
+                }
+            }
+            return $avaliable;
+        } else {
+            return $assigned;
+        }
+    }
+
+    /**
+     * Assign or revoke assignment to user
+     * @param  integer $id
+     * @param  string  $action
+     * @return mixed
+     */
+    public function actionAssign()
+    {
+        $post = Yii::$app->request->post();
+        $id = $post['id'];
+        $action = $post['action'];
+        $roles = $post['roles'];
+        $manager = Yii::$app->authManager;
+        $error = [];
+        if ($action == 'assign') {
+            foreach ($roles as $name) {
+                try {
+                    $item = $manager->getRole($name);
+                    $item = $item ? : $manager->getPermission($name);
+                    $manager->assign($item, $id);
+                } catch (\Exception $exc) {
+                    $error[] = $exc->getMessage();
+                }
+            }
+        } else {
+            foreach ($roles as $name) {
+                try {
+                    $item = $manager->getRole($name);
+                    $item = $item ? : $manager->getPermission($name);
+                    $manager->revoke($item, $id);
+                } catch (\Exception $exc) {
+                    $error[] = $exc->getMessage();
+                }
+            }
+        }
+        MenuHelper::invalidate();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return[
+            'type' => 'S',
+            'errors' => $error,
+        ];
     }
 }

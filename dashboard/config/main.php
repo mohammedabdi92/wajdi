@@ -20,9 +20,32 @@ return [
         'settings' => [
             'class' => 'yii2mod\settings\Module',
         ],
+        'admin' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu', // it can be '@path/to/your/layout'.
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'common\models\User',
+                    'idField' => 'user_id'
+                ],
+                'other' => [
+                    'class' => 'path\to\OtherController', // add another controller
+                ],
+            ],
+            'menus' => [
+                'assignment' => [
+                    'label' => 'Grand Access' // change label
+                ],
+                'route' => null, // disable menu route
+            ]
+        ],
     ],
     'defaultRoute' => 'site/index',
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+        ],
         'request' => [
             'csrfParam' => '_csrf-dashboard',
         ],
@@ -62,6 +85,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'reports/<action:\w+>' => 'reports/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+                '<module:\w+>/<controller:\w+>/<action:\w+>' => '<module>/<controller>/<action>',
             ],
         ],
 

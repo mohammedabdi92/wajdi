@@ -41,7 +41,13 @@ $this->registerJsFile(
 //              'language' => 'en',
       //'dateFormat' => 'yyyy-MM-dd',
   ]); ?>
-        <?= $form->field($model, 'store_id')->dropDownList(\common\components\Constants::storeArray); ?>
+        <?= $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' =>[''=>'اختر المحل ....']+\common\components\Constants::storeArray,
+            'options' => ['placeholder' => 'اختر نوع العد .....'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);?>
 
 
     </div>
