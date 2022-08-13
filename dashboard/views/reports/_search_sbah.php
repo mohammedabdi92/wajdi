@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin([
         'action' => ['products'],
         'method' => 'get',
+        'id'=>'products'
     ]); ?>
 
     <?=  $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
