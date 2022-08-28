@@ -190,7 +190,8 @@ function getProductDetails(item) {
         data = jQuery.parseJSON( data );
         if(data)
         {
-            $('.last_price').html(data.last_price)
+            $('.last_price').html(data.last_price) ;
+            $('.order_product_price').html(data.product_price);
 
         }
     });

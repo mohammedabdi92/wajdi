@@ -338,7 +338,8 @@ class MenuHelper
     {
         $branch = array();
 
-        foreach ($elements as $element) {            
+
+        foreach ($elements as $element) {
             if ($element['parent'] == $parentId) {
                 $children = static::menuTree($elements, $element['id']);
                 if ($children) {
@@ -378,7 +379,7 @@ class MenuHelper
         return implode($result);
     }
     
-    public static function renderMenu($data, $cssClass = 'sidebar-menu') 
+    public static function renderMenu($data, $cssClass = 'nav side-menu')
     {
         $result = array();
         if (sizeof($data) > 0) {
@@ -390,7 +391,7 @@ class MenuHelper
                         $icon = json_decode($entry['data'], true);
                         $icon = isset($icon['icon'])? '<i class="'.$icon['icon'].'"></i>' : '';
                     }
-                    $result[] = sprintf('<li class="treeview"><a href="#">'.$icon.' %s</a> %s</li>', $entry['label'], static::renderMenu($entry['items'], 'treeview-menu'));
+                    $result[] = sprintf('<li class=""><a href="javascript:void(0);">'.$icon.' %s <span class="fa fa-chevron-down"></span></a> %s </li>', $entry['label'], static::renderMenu($entry['items'], 'nav child_menu'));
                 }else{
                     $urlAttr = '';
                     $icon = '';

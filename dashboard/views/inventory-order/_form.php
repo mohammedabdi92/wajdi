@@ -43,7 +43,7 @@ $this->registerJsFile(
   ]); ?>
         <?= $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
             'data' =>[''=>'اختر المحل ....']+\common\components\Constants::storeArray,
-            'options' => ['placeholder' => 'اختر نوع العد .....'],
+            'options' => ['placeholder' => 'اختر نوع العد .....' ,'disabled' => !Yii::$app->user->can('كل المحلات') ,'value'=>!Yii::$app->user->can('كل المحلات')?Yii::$app->user->identity->store_id:''],
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -104,7 +104,7 @@ $this->registerJsFile(
                                         ],
                                     ]);
                                     ?>
-                                    <div > <label> اخر سعر</label> <br><label class="last_price" > </label></div>
+
                                 </div>
                                 <div class="col-sm-2">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
@@ -122,6 +122,10 @@ $this->registerJsFile(
                                     <?= $form->field($modelAddress, "[{$i}]product_total_cost_final")->textInput(['readonly' => true]) ?>
                                 </div>
                             </div><!-- .row -->
+                            <div class="row">
+                                <div class="col-sm-2"> <label> سعر التكلفة</label> <br><label class="order_product_price" > </label></div>
+                                <div class="col-sm-2"> <label> اخر سعر</label> <br><label class="last_price" > </label></div>
+                            </div>
 
                     </div>
                     </div>

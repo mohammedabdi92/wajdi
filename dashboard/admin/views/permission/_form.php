@@ -20,7 +20,6 @@ use dashboard\admin\AutocompleteAsset;
 
     <?= $form->field($model, 'ruleName')->textInput(['id'=>'rule-name']) ?>
 
-    <?= $form->field($model, 'data')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?php

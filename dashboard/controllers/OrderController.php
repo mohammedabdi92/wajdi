@@ -48,7 +48,12 @@ class OrderController extends BaseController
     public function actionIndex()
     {
         $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $params = $this->request->queryParams;
+        if(!Yii::$app->user->can('كل المحلات'))
+        {
+            $params['OrderSearch']['store_id'] =Yii::$app->user->identity->store_id;
+        }
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

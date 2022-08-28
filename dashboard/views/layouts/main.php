@@ -7,6 +7,10 @@
 
 use yii\helpers\Html;
 use rmrevin\yii\fontawesome\FA;
+use dashboard\admin\components\MenuHelper;
+
+
+
 
 $bundle = mortezakarimi\gentelellartl\assets\Asset::register($this);
 $user = Yii::$app->user->identity;
@@ -59,55 +63,56 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                     <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
                         <div class="menu_section">
                             <h3>القائمة</h3>
-                            <?=
-                            mortezakarimi\gentelellartl\widgets\Menu::widget(
-                                [
-                                    "items" => [
-                                        ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
-                                        [
-                                            "label" => "التقارير",
-                                            "icon" => "th",
-                                            "items" => [
-                                                ["label" => "المخزن", "url" => ["reports/products"]],
-                                                ["label" => "البيع", "url" => ["reports/order-product"]],
-                                                ["label" => "المشتريات", "url" => ["reports/inventory-order-product"]],
-                                            ],
-                                        ],
-                                        ["label" => 'بصمة دوام', "url" => "/user/presence", "icon" => "hand-pointer-o"],
-                                        ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
-                                        ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
-
-                                        ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
-                                        ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
-                                        ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
-                                        ["label" => ' فواتير المشتريات', "url" => "/inventory-order/index", "icon" => "handshake-o"],
-                                        ["label" => 'فواتير المبيعات', "url" => "/order/index", "icon" => "money"],
-                                        [
-                                            "label" => "المخزن",
-                                            "icon" => "th",
-                                            "items" => [
-                                                ["label" => "مواد الافرع", "url" => ["inventory/index"]],
-                                                ["label" => "النقليات", "url" => ["transfer-order/index"]],
-//                                                ["label" => "پنل", "url" => ["site/panel"]],
-                                            ],
-                                        ],
-                                        [
-                                            "label" => "اعدادات",
-                                            "icon" => "th",
-                                            "items" => [
-                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
-                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
-//                                                ["label" => "پنل", "url" => ["site/panel"]],
-                                            ],
-                                        ],
-
-                                        ["label" => 'البضاعة التالفة', "url" => "/damaged/index", "icon" => "exclamation-triangle"],
-                                        ["label" => 'المرجع', "url" => "/returns/index", "icon" => "retweet"],
-                                        ["label" => 'المصروفات', "url" => "/outlay/index", "icon" => "money"],
-                                        ["label" => 'المسحوبات من الصندوق', "url" => "/financial-withdrawal/index", "icon" => "money"],
-                                    ],
-                                ]
-                            )
+                            <?php
+                            echo MenuHelper::renderMenu(MenuHelper::getAssignedMenuCustom(Yii::$app->user->id));
+//                            echo mortezakarimi\gentelellartl\widgets\Menu::widget(
+//                                [
+//                                    "items" => [
+//                                        ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
+//                                        [
+//                                            "label" => "التقارير",
+//                                            "icon" => "th",
+//                                            "items" => [
+//                                                ["label" => "المخزن", "url" => ["reports/products"]],
+//                                                ["label" => "البيع", "url" => ["reports/order-product"]],
+//                                                ["label" => "المشتريات", "url" => ["reports/inventory-order-product"]],
+//                                            ],
+//                                        ],
+//                                        ["label" => 'بصمة دوام', "url" => "/user/presence", "icon" => "hand-pointer-o"],
+//                                        ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
+//                                        ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
+//
+//                                        ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
+//                                        ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
+//                                        ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
+//                                        ["label" => ' فواتير المشتريات', "url" => "/inventory-order/index", "icon" => "handshake-o"],
+//                                        ["label" => 'فواتير المبيعات', "url" => "/order/index", "icon" => "money"],
+//                                        [
+//                                            "label" => "المخزن",
+//                                            "icon" => "th",
+//                                            "items" => [
+//                                                ["label" => "مواد الافرع", "url" => ["inventory/index"]],
+//                                                ["label" => "النقليات", "url" => ["transfer-order/index"]],
+////                                                ["label" => "پنل", "url" => ["site/panel"]],
+//                                            ],
+//                                        ],
+//                                        [
+//                                            "label" => "اعدادات",
+//                                            "icon" => "th",
+//                                            "items" => [
+//                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
+//                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
+////                                                ["label" => "پنل", "url" => ["site/panel"]],
+//                                            ],
+//                                        ],
+//
+//                                        ["label" => 'البضاعة التالفة', "url" => "/damaged/index", "icon" => "exclamation-triangle"],
+//                                        ["label" => 'المرجع', "url" => "/returns/index", "icon" => "retweet"],
+//                                        ["label" => 'المصروفات', "url" => "/outlay/index", "icon" => "money"],
+//                                        ["label" => 'المسحوبات من الصندوق', "url" => "/financial-withdrawal/index", "icon" => "money"],
+//                                    ],
+//                                ]
+//                            )
                             ?>
                         </div>
                     </div>

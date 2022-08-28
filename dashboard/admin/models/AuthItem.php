@@ -188,6 +188,7 @@ class AuthItem extends \yii\base\Model
     public function getMenus()
     {
         $menus = Menu::find()->asArray()->all();
+
         $res = MenuHelper::menuTree($menus);
         return $res;
     }

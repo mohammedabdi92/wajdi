@@ -17,7 +17,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'انشاء مادة'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?php
+        if(Yii::$app->user->can('تعديل المواد'))
+        {
+            echo Html::a(Yii::t('app', 'انشاء مادة'), ['create'], ['class' => 'btn btn-success']);
+        }
+        ?>
+
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -73,7 +79,18 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, \common\models\Product $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل المواد');
+                    },
+                    'delete' => function ($model) {
+                        return Yii::$app->user->can('تعديل المواد');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('تعديل المواد');
+                    },
+                ]
             ],
         ],
     ]); ?>

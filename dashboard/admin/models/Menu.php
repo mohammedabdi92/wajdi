@@ -58,9 +58,9 @@ class Menu extends \yii\db\ActiveRecord
                 'message' => 'Menu "{value}" not found.'],
             [['parent', 'route', 'data', 'order'], 'default'],
             [['order'], 'integer'],
-            [['route'], 'in',
-                'range' => static::getControllers(),
-                'message' => 'Route "{value}" not found.']
+//            [['route'], 'in',
+//                'range' => static::getControllers(),
+//                'message' => 'Route "{value}" not found.']
         ];
     }
 

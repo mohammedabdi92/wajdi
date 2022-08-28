@@ -151,6 +151,7 @@ class ProductController extends BaseController
     public function actionGetDetails($id){
         $response = ['last_price'=>''];
         $Product = $this->findModel($id);
+        $response['product_price']  = $Product->price;
         $InventoryOrderProduct = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['id' => SORT_DESC])->one();
         if($InventoryOrderProduct)
         {

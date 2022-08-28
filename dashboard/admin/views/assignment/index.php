@@ -26,46 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                 'class' => 'yii\grid\DataColumn',
-                'attribute' => 'user_name',
+                'attribute' => 'full_name',
             ],
         ],
         $extraColumns,
         [
             [
                 'class' => 'yii\grid\ActionColumn',
-                'template' => '{permession}{dealer}{channel}{price}',
+                'template' => '{permession}',
                 'buttons' => [
                     'permession' => function ($url, $model, $key) {
 
-                        return Html::a('Assign Permession', ['assignment/view', 'id' => $model->id], [
-                                    'title' => \Yii::t('yii', 'Assign Permession'),
-                                    'data-pjax' => '0',
-                                    'class'=>'btn btn-primary',
-                                    'style'=>'margin-right:10px'
-                        ]);
-                    },
-                    'dealer' => function ($url, $model, $key) {
-
-                        return Html::a('Assign Dealer', ['assignment/dealer', 'id' => $model->id], [
-                                    'title' => \Yii::t('yii', 'Assign Dealer'),
-                                    'data-pjax' => '0',
-                                     'class'=>'btn btn-primary',
-                                    'style'=>'margin-right:10px'
-                        ]);
-                    },
-                    'channel' => function ($url, $model, $key) {
-
-                        return Html::a('Assign Channel', ['assignment/channel', 'id' => $model->id], [
-                                    'title' => \Yii::t('yii', 'Assign Channel'),
-                                    'data-pjax' => '0',
-                                    'class'=>'btn btn-primary',
-                                    'style'=>'margin-right:10px'
-                        ]);
-                    },
-                    'price' => function ($url, $model, $key) {
-
-                        return Html::a('Assign Price', ['assignment/price', 'id' => $model->id], [
-                                    'title' => \Yii::t('yii', 'Assign Price'),
+                        return Html::a('ارفاق صلاحية', ['assignment/view', 'id' => $model->id], [
+                                    'title' => \Yii::t('yii', 'ارفاق صلاحية'),
                                     'data-pjax' => '0',
                                     'class'=>'btn btn-primary',
                                     'style'=>'margin-right:10px'

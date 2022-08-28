@@ -9,6 +9,7 @@ use dashboard\admin\components\MenuHelper;
 /* @var $this yii\web\View */
 /* @var $model dashboard\admin\models\AuthItem */
 /* @var $form yii\widgets\ActiveForm */
+//print_r($model->menus);die;
 ?>
 
 <div class="auth-item-form">
@@ -43,17 +44,28 @@ $options = Json::htmlEncode([
 $this->registerJs("$('#rule-name').autocomplete($options);");
 ?>
 
-<script>
-    $('.permission-menu a').on('click', function(){
-        var checkbox = $(this).children('div').children('input[type="checkbox"]');
-        checkbox.prop('checked', !checkbox.prop('checked'));
-        
-        if (checkbox.prop('checked')) {
-            $(this).removeClass('unchecked-background');
-            $(this).addClass('checked-background');
-        }else{
-            $(this).removeClass('checked-background');
-            $(this).addClass('unchecked-background');
-        }
+<?php
+
+$this->registerJs("
+  $( document ).ready(function() {
+        $('.permission-menu a').on('click', function(){
+            var checkbox = $(this).children('div').children('input[type=\"checkbox\"]');
+            checkbox.prop('checked', !checkbox.prop('checked'));
+
+            if (checkbox.prop('checked')) {
+                $(this).removeClass('unchecked-background');
+                $(this).addClass('checked-background');
+            }else{
+                $(this).removeClass('checked-background');
+                $(this).addClass('unchecked-background');
+            }
+        });
     });
+", yii\web\View::POS_END);
+?>
+<script>
+
+
+
+
 </script>

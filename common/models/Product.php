@@ -31,6 +31,10 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
 class Product extends \common\components\BaseModel
 {
     public $imageFile;
+    public $price_pf_vat;
+    public $vat;
+    public $price_discount_percent;
+    public $price_discount_amount;
     /**
      * {@inheritdoc}
      */
@@ -49,6 +53,7 @@ class Product extends \common\components\BaseModel
             [['title'], 'string'],
             [['min_number'], 'double'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['price_pf_vat','vat','price_discount_percent','price_discount_amount'], 'safe'],
         ];
     }
 

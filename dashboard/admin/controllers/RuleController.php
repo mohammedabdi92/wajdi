@@ -21,38 +21,38 @@ use yii\filters\AccessControl;
 class RuleController extends BaseController
 {
 
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['post'],
-                ],
-            ],
-            'access' => [
-                'class' => AccessControl::className(),
-                //'ruleConfig' => [
-                //    'class' => AdministrationRule::className(),
-                //],
-                'only' => ['create','update','admin','index','delete','view'],
-                'rules' => [
-                    [
-                        'actions' => ['create','update','admin','index','delete','view' ],
-                        'allow' => true,
-                        'roles' => [
-                            'Admin',
-                        ],
-                    ],
-                    [
-                        'actions' => ['create','update','admin','index','delete','view'],
-                        'allow' => false,
-                        'roles' => ['?'],
-                    ],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'delete' => ['post'],
+//                ],
+//            ],
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                //'ruleConfig' => [
+//                //    'class' => AdministrationRule::className(),
+//                //],
+//                'only' => ['create','update','admin','index','delete','view'],
+//                'rules' => [
+//                    [
+//                        'actions' => ['create','update','admin','index','delete','view' ],
+//                        'allow' => true,
+//                        'roles' => [
+//                            'Admin',
+//                        ],
+//                    ],
+//                    [
+//                        'actions' => ['create','update','admin','index','delete','view'],
+//                        'allow' => false,
+//                        'roles' => ['?'],
+//                    ],
+//                ],
+//            ],
+//        ];
+//    }
 
     /**
      * Lists all AuthItem models.

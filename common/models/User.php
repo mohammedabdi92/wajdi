@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\components\BaseModel;
+use common\components\Constants;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\BlameableBehavior;
@@ -277,5 +278,9 @@ class User extends BaseModel implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
     }
 }

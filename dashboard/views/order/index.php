@@ -43,6 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->storeTitle;
                 },
                 'format' => 'raw',
+                'filter' => \common\components\Constants::storeArray,
             ],
             'total_amount',
             'created_at',

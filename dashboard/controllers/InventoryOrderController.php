@@ -46,7 +46,12 @@ class InventoryOrderController extends BaseController
     public function actionIndex()
     {
         $searchModel = new InventoryOrderSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $params = $this->request->queryParams;
+        if(!Yii::$app->user->can('كل المحلات'))
+        {
+            $params['InventoryOrderSearch']['store_id'] =Yii::$app->user->identity->store_id;
+        }
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

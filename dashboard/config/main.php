@@ -20,31 +20,42 @@ return [
         'settings' => [
             'class' => 'yii2mod\settings\Module',
         ],
+//        'admin' => [
+//            'class' => 'mdm\admin\Module',
+//            'layout' => 'left-menu', // it can be '@path/to/your/layout'.
+//            'controllerMap' => [
+//                'assignment' => [
+//                    'class' => 'mdm\admin\controllers\AssignmentController',
+//                    'userClassName' => 'common\models\User',
+//                    'idField' => 'id'
+//                ],
+//            ],
+//            'menus' => [
+//                'assignment' => [
+//                    'label' => 'Grand Access' // change label
+//                ],
+//                'route' => null, // disable menu route
+//            ]
+//        ],
         'admin' => [
-            'class' => 'mdm\admin\Module',
-            'layout' => 'left-menu', // it can be '@path/to/your/layout'.
+            'class' => 'dashboard\admin\Module',
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/main.php',
             'controllerMap' => [
                 'assignment' => [
-                    'class' => 'mdm\admin\controllers\AssignmentController',
-                    'userClassName' => 'common\models\User',
-                    'idField' => 'user_id'
-                ],
-                'other' => [
-                    'class' => 'path\to\OtherController', // add another controller
-                ],
+                    'class' => 'dashboard\admin\controllers\AssignmentController',
+                    'userClassName' => 'common\models\User',  // fully qualified class name of your User model
+                    'idField' => 'id',        // id field of your User model that corresponds to Yii::$app->user->id
+                    'usernameField' => 'username', // username field of your User model
+                    //'searchClass' => 'app\models\Admin'    // fully qualified class name of your User model for searching
+                ]
             ],
-            'menus' => [
-                'assignment' => [
-                    'label' => 'Grand Access' // change label
-                ],
-                'route' => null, // disable menu route
-            ]
         ],
     ],
     'defaultRoute' => 'site/index',
     'components' => [
         'authManager' => [
-            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\DbManager'
+            'class' => 'dashboard\admin\components\DbManager', // or use 'yii\rbac\DbManager'
         ],
         'request' => [
             'csrfParam' => '_csrf-dashboard',
