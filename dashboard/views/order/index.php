@@ -46,11 +46,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => \common\components\Constants::storeArray,
             ],
             'total_amount',
-            'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
-            //'isDeleted',
+
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, \common\models\Order $model, $key, $index, $column) {

@@ -47,12 +47,12 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
             //'created_by',
             //'updated_at',
             //'updated_by',
-            [
-                'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, \common\models\Returns $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
-            ],
+//            [
+//                'class' => ActionColumn::className(),
+//                'urlCreator' => function ($action, \common\models\Returns $model, $key, $index, $column) {
+//                    return Url::toRoute([$action, 'id' => $model->id]);
+//                 }
+//            ],
         ],
     ]); ?>
 

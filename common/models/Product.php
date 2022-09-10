@@ -52,6 +52,8 @@ class Product extends \common\components\BaseModel
             [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type','min_number'], 'required'],
             [['title'], 'string'],
             [['min_number'], 'double'],
+            [['title'], 'unique'],
+            [['title'], 'trim'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['price_pf_vat','vat','price_discount_percent','price_discount_amount'], 'safe'],
         ];

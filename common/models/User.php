@@ -109,6 +109,7 @@ class User extends BaseModel implements IdentityInterface
             [['full_name','username','type'], 'required'],
             [['email'], 'email'],
             [['email','username'], 'unique'],
+            [['username'], 'trim'],
             ["password_text", "required", "on" => ['create']],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],

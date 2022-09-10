@@ -40,6 +40,8 @@ class Customer extends \common\components\BaseModel
         return [
             [['name' ], 'required'],
             [['email' ], 'email'],
+            [['name'], 'unique'],
+            [['name'], 'trim'],
             [['name', 'phone_number', 'email', 'address'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];

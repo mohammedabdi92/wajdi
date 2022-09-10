@@ -66,5 +66,34 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+    <div class="row">
+        <div class="col-md-6">
+            <label>المباع</label>
+            <?php
+            $items = $model->products;
+            foreach ($items as $item) {
+                echo "<div>اسم المادة :    $item->productTitle </div>";
+                echo DetailView::widget([
+                    'model' => $item,
+                    'attributes' => [
+                        'count',
+                        'amount',
+                        'total_product_amount',
 
+                    ],
+                ]);
+            }
+
+            ?>
+        </div>
+        <div class="col-md-6">
+            <label>المرجع</label>
+
+        </div>
+
+    </div>
+    <div class="col-md-6">
+        <label>التالف</label>
+
+    </div>
 </div>

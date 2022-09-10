@@ -21,13 +21,14 @@ $this->registerJsFile(
 
 
     <?php
-    echo $form->field($model, "order_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->all(), 'id', 'id'),
-        'options' => ['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....'],
-        'pluginOptions' => ['allowClear' => true],
-    ]);
+//    echo $form->field($model, "order_id")->widget(\kartik\select2\Select2::classname(), [
+//        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->all(), 'id', 'id'),
+//        'options' => ['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....'],
+//        'pluginOptions' => ['allowClear' => true],
+//    ]);
+    echo $form->field($model, "order_id")->dropDownList([''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->all(), 'id', 'id'),['id'=>'order_id']);
     echo $form->field($model, 'product_id')->widget(\kartik\depdrop\DepDrop::classname(), [
-        'type' => DepDrop::TYPE_SELECT2,
+//        'type' => DepDrop::TYPE_SELECT2,
         'options' => ['id' => 'product_id', 'placeholder' => 'Select ...'],
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
@@ -37,7 +38,7 @@ $this->registerJsFile(
         ],
     ]);
     ?>
-
+    <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
     <?= $form->field($model, 'count')->textInput() ?>
 

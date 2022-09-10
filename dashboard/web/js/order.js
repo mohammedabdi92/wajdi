@@ -144,4 +144,13 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
     });
     calculateTotal();
 });
+$(document).on('click',".add-item", function (item) {
+    var num =parseInt( $('#order-product_count').val()) + 1;
+    $('#order-product_count').val(num);
+});
+$(document).on('click',".remove-item", function (item) {
+    var num = parseInt( $('#order-product_count').val()) - 1;
+    $('#order-product_count').val(num);
+});
+
 

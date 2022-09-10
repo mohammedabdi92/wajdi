@@ -146,7 +146,11 @@ foreach ($products as $product)
 
                     <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
                 </div>
+                <div class=" col-md-2">
+                    <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
+                </div>
             </div>
+
         </div>
 
 

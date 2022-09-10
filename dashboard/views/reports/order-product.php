@@ -39,6 +39,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
                 'attribute' => 'product.price',
                 'label'=>'سعر الكلفة',
             ],

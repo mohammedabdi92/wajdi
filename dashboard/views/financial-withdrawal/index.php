@@ -30,6 +30,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'amount',
+            [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->getStatusText();
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'user_id',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getUserName($model->user_id);
+                },
+                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
+            ],
             'note:ntext',
             [
                 'attribute' => 'created_at',

@@ -13,6 +13,8 @@ use yii\behaviors\TimestampBehavior;
  * @property float|null $amount
  * @property string|null $note
  * @property string|null $image_name
+ * @property int|null $user_id
+ * @property dateTime|null $pull_date
  * @property int $created_at
  * @property int|null $created_by
  * @property int $updated_at
@@ -44,6 +46,7 @@ class Outlay extends \yii\db\ActiveRecord
         return [
             [['amount'], 'number'],
             [['note'], 'string'],
+            [['amount','user_id','pull_date'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['image_name'], 'string', 'max' => 255],
         ];
@@ -63,6 +66,8 @@ class Outlay extends \yii\db\ActiveRecord
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
+            'user_id' => Yii::t('app', 'الساحب'),
+            'pull_date' => Yii::t('app', 'تاريخ السحب'),
         ];
     }
 

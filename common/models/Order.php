@@ -24,6 +24,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float|null $debt
  * @property float|null $repayment
  * @property int $created_at
+ * @property int $product_count
  * @property string $note
  * @property string $customer_name
  * @property string $phone_number
@@ -54,8 +55,9 @@ class Order extends \common\components\BaseModel
             [[ 'store_id', 'total_amount' ], 'required'],
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
+            [['product_count'], 'number'],
             [['customer_id'],'validateCustomerRequired'],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
@@ -104,6 +106,7 @@ class Order extends \common\components\BaseModel
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
+            'product_count' => Yii::t('app', 'عدد الاصناف'),
         ];
     }
 

@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Returns */
 
-$this->title = Yii::t('app', 'Update Returns: {name}', [
+$this->title = Yii::t('app', 'تعديل: {name}', [
     'name' => $model->id,
 ]);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Returns'), 'url' => ['index']];

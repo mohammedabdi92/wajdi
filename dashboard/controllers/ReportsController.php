@@ -70,20 +70,30 @@ class ReportsController extends Controller
     public function actionPresence()
     {
 
-        $query =  Presence::find()->where(['type'=>Presence::TYPE_IN])->with('outPresence');
+        $searchModel = new Presence();
+        $searchModel->load($this->request->queryParams);
+        $query =  Presence::find()->select([
+            '*',
+            'time_out'=>"@time_outs :=(SELECT p2.time FROM presence as p2 where p2.type = 2 AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1)",
+            'diff_time_out_mints'=>'TIMESTAMPDIFF(MINUTE,`time`,@time_outs)'
+            ])->where(['type'=>Presence::TYPE_IN]);
+
+
+
+
+        if($searchModel->user_id)
+        {
+            $query->andWhere(['user_id'=>$searchModel->user_id]);
+        }
+
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        print_r("<pre>");
-        print_r($dataProvider->getModels());die;
 
 
-
-        $searchModel = new InventoryOrderProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, true);
-
-        return $this->render('inventory-order-product', [
+        return $this->render('presence', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

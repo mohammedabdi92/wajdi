@@ -22,13 +22,14 @@
         "yii2tech/ar-softdelete": "^1.0",
         "demogorgorn/yii2-ajax-submit-button": "^1.2",
         "kartik-v/yii2-builder": "^1.6",
-        "wbraganca/yii2-dynamicform": "^2.0",
+        "wbraganca/yii2-dynamicform": "2.0.2",
         "yii2mod/yii2-settings": "*",
-        "kartik-v/yii2-widget-select2": "*",
+        "kartik-v/yii2-widget-select2": "1.0.0",
         "kartik-v/yii2-widget-datepicker": "@dev",
+        "kartik-v/yii2-widget-datetimepicker": "@dev",
         "kartik-v/yii2-widget-fileinput": "^1.1",
         "kartik-v/yii2-mpdf": "dev-master",
-        "kartik-v/yii2-widget-depdrop": "dev-master",
+        "kartik-v/yii2-widget-depdrop": "@dev",
         "mdmsoft/yii2-admin": "~2.0"
     },
     "require-dev": {

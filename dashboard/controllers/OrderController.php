@@ -89,6 +89,9 @@ class OrderController extends BaseController
             $model_product = Model::createMultiple(OrderProduct::classname());
             Model::loadMultiple($model_product, \Yii::$app->request->post());
 
+            foreach ($model_product as $item) {
+                $item->store_id = $model->store_id;
+            }
             // ajax validation
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -146,6 +149,9 @@ class OrderController extends BaseController
             Model::loadMultiple($model_product, Yii::$app->request->post());
             $deletedIDs = array_diff($oldIDs, array_filter(ArrayHelper::map($model_product, 'id', 'id')));
 
+            foreach ($model_product as $item) {
+                $item->store_id = $model->store_id;
+            }
             // ajax validation
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -171,7 +177,7 @@ class OrderController extends BaseController
                             $modelproduct->order_id = $model->id;
                             $modelproduct->store_id = $model->store_id;
 
-                            if (! ($flag = $modelproduct->save(false))) {
+                            if (! ($flag = $modelproduct->save())) {
                                 $transaction->rollBack();
                                 break;
                             }

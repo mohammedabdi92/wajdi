@@ -49,8 +49,36 @@ class OrderProduct extends \common\components\BaseModel
             [['product_id', 'count', 'price_number', 'amount'], 'required'],
             [['order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['count'], 'number'],
+            [['product_id'], 'checkInventory'],
+            [['product_id'], 'checkDuplicate'],
             [['total_product_amount', 'discount'], 'double'],
         ];
+    }
+
+    public function checkInventory($attr, $params) {
+
+        if (   isset($this->product_id)) {
+            $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$this->store_id,'product_id'=>$this->product_id])->sum('count') ?? 0;
+            $item_order_count = OrderProduct::find()->where(['store_id'=>$this->store_id,'product_id'=>$this->product_id])->andWhere(['<>','id',$this->id??0])->sum('count')?? 0 ;
+
+            $total = $item_inventory_count- $item_order_count;
+
+            if (($total-$this->count)<0) {
+
+                $this->addError($attr, 'لا توجد هذه الكمية (الموجود هو '.$total.')');
+            }
+        }
+    }
+
+    public function checkDuplicate($attr, $params) {
+
+        if (isset($this->product_id)) {
+            $item_order = OrderProduct::find()->where(['order_id'=>$this->order_id,'product_id'=>$this->product_id])->andWhere(['<>','id',$this->id??0])->one() ;
+
+            if ($item_order) {
+                $this->addError($attr, 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+            }
+        }
     }
 
     public function afterSave($insert, $changedAttributes)

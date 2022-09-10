@@ -1,23 +1,24 @@
 <?php
 
+use common\models\Presence;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
-/* @var $this yii\web\View */
-/* @var $searchModel common\models\OutlaySearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
+/** @var yii\web\View $this */
+/** @var common\models\PresenceSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = Yii::t('app', 'المصروفات');
+$this->title = 'ادارة البصمة';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="outlay-index">
+<div class="presence-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'انشاء مصروفات'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('انشاء تسجيل دخول', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,23 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'amount',
+            [
+                'attribute' => 'type',
+                'value' => function($model){
+                    return $model->getTypeText();
+                },
+                'format' => 'raw',
+            ],
             [
                 'attribute' => 'user_id',
                 'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->user_id);
                 },
+                'format' => 'raw',
                 'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
-            'note:ntext',
-//            'image_name',
-//            'created_at',
-            //'created_by',
-            //'updated_at',
-            //'updated_by',
+            'time',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, \common\models\Outlay $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Presence $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
