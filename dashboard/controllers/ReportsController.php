@@ -6,7 +6,9 @@ use common\models\InventoryOrderProduct;
 use common\models\InventoryOrderProductSearch;
 use common\models\InventorySearch;
 use common\models\OrderProductSearch;
+use common\models\Presence;
 use common\models\ProductSearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
@@ -56,6 +58,27 @@ class ReportsController extends Controller
 
     public function actionInventoryOrderProduct()
     {
+
+        $searchModel = new InventoryOrderProductSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams, true);
+
+        return $this->render('inventory-order-product', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionPresence()
+    {
+
+        $query =  Presence::find()->where(['type'=>Presence::TYPE_IN])->with('outPresence');
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        print_r("<pre>");
+        print_r($dataProvider->getModels());die;
+
+
 
         $searchModel = new InventoryOrderProductSearch();
         $dataProvider = $searchModel->search($this->request->queryParams, true);

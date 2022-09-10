@@ -54,6 +54,9 @@ class Presence extends \yii\db\ActiveRecord
             'type' => Yii::t('app', 'نوع البصمة'),
         ];
     }
+    public  function getOutPresence(){
+        return $this->hasOne(Presence::className(), ['type' => self::TYPE_OUT]);
+    }
 
     /**
      * {@inheritdoc}

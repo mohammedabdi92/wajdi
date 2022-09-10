@@ -14,6 +14,7 @@ $this->registerJsFile(
 );
 $products = \common\models\Product::find()->all();
 $productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
+$productsArray = [];
 foreach ($products as $product)
 {
     $productsArray[$product->id] =$product->attributes;
