@@ -98,7 +98,11 @@ foreach ($products as $product)
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
                                 $priceList = $modelAddress->getPriceList();
                             } else {
-                                $priceList = $products[0]->getPriceList();
+                                if($products)
+                                {
+                                    $priceList = $products[0]->getPriceList();
+                                }
+
                             }
 
 
