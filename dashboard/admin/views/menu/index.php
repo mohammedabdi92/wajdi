@@ -8,7 +8,7 @@ use yii\widgets\Pjax;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var $searchModel mdm\admin\models\searchs\Menu */
 
-$this->title = Yii::t('rbac-admin', 'Menus');
+$this->title = Yii::t('rbac-admin', 'القائمة');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menu-index">
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]);  ?>
 
     <p>
-        <?= Html::a(Yii::t('rbac-admin', 'Create Menu'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('rbac-admin', 'انشاء قائمة'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php
@@ -26,18 +26,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-//            ['class' => 'yii\grid\SerialColumn'],
-            'id',
-            'name',
+            [
+                'attribute' => 'id',
+                'label' => Yii::t('rbac-admin', 'الرقم'),
+            ],
+            [
+                'attribute' => 'name',
+                'label' => Yii::t('rbac-admin', 'الاسم'),
+            ],
             [
                 'attribute' => 'menuParent.name',
                 'filter' => Html::activeTextInput($searchModel, 'parent_name', [
                     'class' => 'form-control', 'id' => null
                 ]),
-                'label' => Yii::t('rbac-admin', 'Parent'),
+                'label' => Yii::t('rbac-admin', 'اسم الرئيسي'),
             ],
-            'route',
-            'order',
+            [
+                'attribute' => 'route',
+                'label' => Yii::t('rbac-admin', 'الرابط'),
+            ],
+            [
+                'attribute' => 'order',
+                'label' => Yii::t('rbac-admin', 'الترتيب'),
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]);
