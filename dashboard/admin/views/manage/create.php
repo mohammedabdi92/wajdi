@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\AuthItem */
 
-$this->title = Yii::t('rbac-admin', 'Create Permission');
+$this->title = Yii::t('rbac-admin', 'انشاء صلاحية');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Manage'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

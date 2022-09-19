@@ -46,7 +46,7 @@ foreach ($products as $product)
     <?php
     echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>'اختر المحل ....']+\common\components\Constants::storeArray,
-        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'options' => ['placeholder' => 'اختر نوع العد .....','disabled' => !Yii::$app->user->can('كل المحلات'),'value'=>!Yii::$app->user->can('كل المحلات')?Yii::$app->user->identity->store_id:''],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -135,9 +135,11 @@ foreach ($products as $product)
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]total_product_amount")->textInput(['readonly' => true])?>
                                 </div>
+                                <?php if(Yii::$app->user->can('الخصم الافرادي فواتير المبيعات')):?>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
                                 </div>
+                                <?php endif;?>
                             </div><!-- .row -->
 
                         </div>
@@ -156,12 +158,21 @@ foreach ($products as $product)
 
         <div class=" col-md-12">
 
+            <?php if(Yii::$app->user->can('الخصم الافرادي فواتير المبيعات')):?>
             <?= $form->field($model, 'total_price_discount_product')->textInput(['readonly' => true]) ?>
+            <?php endif;?>
+
+            <?php if(Yii::$app->user->can('الخصم الاجمالي فواتير المبيعات')):?>
             <?= $form->field($model, 'total_amount_without_discount')->textInput(['readonly' => true]) ?>
-            <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
+                <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
+            <?php endif;?>
+
             <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+            <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
             <?= $form->field($model, 'debt')->textInput() ?>
             <?= $form->field($model, 'repayment')->textInput() ?>
+            <?php endif;?>
+
             <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
             <?= $form->field($model, 'paid')->textInput() ?>
             <?= $form->field($model, 'remaining')->textInput(['readonly' => true]) ?>

@@ -17,7 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'انشاء فاتورة مشتريات'), ['create'], ['class' => 'btn btn-success']) ?>
+
+        <?php
+        if(Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات'))
+        {
+            echo Html::a(Yii::t('app', 'انشاء فاتورة مشتريات'), ['create'], ['class' => 'btn btn-success']);
+        }
+
+
+        ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -98,7 +106,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pdf' => function ($url, $model, $key) {     // render your custom button
                         return Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',"report?id=".$model->id,['target'=>'_blank']);
                 }
+                ],
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
+                    'delete' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
+                    'pdf' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
                 ]
+
             ],
         ],
     ]); ?>

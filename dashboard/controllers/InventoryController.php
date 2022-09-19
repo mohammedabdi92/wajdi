@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use Yii;
 use common\models\Inventory;
 use common\models\InventorySearch;
 use dashboard\components\BaseController;
@@ -39,7 +40,15 @@ class InventoryController extends BaseController
     public function actionIndex()
     {
         $searchModel = new InventorySearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        $params = $this->request->queryParams;
+
+        if(!Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
+        {
+            $params['InventorySearch']['store_id'] =Yii::$app->user->identity->store_id;
+        }
+
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

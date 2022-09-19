@@ -75,6 +75,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pdf' => function ($url, $model, $key) {     // render your custom button
                         return Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',"report?id=".$model->id,['target'=>'_blank']);
                     }
+                ],
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف فواتير المبيعات');
+                    },
+                    'delete' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف فواتير المبيعات');
+                    }
                 ]
             ],
         ],

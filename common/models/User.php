@@ -76,7 +76,7 @@ class User extends BaseModel implements IdentityInterface
                 ],
             ],
             TimestampBehavior::className(),
-            BlameableBehavior::className(),
+
         ];
     }
     public function attributeLabels()
@@ -87,9 +87,7 @@ class User extends BaseModel implements IdentityInterface
             'full_name' => Yii::t('app', 'الاسم'),
             'status' => Yii::t('app', 'الحالة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
-            'created_by' => Yii::t('app', 'المونشيء'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
-            'updated_by' => Yii::t('app', 'اخر معدل'),
             'email' => Yii::t('app', 'الايميل'),
             'store_id' => Yii::t('app', 'المحل'),
             'type' => Yii::t('app', 'صلاحيات'),
@@ -105,7 +103,7 @@ class User extends BaseModel implements IdentityInterface
     {
 
         return [
-            [['full_name','username','type','password_text'], 'safe'],
+            [['full_name','username','type','password_text','store_id'], 'safe'],
             [['full_name','username','type'], 'required'],
             [['email'], 'email'],
             [['email','username'], 'unique'],

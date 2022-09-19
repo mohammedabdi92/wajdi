@@ -16,18 +16,19 @@ use dashboard\admin\components\MenuHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => 64]) ?>
+    <?= $form->field($model, 'name')->label('الاسم')->textInput(['maxlength' => 64]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 2]) ?>
+    <?= $form->field($model, 'description')->label('الوصف')->textarea(['rows' => 2]) ?>
     
     <div class="permission-menu">
-        <h1>Menus Permission</h1>
+        <br>
+        <h1>  صلاحيات القائمة</h1>
         <?=MenuHelper::menuHtml($model->menus, $form, $model)?>
     </div>
     <br>
     <div class="form-group">
         <?php
-        echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'Create') : Yii::t('rbac-admin', 'Update'), [
+        echo Html::submitButton($model->isNewRecord ? Yii::t('rbac-admin', 'حفظ') : Yii::t('rbac-admin', 'حفظ'), [
             'class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary',])
         ?>
     </div>
