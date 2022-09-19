@@ -174,8 +174,10 @@ foreach ($products as $product)
             <?php endif;?>
 
             <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
+            <?php if(Yii::$app->user->can('باقي المبلغ للعميل في فواتير المبيعات')):?>
             <?= $form->field($model, 'paid')->textInput() ?>
             <?= $form->field($model, 'remaining')->textInput(['readonly' => true]) ?>
+            <?php endif;?>
             <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
