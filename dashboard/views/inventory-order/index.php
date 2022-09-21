@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->storeTitle;
                 },
                 'format' => 'raw',
-                'filter' => \common\components\Constants::storeArray,
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
             ],
             'total_cost',
             [

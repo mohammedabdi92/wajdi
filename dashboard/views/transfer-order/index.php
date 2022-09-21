@@ -43,7 +43,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 'value' => function($model){
                     return $model->fromTitle;
                 },
-                'filter'=>\common\components\Constants::storeArray,
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             [
@@ -51,7 +51,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 'value' => function($model){
                     return $model->toTitle;
                 },
-                'filter'=>\common\components\Constants::storeArray,
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             'count',

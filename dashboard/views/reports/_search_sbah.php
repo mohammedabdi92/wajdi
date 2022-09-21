@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
         ],
     ]);?>
 
-    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
 
 
 

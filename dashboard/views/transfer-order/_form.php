@@ -12,9 +12,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'from')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'from')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
 
-    <?= $form->field($model, 'to')->dropDownList([''=>'اختر المحل ....']+\common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'to')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
     <?php
     echo $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),

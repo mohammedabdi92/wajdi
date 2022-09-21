@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return $model->storeTitle;
                 },
-                'filter'=>\common\components\Constants::storeArray,
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             [

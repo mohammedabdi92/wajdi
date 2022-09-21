@@ -66,7 +66,23 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'price_4')->textInput()->label('السعر الرابع '.($price4*100).'%') ?>
 
-    <?= $form->field($model, 'min_number')->textInput() ?>
+
+    <?php foreach (\common\models\Store::find()->all() as $store):  ?>
+
+    <div class="row col-md-2">
+       <b> <?= $store->name ?></b>
+        <?= $form->field($model, 'min_counts['.$store->id.']')->textInput() ?>
+    </div>
+
+    <?php endforeach; ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
 
     <?php
     echo $form->field($model, 'imageFile')->widget(\kartik\file\FileInput::classname(), [

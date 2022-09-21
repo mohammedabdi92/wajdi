@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
         ],
     ]);?>
 
-    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'created_by')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
     <?=  $form->field($model, "order_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->all(), 'id', 'id'),

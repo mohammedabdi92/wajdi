@@ -45,7 +45,7 @@ foreach ($products as $product)
     ?>
     <?php
     echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>'اختر المحل ....']+\common\components\Constants::storeArray,
+        'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر نوع العد .....','disabled' => !Yii::$app->user->can('كل المحلات'),'value'=>!Yii::$app->user->can('كل المحلات')?Yii::$app->user->identity->store_id:''],
         'pluginOptions' => [
             'allowClear' => true

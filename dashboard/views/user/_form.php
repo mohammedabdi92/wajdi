@@ -25,7 +25,7 @@ list(,$url) = Yii::$app->assetManager->publish('@dashboard/admin/assets');
 
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'type')->dropDownList($model::typeArray); ?>
-    <?= $form->field($model, 'store_id')->dropDownList(\common\components\Constants::storeArray); ?>
+    <?= $form->field($model, 'store_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
     * اذا قمت بتعبئة هذا الحقل سيتغير كلمت السر للمستخدم
     <?= $form->field($model, 'password_text')->textInput() ?>
