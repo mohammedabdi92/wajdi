@@ -12,7 +12,7 @@ $this->registerJsFile(
     '@web/js/order.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
-$products = \common\models\Product::find()->all();
+$products = \common\models\Product::find()->where(['status'=>1])->all();
 $productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
 $productsArray = [];
 $priceList = [];
@@ -44,14 +44,20 @@ foreach ($products as $product)
     ]);
     ?>
     <?php
+    $stores = [];
+    if(Yii::$app->user->can('كل المحلات'))
+    {
+        $stores = \common\models\Store::find()->where(['status'=>1])->all();
+    }else{
+        $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+    }
     echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
-        'options' => ['placeholder' => 'اختر نوع العد .....','disabled' => !Yii::$app->user->can('كل المحلات'),'value'=>!Yii::$app->user->can('كل المحلات')?Yii::$app->user->identity->store_id:''],
+        'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
+        'options' => ['placeholder' => 'اختر نوع العد .....'  ],
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ]);
-    ?>
+    ]);?>
 
 
 
@@ -114,7 +120,7 @@ foreach ($products as $product)
 
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
-                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
                                         'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [

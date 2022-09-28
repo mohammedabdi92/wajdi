@@ -36,6 +36,15 @@ class Product extends \common\components\BaseModel
     public $price_discount_percent;
     public $price_discount_amount;
     public $min_counts = [];
+    const STATUS_ACTIVE = 1;
+    const STATUS_INACTIVE = 2;
+    const statusArray = [
+        self::STATUS_ACTIVE=>"فعال",
+        self::STATUS_INACTIVE=>"غير فعال",
+    ];
+    public  function getStatusText(){
+        return self::statusArray[$this->status];
+    }
     /**
      * {@inheritdoc}
      */
@@ -50,7 +59,7 @@ class Product extends \common\components\BaseModel
     public function rules()
     {
         return [
-            [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type'], 'required'],
+            [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type','status'], 'required'],
             [['title'], 'string'],
             [['title'], 'unique'],
             [['title'], 'trim'],
@@ -95,6 +104,7 @@ class Product extends \common\components\BaseModel
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
             'min_counts' => Yii::t('app', 'الحد الادنى'),
+            'status' => Yii::t('app', 'الحالة'),
         ];
     }
 

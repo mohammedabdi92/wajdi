@@ -11,7 +11,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'النقليات');
 $this->params['breadcrumbs'][] = $this->title;
-$products = \common\models\Product::find()->all();
+$products = \common\models\Product::find()->where(['status'=>1])->all();
 $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
 
 ?>
@@ -43,7 +43,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 'value' => function($model){
                     return $model->fromTitle;
                 },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             [
@@ -51,7 +51,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 'value' => function($model){
                     return $model->toTitle;
                 },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
+                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
             'count',

@@ -41,9 +41,17 @@ $this->registerJsFile(
 //              'language' => 'en',
       //'dateFormat' => 'yyyy-MM-dd',
   ]); ?>
-        <?= $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
-            'options' => ['placeholder' => 'اختر نوع العد .....' ,'disabled' => !Yii::$app->user->can('كل المحلات') ,'value'=>!Yii::$app->user->can('كل المحلات')?Yii::$app->user->identity->store_id:''],
+        <?php
+        $stores = [];
+        if(Yii::$app->user->can('كل المحلات'))
+        {
+            $stores = \common\models\Store::find()->where(['status'=>1])->all();
+        }else{
+            $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+        }
+        echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
+            'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
+            'options' => ['placeholder' => 'اختر نوع العد .....'  ],
             'pluginOptions' => [
                 'allowClear' => true
             ],
@@ -97,7 +105,7 @@ $this->registerJsFile(
                                 <div class="col-sm-2">
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
-                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
                                         'options' => ['placeholder' => 'اختر نوع العد .....'],
                                         'pluginOptions' => [
                                             'allowClear' => true

@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?=  $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->all(), 'id', 'title'),
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
         'options' => ['placeholder' => 'اختر نوع العد .....'],
         'pluginOptions' => [
             'allowClear' => true
@@ -26,7 +26,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'inventory_order_id') ?>
 
-    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
+    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر نوع العد .....'],

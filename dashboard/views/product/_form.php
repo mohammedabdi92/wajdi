@@ -27,6 +27,7 @@ $this->registerJsFile(
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput() ?>
+    <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
 
     <?php
@@ -67,7 +68,7 @@ $this->registerJsFile(
     <?= $form->field($model, 'price_4')->textInput()->label('السعر الرابع '.($price4*100).'%') ?>
 
 
-    <?php foreach (\common\models\Store::find()->all() as $store):  ?>
+    <?php foreach (\common\models\Store::find()->where(['status'=>1])->all() as $store):  ?>
 
     <div class="row col-md-2">
        <b> <?= $store->name ?></b>

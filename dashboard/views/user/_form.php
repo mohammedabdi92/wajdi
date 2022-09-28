@@ -26,7 +26,7 @@ list(,$url) = Yii::$app->assetManager->publish('@dashboard/admin/assets');
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'type')->dropDownList($model::typeArray); ?>
     <?=  $form->field($model, "stores")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر .....','multiple' => true],
         'pluginOptions' => ['allowClear' => true],
     ]); ?>

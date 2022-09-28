@@ -32,6 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->getStatusText();
+                },
+                'format' => 'raw',
+            ],
+            [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Store $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);

@@ -44,6 +44,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'title:ntext',
             [
+                'attribute' => 'status',
+                'value' => function($model){
+                    return $model->getStatusText();
+                },
+                'format' => 'raw',
+            ],
+            [
                 'attribute' => 'category_id',
                 'value' => function($model){
                     return $model->categoryTitle;

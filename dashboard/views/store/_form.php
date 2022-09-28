@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
     <div class="form-group">
         <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>
