@@ -91,9 +91,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($model) {
                         return Yii::$app->user->can('تعديل المواد');
                     },
-                    'delete' => function ($model) {
-                        return Yii::$app->user->can('تعديل المواد');
-                    },
                     'view' => function ($model) {
                         return Yii::$app->user->can('تعديل المواد');
                     },
