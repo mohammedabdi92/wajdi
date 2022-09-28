@@ -23,6 +23,7 @@ $(document).on('change', '[id$=price_discount_amount]', function (item) {
 
 function getTotalProductPrice(){
 
+    debugger;
     var total =$('#product-price_pf_vat').val();
     if(total){
 
@@ -43,6 +44,6 @@ function getTotalProductPrice(){
 
     }
 
-    total = parseFloat(total.toFixed(2));
+    total = parseFloat(total).toFixed(2);
     $('#product-price').val(total).trigger("change")
 }
