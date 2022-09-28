@@ -90,6 +90,7 @@ class User extends BaseModel implements IdentityInterface
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'email' => Yii::t('app', 'الايميل'),
             'type' => Yii::t('app', 'صلاحيات'),
+            'stores' => Yii::t('app', 'المحلات'),
             'password_text' => Yii::t('app', 'كلمة السر'),
         ];
     }

@@ -50,7 +50,7 @@ class Product extends \common\components\BaseModel
     public function rules()
     {
         return [
-            [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type','min_counts'], 'required'],
+            [['price_1','price_2','price_3','price_4','price','title', 'category_id', 'count_type'], 'required'],
             [['title'], 'string'],
             [['title'], 'unique'],
             [['title'], 'trim'],
