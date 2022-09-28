@@ -32,7 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'name:ntext',
-            'phone_number:ntext',
+            [
+                'attribute' => 'phone_number',
+                'format' => 'html',
+                'value' => function($model){
+                    return $model->phone_number?'<a href="tel:'.$model->phone_number.'">'.$model->phone_number.'</a>':'';
+                },
+            ],
             'email:ntext',
             'address:ntext',
              [

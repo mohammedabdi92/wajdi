@@ -149,13 +149,18 @@ class ProductController extends BaseController
     }
 
     public function actionGetDetails($id){
-        $response = ['last_price'=>''];
+        $response = ['last_price'=>'','min_price'=>''];
         $Product = $this->findModel($id);
         $response['product_price']  = $Product->price;
         $InventoryOrderProduct = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['id' => SORT_DESC])->one();
         if($InventoryOrderProduct)
         {
             $response['last_price'] =$InventoryOrderProduct->product_cost;
+        }
+        $InventoryOrderProductMin = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['product_cost' => SORT_ASC])->one();
+        if($InventoryOrderProductMin)
+        {
+            $response['min_price'] =$InventoryOrderProductMin->product_cost;
         }
         return json_encode($response);
     }

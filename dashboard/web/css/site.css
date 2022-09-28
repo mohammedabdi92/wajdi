@@ -94,6 +94,17 @@ body .container.body .right_col {
 #w0{
 width: 100%;
 overflow-y: scroll;
+display: block;
+}
+#w2{
+    width: 100%;
+    overflow-y: scroll;
+    display: block;
+}
+#w3{
+    width: 100%;
+    overflow-y: scroll;
+    display: block;
 }
 .site_title{
     font-size: 18px !important;

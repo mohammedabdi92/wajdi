@@ -44,5 +44,5 @@ function getTotalProductPrice(){
     }
 
     total = parseFloat(total.toFixed(2));
-    $('#product-price').val(total)
+    $('#product-price').val(total).trigger("change")
 }

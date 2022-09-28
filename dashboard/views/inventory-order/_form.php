@@ -125,6 +125,7 @@ $this->registerJsFile(
                             <div class="row">
                                 <div class="col-sm-2"> <label> سعر التكلفة</label> <br><label class="order_product_price" > </label></div>
                                 <div class="col-sm-2"> <label> اخر سعر</label> <br><label class="last_price" > </label></div>
+                                <div class="col-sm-2"> <label> اقل سعر</label> <br><label class="min_price" > </label></div>
                             </div>
 
                     </div>

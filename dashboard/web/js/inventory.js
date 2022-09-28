@@ -184,13 +184,14 @@ $(document).on('change', '[id$=product_id]', function (item) {
 });
 function getProductDetails(item) {
     var mainBox = $(item);
-    var product_id_item = $("[id$=product_id]");
+    var product_id_item = $("select[id$=product_id]");
     var product_id = mainBox.find(product_id_item).val();
     $.post( "/product/get-details?id="+product_id, function( data ) {
         data = jQuery.parseJSON( data );
         if(data)
         {
             $('.last_price').html(data.last_price) ;
+            $('.min_price').html(data.min_price) ;
             $('.order_product_price').html(data.product_price);
 
         }

@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-dashboard',
+    'timezone' => 'Asia/Amman',
     // set target language to be Russian
     'language' => 'ar',
 
