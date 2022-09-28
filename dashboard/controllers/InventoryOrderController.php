@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\models\InventoryOrder;
@@ -47,10 +48,7 @@ class InventoryOrderController extends BaseController
     {
         $searchModel = new InventoryOrderSearch();
         $params = $this->request->queryParams;
-        if(!Yii::$app->user->can('كل المحلات'))
-        {
-            $params['InventoryOrderSearch']['store_id'] =Yii::$app->user->identity->store_id;
-        }
+
         $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [

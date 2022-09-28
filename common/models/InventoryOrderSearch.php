@@ -17,7 +17,7 @@ class InventoryOrderSearch extends InventoryOrder
     public function rules()
     {
         return [
-            [['id', 'supplier_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'supplier_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
         ];
     }
@@ -42,13 +42,13 @@ class InventoryOrderSearch extends InventoryOrder
     {
         $query = InventoryOrder::find();
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
         $this->load($params);
+
+
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -56,11 +56,11 @@ class InventoryOrderSearch extends InventoryOrder
             return $dataProvider;
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'supplier_id' => $this->supplier_id,
-            'store_id' => $this->store_id,
             'total_cost' => $this->total_cost,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -68,6 +68,13 @@ class InventoryOrderSearch extends InventoryOrder
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+        if(!\Yii::$app->user->can('كل المحلات'))
+        {
+            $stores = \Yii::$app->user->identity->stores;
+            $query->andWhere(['store_id'=>$stores]);
+
+        }
+
 
         return $dataProvider;
     }

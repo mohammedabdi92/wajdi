@@ -25,7 +25,11 @@ list(,$url) = Yii::$app->assetManager->publish('@dashboard/admin/assets');
 
     <?= $form->field($model, 'email')->textInput() ?>
     <?= $form->field($model, 'type')->dropDownList($model::typeArray); ?>
-    <?= $form->field($model, 'store_id')->dropDownList(\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name')); ?>
+    <?=  $form->field($model, "stores")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر .....','multiple' => true],
+        'pluginOptions' => ['allowClear' => true],
+    ]); ?>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
     * اذا قمت بتعبئة هذا الحقل سيتغير كلمت السر للمستخدم
     <?= $form->field($model, 'password_text')->textInput() ?>

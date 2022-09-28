@@ -67,7 +67,6 @@ class InventorySearch extends Inventory
         $query->andFilterWhere([
             'id' => $this->id,
             'product_id' => $this->product_id,
-            'store_id' => $this->store_id,
             'last_product_cost' => $this->last_product_cost,
             'count' => $this->count,
             'created_at' => $this->created_at,
@@ -76,6 +75,11 @@ class InventorySearch extends Inventory
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+        if(!\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
+        {
+            $stores = \Yii::$app->user->identity->stores;
+            $query->andWhere(['store_id'=>$stores]);
+        }
 
         if($getSums)
         {

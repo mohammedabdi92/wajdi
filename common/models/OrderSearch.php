@@ -60,7 +60,6 @@ class OrderSearch extends Order
         $query->andFilterWhere([
             'id' => $this->id,
             'customer_id' => $this->customer_id,
-            'store_id' => $this->store_id,
             'total_amount' => $this->total_amount,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
@@ -68,6 +67,12 @@ class OrderSearch extends Order
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+        if(!\Yii::$app->user->can('كل المحلات'))
+        {
+            $stores = \Yii::$app->user->identity->stores;
+            $query->andWhere(['store_id'=>$stores]);
+
+        }
 
         return $dataProvider;
     }

@@ -49,10 +49,6 @@ class OrderController extends BaseController
     {
         $searchModel = new OrderSearch();
         $params = $this->request->queryParams;
-        if(!Yii::$app->user->can('كل المحلات'))
-        {
-            $params['OrderSearch']['store_id'] =Yii::$app->user->identity->store_id;
-        }
         $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [

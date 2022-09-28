@@ -51,7 +51,7 @@ class InventoryOrder extends \common\components\BaseModel
     {
         return [
             [[ 'store_id', 'total_cost'], 'required'],
-            [['store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [[ 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
             [['supplier_id'],'validateSupplierRequired'],
             [['debt','repayment'],'double'],

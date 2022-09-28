@@ -43,10 +43,7 @@ class InventoryController extends BaseController
 
         $params = $this->request->queryParams;
 
-        if(!Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
-        {
-            $params['InventorySearch']['store_id'] =Yii::$app->user->identity->store_id;
-        }
+
 
         $dataProvider = $searchModel->search($params);
 
