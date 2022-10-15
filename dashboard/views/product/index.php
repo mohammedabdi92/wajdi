@@ -34,10 +34,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'pager' => [
             'options'=>['class'=>'pagination'],   // set clas name used in ui list of pagination
-            'prevPageLabel' => 'Previous',   // Set the label for the "previous" page button
+            'prevPageLabel' => '<',   // Set the label for the "previous" page button
             'nextPageLabel' => '>',   // Set the label for the "next" page button
-            'firstPageLabel'=>'>>',   // Set the label for the "first" page button
-            'lastPageLabel'=>'<<',    // Set the label for the "last" page button
+            'firstPageLabel'=>'<<',   // Set the label for the "first" page button
+            'lastPageLabel'=>'>>',    // Set the label for the "last" page button
             'maxButtonCount'=>20,    // Set maximum number of page buttons that can be displayed
         ],
         'columns' => [
