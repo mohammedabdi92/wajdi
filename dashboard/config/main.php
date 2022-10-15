@@ -76,6 +76,10 @@ return [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@yii2mod/settings/messages',
                 ],
+                'kvexport' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@vendor/kartik-v/yii2-export/messages',
+                ],
             ],
         ],
         'session' => [

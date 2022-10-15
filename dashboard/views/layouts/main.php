@@ -35,7 +35,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
         <![endif]-->
     </head>
     <!-- /header content -->
-    <body class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>">
+    <body  onload="clock()" class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>">
     <?php $this->beginBody(); ?>
     <div class="container body">
         <div class="main_container">
@@ -54,6 +54,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                         </div>
                         <div class="profile_info">
                             <span><?=$user->full_name?></span>
+
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -145,7 +146,10 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                    aria-expanded="false">
                                     <img src="/images/site/icons/avatar.webp" alt=""><?=$user->full_name?>
+
                                     <span class=" fa fa-angle-down"></span>
+
+
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
 <!--                                    <li><a href="javascript:;"> نمایه</a></li>-->
@@ -158,6 +162,10 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
 <!--                                    <li><a href="javascript:;">کمک</a></li>-->
                                     <li><?= Html::a(FA::i(FA::_SIGN_OUT)->pullRight() . 'خروج', ['site/logout'], ['data' => ['method' => 'post']]) ?></li>
                                 </ul>
+                            </li>
+                            <li style=" text-align: center; background: #767676; color: white; padding: 0px 10px; ">
+                                <h3><div id="clock"></div></h3>
+                                <h5><div id="date"></div></h5>
                             </li>
 
 <!--                            notification -->
@@ -274,5 +282,31 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
     </div>
     <?php $this->endBody(); ?>
     </body>
+    0
+
+
+    <script>
+        var nameOfDay = new Array('الاحد','الاثنين','الثلاثاء','الاربعاء','الخميس','الجمعة','السبت');
+        var nameOfMonth = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12');
+        var data = new Date();
+        function clock()
+        {
+
+            var hou = data.getHours();
+            var min = data.getMinutes();
+            var sec = data.getSeconds();
+            if(hou<10){ hou= "0"+hou;}
+            if(min<10){ min= "0"+min;}
+            if(sec<10){ sec= "0"+sec;}
+
+            document.getElementById('clock').innerHTML = hou+":"+min+":"+sec;
+            data.setTime(data.getTime()+1000)
+            setTimeout("clock();",1000);
+
+            document.getElementById('date').innerHTML = nameOfDay[data.getDay()] + ",  " +   data.getDate() + "-" + nameOfMonth[data.getMonth()]+ "-" + data.getFullYear();
+        }
+
+    </script>
+
     </html>
 <?php $this->endPage(); ?>

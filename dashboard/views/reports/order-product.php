@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\OrderProductSearch */
@@ -19,49 +20,97 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php  echo $this->render('_search_order_product', ['model' => $searchModel]); ?>
+    <?php
+    $gridColumns = [
+        'order_id',
+        [
+            'attribute' => 'product_id',
+            'value' => function($model){
+                return $model->productTitle;
+            },
+        ],
+        [
+            'attribute' => 'store_id',
+            'value' => function($model){
+                return $model->storeTitle;
+            },
+            'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
+        [
+            'attribute' => 'created_by',
+            'value' => function($model){
+                return \common\components\CustomFunc::getUserName($model->created_by);
+            },
+        ],
+        [
+            'attribute' => 'product.price',
+            'label'=>'سعر الكلفة',
+        ],
+        'count',
+        'amount',
+        'total_product_amount',
+        'discount',
+        [
+            'label'=>'الاجمالي بعد الخصم',
+            'value' => function($model){
+                return $model->total_product_amount - $model->discount ;
+            },
+        ],
+
+
+
+    ];
+    ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'target' => ExportMenu::TARGET_BLANK,
+    ]);
+    echo  ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'target' => ExportMenu::TARGET_BLANK,
+        'fontAwesome' => true,
+        'pjaxContainerId' => 'kv-pjax-container',
+        'batchSize' => 40,
+        'styleOptions' => [
+            ExportMenu::FORMAT_EXCEL => [
+                'alignment' => [
+                    //'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+                ],
+            ],
+            ExportMenu::FORMAT_EXCEL_X => false
+        ],
+        'exportConfig' => [
+            ExportMenu::FORMAT_EXCEL => [
+                'label' => 'Microsoft Excel (xls)',
+                'icon' => 'floppy-remove',
+                'iconOptions' => ['class' => 'text-success'],
+                'linkOptions' => [],
+                'options' => ['title' => 'Microsoft Excel (xls)'],
+                'alertMsg' =>  'The EXCEL (xls) export file will be generated for download.',
+                'mime' => 'application/vnd.ms-excel',
+                'extension' => 'xls',
+            ],
+            ExportMenu::FORMAT_EXCEL_X => false,
+
+        ],'filename' => 'Action-Log-Search-'. date('Y-m-d'),
+        'dropdownOptions' => [
+            'label' => 'Excel Export',
+            'class' => 'btn btn-default',
+            'itemsBefore' => [
+                '<li class="dropdown-header">Export All Data</li>',
+            ],
+        ],
+    ]);
+
+
+
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'columns' => [
-            'order_id',
-            [
-                'attribute' => 'product_id',
-                'value' => function($model){
-                    return $model->productTitle;
-                },
-            ],
-            [
-                'attribute' => 'store_id',
-                'value' => function($model){
-                    return $model->storeTitle;
-                },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
-                'format' => 'raw',
-            ],
-            [
-                'attribute' => 'created_by',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getUserName($model->created_by);
-                },
-            ],
-            [
-                'attribute' => 'product.price',
-                'label'=>'سعر الكلفة',
-            ],
-            'count',
-            'amount',
-            'total_product_amount',
-            'discount',
-            [
-                'label'=>'الاجمالي بعد الخصم',
-                'value' => function($model){
-                    return $model->total_product_amount - $model->discount ;
-                },
-            ],
-
-
-
-        ],
+        'columns' => $gridColumns,
     ]); ?>
 
 

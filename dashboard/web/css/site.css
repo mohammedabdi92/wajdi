@@ -179,3 +179,6 @@ display: block;
 .permission-menu .form-group{ margin: 0px; display: inline; }
 .permission-menu .help-block{ display: none }
 
+.top_nav .navbar-right {
+    width: 80%;
+}
