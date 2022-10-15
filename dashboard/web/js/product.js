@@ -23,12 +23,8 @@ $(document).on('change', '[id$=price_discount_amount]', function (item) {
 });
 
 function getTotalProductPrice(){
-
-    debugger;
     var total =$('#product-price_pf_vat').val();
     if(total){
-
-
         var price_discount_percent =$('#product-price_discount_percent').val();
         if(price_discount_percent){
             total = total * (1-(price_discount_percent/100));
@@ -41,8 +37,6 @@ function getTotalProductPrice(){
         if(vat){
             total = total * (1+(vat/100));
         }
-
-
     }
 
     total = parseFloat(total).toFixed(3);
