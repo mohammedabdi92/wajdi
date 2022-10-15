@@ -1,0 +1,20 @@
+<?php
+
+use yii\helpers\Html;
+
+/** @var yii\web\View $this */
+/** @var common\models\Shortage $model */
+
+$this->title = 'انشاء نقص';
+$this->params['breadcrumbs'][] = ['label' => 'Shortages', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="shortage-create">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+
+    <?= $this->render('_form', [
+        'model' => $model,
+    ]) ?>
+
+</div>

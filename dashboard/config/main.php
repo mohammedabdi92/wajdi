@@ -21,6 +21,7 @@ return [
         'settings' => [
             'class' => 'yii2mod\settings\Module',
         ],
+        'gridview' => ['class' => 'kartik\grid\Module'],
 //        'admin' => [
 //            'class' => 'mdm\admin\Module',
 //            'layout' => 'left-menu', // it can be '@path/to/your/layout'.

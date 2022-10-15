@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ProductSearch */
@@ -67,8 +68,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             [
-                'attribute' => 'min_number',
+                'attribute' => 'price',
                 'format' => 'raw',
+                'visible' => Yii::$app->user->can('سعر التكلفة بالواجهة على المواد'),
             ],
             [
                 'attribute' => 'price_1',

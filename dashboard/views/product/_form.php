@@ -51,7 +51,7 @@ $this->registerJsFile(
     ?>
 
 
-    <?= $form->field($model, 'price_pf_vat')->textInput()->label('السعر قبل الضريبة ') ?>
+    <?= $form->field($model, 'price_pf_vat')->textInput()->label('السعر قبل الضريبه والخصم') ?>
     <?= $form->field($model, 'vat')->textInput()->label('الضريبة %') ?>
     <?= $form->field($model, 'price_discount_percent')->textInput()->label('نسبة الخصم %') ?>
     <?= $form->field($model, 'price_discount_amount')->textInput()->label('قيمة الخصم ') ?>
