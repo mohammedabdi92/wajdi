@@ -27,14 +27,15 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $updated_at
  * @property int|null $updated_by
  * @property int|null $isDeleted
+ * @property float|null $price_discount_percent
+ * @property float|null $vat
+ * @property float|null $price_pf_vat
+ * @property float|null $price_discount_amount
  */
 class Product extends \common\components\BaseModel
 {
     public $imageFile;
-    public $price_pf_vat;
-    public $vat;
-    public $price_discount_percent;
-    public $price_discount_amount;
+
     public $min_counts = [];
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;

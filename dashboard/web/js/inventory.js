@@ -80,14 +80,14 @@ function calculateTotals() {
     var discount_percentage = $('[id$=discount_percentage]').val();
     if (discount_percentage) {
         var discount = (total * (parseFloat(discount_percentage) / 100));
-        discount = parseFloat(discount.toFixed(2));
+        discount = parseFloat(discount.toFixed(3));
         total =  total-discount;
         $('[id$=discount]').val(discount);
     }
     var tax_percentage = $('[id$=tax_percentage]').val();
     if (tax_percentage) {
         var tax = (total * (parseFloat(tax_percentage) / 100));
-        tax = parseFloat(tax.toFixed(2));
+        tax = parseFloat(tax.toFixed(3));
         total = tax + total;
         $('[id$=tax]').val(tax);
     }
@@ -111,7 +111,7 @@ function getTotalWithoutVat() {
     $('[id$=product_total_cost]').each(function (index, element) {
         var elementCost = parseFloat(element.value);
         if (elementCost) {
-            elementCost =parseFloat(elementCost.toFixed(2));
+            elementCost =parseFloat(elementCost.toFixed(3));
             total = parseFloat(total) + elementCost;
         }
     });
@@ -132,14 +132,14 @@ function calculateSupTotals(item) {
         var discount_percentage = $('[id$=discount_percentage]').val();
         if (discount_percentage) {
             var discount = (suptotal * (parseFloat(discount_percentage) / 100));
-            discount = parseFloat(discount.toFixed(2));
+            discount = parseFloat(discount.toFixed(3));
 
             suptotal =  suptotal-discount;
         }
         var tax_percentage = $('[id$=tax_percentage]').val();
         if (tax_percentage) {
             var tax = (suptotal * (parseFloat(tax_percentage) / 100));
-            tax = parseFloat(tax.toFixed(2));
+            tax = parseFloat(tax.toFixed(3));
 
             suptotal = tax + suptotal;
         }
@@ -161,14 +161,14 @@ function calculateTotTotals(item) {
         var discount_percentage = $('[id$=discount_percentage]').val();
         if (discount_percentage) {
             var discount = (suptotal * (parseFloat(discount_percentage) / 100));
-            discount = parseFloat(discount.toFixed(2));
+            discount = parseFloat(discount.toFixed(3));
 
             suptotal =  suptotal-discount;
         }
         var tax_percentage = $('[id$=tax_percentage]').val();
         if (tax_percentage) {
             var tax = (suptotal * (parseFloat(tax_percentage) / 100));
-            tax = parseFloat(tax.toFixed(2));
+            tax = parseFloat(tax.toFixed(3));
             suptotal = tax + suptotal;
         }
         mainBox.find(productCostItemfinal).val(suptotal);
