@@ -180,13 +180,22 @@ class Product extends \common\components\BaseModel
     }
     public function getPriceList()
     {
+        $prices = [];
+        if(Yii::$app->user->can('سعر بيع 1')){
+            $prices[1]= 1;
+        }
+        if(Yii::$app->user->can('سعر بيع 2')){
+            $prices[2]= 2;
+        }
+        if(Yii::$app->user->can('سعر بيع 3')){
+            $prices[3]= 3;
+        }
+        if(Yii::$app->user->can('سعر بيع 4')){
+            $prices[4]= 4;
+        }
 
-            return [
-                1=>1,
-                2=>2,
-                3=>3,
-                4=>4,
-            ];
+
+            return $prices;
 
     }
 }

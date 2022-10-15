@@ -48,9 +48,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'price',
-            'price_1',
-            'price_2',
-            'price_3',
+            [
+                'attribute' => 'price_1',
+                'visible' => Yii::$app->user->can('سعر بيع 1'),
+            ],
+            [
+                'attribute' => 'price_2',
+                'visible' => Yii::$app->user->can('سعر بيع 2'),
+            ],
+            [
+                'attribute' => 'price_3',
+                'visible' => Yii::$app->user->can('سعر بيع 3'),
+            ],
+            [
+                'attribute' => 'price_4',
+                'visible' => Yii::$app->user->can('سعر بيع 4'),
+            ],
             [
                 'attribute'=>'image_name',
                 'value'=>$model->getImageUrl(),

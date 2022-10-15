@@ -1,6 +1,6 @@
 <?php
 ?>
-<h2 style="text-align: center;">بصمة دوام الموضف</h2>
+<h2 style="text-align: center;">بصمة دوام الموظف</h2>
 <?php if($last_login):?>
 <h3 style="text-align: center;">  اخر تسجيل <?=$last_login->getTypeText()?><br>
  <?=$last_login->time?>
