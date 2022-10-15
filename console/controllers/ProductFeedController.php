@@ -127,5 +127,36 @@ class ProductFeedController extends Controller
 
         }
     }
+    public function actionIndex5()
+    {
+        $connection = \Yii::$app->db;
+        $file = fopen(__DIR__.'/product6.csv', "r");
+
+        while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
+
+            $title= $data[1];
+            $price1 = (float)$data[2];
+            $price2 = (float)$data[3] ;
+
+            print $title.PHP_EOL;
+            $product = new Product();
+            $product->count_type = 1;
+            $product->category_id = 12;
+            $product->price = $price1;
+            $product->price_1 = round($price2 * (0.95), 3);
+            $product->price_2 =  round($price2, 3);
+            $product->price_3 = round($price2 * (1.05), 3);
+            $product->price_4 = round($price2 * (1.10), 3);
+            $product->title = $title;
+            $product->created_at = time() ;
+            $product->updated_at = time() ;
+            $product->created_by = 2 ;
+            $product->updated_by = 2 ;
+            $product->status = 1 ;
+            $product->save(false);
+
+
+        }
+    }
 }
 
