@@ -32,6 +32,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pager' => [
+            'options'=>['class'=>'pagination'],   // set clas name used in ui list of pagination
+            'prevPageLabel' => 'Previous',   // Set the label for the "previous" page button
+            'nextPageLabel' => 'Next',   // Set the label for the "next" page button
+            'firstPageLabel'=>'First',   // Set the label for the "first" page button
+            'lastPageLabel'=>'Last',    // Set the label for the "last" page button
+            'nextPageCssClass'=>'next',    // Set CSS class for the "next" page button
+            'prevPageCssClass'=>'prev',    // Set CSS class for the "previous" page button
+            'firstPageCssClass'=>'first',    // Set CSS class for the "first" page button
+            'lastPageCssClass'=>'last',    // Set CSS class for the "last" page button
+            'maxButtonCount'=>10,    // Set maximum number of page buttons that can be displayed
+        ],
         'columns' => [
 
 
