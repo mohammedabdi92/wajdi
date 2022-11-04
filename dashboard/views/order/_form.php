@@ -85,9 +85,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                 ]); ?>
 
                 <div class="container-items"><!-- widgetContainer -->
-                    <?php foreach ($model_product
-
-                                   as $i => $modelAddress): ?>
+                    <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
                             <h3 class="panel-title pull-right"> مادة</h3>

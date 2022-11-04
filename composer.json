@@ -29,6 +29,7 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "@dev",
         "kartik-v/yii2-widget-fileinput": "^1.1",
+        "kartik-v/yii2-date-range": "@dev",
         "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-widget-depdrop": "@dev",
         "kartik-v/yii2-export": "~1.4.2",

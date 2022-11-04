@@ -53,8 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'count',
             'product_cost_final',
             'product_total_cost_final',
-
-
+            [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+            ],
 
 
         ],

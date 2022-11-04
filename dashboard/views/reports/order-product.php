@@ -57,6 +57,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->total_product_amount - $model->discount ;
             },
         ],
+        [
+            'attribute' => 'created_at',
+            'value' => function($model){
+                return \common\components\CustomFunc::getFullDate($model->created_at);
+            },
+        ],
 
 
 
@@ -109,9 +115,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
     ?>
 
-    <?= GridView::widget([
+    <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => $gridColumns,
+        'id' => 'w0',
     ]); ?>
 
 

@@ -78,19 +78,32 @@ class ReportsController extends Controller
             'diff_time_out_mints'=>'TIMESTAMPDIFF(MINUTE,`time`,@time_outs)'
             ])->where(['type'=>Presence::TYPE_IN]);
 
-
-
-
         if($searchModel->user_id)
         {
             $query->andWhere(['user_id'=>$searchModel->user_id]);
         }
-
+        if($searchModel->time_from)
+        {
+            $query->andWhere(['>=', 'time', $searchModel->time_from]);
+        }
+        if($searchModel->time_to)
+        {
+            $query->andWhere(['<=', 'time', $searchModel->time_to]);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+//        print_r($query->createCommand()->rawSql);die;
 
+        $searchModel->total_diff_time_out_mints = $query->sum("(TIMESTAMPDIFF(MINUTE,`time`,(SELECT p2.time FROM presence as p2 where p2.type = 2 AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1))  )");
+        if(!empty($searchModel->total_diff_time_out_mints))
+        {
+            $mins =$searchModel->total_diff_time_out_mints;
+            $hours= floor($mins/(60));
+            $mints_last =   $mins - floor($mins/(60));
+            $searchModel->total_diff_time_out_mints=$hours.':'.$mints_last;
+        }
 
 
         return $this->render('presence', [

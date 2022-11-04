@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventorySearch */
@@ -31,6 +32,24 @@ use yii\widgets\ActiveForm;
         'options' => ['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....'],
         'pluginOptions' => ['allowClear' => true],
     ]); ?>
+
+    <label> التاريخ</label>
+    <?= DateRangePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'created_at_from',
+        'endAttribute' => 'created_at_to',
+        'pluginOptions' => [
+            'timePicker' => true,
+            'timePickerIncrement' => 30,
+            'locale' => [
+                'format' => 'Y-m-d'
+            ]
+        ]
+    ]); ?>
+    <br>
 
 
 

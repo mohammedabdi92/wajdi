@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Presence */
@@ -29,6 +30,23 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($searchModel, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
 
+    <label> التاريخ</label>
+    <?= DateRangePicker::widget([
+        'model' => $searchModel,
+        'attribute' => 'time',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'time_from',
+        'endAttribute' => 'time_to',
+        'pluginOptions' => [
+            'timePicker' => true,
+            'timePickerIncrement' => 30,
+            'locale' => [
+                'format' => 'Y-m-d'
+            ]
+        ]
+    ]); ?>
+    <br>
 
 
 
@@ -59,6 +77,21 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
+    <div class="row">
+        <div class="col-xs-6">
+            <p class="lead">المجموع</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="width:50%">وقت الدوام :</th>
+                        <td><?= $searchModel->total_diff_time_out_mints?></td>
+                    </tr>
 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
 </div>

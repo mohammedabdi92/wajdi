@@ -14,15 +14,18 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
     public $sum_product_total_cost_final;
     public $sum_count;
     public $supplier_id;
+    public $created_at_from ;
+    public $created_at_to;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
+            [['id', 'inventory_order_id', 'product_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['product_total_cost', 'product_cost', 'count'], 'number'],
-            [['sum_product_total_cost_final','sum_count','supplier_id'], 'safe'],
+            [['sum_product_total_cost_final','sum_count', 'created_at','supplier_id','created_at_from','created_at_to'], 'safe'],
         ];
     }
 
@@ -56,6 +59,7 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
 
         $this->load($params);
 
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
@@ -71,13 +75,22 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
             'inventory_order_product.product_cost' => $this->product_cost,
             'inventory_order_product.count' => $this->count,
             'inventory_order_product.store_id' => $this->store_id,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
             'inventory_order.supplier_id' => $this->supplier_id,
         ]);
+
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'inventory_order_product.created_at',strtotime( $this->created_at_from)]);
+        }
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'inventory_order_product.created_at',strtotime($this->created_at_to) ]);
+        }
+
         if($getSums) {
             $this->sum_count = $query->sum('count');
             $this->sum_product_total_cost_final = $query->sum('product_total_cost_final');

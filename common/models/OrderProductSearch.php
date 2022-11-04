@@ -17,14 +17,17 @@ class OrderProductSearch extends OrderProduct
     public $sum_discount;
     public $sum_total_amount_w_discount;
     public $sum_profit;
+    public $created_at_from ;
+    public $created_at_to;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'order_id', 'product_id', 'count_type', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['count'], 'number'],
+            [['created_at_from','created_at_to', 'created_at'],'safe']
         ];
     }
 
@@ -70,12 +73,20 @@ class OrderProductSearch extends OrderProduct
             'product_id' => $this->product_id,
             'count' => $this->count,
             'count_type' => $this->count_type,
-            'created_at' => $this->created_at,
             'product.created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'order_product.created_at',strtotime( $this->created_at_from)]);
+        }
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'order_product.created_at',strtotime($this->created_at_to) ]);
+        }
 
         if($getSums)
         {
@@ -87,8 +98,6 @@ class OrderProductSearch extends OrderProduct
 
             $this->sum_total_amount_w_discount = $this->sum_total_product_amount - $this->sum_discount;
             $this->sum_profit = $this->sum_total_amount_w_discount - $this->sum_product_price;
-
-
 
         }
 

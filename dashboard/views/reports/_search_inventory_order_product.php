@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventoryOrderProductSearch */
@@ -24,6 +25,7 @@ use yii\widgets\ActiveForm;
         ],
     ]);?>
 
+
     <?= $form->field($model, 'inventory_order_id') ?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
@@ -34,6 +36,24 @@ use yii\widgets\ActiveForm;
             'allowClear' => true
         ],
     ])->label('المورد'); ?>
+
+    <label> التاريخ</label>
+    <?= DateRangePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'created_at_from',
+        'endAttribute' => 'created_at_to',
+        'pluginOptions' => [
+            'timePicker' => true,
+            'timePickerIncrement' => 30,
+            'locale' => [
+                'format' => 'Y-m-d'
+            ]
+        ]
+    ]); ?>
+    <br>
 
 
 
