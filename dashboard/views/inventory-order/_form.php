@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\date\DatePicker;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventoryOrder */
@@ -13,6 +14,7 @@ $this->registerJsFile(
     '@web/js/inventory.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
+$url = \yii\helpers\Url::to(['product/product-list']);
 ?>
 
 
@@ -105,10 +107,22 @@ $this->registerJsFile(
                                 <div class="col-sm-2">
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
-                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
                                         'options' => ['placeholder' => 'اختر نوع العد .....'],
                                         'pluginOptions' => [
-                                            'allowClear' => true
+                                            'allowClear' => true,
+                                            'minimumInputLength' => 3,
+                                            'language' => [
+                                                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                            ],
+                                            'ajax' => [
+                                                'url' => $url,
+                                                'dataType' => 'json',
+                                                'data' => new JsExpression('function(params) {  return {q:params}; }'),
+                                                'results' => new JsExpression('function(params) {  return params; }')
+                                            ],
+                                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                            'templateResult' => new JsExpression('function(product) { return product.text; }'),
+                                            'templateSelection' => new JsExpression('function (product) { return product.text; }'),
                                         ],
                                     ]);
                                     ?>
