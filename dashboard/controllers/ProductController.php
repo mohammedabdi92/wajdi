@@ -7,6 +7,7 @@ use common\models\InventoryOrderProduct;
 use common\models\Product;
 use common\models\ProductSearch;
 use dashboard\components\BaseController;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -163,5 +164,28 @@ class ProductController extends BaseController
             $response['min_price'] =$InventoryOrderProductMin->product_cost;
         }
         return json_encode($response);
+    }
+
+    public function actionProductList($q = null, $id = null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+
+            $query = Product::find();
+            $query->select('id, title AS text')
+                ->from('product')
+                ->limit(20);
+            $parts = preg_split('/\s+/', $q);
+            foreach ($parts as $part){
+                $query->andWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+            $data = $query->asArray()->all();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Product::find($id)->name];
+        }
+        return $out;
     }
 }

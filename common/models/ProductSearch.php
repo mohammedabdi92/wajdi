@@ -72,7 +72,14 @@ class ProductSearch extends Product
             'isDeleted' => $this->isDeleted,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        if($this->title)
+        {
+            $parts = preg_split('/\s+/', $this->title);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( title )', "$part"]);
+            }
+        }
+       
 
         return $dataProvider;
     }

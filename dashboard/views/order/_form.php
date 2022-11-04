@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
+
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Order */
@@ -20,7 +22,7 @@ foreach ($products as $product)
 {
     $productsArray[$product->id] =$product->attributes;
 }
-//print_r($products);die;
+$url = \yii\helpers\Url::to(['product/product-list']);
 ?>
 <script>
     var products = <?=\yii\helpers\Json::encode($productsArray);?>;
@@ -120,11 +122,23 @@ foreach ($products as $product)
 
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
-                                        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
                                         'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [
-                                            'allowClear' => true
+                                            'allowClear' => true,
+                                            'minimumInputLength' => 3,
+                                            'language' => [
+                                                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                                            ],
+                                            'ajax' => [
+                                                'url' => $url,
+                                                'dataType' => 'json',
+                                                'data' => new JsExpression('function(params) {  return {q:params}; }'),
+                                                'results' => new JsExpression('function(params) {  return params; }')
+                                            ],
+                                            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                                            'templateResult' => new JsExpression('function(product) { return product.text; }'),
+                                            'templateSelection' => new JsExpression('function (product) { return product.text; }'),
                                         ],
                                     ]);
                                     ?>
