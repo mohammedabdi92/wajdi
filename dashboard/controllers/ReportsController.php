@@ -5,6 +5,7 @@ namespace dashboard\controllers;
 use common\models\InventoryOrderProduct;
 use common\models\InventoryOrderProductSearch;
 use common\models\InventorySearch;
+use common\models\Order;
 use common\models\OrderProductSearch;
 use common\models\Presence;
 use common\models\ProductSearch;
@@ -109,6 +110,25 @@ class ReportsController extends Controller
         return $this->render('presence', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCashBox()
+    {
+
+        // + orders (damaged)
+        $order_q =  Order::find()->select("total_amount");
+
+
+
+        $order_pluse =  $order_q->sum('total_amount');
+
+        $cash_amount = (int)$order_pluse;
+        print_r($cash_amount);die;
+
+        // - inventory-order(dep) , outlay,returns,damaged
+
+        return $this->render('cash-box', [
         ]);
     }
 

@@ -75,7 +75,7 @@ class Product extends \common\components\BaseModel
             'softDeleteBehavior' => [
                 'class' => SoftDeleteBehavior::className(),
                 'softDeleteAttributeValues' => [
-                    'isDeleted' => true
+                    'status' => 2
                 ],
             ],
             TimestampBehavior::className(),
