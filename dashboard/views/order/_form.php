@@ -133,7 +133,6 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                             'ajax' => [
                                                 'url' => $url,
                                                 'dataType' => 'json',
-                                                'data' => new JsExpression('function(params) {  return {q:params}; }'),
                                                 'results' => new JsExpression('function(params) {  return params; }')
                                             ],
                                             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),

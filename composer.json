@@ -25,13 +25,13 @@
         "kartik-v/yii2-builder": "^1.6",
         "wbraganca/yii2-dynamicform": "2.0.2",
         "yii2mod/yii2-settings": "*",
-        "kartik-v/yii2-widget-select2": "1.0.0",
+        "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "@dev",
         "kartik-v/yii2-widget-fileinput": "^1.1",
         "kartik-v/yii2-mpdf": "dev-master",
         "kartik-v/yii2-widget-depdrop": "@dev",
-        "kartik-v/yii2-export": "@dev",
+        "kartik-v/yii2-export": "~1.4.2",
         "mdmsoft/yii2-admin": "~2.0"
     },
     "require-dev": {

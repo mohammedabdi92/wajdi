@@ -171,7 +171,6 @@ class ProductController extends BaseController
 
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
-
             $query = Product::find();
             $query->select('id, title AS text')
                 ->from('product')
