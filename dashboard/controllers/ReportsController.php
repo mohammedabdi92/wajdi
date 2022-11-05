@@ -11,6 +11,7 @@ use common\models\InventoryOrderProductSearch;
 use common\models\InventorySearch;
 use common\models\Order;
 use common\models\OrderProductSearch;
+use common\models\OrderSearch;
 use common\models\Outlay;
 use common\models\Presence;
 use common\models\ProductSearch;
@@ -58,6 +59,16 @@ class ReportsController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams,true);
 
         return $this->render('order-product', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionOrder(){
+
+        $searchModel = new OrderSearch();
+        $dataProvider = $searchModel->search($this->request->queryParams,true);
+
+        return $this->render('order', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
