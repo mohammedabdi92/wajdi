@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Presence $model */
+/** @var common\models\Posts $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Presences', 'url' => ['index']];
+$this->title = $model->title;
+$this->params['breadcrumbs'][] = ['label' => 'Posts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="presence-view">
+<div class="posts-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -31,19 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            [
-                'attribute' => 'user_id',
-                'value' => function ($model) {
-                    return \common\components\CustomFunc::getUserName($model->user_id);
-                },
-            ],
-            'time',
-            [
-                'attribute' => 'type',
-                'value' => function($model){
-                    return $model->getTypeText();
-                },
-            ],
+            'title:ntext',
+            'subject:ntext',
+            'sort',
         ],
     ]) ?>
 
