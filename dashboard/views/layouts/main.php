@@ -288,7 +288,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
     <script>
         var nameOfDay = new Array('الاحد','الاثنين','الثلاثاء','الاربعاء','الخميس','الجمعة','السبت');
         var nameOfMonth = new Array('1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12');
-        var data = new Date();
+        var data = calcTime('Bahrain','+3');
         function clock()
         {
 
@@ -304,6 +304,22 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
             setTimeout("clock();",1000);
 
             document.getElementById('date').innerHTML = nameOfDay[data.getDay()] + ",  " +   data.getDate() + "-" + nameOfMonth[data.getMonth()]+ "-" + data.getFullYear();
+        }
+        function calcTime(city, offset) {
+            // create Date object for current location
+            var d = new Date();
+
+            // convert to msec
+            // subtract local time zone offset
+            // get UTC time in msec
+            var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+
+            // create new Date object for different city
+            // using supplied offset
+            var nd = new Date(utc + (3600000*offset));
+
+            // return time as a string
+            return nd;
         }
 
     </script>

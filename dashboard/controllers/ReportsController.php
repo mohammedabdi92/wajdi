@@ -2,11 +2,16 @@
 
 namespace dashboard\controllers;
 
+use common\models\Damaged;
+use common\models\Entries;
+use common\models\FinancialWithdrawal;
+use common\models\InventoryOrder;
 use common\models\InventoryOrderProduct;
 use common\models\InventoryOrderProductSearch;
 use common\models\InventorySearch;
 use common\models\Order;
 use common\models\OrderProductSearch;
+use common\models\Outlay;
 use common\models\Presence;
 use common\models\ProductSearch;
 use yii\data\ActiveDataProvider;
@@ -118,15 +123,39 @@ class ReportsController extends Controller
 
         // + orders (damaged)
         $order_q =  Order::find()->select("total_amount");
+        $entries_q = Entries::find()->select("amount");
 
-
-
+        $entries_pluse =  $entries_q->sum('amount');
         $order_pluse =  $order_q->sum('total_amount');
 
-        $cash_amount = (int)$order_pluse;
-        print_r($cash_amount);die;
+        $damaged_q =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_RETURNED]);
+        $damaged_plus = $damaged_q->sum('amount');
 
         // - inventory-order(dep) , outlay,returns,damaged
+        $inventory_order_q =  InventoryOrder::find()->select('total_cost');
+        $inventory_order_mince = $inventory_order_q->sum('total_cost');
+
+        $outlay_q =  Outlay::find()->select('amount');
+        $outlay_mince = $outlay_q->sum('amount');
+
+        $damaged_q_m =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_INACTIVE]);
+        $damaged_mince = $damaged_q_m->sum('amount');
+
+        $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
+        $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
+
+        $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince;
+
+
+        $cash_amount =  $box_in - $box_out;
+        $cash_amount = round($cash_amount, 2);
+
+        print_r($box_in.'------');
+        print_r($box_out.'-----');
+        print_r($cash_amount);die;
+
+
 
         return $this->render('cash-box', [
         ]);
