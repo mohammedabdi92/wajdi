@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
+use kartik\export\ExportMenu;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\Presence */
@@ -57,25 +58,57 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
+    <?php
 
-            'id',
-            [
-                'attribute' => 'user_id',
-                'value' => function ($model) {
-                    return \common\components\CustomFunc::getUserName($model->user_id);
-                },
-                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
-            ],
-            'time',
-            'time_out',
-            'diff_time_out',
-
-
+    $gridColumns = [
+        'id',
+        [
+            'attribute' => 'user_id',
+            'value' => function ($model) {
+                return \common\components\CustomFunc::getUserName($model->user_id);
+            },
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
         ],
+        'time',
+        'time_out',
+        'diff_time_out',
+    ];
+
+    if(Yii::$app->user->can('صلاحية الطباعة'))
+    {
+        ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+        ]);
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+            'fontAwesome' => true,
+            'pjaxContainerId' => 'kv-pjax-container',
+            'batchSize' => 40,
+            'filename' => 'Action-Log-Search-' . date('Y-m-d'),
+            'dropdownOptions' => [
+                'label' => 'Excel Export',
+                'class' => 'btn btn-default',
+                'itemsBefore' => [
+                    '<li class="dropdown-header">Export All Data</li>',
+                ],
+            ],
+        ]);
+        
+    }
+
+
+    ?>
+
+    <?= \yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'id' => 'w0',
     ]); ?>
+
     <div class="row">
         <div class="col-xs-6">
             <p class="lead">المجموع</p>

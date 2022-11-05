@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use kartik\export\ExportMenu;
 
 
 /* @var $this yii\web\View */
@@ -28,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-    $columns = [
+    $gridColumns = [
         'id',
         [
             'attribute' => 'image_name',
@@ -95,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
     {
         foreach (\common\models\Store::find()->where(['status' => 1])->all() as $store) {
 
-            $columns[] = [
+            $gridColumns[] = [
                 'attribute' => 'min_counts[' . $store->id . ']',
                 'value' => function ($model) use ($store) {
                     return $model->min_counts[$store->id] ?? "غير محدد";
@@ -105,7 +106,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }
     }
 
-    $columns[] = [
+    $gridColumns[] = [
         'class' => ActionColumn::className(),
         'urlCreator' => function ($action, \common\models\Product $model, $key, $index, $column) {
             return Url::toRoute([$action, 'id' => $model->id]);
@@ -119,9 +120,38 @@ $this->params['breadcrumbs'][] = $this->title;
             },
         ]
     ];
+
+
+    if(Yii::$app->user->can('صلاحية الطباعة'))
+    {
+        ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+        ]);
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+            'fontAwesome' => true,
+            'pjaxContainerId' => 'kv-pjax-container',
+            'batchSize' => 40,
+            'filename' => 'Action-Log-Search-' . date('Y-m-d'),
+            'dropdownOptions' => [
+                'label' => 'Excel Export',
+                'class' => 'btn btn-default',
+                'itemsBefore' => [
+                    '<li class="dropdown-header">Export All Data</li>',
+                ],
+            ],
+        ]);
+        
+    }
+
+
     ?>
 
-    <?= GridView::widget([
+    <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'pager' => [
@@ -132,8 +162,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'lastPageLabel' => '>>',    // Set the label for the "last" page button
             'maxButtonCount' => 20,    // Set maximum number of page buttons that can be displayed
         ],
-        'columns' => $columns,
-    ]); ?>
+        'columns' => $gridColumns,
+        'id' => 'w0',
+    ]);
+    ?>
 
 
 </div>

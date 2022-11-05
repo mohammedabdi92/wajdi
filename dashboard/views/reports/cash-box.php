@@ -63,7 +63,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                     <td><?= $box_out?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">المييعات :</th>
+                    <th style="width:50%">المبيعات :</th>
                     <td><?= $order_pluse?></td>
                 </tr>
                 <tr>

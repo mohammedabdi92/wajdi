@@ -59,49 +59,31 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     ];
-    ExportMenu::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => $gridColumns,
-        'target' => ExportMenu::TARGET_BLANK,
-    ]);
-    echo ExportMenu::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => $gridColumns,
-        'target' => ExportMenu::TARGET_BLANK,
-        'fontAwesome' => true,
-        'pjaxContainerId' => 'kv-pjax-container',
-        'batchSize' => 40,
-//        'styleOptions' => [
-//            ExportMenu::FORMAT_EXCEL => [
-//                'alignment' => [
-//                    //'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-//                ],
-//            ],
-//            ExportMenu::FORMAT_EXCEL_X => false
-//        ],
-//        'exportConfig' => [
-//            ExportMenu::FORMAT_EXCEL => [
-//                'label' => 'Microsoft Excel (xls)',
-//                'icon' => 'floppy-remove',
-//                'iconOptions' => ['class' => 'text-success'],
-//                'linkOptions' => [],
-//                'options' => ['title' => 'Microsoft Excel (xls)'],
-//                'alertMsg' =>  'The EXCEL (xls) export file will be generated for download.',
-//                'mime' => 'application/vnd.ms-excel',
-//                'extension' => 'xls',
-//            ],
-//            ExportMenu::FORMAT_EXCEL_X => false,
-//
-//        ],
-        'filename' => 'Action-Log-Search-' . date('Y-m-d'),
-        'dropdownOptions' => [
-            'label' => 'Excel Export',
-            'class' => 'btn btn-default',
-            'itemsBefore' => [
-                '<li class="dropdown-header">Export All Data</li>',
+    if(Yii::$app->user->can('صلاحية الطباعة'))
+    {
+        ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+        ]);
+        echo ExportMenu::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => $gridColumns,
+            'target' => ExportMenu::TARGET_BLANK,
+            'fontAwesome' => true,
+            'pjaxContainerId' => 'kv-pjax-container',
+            'batchSize' => 40,
+            'filename' => 'Action-Log-Search-' . date('Y-m-d'),
+            'dropdownOptions' => [
+                'label' => 'Excel Export',
+                'class' => 'btn btn-default',
+                'itemsBefore' => [
+                    '<li class="dropdown-header">Export All Data</li>',
+                ],
             ],
-        ],
-    ]);
+        ]);
+        
+    }
 
 
     ?>

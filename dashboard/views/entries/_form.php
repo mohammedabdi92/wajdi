@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     }
     echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
-        'options' => ['placeholder' => 'اختر نوع العد .....'  ],
+        'options' => ['placeholder' => 'اختر المحل .....'  ],
         'pluginOptions' => [
             'allowClear' => true
         ],
