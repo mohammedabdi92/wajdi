@@ -108,7 +108,7 @@ class ReportsController extends Controller
         {
             $mins =$searchModel->total_diff_time_out_mints;
             $hours= floor($mins/(60));
-            $mints_last =   $mins - floor($mins/(60));
+            $mints_last =   fmod($mins, 60);
             $searchModel->total_diff_time_out_mints=$hours.':'.$mints_last;
         }
 

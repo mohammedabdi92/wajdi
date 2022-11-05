@@ -80,7 +80,7 @@ class Presence extends \yii\db\ActiveRecord
         {
             $mins =$this->diff_time_out_mints;
             $hours= floor($mins/(60));
-            $mints_last =   $mins - floor($mins/(60));
+            $mints_last =   fmod($mins, 60);
             $this->diff_time_out=$hours.':'.$mints_last;
         }
 
