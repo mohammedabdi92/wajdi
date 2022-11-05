@@ -14,6 +14,7 @@ use common\models\OrderProductSearch;
 use common\models\Outlay;
 use common\models\Presence;
 use common\models\ProductSearch;
+use dashboard\models\cashBoxSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
@@ -120,28 +121,54 @@ class ReportsController extends Controller
 
     public function actionCashBox()
     {
+        $modelSearch = new cashBoxSearch();
+        $modelSearch->load($this->request->queryParams);
+
 
         // + orders (damaged)
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
-
-        $entries_pluse =  $entries_q->sum('amount');
-        $order_pluse =  $order_q->sum('total_amount');
-
         $damaged_q =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_RETURNED]);
-        $damaged_plus = $damaged_q->sum('amount');
+
 
         // - inventory-order(dep) , outlay,returns,damaged
         $inventory_order_q =  InventoryOrder::find()->select('total_cost');
-        $inventory_order_mince = $inventory_order_q->sum('total_cost');
-
         $outlay_q =  Outlay::find()->select('amount');
-        $outlay_mince = $outlay_q->sum('amount');
-
         $damaged_q_m =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_INACTIVE]);
-        $damaged_mince = $damaged_q_m->sum('amount');
-
         $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
+
+        if($modelSearch->date_from)
+        {
+            $order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
+            $entries_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
+            $damaged_q->andWhere(['>=', 'updated_at', strtotime( $modelSearch->date_from)]);
+            $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
+            $outlay_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
+            $damaged_q_m->andWhere(['>=', 'updated_at', strtotime( $modelSearch->date_from)]);
+            $financial_withdrawal_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
+        }
+
+        if($modelSearch->date_to)
+        {
+
+            $modelSearch->date_to .= " 23:59:59";
+
+            $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
+            $entries_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
+            $damaged_q->andWhere(['<=', 'updated_at', strtotime( $modelSearch->date_to)]);
+            $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
+            $outlay_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
+            $damaged_q_m->andWhere(['<=', 'updated_at', strtotime( $modelSearch->date_to)]);
+            $financial_withdrawal_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
+        }
+
+        $damaged_mince = $damaged_q_m->sum('amount');
+        $outlay_mince = $outlay_q->sum('amount');
+        $inventory_order_mince = $inventory_order_q->sum('total_cost');
+        $damaged_plus = $damaged_q->sum('amount');
+        $entries_pluse =  $entries_q->sum('amount');
+        $order_pluse =  $order_q->sum('total_amount');
+
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
@@ -151,13 +178,20 @@ class ReportsController extends Controller
         $cash_amount =  $box_in - $box_out;
         $cash_amount = round($cash_amount, 2);
 
-        print_r($box_in.'------');
-        print_r($box_out.'-----');
-        print_r($cash_amount);die;
-
 
 
         return $this->render('cash-box', [
+            'modelSearch'=>$modelSearch,
+            'cash_amount'=>$cash_amount,
+            'box_in'=> round($box_in, 2),
+            'box_out'=> round($box_out, 2),
+            'order_pluse'=>round($order_pluse, 2),
+            'entries_pluse'=> round($entries_pluse, 2),
+            'damaged_plus'=> round($damaged_plus, 2),
+            'inventory_order_mince'=>round($inventory_order_mince, 2),
+            'outlay_mince'=> round($outlay_mince, 2),
+            'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
+            'damaged_mince'=> round($damaged_mince, 2),
         ]);
     }
 
