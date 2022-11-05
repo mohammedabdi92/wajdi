@@ -13,7 +13,6 @@ $this->title = Yii::t('app', 'تقرير البصمة');
 $this->params['breadcrumbs'][] = $this->title;
 
 
-
 ?>
 <div class="inventory-index">
 
@@ -24,11 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php $form = ActiveForm::begin([
         'method' => 'get',
-        'id'=>'products'
+        'id' => 'products'
     ]); ?>
 
 
-    <?= $form->field($searchModel, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
+    <?= $form->field($searchModel, 'user_id')->dropDownList(['' => 'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
 
     <label> التاريخ</label>
     <?= DateRangePicker::widget([
@@ -42,13 +41,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'timePicker' => true,
             'timePickerIncrement' => 30,
             'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
                 'format' => 'Y-m-d'
             ]
         ]
     ]); ?>
     <br>
-
-
 
 
     <div class="form-group">
@@ -85,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                     <tr>
                         <th style="width:50%">وقت الدوام :</th>
-                        <td><?= $searchModel->total_diff_time_out_mints?></td>
+                        <td><?= $searchModel->total_diff_time_out_mints ?></td>
                     </tr>
 
                     </tbody>

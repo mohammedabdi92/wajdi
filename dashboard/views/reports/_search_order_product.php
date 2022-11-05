@@ -45,6 +45,8 @@ use kartik\daterange\DateRangePicker;
             'timePicker' => true,
             'timePickerIncrement' => 30,
             'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
                 'format' => 'Y-m-d'
             ]
         ]

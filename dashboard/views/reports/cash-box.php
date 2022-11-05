@@ -32,6 +32,8 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
             'timePicker' => true,
             'timePickerIncrement' => 30,
             'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
                 'format' => 'Y-m-d'
             ]
         ]
