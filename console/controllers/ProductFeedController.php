@@ -130,14 +130,13 @@ class ProductFeedController extends Controller
     public function actionIndex5()
     {
         $connection = \Yii::$app->db;
-        $file = fopen(__DIR__.'/product6.csv', "r");
+        $file = fopen(__DIR__.'/total2.csv', "r");
 
         while (($data = fgetcsv($file, 1000, ",")) !== FALSE) {
 
-            $title= $data[1];
-            $price1 = (float)$data[2];
-            $price2 = (float)$data[3] ;
-
+            $title= $data[0].' توتال ';
+            $price1 = (float)$data[1];
+            $price2 = (float)$data[2] ;
             print $title.PHP_EOL;
             $product = new Product();
             $product->count_type = 1;
@@ -154,7 +153,6 @@ class ProductFeedController extends Controller
             $product->updated_by = 2 ;
             $product->status = 1 ;
             $product->save(false);
-
 
         }
     }
