@@ -149,7 +149,6 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
                 $("#" + itemName).val(result['price_'+$(item.target).val()]);
                 $(".inventory_count").html(result['inventory_count']);
             }
-
         }
     });
 
