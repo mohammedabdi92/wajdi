@@ -182,3 +182,7 @@ display: block;
 .top_nav .navbar-right {
     width: 80%;
 }
+.panel-default {
+    border-color: #34495e;
+    border-width: medium;
+}

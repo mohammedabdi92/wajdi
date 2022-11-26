@@ -170,28 +170,36 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         </div>
 
 
-        <div class=" col-md-12">
-
+        <div >
             <?php if(Yii::$app->user->can('الخصم الافرادي فواتير المبيعات')):?>
-            <?= $form->field($model, 'total_price_discount_product')->textInput(['readonly' => true]) ?>
+                <?= $form->field($model, 'total_price_discount_product')->textInput(['readonly' => true]) ?>
             <?php endif;?>
 
             <?php if(Yii::$app->user->can('الخصم الاجمالي فواتير المبيعات')):?>
-            <?= $form->field($model, 'total_amount_without_discount')->textInput(['readonly' => true]) ?>
+                <?= $form->field($model, 'total_amount_without_discount')->textInput(['readonly' => true]) ?>
                 <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
             <?php endif;?>
 
             <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
             <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
-            <?= $form->field($model, 'debt')->textInput() ?>
-            <?= $form->field($model, 'repayment')->textInput() ?>
+                <?= $form->field($model, 'debt')->textInput() ?>
+                <?= $form->field($model, 'repayment')->textInput() ?>
             <?php endif;?>
 
-            <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
-            <?php if(Yii::$app->user->can('باقي المبلغ للعميل في فواتير المبيعات')):?>
-            <?= $form->field($model, 'paid')->textInput() ?>
-            <?= $form->field($model, 'remaining')->textInput(['readonly' => true]) ?>
-            <?php endif;?>
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+
+                    <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
+                    <?php if(Yii::$app->user->can('باقي المبلغ للعميل في فواتير المبيعات')):?>
+                        <?= $form->field($model, 'paid')->textInput() ?>
+                        <?= $form->field($model, 'remaining')->textInput(['readonly' => true]) ?>
+                    <?php endif;?>
+
+                </div>
+
+            </div>
+
             <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
