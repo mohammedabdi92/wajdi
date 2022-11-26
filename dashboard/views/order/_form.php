@@ -165,11 +165,14 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                         </div>
                     </div>
                 <?php endforeach; ?>
+                <div class=" col-md-2">
+                    <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
+                </div>
+                <div class=" col-md-2">
+                    <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+                </div>
+            </div>
 
-            </div>
-            <div class=" col-md-2">
-                <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
-            </div>
         </div>
         <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
 
@@ -185,7 +188,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                 <?= $form->field($model, 'total_discount')->textInput(['readonly' => false]) ?>
             <?php endif;?>
 
-            <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+
             <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
                 <?= $form->field($model, 'debt')->textInput() ?>
                 <?= $form->field($model, 'repayment')->textInput() ?>
