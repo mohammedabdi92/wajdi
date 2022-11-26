@@ -169,4 +169,15 @@ $(document).on('click',".remove-item", function (item) {
     $('#order-product_count').val(num);
 });
 
+$(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+    jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
+        jQuery(this).html("المادة : " + (index + 1))
+    });
+});
+
+$(".dynamicform_wrapper").on("afterDelete", function(e) {
+    jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
+        jQuery(this).html("المادة : " + (index + 1))
+    });
+});
 
