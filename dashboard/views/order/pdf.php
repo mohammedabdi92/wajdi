@@ -75,7 +75,7 @@ $Arabic = new  Arabic();
 
     <?php endforeach; ?>
     <tr bgcolor="#eee">
-        <td colspan="2" align="right"><b> العدد الاجمالي</b></td>
+        <td colspan="2" align="right"><b> عدد القطع الاجمالي</b></td>
         <td align="center"><b><?= $model->total_count ?></b></td>
 
 

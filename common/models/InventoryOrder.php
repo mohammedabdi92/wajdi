@@ -110,7 +110,7 @@ class InventoryOrder extends \common\components\BaseModel
             'tax' => Yii::t('app', 'قيمة الضريبة'),
             'debt' => Yii::t('app', 'ذمم للمورد'),
             'repayment' => Yii::t('app', 'السداد'),
-            'total_count' => Yii::t('app', 'العدد الاجمالي'),
+            'total_count' => Yii::t('app', 'عدد القطع الاجمالي'),
             'tax_percentage' => Yii::t('app', 'نسبة الضريبة %'),
             'discount_percentage' => Yii::t('app', ' نسبة الخصم %'),
             'discount' => Yii::t('app', 'قيمة الخصم'),

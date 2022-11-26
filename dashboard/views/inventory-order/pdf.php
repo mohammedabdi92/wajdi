@@ -87,7 +87,7 @@ use yii\helpers\Html;
     <?php endif;?>
     <?php if(!empty($model->total_count)): ?>
         <tr bgcolor="#eee">
-            <td colspan="3" align="right"><b> العدد الاجمالي</b></td>
+            <td colspan="3" align="right"><b> عدد القطع الاجمالي</b></td>
             <td align="center"><b><?=$model->total_count ?></b></td>
         </tr>
     <?php endif;?>

@@ -65,33 +65,33 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
     <div class=" col-md-12">
 
+        <?php \wbraganca\dynamicform\DynamicFormWidget::begin([
+            'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
+            'widgetBody' => '.container-items', // required: css class selector
+            'widgetItem' => '.item', // required: css class
+            'min' => 1, // 0 or 1 (default 1)
+            'insertButton' => '.add-item', // css class
+            'deleteButton' => '.remove-item', // css class
+            'model' => $model_product[0],
+            'formId' => 'dynamic-form',
+            'formFields' => [
+                'product_id',
+                'count',
+            ],
+        ]); ?>
         <div class="panel panel-default">
-            <div class="panel-heading"><h4><i class="glyphicon glyphicon-envelope"></i> المواد</h4></div>
-            <div class="panel-body">
-                <?php \wbraganca\dynamicform\DynamicFormWidget::begin([
-                    'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
-                    'widgetBody' => '.container-items', // required: css class selector
-                    'widgetItem' => '.item', // required: css class
-                    'limit' => 100, // the maximum times, an element can be cloned (default 999)
-                    'min' => 1, // 0 or 1 (default 1)
-                    'insertButton' => '.add-item', // css class
-                    'deleteButton' => '.remove-item', // css class
-                    'model' => $model_product[0],
-                    'formId' => 'dynamic-form',
-                    'formFields' => [
-                        'product_id',
-                        'count',
-                    ],
-                ]); ?>
-
-                <div class="container-items"><!-- widgetContainer -->
-                    <?php foreach ($model_product as $i => $modelAddress): ?>
+            <div class="panel-heading">
+                <i class="fa fa-envelope"></i> المواد
+                <button type="button" class="pull-left add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> اضافة مادة </button>
+                <div class="clearfix"></div>
+            </div>
+            <div class="panel-body container-items"><!-- widgetContainer -->
+                <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading">
                             <h3 class="panel-title pull-right"> مادة</h3>
                             <div class="pull-left">
-                                <button type="button" class="add-item btn btn-success btn-xs"><i
-                                            class="glyphicon glyphicon-plus"></i></button>
+
                                 <button type="button" class="remove-item btn btn-danger btn-xs"><i
                                             class="glyphicon glyphicon-minus"></i></button>
                             </div>
@@ -150,9 +150,9 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                     <?= $form->field($modelAddress, "[{$i}]total_product_amount")->textInput(['readonly' => true])?>
                                 </div>
                                 <?php if(Yii::$app->user->can('الخصم الافرادي فواتير المبيعات')):?>
-                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
-                                    <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
-                                </div>
+                                    <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+                                        <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
+                                    </div>
                                 <?php endif;?>
 
                                 <div class="row col-md-12">
@@ -164,16 +164,15 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
                         </div>
                     </div>
-                        <?php endforeach; ?>
+                <?php endforeach; ?>
 
-                    <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
-                </div>
-                <div class=" col-md-2">
-                    <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
-                </div>
             </div>
-
+            <div class=" col-md-2">
+                <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
+            </div>
         </div>
+        <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
+
 
 
         <div >

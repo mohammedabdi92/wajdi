@@ -113,6 +113,30 @@ function calculateSupTotals(item) {
     {
         product_total_cost_final = product_cost * product_count;
     }
+    var product_id_item = $("select[id$=product_id]");
+    var product_id = mainBox.find(product_id_item).val();
+    var store_id =  $("#order-store_id").val();
+    var productAmountItem = $("[id$=-amount]");
+
+    if(product_id && store_id)
+    {
+        $.ajax({
+            url: '/product/get-detials?id=' + product_id+'&store_id='+store_id,
+            type: 'GET',
+            success: function  (result)  {
+                if (result) {
+                    result =  JSON.parse(result);
+                    console.log(result);
+                    mainBox.find(productAmountItem).val(result['price_'+$(item.target).val()]);
+                    mainBox.find($(".inventory_count")).html(result['inventory_count']);
+                }
+            }
+        });
+    }else {
+        mainBox.find($(".inventory_count")).html(0);
+        mainBox.find(productAmountItem).val(0);
+    }
+
      mainBox.find(product_total_cost_final_el).val(product_total_cost_final);
 
 
@@ -129,28 +153,7 @@ function productChange(This) {
 }
 
 $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (item) {
-    var itemName =  $(item.target).attr('name');
-    itemName =itemName.toLowerCase();
-    itemName =itemName.replaceAll('[', '-');
-    itemName =itemName.replaceAll(']', '');
-    var itemProduct = itemName.replace('price_number', 'product_id');
-    var product_id =  $("#" + itemProduct).val();
-    var store_id =  $("#order-store_id").val();
 
-    itemName =itemName.replace('price_number', 'amount');
-
-    $.ajax({
-        url: '/product/get-detials?id=' + product_id+'&store_id='+store_id,
-        type: 'GET',
-        success: function  (result)  {
-            if (result) {
-                result =  JSON.parse(result);
-                console.log(result);
-                $("#" + itemName).val(result['price_'+$(item.target).val()]);
-                $(".inventory_count").html(result['inventory_count']);
-            }
-        }
-    });
 
     $('.item').each(function (index, element) {
         calculateSupTotals(element);

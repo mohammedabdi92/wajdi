@@ -95,7 +95,7 @@ class Order extends \common\components\BaseModel
             'total_amount_without_discount' => Yii::t('app', 'السعر الاجمالي'),
             'total_amount' => Yii::t('app', 'السعر النهائي المطلوب'),
             'total_discount' => Yii::t('app', 'الخصم الاجمالي'),
-            'total_count' => Yii::t('app', 'العدد الاجمالي'),
+            'total_count' => Yii::t('app', 'عدد القطع الاجمالي'),
             'paid' => Yii::t('app', 'المدفوع'),
             'remaining' => Yii::t('app', 'الباقي للمبلغ للعميل'),
             'debt' => Yii::t('app', 'الدين'),
@@ -106,7 +106,7 @@ class Order extends \common\components\BaseModel
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
-            'product_count' => Yii::t('app', 'عدد الاصناف'),
+            'product_count' => Yii::t('app', 'عدد المواد'),
         ];
     }
 
