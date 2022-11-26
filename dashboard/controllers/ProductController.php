@@ -187,4 +187,7 @@ class ProductController extends BaseController
         }
         return $out;
     }
+    public function actionGetDetials($id){
+       return json_encode(Product::findOne($id)->getAttributes());
+    }
 }

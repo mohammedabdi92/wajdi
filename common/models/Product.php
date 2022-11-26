@@ -54,6 +54,9 @@ class Product extends \common\components\BaseModel
         return 'product';
     }
 
+
+
+
     /**
      * {@inheritdoc}
      */

@@ -107,6 +107,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                 <div class="col-sm-2">
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
+                                        'data' =>[$modelAddress->product_id=>$modelAddress->productTitle],
                                         'options' => ['placeholder' => 'اختر نوع العد .....'],
                                         'pluginOptions' => [
                                             'allowClear' => true,

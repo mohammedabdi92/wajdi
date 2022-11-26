@@ -137,8 +137,21 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
     var product_id =  $("#" + itemProduct).val();
 
     itemName =itemName.replace('price_number', 'amount');
-   var price = products[product_id]['price_'+$(item.target).val()];
-    $("#" + itemName).val(price);
+
+    // var price = products[product_id][];
+    $.ajax({
+        url: '/product/get-detials?id=' + product_id,
+        type: 'GET',
+        success: function  (result)  {
+            if (result) {
+                result =  JSON.parse(result);
+                console.log(result);
+                $("#" + itemName).val(result['price_'+$(item.target).val()])
+            }
+
+        }
+    });
+
     $('.item').each(function (index, element) {
         calculateSupTotals(element);
     });

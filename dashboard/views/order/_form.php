@@ -14,18 +14,18 @@ $this->registerJsFile(
     '@web/js/order.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
-$products = \common\models\Product::find()->where(['status'=>1])->all();
-$productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
-$productsArray = [];
+//$products = \common\models\Product::find()->where(['status'=>1])->all();
+//$productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
+//$productsArray = [];
 $priceList = [];
-foreach ($products as $product)
-{
-    $productsArray[$product->id] =$product->attributes;
-}
+//foreach ($products as $product)
+//{
+//    $productsArray[$product->id] =$product->attributes;
+//}
 $url = \yii\helpers\Url::to(['product/product-list']);
 ?>
 <script>
-    var products = <?=\yii\helpers\Json::encode($productsArray);?>;
+    //var products = <?php //=\yii\helpers\Json::encode($productsArray);?>;
 
 </script>
 
@@ -104,12 +104,6 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                             if (!$modelAddress->isNewRecord) {
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
                                 $priceList = $modelAddress->getPriceList();
-                            } else {
-                                if($products)
-                                {
-                                    $priceList = $products[0]->getPriceList();
-                                }
-
                             }
 
 
@@ -120,6 +114,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
+                                        'data' =>[$modelAddress->product_id=>$modelAddress->productTitle],
                                         'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [
@@ -131,7 +126,9 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                             'ajax' => [
                                                 'url' => $url,
                                                 'dataType' => 'json',
-                                                'results' => new JsExpression('function(params) {  return params; }')
+                                                'results' => new JsExpression('function(params) {  return params; }'),
+                                                'cache' => true
+
                                             ],
                                             'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
                                             'templateResult' => new JsExpression('function(product) { return product.text; }'),
