@@ -135,18 +135,19 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
     itemName =itemName.replaceAll(']', '');
     var itemProduct = itemName.replace('price_number', 'product_id');
     var product_id =  $("#" + itemProduct).val();
+    var store_id =  $("#order-store_id").val();
 
     itemName =itemName.replace('price_number', 'amount');
 
-    // var price = products[product_id][];
     $.ajax({
-        url: '/product/get-detials?id=' + product_id,
+        url: '/product/get-detials?id=' + product_id+'&store_id='+store_id,
         type: 'GET',
         success: function  (result)  {
             if (result) {
                 result =  JSON.parse(result);
                 console.log(result);
-                $("#" + itemName).val(result['price_'+$(item.target).val()])
+                $("#" + itemName).val(result['price_'+$(item.target).val()]);
+                $(".inventory_count").html(result['inventory_count']);
             }
 
         }

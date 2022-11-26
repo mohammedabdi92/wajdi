@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\models\Inventory;
 use common\models\InventoryOrder;
 use common\models\InventoryOrderProduct;
 use common\models\Product;
@@ -187,7 +188,18 @@ class ProductController extends BaseController
         }
         return $out;
     }
-    public function actionGetDetials($id){
-       return json_encode(Product::findOne($id)->getAttributes());
+    public function actionGetDetials($id,$store_id = ''){
+        $product =Product::findOne($id)->getAttributes();
+        $product['inventory_count'] = 0;
+        if($product && $store_id)
+        {
+            $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$id])->one();
+            if($inventory)
+            {
+                $product['inventory_count'] = $inventory->count;
+            }
+
+        }
+       return json_encode($product);
     }
 }

@@ -154,6 +154,12 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                     <?= $form->field($modelAddress, "[{$i}]discount")->textInput() ?>
                                 </div>
                                 <?php endif;?>
+
+                                <div class="row col-md-12">
+                                    <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
+
+                                </div>
+
                             </div><!-- .row -->
 
                         </div>
