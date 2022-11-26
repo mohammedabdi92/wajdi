@@ -186,3 +186,9 @@ display: block;
     border-color: #34495e;
     border-width: medium;
 }
+.radio, .checkbox {
+    display: contents;
+}
+.radio label, .checkbox label{
+    font-weight: bold;
+}

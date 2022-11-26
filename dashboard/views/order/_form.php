@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 use yii\web\JsExpression;
 
 
@@ -165,19 +165,21 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                         </div>
                     </div>
                 <?php endforeach; ?>
-                <div class=" col-md-2">
-                    <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
-                </div>
-                <div class=" col-md-2">
-                    <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
-                </div>
+
             </div>
 
         </div>
         <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
 
 
-
+        <div class="row " style=" border-width: medium; border-style: solid; border-color: #34495e; margin: 0px; margin-bottom: 10px;">
+            <div class=" col-md-2">
+                <?= $form->field($model, 'product_count')->textInput(['readonly' => true,'value'=>$model->product_count??1]) ?>
+            </div>
+            <div class=" col-md-2">
+                <?= $form->field($model, 'total_count')->textInput(['readonly' => true]) ?>
+            </div>
+        </div>
         <div >
             <?php if(Yii::$app->user->can('الخصم الافرادي فواتير المبيعات')):?>
                 <?= $form->field($model, 'total_price_discount_product')->textInput(['readonly' => true]) ?>
