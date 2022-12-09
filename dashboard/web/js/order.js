@@ -102,21 +102,11 @@ function calculateTotal() {
 
 function calculateSupTotals(item) {
     var mainBox = $(item);
-    var product_cost_el = $("[id$=-amount]");
-    var product_count_el = $("[id$=-count]");
-    var product_total_cost_final_el = $("[id$=-total_product_amount]");
-
-    var product_cost = mainBox.find(product_cost_el).val();
-    var product_count = mainBox.find(product_count_el).val();
-    var product_total_cost_final = 0;
-    if(product_cost && product_count)
-    {
-        product_total_cost_final = product_cost * product_count;
-    }
     var product_id_item = $("select[id$=product_id]");
     var product_id = mainBox.find(product_id_item).val();
     var store_id =  $("#order-store_id").val();
-    var productAmountItem = $("[id$=-amount]");
+    var product_cost_el = $("[id$=-amount]");
+    var price_selected  =  mainBox.find($("input[type='radio'][name$='[price_number]']:checked"));
 
     if(product_id && store_id)
     {
@@ -126,18 +116,33 @@ function calculateSupTotals(item) {
             success: function  (result)  {
                 if (result) {
                     result =  JSON.parse(result);
-                    console.log(result);
-                    mainBox.find(productAmountItem).val(result['price_'+$(item.target).val()]);
+                    if(price_selected)
+                    {
+                        mainBox.find(product_cost_el).val(result['price_'+price_selected.val()]);
+                    }
                     mainBox.find($(".inventory_count")).html(result['inventory_count']);
                 }
+                var product_count_el = $("[id$=-count]");
+                var product_total_cost_final_el = $("[id$=-total_product_amount]");
+
+                var product_cost = mainBox.find(product_cost_el).val();
+                var product_count = mainBox.find(product_count_el).val();
+                var product_total_cost_final = 0;
+                if(product_cost && product_count)
+                {
+                    product_total_cost_final = product_cost * product_count;
+                }
+
+
+                mainBox.find(product_total_cost_final_el).val(product_total_cost_final);
             }
         });
     }else {
         mainBox.find($(".inventory_count")).html(0);
-        mainBox.find(productAmountItem).val(0);
+        mainBox.find(product_cost_el).val(0);
     }
 
-     mainBox.find(product_total_cost_final_el).val(product_total_cost_final);
+
 
 
 }
