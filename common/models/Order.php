@@ -56,18 +56,18 @@ class Order extends \common\components\BaseModel
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['product_count'], 'number'],
-            [['customer_id'],'validateCustomerRequired'],
+            [['customer_id'],'required', 'when' => function($model) {
+                if(empty($this->customer_id) && empty($this->customer_name))
+                {
+                    return true;
+                }
+                return false;
+            }],
             [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
-    public function validateCustomerRequired($attr) {
 
-        if(empty($this->customer_id) && empty($this->customer_name))
-        {
-            $this->addError($attr,'يجب اختيرا العميل');
-        }
-    }
     public function behaviors()
     {
         return [
