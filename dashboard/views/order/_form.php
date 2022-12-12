@@ -167,7 +167,11 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                 <?php endforeach; ?>
 
             </div>
-
+            <div class="panel-heading">
+                
+                <button type="button" class="pull-left add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> اضافة مادة </button>
+                <div class="clearfix"></div>
+            </div>
         </div>
         <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
 
