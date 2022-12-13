@@ -182,8 +182,14 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 });
 
 $(".dynamicform_wrapper").on("afterDelete", function(e) {
+
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
         jQuery(this).html("المادة : " + (index + 1))
     });
+    $('.item').each(function (index, element) {
+        calculateSupTotals(element);
+    });
+    checkDiscount();
+    calculateTotal();
 });
 
