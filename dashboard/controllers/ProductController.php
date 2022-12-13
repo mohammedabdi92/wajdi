@@ -173,12 +173,11 @@ class ProductController extends BaseController
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = Product::find();
-//            if($store_id)
-//            {
-//                $query->leftJoin("inventory","product.id = inventory.product_id");
-//                $query->leftJoin('inspection_category', 'inspection_specified_fields.category_id = inspection_category.category_id')
-//            }
-            $query->select('id, title AS text')
+            if($store_id)
+            {
+                $query->leftJoin("inventory","product.id = inventory.product_id")->andWhere(['inventory.store_id'=>$store_id]);
+            }
+            $query->select('product.id, title AS text')
                 ->from('product')
                 ->limit(20);
             $parts = preg_split('/\s+/', $q);

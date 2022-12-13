@@ -166,6 +166,9 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
     });
     calculateTotal();
 });
+$(document).on('change', '#order-store_id', function (item) {
+    $.pjax.reload({container:"#new_country"});
+});
 $(document).on('click',".add-item", function (item) {
     var num =parseInt( $('#order-product_count').val()) + 1;
     $('#order-product_count').val(num);
@@ -192,4 +195,5 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
     checkDiscount();
     calculateTotal();
 });
+
 

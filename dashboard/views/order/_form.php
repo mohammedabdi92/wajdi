@@ -14,20 +14,15 @@ $this->registerJsFile(
     '@web/js/order.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
-//$products = \common\models\Product::find()->where(['status'=>1])->all();
-//$productList = [''=>"اختر ....."]+\yii\helpers\ArrayHelper::map($products, 'id', 'title');
-//$productsArray = [];
-$priceList = [];
-//foreach ($products as $product)
-//{
-//    $productsArray[$product->id] =$product->attributes;
-//}
-$url = \yii\helpers\Url::to(['product/product-list']);
-?>
-<script>
-    //var products = <?php //=\yii\helpers\Json::encode($productsArray);?>;
 
-</script>
+
+$url = \yii\helpers\Url::to(['product/product-list']);
+$priceList = [];
+
+
+
+?>
+
 
 <div class="order-form">
 
@@ -59,12 +54,11 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         'pluginOptions' => [
             'allowClear' => true
         ],
-    ]);?>
-
-
+    ]);
+    ?>
 
     <div class=" col-md-12">
-
+        <?php \yii\widgets\Pjax::begin(['id' => 'new_country']) ?>
         <?php \wbraganca\dynamicform\DynamicFormWidget::begin([
             'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
             'widgetBody' => '.container-items', // required: css class selector
@@ -126,7 +120,8 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                             'ajax' => [
                                                 'url' => $url,
                                                 'dataType' => 'json',
-                                                'results' => new JsExpression('function(params) {  return params; }'),
+                                                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#order-store_id").val()}; }'),
+                                                'results' => new JsExpression('function(params) { return {q:params.term}; }'),
                                                 'cache' => true
 
                                             ],
@@ -168,7 +163,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
             </div>
             <div class="panel-heading">
-                
+
                 <button type="button" class="pull-left add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> اضافة مادة </button>
                 <div class="clearfix"></div>
             </div>
@@ -221,8 +216,13 @@ $url = \yii\helpers\Url::to(['product/product-list']);
             </div>
         </div>
 
-
+        <?php \yii\widgets\Pjax::end() ?>
         <?php ActiveForm::end(); ?>
 
     </div>
+
+
+
+
+
 
