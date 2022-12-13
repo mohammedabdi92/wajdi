@@ -167,12 +167,17 @@ class ProductController extends BaseController
         return json_encode($response);
     }
 
-    public function actionProductList($q = null, $id = null) {
+    public function actionProductList($q = null, $id = null,$store_id=null) {
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $out = ['results' => ['id' => '', 'text' => '']];
         if (!is_null($q)) {
             $query = Product::find();
+//            if($store_id)
+//            {
+//                $query->leftJoin("inventory","product.id = inventory.product_id");
+//                $query->leftJoin('inspection_category', 'inspection_specified_fields.category_id = inspection_category.category_id')
+//            }
             $query->select('id, title AS text')
                 ->from('product')
                 ->limit(20);
