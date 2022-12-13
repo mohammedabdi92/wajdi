@@ -150,7 +150,7 @@ $priceList = [];
                                     </div>
                                 <?php endif;?>
 
-                                <div class="row col-md-12">
+                                <div style=" display: -webkit-inline-box; width: 100%; ">
                                     <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
 
                                 </div>
