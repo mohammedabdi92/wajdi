@@ -28,9 +28,9 @@ class Damaged extends \yii\db\ActiveRecord
     const STATUS_REPLACED = 4;
     const statusArray = [
         self::STATUS_ACTIVE=>"لم يتم التحديد",
-        self::STATUS_INACTIVE=>"عير قابل للارجاع",
+        self::STATUS_INACTIVE=>"غير قابل للارجاع",
         self::STATUS_RETURNED=>"تم الارجاع",
-        self::STATUS_REPLACED=>"تم التبديل",
+        self::STATUS_REPLACED=>"تم الت  بديل",
     ];
     public  function getStatusText(){
         return self::statusArray[$this->status];
