@@ -10,8 +10,7 @@ use yii\grid\GridView;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$products = \common\models\Product::find()->where(['status'=>1])->all();
-$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+
 $this->title = Yii::t('app', 'البضاعة التالفة');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -46,8 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($model){
                     return $model->productTitle;
                 },
-                'format' => 'raw',
-                'filter'=>$productList
+                'format' => 'raw'
             ],
             'count',
             //'amount',

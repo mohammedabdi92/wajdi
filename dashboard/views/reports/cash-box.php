@@ -11,8 +11,7 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'مواد الافرع');
 $this->params['breadcrumbs'][] = $this->title;
-$products = \common\models\Product::find()->where(['status'=>1])->all();
-$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
+
 
 
 ?>

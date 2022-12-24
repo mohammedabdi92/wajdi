@@ -17,10 +17,14 @@ function checkDiscount(){
             $(element).val('');
             $(element).attr('readonly', true);
         });
+        $('#order-total_price_discount_product').val('');
     }else {
         discounts.each(function (index, element) {
             $(element).attr('readonly', false);
         });
+
+
+
     }
 
     var supdis = 0;
@@ -149,6 +153,9 @@ function calculateSupTotals(item) {
 }
 
 function productChange(This) {
+    var box_id =  getBoxId($(This).attr('id')) ;
+    var box_product_title = $("#select2-orderproduct-"+box_id+"-product_id-container").attr("title");
+    $('#orderproduct-'+box_id+'-title').val(box_product_title);
     $.post("/order/price-list?id=" + $(This).val() + "&key=" + $(This).attr('id'), function (data) {
         var id = $(This).attr('id');
         var amount = id.replace('product_id', 'amount');
@@ -156,6 +163,10 @@ function productChange(This) {
         id = id.replace('product_id', 'price_number');
         $("#" + id).html(data);
     });
+}
+function getBoxId(id){
+    var product_changed_id_array = id.split('-');
+    return  product_changed_id_array[1];
 }
 
 $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (item) {

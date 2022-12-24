@@ -51,6 +51,13 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         }else{
             $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
         }
+        $single_store = null ;
+        if(count($stores) == 1)
+        {
+            $single_store = $stores[0]->id;
+        }
+        $model->store_id = $single_store;
+
         echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
             'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
             'options' => ['placeholder' => 'اختر نوع العد .....'  ],

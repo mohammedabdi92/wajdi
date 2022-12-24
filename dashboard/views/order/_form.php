@@ -48,6 +48,12 @@ $priceList = [];
     }else{
         $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
     }
+    $single_store = null ;
+    if(count($stores) == 1)
+    {
+        $single_store = $stores[0]->id;
+    }
+    $model->store_id = $single_store;
     echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
         'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
         'options' => ['placeholder' => 'اختر نوع العد .....'  ],
@@ -82,8 +88,10 @@ $priceList = [];
             <div class="panel-body container-items"><!-- widgetContainer -->
                 <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
-                        <div class="panel-heading">
-                            <h3 class="panel-title pull-right"><span class="panel-title-address">مادة: <?= ($i + 1) ?></span> </h3>
+                        <div class="panel-heading" >
+                            <h3 class="panel-title pull-right" style=" width: 97%; "><span class="panel-title-address">مادة: <?= ($i + 1) ?></span>  <br>
+                                <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+                            </h3>
                             <div class="pull-left">
 
                                 <button type="button" class="remove-item btn btn-danger btn-xs"><i

@@ -12,8 +12,6 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'النقليات');
 $this->params['breadcrumbs'][] = $this->title;
-$products = \common\models\Product::find()->where(['status'=>1])->all();
-$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
 
 ?>
 <div class="transfer-order-index">
@@ -32,8 +30,7 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
             'value' => function($model) {
                 return $model->productTitle;
             },
-            'format' => 'raw',
-            'filter'=>$productList
+            'format' => 'raw'
         ],
         [
             'attribute' => 'from',

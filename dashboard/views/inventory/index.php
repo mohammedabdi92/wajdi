@@ -9,8 +9,6 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'مواد الافرع');
 $this->params['breadcrumbs'][] = $this->title;
-$products = \common\models\Product::find()->where(['status'=>1])->all();
-$productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
 
 
 ?>
@@ -31,7 +29,6 @@ $productList = \yii\helpers\ArrayHelper::map($products, 'id', 'title');
                 return $model->productTitle;
             },
             'format' => 'raw',
-            'filter'=>$productList
         ],
         [
             'attribute' => 'store_id',
