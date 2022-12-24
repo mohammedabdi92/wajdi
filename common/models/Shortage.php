@@ -60,10 +60,10 @@ class Shortage extends \yii\db\ActiveRecord
             'store_id' => 'المحل',
             'product_id' => 'المادة',
             'count' => 'العدد',
-            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
-            'created_by' => Yii::t('app', 'الشخص المنشئ'),
-            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
-            'updated_by' => Yii::t('app', 'الشخص المعدل'),
+            'created_at' =>  'تاريخ الانشاء',
+            'created_by' =>  'الشخص المنشئ',
+            'updated_at' =>  'تاريخ التعديل',
+            'updated_by' =>  'الشخص المعدل',
         ];
     }
     public function getStoreTitle()

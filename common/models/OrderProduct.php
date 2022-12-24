@@ -119,20 +119,20 @@ class OrderProduct extends \common\components\BaseModel
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'الرقم'),
-            'order_id' => Yii::t('app', 'رقم الطلب'),
-            'product_id' => Yii::t('app', 'المادة'),
-            'price_number' => Yii::t('app', 'السعر'),
-            'amount' => Yii::t('app', 'السعر الفردي'),
-            'count' => Yii::t('app', 'العدد'),
-            'store_id' => Yii::t('app', 'المحل'),
-            'count_type' => Yii::t('app', 'نوع العدد'),
-            'created_at' => Yii::t('app', 'تاريخ الانشاء'),
-            'created_by' => Yii::t('app', 'الشخص المنشئ'),
-            'updated_at' => Yii::t('app', 'تاريخ التعديل'),
-            'updated_by' => Yii::t('app', 'الشخص المعدل'),
-            'discount' => Yii::t('app', 'الخصم'),
-            'total_product_amount' => Yii::t('app', 'السعر الاجمالي'),
+            'id' =>  'الرقم',
+            'order_id' =>  'رقم الطلب',
+            'product_id' =>  'المادة',
+            'price_number' =>  'السعر',
+            'amount' =>  'السعر الفردي',
+            'count' =>  'العدد',
+            'store_id' =>  'المحل',
+            'count_type' =>  'نوع العدد',
+            'created_at' =>  'تاريخ الانشاء',
+            'created_by' =>  'الشخص المنشئ',
+            'updated_at' =>  'تاريخ التعديل',
+            'updated_by' =>  'الشخص المعدل',
+            'discount' =>  'الخصم',
+            'total_product_amount' =>  'السعر الاجمالي',
         ];
     }
 
