@@ -112,7 +112,7 @@ function calculateSupTotals(item) {
     var product_cost_el = $("[id$=-amount]");
     var price_selected  =  mainBox.find($("input[type='radio'][name$='[price_number]']:checked"));
 
-    if(product_id && store_id)
+    if(product_id )
     {
         $.ajax({
             url: '/product/get-detials?id=' + product_id+'&store_id='+store_id,

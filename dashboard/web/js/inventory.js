@@ -180,8 +180,14 @@ $(document).on('change', '[id$=product_id]', function (item) {
     $('.item').each(function (index, element) {
         getProductDetails(element);
     });
-
+    var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
+    var box_product_title = $("#select2-inventoryorderproduct-"+box_id+"-product_id-container").attr("title");
+    $('#inventoryorderproduct-'+box_id+'-title').val(box_product_title);
 });
+function getBoxId(id){
+    var product_changed_id_array = id.split('-');
+    return  product_changed_id_array[1];
+}
 function getProductDetails(item) {
     var mainBox = $(item);
     var product_id_item = $("select[id$=product_id]");
