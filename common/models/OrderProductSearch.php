@@ -52,7 +52,10 @@ class OrderProductSearch extends OrderProduct
         $query = OrderProduct::find();
 
         // add conditions that should always apply here
-        $query->joinWith('product');
+        $query->joinWith([
+            'product' => function (\yii\db\ActiveQuery $query) {
+                $query->select(['id', 'price']);
+            }]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

@@ -45,7 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php \yii\widgets\ActiveForm::end(); ?>
 
 
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-md-6">
         <p class="lead">الصندوق</p>
         <div class="table-responsive">
             <table class="table">
