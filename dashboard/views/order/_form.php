@@ -224,7 +224,7 @@ $priceList = [];
             <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
-                <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
+                <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>
             </div>
         </div>
 
