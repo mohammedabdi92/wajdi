@@ -74,7 +74,7 @@ class InventoryOrderSearch extends InventoryOrder
             $query->andWhere(['store_id'=>$stores]);
 
         }
-
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }

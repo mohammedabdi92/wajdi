@@ -101,7 +101,7 @@ class OrderSearch extends Order
             $this->total_amount_sum = round($query->sum('total_amount'), 2);
             $this->total_discount_sum = $query->sum('total_discount') + $query->sum('total_price_discount_product') ;
         }
-
+        $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
     }
 }
