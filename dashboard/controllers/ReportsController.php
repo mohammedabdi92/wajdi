@@ -178,9 +178,9 @@ class ReportsController extends Controller
             $entries_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $damaged_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $inventory_order_q->andWhere(['store_id'=>$modelSearch->store_id]);
-//            $outlay_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
+            $outlay_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $damaged_q_m->andWhere(['order.store_id'=>$modelSearch->store_id]);
-//            $financial_withdrawal_q->andWhere(['store_id'=>$modelSearch->store_id]);
+            $financial_withdrawal_q->andWhere(['store_id'=>$modelSearch->store_id]);
         }
 
         $damaged_mince = $damaged_q_m->sum('amount');

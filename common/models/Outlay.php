@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property string|null $note
  * @property string|null $image_name
  * @property int|null $user_id
+ * @property int|null $store_id
  * @property dateTime|null $pull_date
  * @property int $created_at
  * @property int|null $created_by
@@ -46,7 +47,7 @@ class Outlay extends \yii\db\ActiveRecord
         return [
             [['amount'], 'number'],
             [['note'], 'string'],
-            [['amount','user_id','pull_date'], 'required'],
+            [['amount','user_id','pull_date','store_id'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['image_name'], 'string', 'max' => 255],
         ];
@@ -60,6 +61,7 @@ class Outlay extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'الرقم'),
             'amount' => Yii::t('app', 'القيمة'),
+            'store_id' => Yii::t('app', 'المحل'),
             'note' => Yii::t('app', 'الملاحظة'),
             'image_name' => Yii::t('app', 'الصورة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),

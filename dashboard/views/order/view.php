@@ -44,6 +44,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            'total_amount_without_discount',
+            [
+                'attribute' => 'total_discount',
+                'value' => function($model){
+                    return $model->total_discount+$model->total_price_discount_product;
+                },
+                'format' => 'raw',
+            ],
             'total_amount',
              [
                 'attribute' => 'created_at',

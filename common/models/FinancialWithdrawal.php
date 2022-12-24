@@ -13,6 +13,7 @@ use yii\behaviors\TimestampBehavior;
  * @property float|null $amount
  * @property int|null $status
  * @property int|null $user_id
+ * @property int|null $store_id
  * @property dateTime|null $pull_date
  * @property string|null $note
  * @property int $created_at
@@ -48,7 +49,7 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
     {
         return [
             [['amount','user_id'], 'number'],
-            [['amount','user_id','pull_date'], 'required'],
+            [['amount','user_id','pull_date','store_id'], 'required'],
             [['status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['note'], 'string'],
             ['status', 'default', 'value' => self::STATUS_NOT_PAYED],
@@ -71,6 +72,7 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'الرقم'),
             'amount' => Yii::t('app', 'القيمة'),
+            'store_id' => Yii::t('app', 'المحل'),
             'status' => Yii::t('app', 'الحالة'),
             'user_id' => Yii::t('app', 'الساحب'),
             'pull_date' => Yii::t('app', 'تاريخ السحب'),
