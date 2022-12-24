@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -86,5 +87,9 @@ class Outlay extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
     }
 }

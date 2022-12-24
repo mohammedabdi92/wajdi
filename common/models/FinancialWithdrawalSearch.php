@@ -17,7 +17,7 @@ class FinancialWithdrawalSearch extends FinancialWithdrawal
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'status', 'created_at','user_id', 'created_by','store_id', 'updated_at', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['note'], 'safe'],
         ];
@@ -62,6 +62,8 @@ class FinancialWithdrawalSearch extends FinancialWithdrawal
             'id' => $this->id,
             'amount' => $this->amount,
             'status' => $this->status,
+            'store_id' => $this->store_id,
+            'user_id' => $this->user_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

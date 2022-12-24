@@ -3,6 +3,7 @@
 namespace common\models;
 
 use common\components\Constants;
+use common\components\CustomFunc;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -132,6 +133,18 @@ class InventoryOrder extends \common\components\BaseModel
         $query = new \common\models\query\InventoryOrderQuery(get_called_class());
         $query->attachBehavior('softDelete', SoftDeleteQueryBehavior::className());
         return $query;
+    }
+
+    public function beforeDelete()
+    {
+       $products =  $this->products;
+       foreach ($products as $product)
+       {
+           $product->delete();
+
+       }
+
+        return parent::beforeDelete();
     }
 
     public function getSupplier()

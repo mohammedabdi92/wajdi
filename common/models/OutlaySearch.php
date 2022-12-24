@@ -17,7 +17,7 @@ class OutlaySearch extends Outlay
     public function rules()
     {
         return [
-            [['id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'created_at', 'created_by', 'updated_at','store_id','user_id', 'updated_by'], 'integer'],
             [['amount'], 'number'],
             [['note', 'image_name'], 'safe'],
         ];
@@ -61,6 +61,8 @@ class OutlaySearch extends Outlay
         $query->andFilterWhere([
             'id' => $this->id,
             'amount' => $this->amount,
+            'store_id' => $this->store_id,
+            'user_id' => $this->user_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,

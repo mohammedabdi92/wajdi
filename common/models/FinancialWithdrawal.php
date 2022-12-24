@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use common\components\Constants;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
@@ -92,5 +93,9 @@ class FinancialWithdrawal extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \common\models\query\FinancialWithdrawalQuery(get_called_class());
+    }
+    public function getStoreTitle()
+    {
+        return Constants::getStoreName($this->store_id);
     }
 }
