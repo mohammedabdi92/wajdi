@@ -18,6 +18,7 @@ class OrderSearch extends Order
     public $debt_sum ;
     public $repayment_sum ;
     public $total_amount_sum ;
+    public $customer_name ;
 
 
     /**
@@ -28,7 +29,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to'], 'safe'],
+            [['created_at_from','created_at_to','customer_name'], 'safe'],
         ];
     }
 
@@ -64,6 +65,13 @@ class OrderSearch extends Order
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
+        }
+        if(!empty($this->customer_name))
+        {
+            $user =  Customer::find()->where(" name like '%$this->customer_name%' ")->one();
+           if($user){
+               $this->customer_id =$user->id;
+           }
         }
 
         // grid filtering conditions

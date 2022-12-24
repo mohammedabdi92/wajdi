@@ -122,7 +122,7 @@ class ReportsController extends Controller
             $mints_last =   fmod($mins, 60);
             $searchModel->total_diff_time_out_mints=$hours.':'.$mints_last;
         }
-
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $this->render('presence', [
             'searchModel' => $searchModel,

@@ -27,12 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
         'id',
         [
-            'attribute' => 'customer_id',
+            'attribute' => 'customer_name',
             'value' => function($model){
                 return $model->customerTitle;
             },
             'format' => 'raw',
-            'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name')
         ],
         [
             'attribute' => 'store_id',

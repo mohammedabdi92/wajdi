@@ -11,6 +11,7 @@ use common\models\InventoryOrder;
  */
 class InventoryOrderSearch extends InventoryOrder
 {
+    public $supplier_name;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class InventoryOrderSearch extends InventoryOrder
         return [
             [['id', 'supplier_id','store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
+            [['supplier_name'], 'safe'],
         ];
     }
 
@@ -55,7 +57,13 @@ class InventoryOrderSearch extends InventoryOrder
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if(!empty($this->supplier_name))
+        {
+            $user =  Supplier::find()->where(" name like '%$this->supplier_name%' ")->one();
+            if($user){
+                $this->supplier_id =$user->id;
+            }
+        }
 
         // grid filtering conditions
         $query->andFilterWhere([

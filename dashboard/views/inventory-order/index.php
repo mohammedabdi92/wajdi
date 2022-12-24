@@ -32,12 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php  $gridColumns = [
         'id',
         [
-            'attribute' => 'supplier_id',
+            'attribute' => 'supplier_name',
             'value' => function ($model) {
                 return $model->supplierTitle;
             },
-            'format' => 'raw',
-            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name')
+            'format' => 'raw'
         ],
         [
             'attribute' => 'store_id',
