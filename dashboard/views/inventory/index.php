@@ -38,7 +38,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
             'format' => 'raw',
         ],
-        'count',
+        [
+            'attribute' => 'count',
+            'visible' => Yii::$app->user->can('ظهور العدد بمواد الافرع بالمخزن'),
+        ],
         [
             'attribute' => 'product.price_1',
             'visible' => Yii::$app->user->can('سعر بيع 1'),
