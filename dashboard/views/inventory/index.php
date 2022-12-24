@@ -40,6 +40,22 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'count',
         [
+            'attribute' => 'product.price_1',
+            'visible' => Yii::$app->user->can('سعر بيع 1'),
+        ],
+        [
+            'attribute' => 'product.price_2',
+            'visible' => Yii::$app->user->can('سعر بيع 2'),
+        ],
+        [
+            'attribute' => 'product.price_3',
+            'visible' => Yii::$app->user->can('سعر بيع 3'),
+        ],
+        [
+            'attribute' => 'product.price_4',
+            'visible' => Yii::$app->user->can('سعر بيع 4'),
+        ],
+        [
             'attribute' => 'created_at',
             'value' => function($model){
                 return \common\components\CustomFunc::getFullDate($model->created_at);
