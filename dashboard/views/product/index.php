@@ -11,7 +11,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel common\models\ProductSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'المواد');
+$this->title = 'المواد';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="product-index">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php
         if (Yii::$app->user->can('تعديل المواد')) {
-            echo Html::a(Yii::t('app', 'انشاء مادة'), ['create'], ['class' => 'btn btn-success']);
+            echo Html::a('انشاء مادة', ['create'], ['class' => 'btn btn-success']);
         }
         ?>
 

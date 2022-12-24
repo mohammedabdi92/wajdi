@@ -5,6 +5,7 @@ namespace common\components;
 use common\models\Inventory;
 use common\models\InventoryOrder;
 use common\models\InventoryOrderProduct;
+use common\models\Order;
 use common\models\OrderProduct;
 use common\models\User;
 
@@ -53,8 +54,27 @@ class CustomFunc
             $inventory->count = $total;
 
            return $inventory->save(false);
-
-
+    }
+    public static function removeOrderProduct($product_id,$order_id,$count){
+        $orderProduct =  OrderProduct::find()->where(['order_id'=>$order_id,'product_id'=>$product_id])->one();
+        if($orderProduct)
+        {
+           if($orderProduct->count == $count )
+           {
+               $orderProduct->delete();
+               $orderHaveProduct = OrderProduct::find()->where(['order_id'=>$order_id])->one();
+               if(!$orderHaveProduct)
+               {
+                   Order::deleteAll(['id'=>$order_id]);
+               }
+           }else{
+               $orderProduct->count = $orderProduct->count - $count ;
+           }
+           self::calculateOrderProduct($order_id);
+        }
+    }
+    public static function calculateOrderProduct($order_id)
+    {
 
     }
 }

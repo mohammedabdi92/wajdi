@@ -40,6 +40,18 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'count',
             'amount',
+            [
+                'attribute' => 'created_by',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function($model){
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                },
+            ],
             //'created_at',
             //'created_by',
             //'updated_at',

@@ -45,6 +45,8 @@ $this->registerJsFile(
     <?= $form->field($model, 'count')->textInput() ?>
 
     <?= $form->field($model, 'amount')->textInput() ?>
+    <?= $form->field($model, 'returner_name')->textInput() ?>
+    <?= $form->field($model, 'note')->textarea() ?>
 
 
     <div class="form-group">

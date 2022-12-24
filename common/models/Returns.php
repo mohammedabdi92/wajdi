@@ -45,6 +45,7 @@ class Returns extends \yii\db\ActiveRecord
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
+            [[ 'product_id', 'order_id', 'amount', 'count' ,'returner_name'], 'required'],
         ];
     }
 
@@ -58,6 +59,8 @@ class Returns extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'الرقم'),
             'order_id' => Yii::t('app', 'الطلب'),
             'product_id' => Yii::t('app', 'المادة'),
+            'returner_name' => Yii::t('app', 'الشخص المرجع'),
+            'note' => Yii::t('app', 'ملاحظة'),
             'count' => Yii::t('app', 'العدد'),
             'amount' => Yii::t('app', 'القيمة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
