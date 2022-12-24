@@ -56,7 +56,10 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         {
             $single_store = $stores[0]->id;
         }
-        $model->store_id = $single_store;
+        if(empty($model->store_id))
+        {
+            $model->store_id = $single_store;
+        }
 
         echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
             'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),

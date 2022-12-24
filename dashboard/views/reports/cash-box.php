@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = \yii\widgets\ActiveForm::begin([
         'method' => 'get',
     ]); ?>
+    <?= $form->field($modelSearch, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'))->label("المحل"); ?>
     <label> التاريخ</label>
     <?= \kartik\daterange\DateRangePicker::widget([
         'model' => $modelSearch,

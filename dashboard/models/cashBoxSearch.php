@@ -8,6 +8,7 @@ class cashBoxSearch extends Model
     public $date;
     public $date_from;
     public $date_to;
+    public $store_id;
 
     /**
      * {@inheritdoc}
@@ -15,7 +16,7 @@ class cashBoxSearch extends Model
     public function rules()
     {
         return [
-            [['date','date_from', 'date_to'], 'safe'],
+            [['date','date_from', 'date_to','store_id'], 'safe'],
 
         ];
     }

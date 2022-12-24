@@ -121,6 +121,10 @@ class Damaged extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
     public function getProductTitle()
     {
         return $this->product ? $this->product->title : '';

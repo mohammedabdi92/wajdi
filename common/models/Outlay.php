@@ -81,4 +81,8 @@ class Outlay extends \yii\db\ActiveRecord
     {
         return new \common\models\query\OutlayQuery(get_called_class());
     }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
 }

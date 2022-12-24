@@ -139,13 +139,13 @@ class ReportsController extends Controller
         // + orders (damaged)
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
-        $damaged_q =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_RETURNED]);
+        $damaged_q =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_RETURNED]);
 
 
         // - inventory-order(dep) , outlay,returns,damaged
         $inventory_order_q =  InventoryOrder::find()->select('total_cost');
         $outlay_q =  Outlay::find()->select('amount');
-        $damaged_q_m =  Damaged::find()->select('amount')->where(['status'=>Damaged::STATUS_INACTIVE]);
+        $damaged_q_m =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_INACTIVE]);
         $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
 
         if($modelSearch->date_from)
@@ -171,6 +171,16 @@ class ReportsController extends Controller
             $outlay_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
             $damaged_q_m->andWhere(['<=', 'updated_at', strtotime( $modelSearch->date_to)]);
             $financial_withdrawal_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
+        }
+        if($modelSearch->store_id)
+        {
+            $order_q->andWhere(['store_id'=>$modelSearch->store_id]);
+            $entries_q->andWhere(['store_id'=>$modelSearch->store_id]);
+            $damaged_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
+            $inventory_order_q->andWhere(['store_id'=>$modelSearch->store_id]);
+//            $outlay_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
+            $damaged_q_m->andWhere(['order.store_id'=>$modelSearch->store_id]);
+//            $financial_withdrawal_q->andWhere(['store_id'=>$modelSearch->store_id]);
         }
 
         $damaged_mince = $damaged_q_m->sum('amount');
