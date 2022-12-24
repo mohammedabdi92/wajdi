@@ -12,7 +12,7 @@ use kartik\daterange\DateRangePicker;
 <div class="inventory-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['order-product'],
+        'action' => ['order'],
         'method' => 'get',
         'id'=>'order-product'
     ]); ?>
