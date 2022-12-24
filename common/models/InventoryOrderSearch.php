@@ -17,7 +17,7 @@ class InventoryOrderSearch extends InventoryOrder
     public function rules()
     {
         return [
-            [['id', 'supplier_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'supplier_id','store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
         ];
     }
