@@ -17,13 +17,31 @@ use kartik\daterange\DateRangePicker;
         'id'=>'inventory-order-product'
     ]); ?>
 
-    <?=  $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Product::find()->where(['status'=>1])->all(), 'id', 'title'),
+    <?php
+    $url = \yii\helpers\Url::to(['product/product-list']);
+    echo $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[$model->product_id=>$model->productTitle],
         'options' => ['placeholder' => 'اختر نوع العد .....'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => false,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new \yii\web\JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
+                'results' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
+                'cache' => true
+
+            ],
+            'escapeMarkup' => new \yii\web\JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new \yii\web\JsExpression('function(product) { return product.text; }'),
+            'templateSelection' => new \yii\web\JsExpression('function (product) { return product.text; }'),
         ],
-    ]);?>
+    ]);
+    ?>
 
 
     <?= $form->field($model, 'inventory_order_id') ?>
