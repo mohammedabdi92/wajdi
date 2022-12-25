@@ -40,7 +40,7 @@ use yii\widgets\ActiveForm;
             'templateResult' => new \yii\web\JsExpression('function(product) { return product.text; }'),
             'templateSelection' => new \yii\web\JsExpression('function (product) { return product.text; }'),
         ],
-    ])->label('المحل');
+    ])->label('المادة');
     ?>
 
     <?= $form->field($model, 'supplier_name') ?>
@@ -48,7 +48,28 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'total_cost') ?>
-
+    <label>تاريخ الانشاء</label>
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'ar',
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
+    <?php  echo $form->field($model, 'created_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+    <label>تاريخ التعديل</label>
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'updated_at',
+        'language' => 'ar',
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
+    <?php  echo $form->field($model, 'updated_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'created_by') ?>

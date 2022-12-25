@@ -72,6 +72,8 @@ class OrderSearch extends Order
             $user =  Customer::find()->where(" name like '%$this->customer_name%' ")->one();
            if($user){
                $this->customer_id =$user->id;
+           }else{
+               $this->supplier_id = 1000000000000;
            }
         }
 

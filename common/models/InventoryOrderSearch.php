@@ -5,6 +5,7 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\InventoryOrder;
+use yii\data\ArrayDataProvider;
 
 /**
  * InventoryOrderSearch represents the model behind the search form of `common\models\InventoryOrder`.
@@ -59,11 +60,14 @@ class InventoryOrderSearch extends InventoryOrder
             // $query->where('0=1');
             return $dataProvider;
         }
+
         if(!empty($this->supplier_name))
         {
             $user =  Supplier::find()->where(" name like '%$this->supplier_name%' ")->one();
             if($user){
                 $this->supplier_id =$user->id;
+            }else{
+                $this->supplier_id = 1000000000000;
             }
         }
 

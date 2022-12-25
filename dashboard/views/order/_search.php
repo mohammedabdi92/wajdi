@@ -39,7 +39,7 @@ use yii\widgets\ActiveForm;
             'templateResult' => new \yii\web\JsExpression('function(product) { return product.text; }'),
             'templateSelection' => new \yii\web\JsExpression('function (product) { return product.text; }'),
         ],
-    ])->label('المحل');
+    ])->label('المادة');
     ?>
 
     <?= $form->field($model, 'customer_name') ?>
