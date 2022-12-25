@@ -112,7 +112,6 @@ class ReportsController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-//        print_r($query->createCommand()->rawSql);die;
 
         $searchModel->total_diff_time_out_mints = $query->sum("(TIMESTAMPDIFF(MINUTE,`time`,(SELECT p2.time FROM presence as p2 where p2.type = 2 AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1))  )");
         if(!empty($searchModel->total_diff_time_out_mints))
