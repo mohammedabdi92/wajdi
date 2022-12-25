@@ -11,6 +11,7 @@ use common\models\Inventory;
  */
 class InventorySearch extends Inventory
 {
+    public $product_name;
     public $sum_price_1;
     public $sum_price_2;
     public $sum_price_3;
@@ -24,7 +25,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count'], 'safe'],
+            [['sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name'], 'safe'],
         ];
     }
 
@@ -63,23 +64,22 @@ class InventorySearch extends Inventory
             return $dataProvider;
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'product_id' => $this->product_id,
             'last_product_cost' => $this->last_product_cost,
             'count' => $this->count,
+            'store_id' => $this->store_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
-        if(!\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
-        {
-            $stores = \Yii::$app->user->identity->stores;
-            $query->andWhere(['store_id'=>$stores]);
-        }
+        $query->andFilterWhere(['like','product.title',$this->product_name]);
+
 
         if($getSums)
         {

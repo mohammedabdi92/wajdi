@@ -20,22 +20,29 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php
+    $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name');
+    if(!\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
+    {
+        $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1,'id'=>\Yii::$app->user->identity->stores])->all(), 'id', 'name');
+    }
     $gridColumns = [
 
         'id',
         [
-            'attribute' => 'product_id',
+            'attribute' => 'product_name',
             'value' => function($model){
                 return $model->productTitle;
             },
+            'label'=>"المادة",
             'format' => 'raw',
+
         ],
         [
             'attribute' => 'store_id',
             'value' => function($model){
                 return $model->storeTitle;
             },
-            'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
+            'filter'=>$stores,
             'format' => 'raw',
         ],
         [
