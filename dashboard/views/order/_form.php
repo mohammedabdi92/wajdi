@@ -21,6 +21,7 @@ $priceList = [];
 
 
 
+
 ?>
 
 
@@ -112,6 +113,21 @@ $priceList = [];
                                 $priceList = $modelAddress->getPriceList();
 
                             }
+                            $returnd_count = 0;
+                            $returnd_user = "";
+                            if(!$modelAddress->isNewRecord)
+                            {
+                                $returnd_count  = \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->sum("count");
+                                if($returnd_count)
+                                {
+                                    $user_id =  \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->one();
+                                    if($user_id)
+                                    {
+                                        $returnd_user = $user_id->returner_name ;
+                                    }
+
+                                }
+                            }
 
 
                             ?>
@@ -165,8 +181,12 @@ $priceList = [];
 
                                 <div style=" display: -webkit-inline-box; width: 100%; ">
                                     <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
-
+                                    <?php if($returnd_count): ?>
+                                        <div class="col-sm-2"> <label> المرجع </label> <br><label class="inventory_count"><?=$returnd_count?></label></div>
+                                        <div class="col-sm-2"> <label> المستخدم المرجع </label> <br><label class="inventory_count"><?=$returnd_user?></label></div>
+                                    <?php endif; ?>
                                 </div>
+
 
                             </div><!-- .row -->
 
