@@ -107,9 +107,10 @@ $priceList = [];
                             <?php
 
                             // necessary for update action.
-                            if (!$modelAddress->isNewRecord) {
+                            if (!$modelAddress->isNewRecord || $modelAddress->product_id) {
                                 echo Html::activeHiddenInput($modelAddress, "[{$i}]id");
                                 $priceList = $modelAddress->getPriceList();
+
                             }
 
 
