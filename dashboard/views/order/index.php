@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'انشاء فاتورة بيع'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php
     $gridColumns = [
 

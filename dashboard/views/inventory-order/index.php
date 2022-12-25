@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ?>
     </p>
-
+    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php  $gridColumns = [
         'id',
         [
@@ -44,7 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->storeTitle;
             },
             'format' => 'raw',
-            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
         ],
         'total_cost',
         [
@@ -152,7 +151,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => $gridColumns,
         'id' => 'w0',
     ]);

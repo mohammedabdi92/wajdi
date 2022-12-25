@@ -33,7 +33,7 @@ $this->title = 'وجدي لمواد البناء';
                     </div>
                 </div>
             </div>
-            <?php if(Yii::$app->user->can('ظهور المنشورات على الرئيسية')):?>
+            <?php if(Yii::$app->user->can('ظهور المنشورات على الرئيسية')): ?>
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
@@ -72,7 +72,7 @@ $this->title = 'وجدي لمواد البناء';
                     </div>
                 </div>
             </div>
-            <? endif;?>
+            <?php endif; ?>
 
         </div>
 

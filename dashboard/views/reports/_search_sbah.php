@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
         'data' =>[$model->product_id=>$model->productTitle],
         'options' => ['placeholder' => 'اختر نوع العد .....'],
         'pluginOptions' => [
-            'allowClear' => false,
+            'allowClear' => true,
             'minimumInputLength' => 3,
             'language' => [
                 'errorLoading' => new \yii\web\JsExpression("function () { return 'Waiting for results...'; }"),

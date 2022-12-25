@@ -11,6 +11,7 @@ use common\models\InventoryOrder;
  */
 class InventoryOrderSearch extends InventoryOrder
 {
+    public $product_id;
     public $supplier_name;
     /**
      * {@inheritdoc}
@@ -20,7 +21,7 @@ class InventoryOrderSearch extends InventoryOrder
         return [
             [['id', 'supplier_id','store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
-            [['supplier_name'], 'safe'],
+            [['supplier_name','product_id'], 'safe'],
         ];
     }
 
@@ -45,6 +46,7 @@ class InventoryOrderSearch extends InventoryOrder
         $query = InventoryOrder::find();
 
 
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -65,6 +67,7 @@ class InventoryOrderSearch extends InventoryOrder
             }
         }
 
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -76,6 +79,11 @@ class InventoryOrderSearch extends InventoryOrder
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+        if($this->product_id)
+        {
+            $query->andWhere(' 1 = (select count(*) from inventory_order_product  where inventory_order_product.inventory_order_id = inventory_order.id  and inventory_order_product.product_id = '.$this->product_id.' limit 1  )');
+
+        }
         if(!\Yii::$app->user->can('كل المحلات'))
         {
             $stores = \Yii::$app->user->identity->stores;
@@ -85,5 +93,13 @@ class InventoryOrderSearch extends InventoryOrder
         $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
     }
 }

@@ -16,14 +16,39 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'id') ?>
+    <?php
+    $url = \yii\helpers\Url::to(['product/product-list']);
+    echo $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[$model->product_id=>$model->productTitle],
+        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new \yii\web\JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => $url,
+                'dataType' => 'json',
+                'data' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
+                'results' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
+                'cache' => true
 
-    <?= $form->field($model, 'customer_id') ?>
+            ],
+            'escapeMarkup' => new \yii\web\JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new \yii\web\JsExpression('function(product) { return product.text; }'),
+            'templateSelection' => new \yii\web\JsExpression('function (product) { return product.text; }'),
+        ],
+    ])->label('المحل');
+    ?>
 
-    <?= $form->field($model, 'store_id') ?>
+    <?= $form->field($model, 'customer_name') ?>
+
+    <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')) ?>
 
     <?= $form->field($model, 'total_amount') ?>
 
-    <?= $form->field($model, 'created_at') ?>
+    <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'created_by') ?>
 

@@ -11,6 +11,7 @@ use common\models\Order;
  */
 class OrderSearch extends Order
 {
+    public $product_id;
     public $created_at_from;
     public $created_at_to;
     public $total_amount_without_discount_sum;
@@ -29,7 +30,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id'], 'safe'],
         ];
     }
 
@@ -94,6 +95,11 @@ class OrderSearch extends Order
             $query->andFilterWhere(['<=', 'order.created_at',strtotime($this->created_at_to) ]);
         }
 
+        if($this->product_id)
+        {
+            $query->andWhere(' 1 = (select count(*) from order_product  where order_product.order_id = order.id  and order_product.product_id = '.$this->product_id.' limit 1  )');
+
+        }
         if(!\Yii::$app->user->can('كل المحلات'))
         {
             $stores = \Yii::$app->user->identity->stores;
@@ -111,5 +117,13 @@ class OrderSearch extends Order
         }
         $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
+    }
+    public function getProduct()
+    {
+        return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getProductTitle()
+    {
+        return $this->product ? $this->product->title : '';
     }
 }
