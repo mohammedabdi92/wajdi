@@ -192,3 +192,10 @@ display: block;
 .radio label, .checkbox label{
     font-weight: bold;
 }
+.nav_menu {
+    margin-bottom: 0px;
+}
+.nav-sm .container.body .right_col {
+    height: -webkit-fill-available;
+    display: flex;
+}
