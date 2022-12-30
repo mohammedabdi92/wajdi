@@ -147,6 +147,17 @@ class Order extends \common\components\BaseModel
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
 
+    public function beforeDelete()
+    {
+        $products =  $this->products;
+        foreach ($products as $product)
+        {
+            $product->delete();
+        }
+
+        return parent::beforeDelete();
+    }
+
     public function getCustomerTitle()
     {
         return $this->customer ? $this->customer->name : '';
