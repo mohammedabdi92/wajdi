@@ -14,7 +14,10 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput() ?>
 
+
     <?= $form->field($model, 'phone_number')->textInput() ?>
+
+    <?= $form->field($model, 'name_2')->textInput() ?>
 
     <?= $form->field($model, 'phone_number_2')->textInput() ?>
 

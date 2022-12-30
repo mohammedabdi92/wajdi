@@ -13,6 +13,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  *
  * @property int $id
  * @property string $name
+ * @property string $name_2
  * @property string|null $phone_number
  * @property string|null $email
  * @property string|null $phone_number_2
@@ -42,7 +43,7 @@ class Supplier extends \common\components\BaseModel
             [['name' ], 'required'],
             [['email' ], 'email'],
             [['name'], 'unique'],
-            [['name'], 'trim'],
+            [['name','name_2'], 'trim'],
             [['name', 'phone_number','phone_number_2', 'email', 'address'], 'string'],
             [['created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
         ];
@@ -70,6 +71,7 @@ class Supplier extends \common\components\BaseModel
         return [
             'id' => Yii::t('app', 'الرقم'),
             'name' => Yii::t('app', 'الاسم'),
+            'name_2' => Yii::t('app', 'اسم بديل'),
             'phone_number' => Yii::t('app', 'رقم هاتف'),
             'phone_number_2' => Yii::t('app', 'رقم هاتف بديل'),
             'email' => Yii::t('app', 'الايميل'),
