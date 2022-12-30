@@ -94,7 +94,7 @@ class OrderSearch extends Order
         }
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'order.created_at',strtotime($this->created_at_to) ]);
+            $query->andFilterWhere(['<=', 'order.created_at',strtotime($this->created_at_to." 23:59:59") ]);
         }
 
         if($this->product_id)

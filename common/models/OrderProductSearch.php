@@ -86,10 +86,12 @@ class OrderProductSearch extends OrderProduct
         if($this->created_at_from)
         {
             $query->andFilterWhere(['>=', 'order_product.created_at',strtotime( $this->created_at_from)]);
+
         }
+
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'order_product.created_at',strtotime($this->created_at_to) ]);
+            $query->andFilterWhere(['<=', 'order_product.created_at',strtotime( $this->created_at_to." 23:59:59")]);
         }
 
         if($getSums)
