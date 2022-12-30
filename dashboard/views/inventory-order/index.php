@@ -102,7 +102,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             'visibleButtons' => [
-                'visibleButtons' => [
                     'update' => function ($model) {
                         return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
                     },
@@ -115,7 +114,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'pdf' => function ($model) {
                         return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
                     },
-                ]
             ]
 
         ],
