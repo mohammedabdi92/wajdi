@@ -197,5 +197,5 @@ display: block;
 }
 .nav-sm .container.body .right_col {
     height: -webkit-fill-available;
-    display: flex;
+    display: block;
 }
