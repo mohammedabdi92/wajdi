@@ -120,42 +120,42 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumns,
         'id' => 'w0',
     ]); ?>
-
-
-</div>
-
-<div class="row">
-    <div class="col-xs-6">
-        <p class="lead">المجموع</p>
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th style="width:50%">السعر الكلفة :</th>
-                    <td><?= $searchModel->sum_product_price?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">العدد :</th>
-                    <td><?= $searchModel->sum_count?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">السعر الاجمالي :</th>
-                    <td><?= $searchModel->sum_total_product_amount?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">الخصم :</th>
-                    <td><?= $searchModel->sum_discount?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">الاجمالي بعد الخصم :</th>
-                    <td><?= $searchModel->sum_total_amount_w_discount?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">الاجمالي الربح :</th>
-                    <td><?= $searchModel->sum_profit?></td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-xs-6">
+            <p class="lead">المجموع</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="width:50%">السعر الكلفة :</th>
+                        <td><?= $searchModel->sum_product_price?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">العدد :</th>
+                        <td><?= $searchModel->sum_count?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الاجمالي :</th>
+                        <td><?= $searchModel->sum_total_product_amount?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">الخصم :</th>
+                        <td><?= $searchModel->sum_discount?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">الاجمالي بعد الخصم :</th>
+                        <td><?= $searchModel->sum_total_amount_w_discount?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">الاجمالي الربح :</th>
+                        <td><?= $searchModel->sum_profit?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 </div>
+
+
