@@ -94,37 +94,37 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'w0',
     ]); ?>
 
-
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <p class="lead">المجموع</p>
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th style="width:50%">مجموع القيمة بدون الخصم :</th>
-                    <td><?= $searchModel->total_amount_without_discount_sum ?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">مجموع الخصم :</th>
-                    <td><?= $searchModel->total_discount_sum ?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">مجموع الديون :</th>
-                    <td><?= $searchModel->debt_sum ?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">مجموع السداد :</th>
-                    <td><?= $searchModel->repayment_sum ?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%"> مجموع القيمة بعد الخصم:</th>
-                    <td><?= $searchModel->total_amount_sum ?></td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <p class="lead">المجموع</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="width:50%">مجموع القيمة بدون الخصم :</th>
+                        <td><?= $searchModel->total_amount_without_discount_sum ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">مجموع الخصم :</th>
+                        <td><?= $searchModel->total_discount_sum ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">مجموع الديون :</th>
+                        <td><?= $searchModel->debt_sum ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">مجموع السداد :</th>
+                        <td><?= $searchModel->repayment_sum ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%"> مجموع القيمة بعد الخصم:</th>
+                        <td><?= $searchModel->total_amount_sum ?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
+

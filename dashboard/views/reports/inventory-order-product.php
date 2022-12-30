@@ -101,25 +101,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 
-
-</div>
-
-<div class="row">
-    <div class="col-xs-12 col-md-6">
-        <p class="lead">المجموع</p>
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th style="width:50%">العدد :</th>
-                    <td><?= $searchModel->sum_count?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">السعر الاجمالي النهائي :</th>
-                    <td><?= $searchModel->sum_product_total_cost_final?></td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <p class="lead">المجموع</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="width:50%">العدد :</th>
+                        <td><?= $searchModel->sum_count?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الاجمالي النهائي :</th>
+                        <td><?= $searchModel->sum_product_total_cost_final?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+
