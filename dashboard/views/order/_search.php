@@ -55,6 +55,29 @@ if(Yii::$app->user->can('كل المحلات'))
 
     <?= $form->field($model, 'total_amount') ?>
 
+    <label>تاريخ الانشاء</label>
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'ar',
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
+    <?php  echo $form->field($model, 'created_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+    <label>تاريخ التعديل</label>
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'updated_at',
+        'language' => 'ar',
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
+    <?php  echo $form->field($model, 'updated_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'created_by') ?>
