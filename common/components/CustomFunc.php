@@ -64,7 +64,13 @@ class CustomFunc
             }
             $inventory->count = $total;
 
-            $inventory->save(false);
+            if($total != 0 )
+            {
+                $inventory->save(false);
+            }else if (!$inventory->isNewRecord)
+            {
+                $inventory->delete();
+            }
         }
 
 
