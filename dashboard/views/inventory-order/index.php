@@ -20,16 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
 
         <?php
-        if(Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات'))
-        {
+        if (Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات')) {
             echo Html::a(Yii::t('app', 'انشاء فاتورة مشتريات'), ['create'], ['class' => 'btn btn-success']);
         }
 
 
         ?>
     </p>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?php  $gridColumns = [
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php $gridColumns = [
         'id',
         [
             'attribute' => 'supplier_name',
@@ -44,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->storeTitle;
             },
             'format' => 'raw',
-            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status' => 1])->all(), 'id', 'name'),
         ],
         'total_cost',
         [
@@ -99,30 +98,31 @@ $this->params['breadcrumbs'][] = $this->title;
             'template' => '{view} {update} {delete} {pdf}',  // the default buttons + your custom button
             'buttons' => [
                 'pdf' => function ($url, $model, $key) {     // render your custom button
-                    return Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>',"report?id=".$model->id,['target'=>'_blank']);
+                    return Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i>', "report?id=" . $model->id, ['target' => '_blank']);
                 }
             ],
             'visibleButtons' => [
-                'update' => function ($model) {
-                    return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
-                },
-                'delete' => function ($model) {
-                    return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
-                },
-                'view' => function ($model) {
-                    return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
-                },
-                'pdf' => function ($model) {
-                    return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
-                },
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
+                    },
+                    'delete' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
+                    'pdf' => function ($model) {
+                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                    },
+                ]
             ]
 
         ],
     ];
 
 
-    if(Yii::$app->user->can('صلاحية الطباعة'))
-    {
+    if (Yii::$app->user->can('صلاحية الطباعة')) {
         ExportMenu::widget([
             'dataProvider' => $dataProvider,
             'columns' => $gridColumns,
@@ -144,7 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
         ]);
-        
+
     }
 
 
@@ -157,8 +157,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'w0',
     ]);
     ?>
-
-
 
 
 </div>
