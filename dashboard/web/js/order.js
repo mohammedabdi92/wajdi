@@ -8,6 +8,14 @@ $(document).on('change', '[id$=count]', function (item) {
     calculateTotal();
 
 });
+$(document).on('change', '[id$=-amount]', function (item) {
+    $('.item').each(function (index, element) {
+        calculateSupTotals(element,true);
+    });
+    checkDiscount();
+    calculateTotal();
+
+});
 function checkDiscount(){
     var totalDiscount =  $('#order-total_discount').val();
     var discounts = $('[id$=-discount]');
@@ -104,7 +112,7 @@ function calculateTotal() {
     $('#order-total_count').val(supdis);
 }
 
-function calculateSupTotals(item) {
+function calculateSupTotals(item,isAmountChanged = false) {
     var mainBox = $(item);
     var product_id_item = $("select[id$=product_id]");
     var product_id = mainBox.find(product_id_item).val();
@@ -121,7 +129,7 @@ function calculateSupTotals(item) {
             success: function  (result)  {
                 if (result) {
                     result =  JSON.parse(result);
-                    if(price_selected)
+                    if(price_selected && !isAmountChanged )
                     {
                         mainBox.find(product_cost_el).val(result['price_'+price_selected.val()]);
                     }
@@ -137,6 +145,7 @@ function calculateSupTotals(item) {
                 {
                     product_total_cost_final = product_cost * product_count;
                 }
+
 
 
                 mainBox.find(product_total_cost_final_el).val(product_total_cost_final);
