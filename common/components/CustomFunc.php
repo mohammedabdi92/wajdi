@@ -9,6 +9,7 @@ use common\models\InventoryOrderProduct;
 use common\models\Order;
 use common\models\OrderProduct;
 use common\models\Returns;
+use common\models\Store;
 use common\models\User;
 
 class CustomFunc
@@ -32,35 +33,42 @@ class CustomFunc
     }
     public static function calculateProductCount($store_id,$product_id)
     {
-        $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
+        $Stores = Store::find()->where(['status'=>1])->all();
+        foreach ($Stores as $store) {
+            $store_id = $store->id;
+            $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
 
-        $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count')?? 0 ;
+            $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count')?? 0 ;
 
-        $returned = Returns::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
-        $damaged_returned = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
-        $damaged_inactive = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
+            $returned = Returns::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
+            $damaged_returned = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
+            $damaged_inactive = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
 
-        $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned -$damaged_inactive;
+            $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned -$damaged_inactive;
 
-        $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->one();
-        if(empty($inventory))
-        {
-            $inventory = new Inventory();
-            $inventory->product_id = $product_id;
-            $inventory->store_id = $store_id;
+            $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->one();
+            if(empty($inventory))
+            {
+                $inventory = new Inventory();
+                $inventory->product_id = $product_id;
+                $inventory->store_id = $store_id;
+            }
+
+            if($inventory->count >= $inventory->product->min_number &&  $total < $inventory->product->min_number  ){
+                \Yii::$app->mailer->compose()
+                    ->setFrom(['info@mohammedabadi.com' => 'وجدي للاعمار'])
+                    ->setTo("mohammed.abadi92@gmail.com")
+                    ->setSubject("العنصر $product_id اصبح $total")
+                    ->setHtmlBody("العنصر $product_id اصبح $total")
+                    ->send();
+            }
+            $inventory->count = $total;
+
+            $inventory->save(false);
         }
 
-        if($inventory->count >= $inventory->product->min_number &&  $total < $inventory->product->min_number  ){
-            \Yii::$app->mailer->compose()
-                ->setFrom(['info@mohammedabadi.com' => 'وجدي للاعمار'])
-                ->setTo("mohammed.abadi92@gmail.com")
-                ->setSubject("العنصر $product_id اصبح $total")
-                ->setHtmlBody("العنصر $product_id اصبح $total")
-                ->send();
-        }
-        $inventory->count = $total;
 
-           return $inventory->save(false);
+       return true;
     }
     public static function removeOrderProduct($product_id,$order_id,$count){
         $orderProduct =  OrderProduct::find()->where(['order_id'=>$order_id,'product_id'=>$product_id])->one();
