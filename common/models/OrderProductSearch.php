@@ -25,9 +25,9 @@ class OrderProductSearch extends OrderProduct
     public function rules()
     {
         return [
-            [['id', 'order_id', 'product_id', 'count_type', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'order_id','store_id', 'product_id', 'count_type', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['count'], 'number'],
-            [['created_at_from','created_at_to', 'created_at'],'safe']
+            [['created_at_from','created_at_to', 'created_at','store_id'],'safe']
         ];
     }
 
@@ -74,6 +74,7 @@ class OrderProductSearch extends OrderProduct
             'id' => $this->id,
             'order_id' => $this->order_id,
             'product_id' => $this->product_id,
+            'store_id' => $this->store_id,
             'count' => $this->count,
             'count_type' => $this->count_type,
             'product.created_by' => $this->created_by,
