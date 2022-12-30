@@ -88,11 +88,12 @@ class InventoryOrderSearch extends InventoryOrder
             $query->andWhere(' 1 = (select count(*) from inventory_order_product  where inventory_order_product.inventory_order_id = inventory_order.id  and inventory_order_product.product_id = '.$this->product_id.' limit 1  )');
 
         }
-        if(!\Yii::$app->user->can('كل المحلات'))
+        if(!\Yii::$app->user->can('كل المحلات') && empty($this->store_id))
         {
             $stores = \Yii::$app->user->identity->stores;
             $query->andWhere(['store_id'=>$stores]);
-
+        }else{
+            $query->andFilterWhere(['store_id'=>$this->store_id]);
         }
         $query->orderBy(['id'=>SORT_DESC]);
 

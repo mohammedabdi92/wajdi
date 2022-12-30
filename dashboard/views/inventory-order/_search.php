@@ -6,6 +6,13 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\InventoryOrderSearch */
 /* @var $form yii\widgets\ActiveForm */
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
 ?>
 
 <div class="inventory-order-search">
@@ -45,7 +52,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'supplier_name') ?>
 
-    <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')) ?>
+    <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name')) ?>
 
     <?= $form->field($model, 'total_cost') ?>
     <label>تاريخ الانشاء</label>

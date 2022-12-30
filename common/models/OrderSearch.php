@@ -102,11 +102,12 @@ class OrderSearch extends Order
             $query->andWhere(' 1 = (select count(*) from order_product  where order_product.order_id = order.id  and order_product.product_id = '.$this->product_id.' limit 1  )');
 
         }
-        if(!\Yii::$app->user->can('كل المحلات'))
+        if(!\Yii::$app->user->can('كل المحلات') && empty($this->store_id))
         {
             $stores = \Yii::$app->user->identity->stores;
             $query->andWhere(['store_id'=>$stores]);
-
+        }else{
+            $query->andFilterWhere(['store_id'=>$this->store_id]);
         }
 
         if($getSums)
