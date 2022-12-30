@@ -28,9 +28,9 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at'], 'safe'],
         ];
     }
 
@@ -61,12 +61,12 @@ class OrderSearch extends Order
         ]);
 
         $this->load($params);
-
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
+
         if(!empty($this->customer_name))
         {
             $user =  Customer::find()->where(" name like '%$this->customer_name%' ")->one();
