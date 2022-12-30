@@ -78,7 +78,13 @@ class InventorySearch extends Inventory
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
-        $query->andFilterWhere(['like','product.title',$this->product_name]);
+        if($this->product_name)
+        {
+            $parts = preg_split('/\s+/', $this->product_name);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+        }
 
 
         if($getSums)
