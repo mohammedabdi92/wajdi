@@ -77,7 +77,7 @@ class OrderProductSearch extends OrderProduct
             'store_id' => $this->store_id,
             'count' => $this->count,
             'count_type' => $this->count_type,
-            'product.created_by' => $this->created_by,
+            'order_product.created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
