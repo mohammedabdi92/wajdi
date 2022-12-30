@@ -105,7 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 
 <div class="row">
-    <div class="col-xs-6">
+    <div class="col-xs-12 col-md-6">
         <p class="lead">المجموع</p>
         <div class="table-responsive">
             <table class="table">
