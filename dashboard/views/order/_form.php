@@ -245,7 +245,9 @@ $priceList = [];
             <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
+                <?php if(!Yii::$app->user->can('عدم حفظ فواتورة المبيعات')):?>
                 <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>
+                <?php endif;?>
             </div>
         </div>
 
