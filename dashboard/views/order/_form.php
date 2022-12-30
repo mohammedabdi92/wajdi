@@ -168,7 +168,7 @@ $priceList = [];
                                     <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList)->label('اختر') ?>
                                 </div>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
-                                    <?= $form->field($modelAddress, "[{$i}]amount")->textInput(['readonly' => true]) ?>
+                                    <?= $form->field($modelAddress, "[{$i}]amount")->textInput(['readonly' => !Yii::$app->user->can('تعديل السعر الافرادي في المبيعات')]) ?>
                                 </div>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]total_product_amount")->textInput(['readonly' => true])?>
