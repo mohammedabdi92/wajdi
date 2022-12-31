@@ -31,7 +31,7 @@ class CustomFunc
         $user = User::findOne($id);
         return  $user? $user->full_name:'';
     }
-    public static function calculateProductCount($store_id,$product_id)
+    public static function calculateProductCount($store_id,$product_id,$old_product_id= null)
     {
         $Stores = Store::find()->where(['status'=>1])->all();
         foreach ($Stores as $store) {
@@ -70,6 +70,48 @@ class CustomFunc
             }else if (!$inventory->isNewRecord)
             {
                 $inventory->delete();
+            }
+        }
+        if($old_product_id)
+        {
+            $Stores = Store::find()->where(['status'=>1])->all();
+            foreach ($Stores as $store) {
+                $store_id = $store->id;
+                $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count') ?? 0;
+
+                $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count')?? 0 ;
+
+                $returned = Returns::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count');
+                $damaged_returned = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
+                $damaged_inactive = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
+
+                $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned -$damaged_inactive;
+
+                $inventory =  Inventory::find()->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->one();
+                if(empty($inventory))
+                {
+                    $inventory = new Inventory();
+                    $inventory->product_id = $old_product_id;
+                    $inventory->store_id = $store_id;
+                }
+
+                if($inventory->count >= $inventory->product->min_number &&  $total < $inventory->product->min_number  ){
+                    \Yii::$app->mailer->compose()
+                        ->setFrom(['info@mohammedabadi.com' => 'وجدي للاعمار'])
+                        ->setTo("mohammed.abadi92@gmail.com")
+                        ->setSubject("العنصر $product_id اصبح $total")
+                        ->setHtmlBody("العنصر $product_id اصبح $total")
+                        ->send();
+                }
+                $inventory->count = $total;
+
+                if($total != 0 )
+                {
+                    $inventory->save(false);
+                }else if (!$inventory->isNewRecord)
+                {
+                    $inventory->delete();
+                }
             }
         }
 
