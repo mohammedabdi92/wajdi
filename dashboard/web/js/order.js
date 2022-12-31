@@ -15,7 +15,7 @@ $(document).on('change', '[id$=discount]', function (item) {
 });
 $(document).on('change', '[id$=-amount]', function (item) {
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
-    calculateSupTotals($('.item')[box_id]);
+    calculateSupTotals($('.item')[box_id],true);
     checkDiscount();
     calculateTotal();
 

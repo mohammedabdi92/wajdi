@@ -55,13 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]),
             ],
-            [
-                'attribute' => 'created_by',
-                'value' => function ($model) {
-                    return \common\components\CustomFunc::getUserName($model->created_by);
-                },
-                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
-            ],
+
             [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
@@ -77,13 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]),
             ],
-            [
-                'attribute' => 'updated_by',
-                'value' => function ($model) {
-                    return \common\components\CustomFunc::getUserName($model->updated_by);
-                },
-                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
-            ],
+
             [
                 'class' => ActionColumn::className(),
                 'template' => '{view} {update}',

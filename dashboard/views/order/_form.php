@@ -142,19 +142,16 @@ $priceList = [];
 
                             }
                             $returnd_count = 0;
-                            $returnd_user = "";
                             if(!$modelAddress->isNewRecord)
                             {
                                 $returnd_count  = \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->sum("count");
-                                if($returnd_count)
-                                {
-                                    $user_id =  \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->one();
-                                    if($user_id)
-                                    {
-                                        $returnd_user = $user_id->returner_name ;
-                                    }
 
-                                }
+                            }
+                            $dameged_count = 0;
+                            if(!$modelAddress->isNewRecord)
+                            {
+                                $dameged_count  = \common\models\Damaged::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->sum("count");
+
                             }
 
 
@@ -166,7 +163,7 @@ $priceList = [];
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\select2\Select2::classname(), [
                                         'data' =>[$modelAddress->product_id=>$modelAddress->productTitle],
-                                        'options' => ['placeholder' => 'اختر نوع العد .....','onchange' => 'productChange(this)'
+                                        'options' => ['placeholder' => 'اختر المادة .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [
                                             'allowClear' => true,
@@ -209,9 +206,9 @@ $priceList = [];
 
                                 <div style=" display: -webkit-inline-box; width: 100%; ">
                                     <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
-                                    <?php if($returnd_count): ?>
+                                    <?php if($returnd_count || $dameged_count): ?>
                                         <div class="col-sm-2"> <label> المرجع </label> <br><label class="inventory_count"><?=$returnd_count?></label></div>
-                                        <div class="col-sm-2"> <label> المستخدم المرجع </label> <br><label class="inventory_count"><?=$returnd_user?></label></div>
+                                        <div class="col-sm-2"> <label> التالف </label> <br><label class="inventory_count"><?=$dameged_count?></label></div>
                                     <?php endif; ?>
                                 </div>
 
@@ -273,7 +270,7 @@ $priceList = [];
             <?= $form->field($model, 'note')->textarea() ?>
 
             <div class="form-group">
-                <?php if(!Yii::$app->user->can('عدم حفظ فواتورة المبيعات')):?>
+                <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
                 <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>
                 <?php endif;?>
             </div>
