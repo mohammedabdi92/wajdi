@@ -1,9 +1,8 @@
 
 
 $(document).on('change', '[id$=-count]', function (item) {
-    $('.item').each(function (index, element) {
-        calculateSupTotals(element);
-    });
+    var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
+    calculateSupTotals($('.item')[box_id]);
     checkDiscount();
     calculateTotal();
 
@@ -15,9 +14,8 @@ $(document).on('change', '[id$=discount]', function (item) {
 
 });
 $(document).on('change', '[id$=-amount]', function (item) {
-    $('.item').each(function (index, element) {
-        calculateSupTotals(element,true);
-    });
+    var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
+    calculateSupTotals($('.item')[box_id]);
     checkDiscount();
     calculateTotal();
 
@@ -194,9 +192,9 @@ function getBoxId(id){
 $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (item) {
 
 
-    $('.item').each(function (index, element) {
-        calculateSupTotals(element);
-    });
+    var box_id =  getBoxId($(item.currentTarget.parentNode.parentNode).attr('id')) ;
+    calculateSupTotals($('.item')[box_id]);
+
     calculateTotal();
 });
 $(document).on('change', '#order-store_id', function (item) {
