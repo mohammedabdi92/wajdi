@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
-    <div class="col-md-6">
+    <div class="col-md-6" style=" display: contents; ">
 
     <?php
     $items = $model->products;
