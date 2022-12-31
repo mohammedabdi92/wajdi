@@ -145,13 +145,11 @@ $priceList = [];
                             if(!$modelAddress->isNewRecord)
                             {
                                 $returnd_count  = \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->sum("count");
-
                             }
                             $dameged_count = 0;
                             if(!$modelAddress->isNewRecord)
                             {
                                 $dameged_count  = \common\models\Damaged::find()->where(['order_id'=>$model->id,'product_id'=>$modelAddress->product_id])->sum("count");
-
                             }
 
 
@@ -207,8 +205,8 @@ $priceList = [];
                                 <div style=" display: -webkit-inline-box; width: 100%; ">
                                     <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
                                     <?php if($returnd_count || $dameged_count): ?>
-                                        <div class="col-sm-2"> <label> المرجع </label> <br><label class="inventory_count"><?=$returnd_count?></label></div>
-                                        <div class="col-sm-2"> <label> التالف </label> <br><label class="inventory_count"><?=$dameged_count?></label></div>
+                                        <div class="col-sm-2"> <label> المرجع </label> <br><label><?=$returnd_count?></label></div>
+                                        <div class="col-sm-2"> <label> التالف </label> <br><label><?=$dameged_count?></label></div>
                                     <?php endif; ?>
                                 </div>
 
@@ -269,6 +267,45 @@ $priceList = [];
 
             <?= $form->field($model, 'note')->textarea() ?>
 
+            <?php
+            if(!$model->isNewRecord)
+            {
+                echo '<label>المرجع</label>';
+                echo \yii\grid\GridView::widget([
+                    'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Returns::find()->where(['order_id'=>$model->id])]),
+                    'columns' => [
+                        'id',
+                        'count',
+                        [
+                            'attribute' => 'product_name',
+                            'value' => function($model){
+                                return $model->productTitle;
+                            },
+                            'label'=>"المادة",
+                            'format' => 'raw',
+
+                        ],
+                    ],
+                ]);
+                echo '<label>التالف</label>';
+                echo \yii\grid\GridView::widget([
+                    'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Damaged::find()->where(['order_id'=>$model->id])]),
+                    'columns' => [
+                        'id',
+                        'count',
+                        [
+                            'attribute' => 'product_name',
+                            'value' => function($model){
+                                return $model->productTitle;
+                            },
+                            'label'=>"المادة",
+                            'format' => 'raw',
+
+                        ],
+                    ],
+                ]);
+            }
+             ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
                 <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>
