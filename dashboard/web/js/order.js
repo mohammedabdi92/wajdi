@@ -181,7 +181,7 @@ function productChange(This) {
     $.post("/product/get-detials?id=" + $(This).val() , function (data) {
         if (data) {
             result =  JSON.parse(data);
-            $('#orderproduct-'+box_id+'-count_type').val(result['count_type_title']);
+            $('#orderproduct-'+box_id+'-count_type_name').val(result['count_type_title']);
         }
     });
 

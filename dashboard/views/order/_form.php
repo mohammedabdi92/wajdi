@@ -117,7 +117,7 @@ $priceList = [];
                                         <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
                                     </div>
                                     <div class="col-md-4">
-                                        <?= $form->field($modelAddress, "[{$i}]count_type")->textInput(['readonly' => true,'value' =>$modelAddress->productCountType])->label('') ?>
+                                        <?= $form->field($modelAddress, "[{$i}]count_type_name")->textInput(['readonly' => true,'value' =>$modelAddress->productCountType])->label('') ?>
                                     </div>
                                 </div>
 
