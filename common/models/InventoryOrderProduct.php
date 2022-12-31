@@ -28,6 +28,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class InventoryOrderProduct extends \common\components\BaseModel
 {
+    public $ready_to_deliver ;
     /**
      * {@inheritdoc}
      */
@@ -45,9 +46,16 @@ class InventoryOrderProduct extends \common\components\BaseModel
             [[ 'product_id', 'product_total_cost', 'product_cost', 'count' ], 'required'],
             [['inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [[ 'count','tax_percentage'], 'number'],
+            [['ready_to_deliver'], 'checkReady'],
             [[ 'store_id'], 'safe'],
             [['product_total_cost', 'product_cost','product_total_cost_final','product_cost_final'], 'double'],
         ];
+    }
+    public function checkReady($attr, $params) {
+
+        if (   empty($this->ready_to_deliver) && $this->isNewRecord) {
+            $this->addError($attr, 'يجب استلام هذه المادة');
+        }
     }
 
     public function behaviors()

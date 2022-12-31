@@ -31,6 +31,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class OrderProduct extends \common\components\BaseModel
 {
+    public $ready_to_deliver ;
 
     /**
      * {@inheritdoc}
@@ -49,6 +50,7 @@ class OrderProduct extends \common\components\BaseModel
             [['product_id', 'count', 'price_number', 'amount'], 'required'],
             [['order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['count'], 'number'],
+            [['ready_to_deliver'], 'checkReady'],
             [['product_id'], 'checkInventory'],
             [['product_id'], 'checkDuplicate'],
             [['total_product_amount', 'discount'], 'double'],
@@ -68,6 +70,12 @@ class OrderProduct extends \common\components\BaseModel
 
                 $this->addError($attr, 'لا توجد هذه الكمية (الموجود هو '.$total.')');
             }
+        }
+    }
+    public function checkReady($attr, $params) {
+
+        if (   empty($this->ready_to_deliver) && $this->isNewRecord) {
+            $this->addError($attr, 'يجب تجهيز هذه المادة');
         }
     }
 

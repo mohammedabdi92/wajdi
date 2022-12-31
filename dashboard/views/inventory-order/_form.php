@@ -98,8 +98,25 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                 <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading" >
-                            <h3 class="panel-title pull-right" style=" width: 95%; "><span class="panel-title-address">مادة: <?= ($i + 1) ?></span>  <br>
+                            <h3 class="panel-title pull-right" style=" width: 95%; ">
+
+                                <span class="panel-title-address">مادة: <?= ($i + 1) ?></span>
+                                <div style=" display: inline-block; padding: 0px  22px; ">
+                                    <?php
+                                    if($model->isNewRecord)
+                                    {
+                                        echo $form->field($modelAddress, "[{$i}]ready_to_deliver")->checkbox([
+                                            'class' => 'select-on-check-all pull-right',//pull right the checkbox
+                                            'label' => '<span class="checkmark"></span>',//pull left the label
+                                            'style' => 'transform: scale(2);',//pull left the label
+                                        ]);
+
+                                    }
+                                    ?>
+                                </div>
+                                <br>
                                 <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+
                             </h3>
                             <div class="pull-left">
                                 <button type="button" class="add-item btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i></button>

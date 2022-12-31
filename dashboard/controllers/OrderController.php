@@ -88,6 +88,8 @@ class OrderController extends BaseController
             foreach ($model_product as $item) {
                 $item->store_id = $model->store_id;
             }
+//            $model_product[0]->validate();
+//            print_r($model_product[0]->getErrors());die;
             // ajax validation
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;

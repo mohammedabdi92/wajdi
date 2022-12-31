@@ -208,3 +208,8 @@ div[class$="-view"] .table-bordered.detail-view {
     height: -webkit-fill-available;
     display: block;
 }
+
+
+.checkbox {
+    display: flex;
+}

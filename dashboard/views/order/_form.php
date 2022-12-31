@@ -82,6 +82,7 @@ $priceList = [];
             'formFields' => [
                 'product_id',
                 'count',
+                'ready_to_deliver'
             ],
         ]); ?>
         <div class="panel panel-default">
@@ -94,13 +95,33 @@ $priceList = [];
                 <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading" >
-                            <h3 class="panel-title pull-right" style=" width: 97%; "><span class="panel-title-address">مادة: <?= ($i + 1) ?></span>  <br>
+                            <h3 class="panel-title pull-right" style=" width: 97%; ">
+
+                                <span class="panel-title-address">مادة: <?= ($i + 1) ?></span>
+                                <div style=" display: inline-block; padding: 0px  22px; ">
+                                    <?php
+                                    if($model->isNewRecord)
+                                    {
+                                        echo $form->field($modelAddress, "[{$i}]ready_to_deliver")->checkbox([
+                                            'class' => 'select-on-check-all pull-right',//pull right the checkbox
+                                            'label' => '<span class="checkmark"></span>',//pull left the label
+                                            'style' => 'transform: scale(2);',//pull left the label
+                                        ]);
+
+                                    }
+                                    ?>
+                                </div>
+                                <br>
                                 <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+
                             </h3>
+
+
                             <div class="pull-left">
 
                                 <button type="button" class="remove-item btn btn-danger btn-xs"><i
                                             class="glyphicon glyphicon-minus"></i></button>
+
                             </div>
                             <div class="clearfix"></div>
                         </div>
