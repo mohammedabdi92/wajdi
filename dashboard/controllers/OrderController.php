@@ -329,9 +329,19 @@ class OrderController extends BaseController
 
     public function actionGetProductPrice($order_id,$product_id,$count)
     {
+        $order = Order::findOne($order_id);
         $orderProduct = OrderProduct::find()->where(['order_id'=>$order_id,'product_id'=>$product_id])->one();
 
-        $product_price =  !empty($orderProduct->discount)?($orderProduct->amount - ($orderProduct->discount/$orderProduct->count)):$orderProduct->amount;
+        if($order && $order->total_discount)
+        {
+            $percentage_discount =  $order->total_discount / $order->total_amount_without_discount;
+            $product_price  = (1-$percentage_discount ) * $orderProduct->amount  ;
+
+        }else{
+            $product_price =  !empty($orderProduct->discount)?($orderProduct->amount - ($orderProduct->discount/$orderProduct->count)):$orderProduct->amount;
+        }
+
+
         $product_price_for_count =  $product_price * $count;
 
         return $product_price_for_count;
