@@ -1,9 +1,15 @@
 
 
-$(document).on('change', '[id$=count]', function (item) {
+$(document).on('change', '[id$=-count]', function (item) {
     $('.item').each(function (index, element) {
         calculateSupTotals(element);
     });
+    checkDiscount();
+    calculateTotal();
+
+});
+
+$(document).on('change', '[id$=discount]', function (item) {
     checkDiscount();
     calculateTotal();
 
@@ -210,7 +216,7 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
         jQuery(this).html("المادة : " + (index + 1))
     });
     $('.item').each(function (index, element) {
-        calculateSupTotals(element);
+        calculateSupTotals(element,true);
     });
     checkDiscount();
     calculateTotal();
