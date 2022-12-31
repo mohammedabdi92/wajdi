@@ -90,6 +90,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $item,
                     'attributes' => [
                         'count',
+                        [
+                            'attribute' => 'count_type',
+                            'value' => function ($model) {
+                                return $model->getCountTypeName('count_type');
+                            },
+                        ],
                         'amount',
                         'total_product_amount',
 
