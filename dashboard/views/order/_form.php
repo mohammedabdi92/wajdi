@@ -95,7 +95,7 @@ $priceList = [];
                 <?php foreach ($model_product as $i => $modelAddress): ?>
                     <div class="item panel panel-default"><!-- widgetBody -->
                         <div class="panel-heading" >
-                            <h3 class="panel-title pull-right" style=" width: 97%; ">
+                            <h3 class="panel-title pull-right" style=" width: 95%; ">
 
                                 <span class="panel-title-address">مادة: <?= ($i + 1) ?></span>
                                 <div style=" display: inline-block; padding: 0px  22px; ">
