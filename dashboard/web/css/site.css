@@ -111,10 +111,8 @@ overflow-y: scroll;
     overflow-y: scroll;
     display: inline-table;
 }
-div[class$="-view"] > .table-bordered {
-    width: 100%;
-    overflow-y: scroll;
-    display: block;
+div[class$="-view"]  .table-bordered {
+    display: contents;
 }
 
 .site_title{
