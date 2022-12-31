@@ -85,7 +85,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php
             $items = $model->products;
             foreach ($items as $item) {
-                echo "<div>اسم المادة :    $item->productTitle </div>";
+                echo "<br><div>اسم المادة :    $item->productTitle </div>";
                 echo DetailView::widget([
                     'model' => $item,
                     'attributes' => [
