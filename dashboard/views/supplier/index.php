@@ -37,6 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->phone_number?'<a href="tel:'.$model->phone_number.'">'.$model->phone_number.'</a>':'';
                 },
             ],
+            'name_2:ntext',
+            [
+                'attribute' => 'phone_number_2',
+                'format' => 'html',
+                'value' => function($model){
+                    return $model->phone_number_2?'<a href="tel:'.$model->phone_number_2.'">'.$model->phone_number_2.'</a>':'';
+                },
+            ],
             'email:ntext',
             'address:ntext',
             //'created_at',
