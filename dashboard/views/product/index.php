@@ -45,6 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 return $model->getStatusText();
             },
             'format' => 'raw',
+            'filter' => \common\models\Product::statusArray,
         ],
         [
             'attribute' => 'category_id',

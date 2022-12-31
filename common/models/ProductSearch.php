@@ -18,7 +18,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['title','price_1','price_2','price_3','price_4'], 'safe'],
+            [['title','price_1','price_2','price_3','price_4','status'], 'safe'],
         ];
     }
 
@@ -61,6 +61,7 @@ class ProductSearch extends Product
             'id' => $this->id,
             'category_id' => $this->category_id,
             'count_type' => $this->count_type,
+            'status' => $this->status,
             'price_1' => $this->price_1,
             'price_2' => $this->price_2,
             'price_3' => $this->price_3,

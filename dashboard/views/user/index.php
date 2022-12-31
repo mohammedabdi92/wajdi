@@ -38,27 +38,51 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getStatusText();
                 },
                 'format' => 'raw',
+                'filter' => \common\models\User::statusArray
             ],
             [
                 'attribute' => 'created_at',
-                'value' => function($model){
-                    return $model->getDate('created_at');
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
-                'format' => 'raw',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function($model){
-                    return $model->getDate('updated_at');
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
-                'format' => 'raw',
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
             ],
             [
-                'attribute' => 'store_id',
-                'value' => function($model){
-                    return Constants::getStoreName($model->store_id);
+                'attribute' => 'updated_by',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
-                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'class' => ActionColumn::className(),

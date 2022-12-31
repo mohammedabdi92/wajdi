@@ -36,6 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->getTypeText();
                 },
                 'format' => 'raw',
+                'filter' => Presence::typesArray,
             ],
             [
                 'attribute' => 'user_id',

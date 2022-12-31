@@ -11,6 +11,7 @@ use common\models\Shortage;
  */
 class ShortageSearch extends Shortage
 {
+    public $product_name;
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class ShortageSearch extends Shortage
     {
         return [
             [['id', 'store_id', 'product_id', 'count', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['note'], 'safe'],
+            [['note','product_name'], 'safe'],
         ];
     }
 
@@ -42,6 +43,7 @@ class ShortageSearch extends Shortage
     {
         $query = Shortage::find();
 
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -67,7 +69,13 @@ class ShortageSearch extends Shortage
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
-
+        if($this->product_name)
+        {
+            $parts = preg_split('/\s+/', $this->product_name);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+        }
         $query->andFilterWhere(['like', 'note', $this->note]);
 
         return $dataProvider;

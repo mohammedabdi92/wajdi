@@ -11,13 +11,15 @@ use common\models\TransferOrder;
  */
 class TransferOrderSearch extends TransferOrder
 {
+    public $product_name;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'from', 'product_id','to', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'from', 'product_id','to', 'status', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','count'], 'integer'],
+            [['product_name'], 'safe'],
         ];
     }
 
@@ -40,7 +42,7 @@ class TransferOrderSearch extends TransferOrder
     public function search($params)
     {
         $query = TransferOrder::find();
-
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -62,13 +64,20 @@ class TransferOrderSearch extends TransferOrder
             'to' => $this->to,
             'product_id' => $this->product_id,
             'status' => $this->status,
+            'count' => $this->count,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
-
+        if($this->product_name)
+        {
+            $parts = preg_split('/\s+/', $this->product_name);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+        }
         return $dataProvider;
     }
 }

@@ -32,25 +32,37 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'order_id',
             [
-                'attribute' => 'product_id',
+                'attribute' => 'product_name',
                 'value' => function($model){
                     return $model->productTitle;
                 },
-                'format' => 'raw'
+                'label'=>"المادة",
+                'format' => 'raw',
+
             ],
             'count',
             'amount',
             [
                 'attribute' => 'created_by',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->created_by);
                 },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'attribute' => 'created_at',
-                'value' => function($model){
-                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
             ],
             //'created_at',
             //'created_by',

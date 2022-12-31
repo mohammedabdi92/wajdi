@@ -33,43 +33,65 @@ $this->params['breadcrumbs'][] = $this->title;
             'note:ntext',
             [
                 'attribute' => 'store_id',
-                'value' => function($model){
-
+                'value' => function ($model) {
                     return $model->storeTitle??'';
                 },
-
+                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status' => 1])->all(), 'id', 'name'),
             ],
             [
-                'attribute' => 'product_id',
+                'attribute' => 'product_name',
                 'value' => function($model){
                     return $model->productTitle;
                 },
+                'label'=>"المادة",
                 'format' => 'raw',
+
             ],
             'count',
             [
                 'attribute' => 'created_at',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'created_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
             ],
             [
                 'attribute' => 'created_by',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->created_by);
                 },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'attribute' => 'updated_at',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
             ],
             [
                 'attribute' => 'updated_by',
-                'value' => function($model){
+                'value' => function ($model) {
                     return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
+                'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
             ],
             [
                 'class' => ActionColumn::className(),

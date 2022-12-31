@@ -11,6 +11,7 @@ use common\models\Returns;
  */
 class ReturnsSearch extends Returns
 {
+    public $product_name;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class ReturnsSearch extends Returns
         return [
             [['id', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
+            [['product_name'], 'safe'],
         ];
     }
 
@@ -42,6 +44,7 @@ class ReturnsSearch extends Returns
     {
         $query = Returns::find();
 
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -68,7 +71,13 @@ class ReturnsSearch extends Returns
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
-
+        if($this->product_name)
+        {
+            $parts = preg_split('/\s+/', $this->product_name);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+        }
         return $dataProvider;
     }
 }

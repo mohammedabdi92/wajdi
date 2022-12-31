@@ -32,20 +32,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            [
-                'attribute' => 'status',
-                'value' => function($model){
-                    return $model->getStatusText();
-                },
-                'format' => 'raw',
-            ],
+
             'order_id',
             [
-                'attribute' => 'product_id',
+                'attribute' => 'product_name',
                 'value' => function($model){
                     return $model->productTitle;
                 },
-                'format' => 'raw'
+                'label'=>"المادة",
+                'format' => 'raw',
+
             ],
             'count',
             //'amount',

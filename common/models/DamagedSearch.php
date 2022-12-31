@@ -11,6 +11,7 @@ use common\models\Damaged;
  */
 class DamagedSearch extends Damaged
 {
+    public $product_name;
     /**
      * {@inheritdoc}
      */
@@ -19,6 +20,7 @@ class DamagedSearch extends Damaged
         return [
             [['id', 'status', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
+            [['product_name'], 'safe'],
         ];
     }
 
@@ -42,6 +44,7 @@ class DamagedSearch extends Damaged
     {
         $query = Damaged::find();
 
+        $query->joinWith('product');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -69,7 +72,13 @@ class DamagedSearch extends Damaged
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
-
+        if($this->product_name)
+        {
+            $parts = preg_split('/\s+/', $this->product_name);
+            foreach ($parts as $part){
+                $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
+            }
+        }
         return $dataProvider;
     }
 }
