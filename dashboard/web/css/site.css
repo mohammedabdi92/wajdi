@@ -109,7 +109,7 @@ display: block;
 .table-bordered {
     width: 100%;
     overflow-y: scroll;
-    display: block;
+    display: inline-table;
 }
 .site_title{
     font-size: 18px !important;
