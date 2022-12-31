@@ -111,7 +111,7 @@ overflow-y: scroll;
     overflow-y: scroll;
     display: inline-table;
 }
-div[class$="-view"]  .table-bordered {
+div[class$="-view"]  .table-bordered .detail-view{
     display: contents;
 }
 
