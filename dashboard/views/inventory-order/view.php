@@ -91,9 +91,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'attributes' => [
                 'count',
                 [
-                    'attribute' => 'count_type',
+                    'label' => 'نوع العد',
                     'value' => function ($model) {
-                        return $model->getCountTypeName('count_type');
+                        return $model->productCountType;
                     },
                 ],
                 'product_cost',
