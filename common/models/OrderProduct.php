@@ -171,6 +171,11 @@ class OrderProduct extends \common\components\BaseModel
     {
         return $this->product ? $this->product->title : '';
     }
+
+    public function getProductCountType()
+    {
+        return $this->product ? $this->product->getCountTypeName('count_type') : '';
+    }
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);

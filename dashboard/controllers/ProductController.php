@@ -163,7 +163,9 @@ class ProductController extends BaseController
         if($InventoryOrderProductMin)
         {
             $response['min_price'] =$InventoryOrderProductMin->product_cost;
+
         }
+        $response['count_type_title'] =$Product->getCountTypeName('count_type');
         return json_encode($response);
     }
 
@@ -193,7 +195,8 @@ class ProductController extends BaseController
         return $out;
     }
     public function actionGetDetials($id,$store_id = ''){
-        $product =Product::findOne($id)->getAttributes();
+        $product_model =Product::findOne($id);
+        $product =$product_model->getAttributes();
         $product['inventory_count'] = 0;
         if($product && $store_id)
         {
@@ -204,6 +207,7 @@ class ProductController extends BaseController
             }
 
         }
+        $product['count_type_title'] = $product_model->getCountTypeName('count_type');
        return json_encode($product);
     }
 }

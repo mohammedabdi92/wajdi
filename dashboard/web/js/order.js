@@ -178,6 +178,13 @@ function productChange(This) {
         id = id.replace('product_id', 'price_number');
         $("#" + id).html(data);
     });
+    $.post("/product/get-detials?id=" + $(This).val() , function (data) {
+        if (data) {
+            result =  JSON.parse(data);
+            $('#orderproduct-'+box_id+'-count_type').val(result['count_type_title']);
+        }
+    });
+
 }
 function getBoxId(id){
     var product_changed_id_array = id.split('-');

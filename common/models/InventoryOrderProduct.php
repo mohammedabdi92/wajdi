@@ -121,6 +121,10 @@ class InventoryOrderProduct extends \common\components\BaseModel
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
     }
+    public function getProductCountType()
+    {
+        return $this->product ? $this->product->getCountTypeName('count_type') : '';
+    }
     public function getProductTitle()
     {
         return $this->product ? $this->product->title : '';

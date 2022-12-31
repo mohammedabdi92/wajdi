@@ -177,10 +177,10 @@ function calculateTotTotals(item) {
 }
 
 $(document).on('change', '[id$=product_id]', function (item) {
-    $('.item').each(function (index, element) {
-        getProductDetails(element);
-    });
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
+
+    getProductDetails($('.item')[box_id]);
+
     var box_product_title = $("#select2-inventoryorderproduct-"+box_id+"-product_id-container").attr("title");
     $('#inventoryorderproduct-'+box_id+'-title').val(box_product_title);
 });
@@ -196,6 +196,7 @@ function getProductDetails(item) {
         data = jQuery.parseJSON( data );
         if(data)
         {
+            mainBox.find( $('input[id$=-count_type]')).val(data.count_type_title);
             mainBox.find( $('.last_price')).html(data.last_price) ;
             mainBox.find(  $('.min_price')).html(data.min_price) ;
             mainBox.find(  $('.order_product_price')).html(data.product_price);
