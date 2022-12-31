@@ -111,6 +111,12 @@ overflow-y: scroll;
     overflow-y: scroll;
     display: inline-table;
 }
+div[class$="-view"] > .table-bordered {
+    width: 100%;
+    overflow-y: scroll;
+    display: block;
+}
+
 .site_title{
     font-size: 18px !important;
     font-style: italic !important;
