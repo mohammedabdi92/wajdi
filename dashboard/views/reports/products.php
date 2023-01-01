@@ -107,7 +107,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     </tr>
                     <tr>
                         <th style="width:50%">العدد :</th>
-                        <td><?= $searchModel->sum_count?></td>
+                        <td><?= round($searchModel->sum_count,2)?></td>
                     </tr>
                     </tbody>
                 </table>
