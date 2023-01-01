@@ -12,6 +12,7 @@ use common\models\Inventory;
 class InventorySearch extends Inventory
 {
     public $product_name;
+    public $sum_price;
     public $sum_price_1;
     public $sum_price_2;
     public $sum_price_3;
@@ -25,7 +26,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name'], 'safe'],
         ];
     }
 
@@ -89,10 +90,10 @@ class InventorySearch extends Inventory
 
         if($getSums)
         {
+            $this->sum_price = $query->sum('product.price');
             $this->sum_price_1 = $query->sum('product.price_1');
             $this->sum_price_2 = $query->sum('product.price_2');
             $this->sum_price_3 = $query->sum('product.price_3');
-            $this->sum_price_4 = $query->sum('product.price_4');
             $this->sum_price_4 = $query->sum('product.price_4');
             $this->sum_count = $query->sum('count');
         }

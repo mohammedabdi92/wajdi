@@ -25,7 +25,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
         'rowOptions' =>function ($model){
             if(!empty($model->count) && $model->product && $model->count < $model->product->min_number ){
                 return [
@@ -56,43 +55,65 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
                 'format' => 'raw',
             ],
+            'product.price',
             'product.price_1',
             'product.price_2',
             'product.price_3',
             'product.price_4',
             'count',
-
-
         ],
     ]); ?>
-    <div class="col-xs-12 col-md-6">
-        <p class="lead">المجموع</p>
-        <div class="table-responsive">
-            <table class="table">
-                <tbody>
-                <tr>
-                    <th style="width:50%">السعر الاول :</th>
-                    <td><?= $searchModel->sum_price_1?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">السعر الثاني :</th>
-                    <td><?= $searchModel->sum_price_2?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">السعر الثالث :</th>
-                    <td><?= $searchModel->sum_price_3?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">السعر الرابع :</th>
-                    <td><?= $searchModel->sum_price_4?></td>
-                </tr>
-                <tr>
-                    <th style="width:50%">العدد :</th>
-                    <td><?= $searchModel->sum_count?></td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <p class="lead">المجموع</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <th style="width:50%">سعر الكلفة :</th>
+                        <td><?= $searchModel->sum_price?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الاول :</th>
+                        <td><?= $searchModel->sum_price_1?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">ربح السعر الاول :</th>
+                        <td><?= $searchModel->sum_price_1 - $searchModel->sum_price ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الثاني :</th>
+                        <td><?= $searchModel->sum_price_2?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">ربح السعر الثاني :</th>
+                        <td><?= $searchModel->sum_price_2 - $searchModel->sum_price ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الثالث :</th>
+                        <td><?= $searchModel->sum_price_3?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">ربح السعر الثالث :</th>
+                        <td><?= $searchModel->sum_price_3 - $searchModel->sum_price ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">السعر الرابع :</th>
+                        <td><?= $searchModel->sum_price_4?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">ربح السعر الرابع :</th>
+                        <td><?= $searchModel->sum_price_4 - $searchModel->sum_price  ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%">العدد :</th>
+                        <td><?= $searchModel->sum_count?></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
 
 </div>
