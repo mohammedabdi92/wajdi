@@ -142,8 +142,8 @@ function calculateSupTotals(item,isAmountChanged = false) {
                 var product_count_el = $("[id$=-count]");
                 var product_total_cost_final_el = $("[id$=-total_product_amount]");
 
-                var product_cost = mainBox.find(product_cost_el).val();
-                var product_count = mainBox.find(product_count_el).val();
+                var product_cost = + mainBox.find(product_cost_el).val();
+                var product_count = + mainBox.find(product_count_el).val();
                 var product_total_cost_final = 0;
                 if(product_cost && product_count)
                 {
