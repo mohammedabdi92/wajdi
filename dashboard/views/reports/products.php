@@ -71,39 +71,39 @@ $this->params['breadcrumbs'][] = $this->title;
                     <tbody>
                     <tr>
                         <th style="width:50%">سعر الكلفة :</th>
-                        <td><?= $searchModel->sum_price?></td>
+                        <td><?= round($searchModel->sum_price, 2)?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">السعر الاول :</th>
-                        <td><?= $searchModel->sum_price_1?></td>
+                        <td><?= round($searchModel->sum_price_1,2)  ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">ربح السعر الاول :</th>
-                        <td><?= $searchModel->sum_price_1 - $searchModel->sum_price ?></td>
+                        <td><?= round($searchModel->sum_price_1 - $searchModel->sum_price,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">السعر الثاني :</th>
-                        <td><?= $searchModel->sum_price_2?></td>
+                        <td><?= round($searchModel->sum_price_2,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">ربح السعر الثاني :</th>
-                        <td><?= $searchModel->sum_price_2 - $searchModel->sum_price ?></td>
+                        <td><?= round($searchModel->sum_price_2 - $searchModel->sum_price,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">السعر الثالث :</th>
-                        <td><?= $searchModel->sum_price_3?></td>
+                        <td><?= round($searchModel->sum_price_3,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">ربح السعر الثالث :</th>
-                        <td><?= $searchModel->sum_price_3 - $searchModel->sum_price ?></td>
+                        <td><?= round($searchModel->sum_price_3 - $searchModel->sum_price,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">السعر الرابع :</th>
-                        <td><?= $searchModel->sum_price_4?></td>
+                        <td><?= round($searchModel->sum_price_4,2)  ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">ربح السعر الرابع :</th>
-                        <td><?= $searchModel->sum_price_4 - $searchModel->sum_price  ?></td>
+                        <td><?= round($searchModel->sum_price_4 - $searchModel->sum_price ,2) ?></td>
                     </tr>
                     <tr>
                         <th style="width:50%">العدد :</th>
