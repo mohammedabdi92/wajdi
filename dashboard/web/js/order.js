@@ -113,7 +113,7 @@ function calculateTotal() {
         }
     });
 
-    $('#order-total_count').val(supdis);
+    $('#order-total_count').val(supdis.toFixed(3));
 }
 
 function calculateSupTotals(item,isAmountChanged = false) {
@@ -152,7 +152,7 @@ function calculateSupTotals(item,isAmountChanged = false) {
 
 
 
-                mainBox.find(product_total_cost_final_el).val(product_total_cost_final);
+                mainBox.find(product_total_cost_final_el).val(product_total_cost_final.toFixed(3));
             }
         });
     }else {
