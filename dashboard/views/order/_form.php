@@ -26,8 +26,9 @@ $priceList = [];
 
 
 <div class="order-form">
-
-    <?php $form = ActiveForm::begin(['enableClientValidation' => false, 'id' => 'dynamic-form']); ?>
+    <?php $form = ActiveForm::begin([ 'enableClientValidation'=>false,
+                'enableAjaxValidation'=>false,
+        'id' => 'dynamic-form']); ?>
 
     <?= $form->field($model, 'customer_name')->textInput() ?>
     <?= $form->field($model, 'phone_number')->textInput() ?>
@@ -59,13 +60,7 @@ $priceList = [];
         $model->store_id = $single_store;
     }
 
-    echo $form->field($model, 'store_id')->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
-        'options' => ['placeholder' => 'اختر نوع العد .....'  ],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]);
+    echo $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'));
     ?>
 
     <div class=" col-md-12">

@@ -18,14 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('rbac-admin', 'Update'), ['update', 'id' => $model->name], ['class' => 'btn btn-primary']) ?>
-        <?php
-        echo Html::a(Yii::t('rbac-admin', 'Delete'), ['delete', 'id' => $model->name], [
+
+        <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->name], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->name], [
             'class' => 'btn btn-danger',
-            'data-confirm' => Yii::t('rbac-admin', 'Are you sure to delete this item?'),
-            'data-method' => 'post',
-        ]);
-        ?>
+            'data' => [
+                'confirm' => Yii::t('app', 'هل انت متاكد من الحذف ؟'),
+                'method' => 'post',
+            ],
+        ]) ?>
     </p>
 
     <?php

@@ -228,9 +228,6 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
 });
 
 $(document).on('select2:open',"select[id$=\"-product_id\"]", function (item) {
-    setTimeout(() => {
-        console.log("Delayed for 1 second.");
-        $('.select2-search__field').focus();
-    }, "1000")
+    $('.select2-search__field').trigger('focus');
 });
 
