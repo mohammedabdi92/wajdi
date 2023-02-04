@@ -78,6 +78,10 @@ class InventorySearch extends Inventory
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+        if(empty($this->store_id) && !\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
+        {
+            $query->andFilterWhere( ['store_id' => \Yii::$app->user->identity->stores]);
+        }
 
         if(!empty($this->created_at))
         {
