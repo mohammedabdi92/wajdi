@@ -54,7 +54,7 @@ class OrderProductSearch extends OrderProduct
         // add conditions that should always apply here
         $query->joinWith([
             'product' => function (\yii\db\ActiveQuery $query) {
-                $query->select(['id', 'price']);
+                $query->select(['id', 'price','title']);
             }]);
 
         $dataProvider = new ActiveDataProvider([
