@@ -74,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th style="width:50%">التوالف المرجعة :</th>
                     <td><?= $damaged_plus?></td>
                 </tr>
+
                 <tr>
                     <th style="width:50%">المشتريات :</th>
                     <td><?= $inventory_order_mince?></td>
@@ -89,6 +90,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th style="width:50%">التوالف الغير مرجعة :</th>
                     <td><?= $damaged_mince?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%"> المرجعة :</th>
+                    <td><?= $returns_mince?></td>
                 </tr>
 
                 </tbody>

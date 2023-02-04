@@ -15,6 +15,7 @@ use common\models\OrderSearch;
 use common\models\Outlay;
 use common\models\Presence;
 use common\models\ProductSearch;
+use common\models\Returns;
 use dashboard\models\cashBoxSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
@@ -143,6 +144,7 @@ class ReportsController extends Controller
 
         // - inventory-order(dep) , outlay,returns,damaged
         $inventory_order_q =  InventoryOrder::find()->select('total_cost');
+        $returns_q =  Returns::find()->select('amount')->joinWith('order');
         $outlay_q =  Outlay::find()->select('amount');
         $damaged_q_m =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_INACTIVE]);
         $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
@@ -152,6 +154,7 @@ class ReportsController extends Controller
             $order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $entries_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
+            $returns_q->andWhere(['>=', 'order.created_at', strtotime( $modelSearch->date_from)]);
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $outlay_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
             $damaged_q_m->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
@@ -166,6 +169,7 @@ class ReportsController extends Controller
             $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $entries_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
+            $returns_q->andWhere(['<=', 'order.created_at', strtotime( $modelSearch->date_to)]);
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $outlay_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
             $damaged_q_m->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
@@ -175,6 +179,7 @@ class ReportsController extends Controller
         {
             $order_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $entries_q->andWhere(['store_id'=>$modelSearch->store_id]);
+            $returns_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $damaged_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $inventory_order_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $outlay_q->andWhere(['store_id'=>$modelSearch->store_id]);
@@ -186,13 +191,14 @@ class ReportsController extends Controller
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
         $damaged_plus = $damaged_q->sum('amount');
+        $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
         $order_pluse =  $order_q->sum('total_amount');
 
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
-        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince-(double)$returns_mince;
 
 
         $cash_amount =  $box_in - $box_out;
@@ -207,6 +213,7 @@ class ReportsController extends Controller
             'box_out'=> round($box_out, 2),
             'order_pluse'=>round($order_pluse, 2),
             'entries_pluse'=> round($entries_pluse, 2),
+            'returns_mince'=> round($returns_mince, 2),
             'damaged_plus'=> round($damaged_plus, 2),
             'inventory_order_mince'=>round($inventory_order_mince, 2),
             'outlay_mince'=> round($outlay_mince, 2),
