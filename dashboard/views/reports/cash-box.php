@@ -95,6 +95,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th style="width:50%"> المرجعة :</th>
                     <td><?= $returns_mince?></td>
                 </tr>
+                <tr>
+                    <th style="width:50%">صافي الصندوق بدون المشتريات:</th>
+                    <td><?= $cash_amount_without_inventory_order?></td>
+                </tr>
 
                 </tbody>
             </table>

@@ -203,12 +203,14 @@ class ReportsController extends Controller
 
         $cash_amount =  $box_in - $box_out;
         $cash_amount = round($cash_amount, 2);
+        $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
 
 
         return $this->render('cash-box', [
             'modelSearch'=>$modelSearch,
             'cash_amount'=>$cash_amount,
+            'cash_amount_without_inventory_order'=>$cash_amount_without_inventory_order,
             'box_in'=> round($box_in, 2),
             'box_out'=> round($box_out, 2),
             'order_pluse'=>round($order_pluse, 2),
