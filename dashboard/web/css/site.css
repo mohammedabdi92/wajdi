@@ -106,6 +106,10 @@ overflow-y: scroll;
     overflow-y: scroll;
 
 }
+div[id^='w']{
+    width: 100%;
+    overflow-y: scroll;
+}
 .table-bordered {
     width: 100%;
     overflow-y: scroll;
@@ -216,4 +220,7 @@ div[class$="-view"] .table-bordered.detail-view {
 .has-error .help-block, .has-error .control-label, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
     color: #a94442;
     padding: 0px 6px;
+}
+.dropdown-menu {
+    right: auto;
 }

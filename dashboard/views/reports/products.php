@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use kartik\export\ExportMenu;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
@@ -23,6 +24,64 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php  echo $this->render('_search_sbah', ['model' => $searchModel]); ?>
 
+    <?php
+    $gridColumns = [
+
+        'id',
+        [
+            'attribute' => 'product_id',
+            'value' => function($model){
+                return $model->productTitle;
+            },
+            'format' => 'raw'
+        ],
+        [
+            'attribute' => 'store_id',
+            'value' => function($model){
+                return $model->storeTitle;
+            },
+            'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
+        'product.price',
+        'product.price_1',
+        'product.price_2',
+        'product.price_3',
+        'product.price_4',
+        'count',
+        [
+            'attribute' => 'created_at',
+            'value' => function($model){
+                return \common\components\CustomFunc::getFullDate($model->created_at);
+            },
+        ],
+    ];
+    ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'target' => ExportMenu::TARGET_BLANK,
+    ]);
+    echo  ExportMenu::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => $gridColumns,
+        'target' => ExportMenu::TARGET_BLANK,
+        'fontAwesome' => true,
+        'pjaxContainerId' => 'kv-pjax-container',
+        'batchSize' => 40,
+        'filename' => 'Action-Log-Search-'. date('Y-m-d'),
+        'dropdownOptions' => [
+            'label' => 'Excel Export',
+            'class' => 'btn btn-default',
+            'itemsBefore' => [
+                '<li class="dropdown-header">Export All Data</li>',
+            ],
+        ],
+    ]);
+
+
+
+    ?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'rowOptions' =>function ($model){
@@ -33,35 +92,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ];
             }
             return ['class' => 'time-set-notSet'];
-
-
         },
-
-        'columns' => [
-
-            'id',
-            [
-                'attribute' => 'product_id',
-                'value' => function($model){
-                    return $model->productTitle;
-                },
-                'format' => 'raw'
-            ],
-            [
-                'attribute' => 'store_id',
-                'value' => function($model){
-                    return $model->storeTitle;
-                },
-                'filter'=>\yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
-                'format' => 'raw',
-            ],
-            'product.price',
-            'product.price_1',
-            'product.price_2',
-            'product.price_3',
-            'product.price_4',
-            'count',
-        ],
+        'columns' => $gridColumns,
     ]); ?>
     <div class="row">
         <div class="col-xs-12 col-md-6">

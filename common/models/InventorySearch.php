@@ -24,9 +24,9 @@ class InventorySearch extends Inventory
     public function rules()
     {
         return [
-            [['id', 'product_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at'], 'safe'],
         ];
     }
 
@@ -73,12 +73,16 @@ class InventorySearch extends Inventory
             'last_product_cost' => $this->last_product_cost,
             'count' => $this->count,
             'store_id' => $this->store_id,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
+
+        if(!empty($this->created_at))
+        {
+            $query->andWhere(['>=','inventory.created_at',strtotime($this->created_at.' 00:00:00')])->andWhere(['<=','inventory.created_at',strtotime($this->created_at.' 24:59:59')]);
+        }
         if($this->product_name)
         {
             $parts = preg_split('/\s+/', $this->product_name);

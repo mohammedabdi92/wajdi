@@ -43,8 +43,21 @@ use yii\widgets\ActiveForm;
     ?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
-
-
+    <label>تاريخ الانشاء</label>
+    <div class="row">
+    <div class="col-md-12">
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'ar',
+        'pluginOptions' => [
+                'rtl'=>false,
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
+    </div>
+    </div>
 
 
 

@@ -34,6 +34,19 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
+    <?php
+//    print_r("<pre>");
+//    print_r(Yii::$app->requestedRoute);die;
+    ?>
+    <?php if( in_array(Yii::$app->requestedRoute,['inventory-order/create','inventory-order/update','order/create','order/update']) ) :?>
+    <script>
+
+        window.onbeforeunload = popup;
+        function popup() {
+            return 'هل تريد الخروج من الصفحة قبل حفظ المعلومات';
+        }
+    </script>
+    <?php endif; ?>
     <!-- /header content -->
     <body  onload="clock()" class="nav-<?= !empty($_COOKIE['menuIsCollapsed']) && $_COOKIE['menuIsCollapsed'] == 'true' ? 'sm' : 'md' ?>">
     <?php $this->beginBody(); ?>
