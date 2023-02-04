@@ -36,13 +36,13 @@ class CustomFunc
         $Stores = Store::find()->where(['status'=>1])->all();
         foreach ($Stores as $store) {
             $store_id = $store->id;
-            $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
+            $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
 
-            $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count')?? 0 ;
+            $item_order_count = OrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count')?? 0 ;
 
-            $returned = Returns::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
-            $damaged_returned = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
-            $damaged_inactive = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
+            $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
+            $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
+            $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
 
             $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned -$damaged_inactive;
 
@@ -77,13 +77,13 @@ class CustomFunc
             $Stores = Store::find()->where(['status'=>1])->all();
             foreach ($Stores as $store) {
                 $store_id = $store->id;
-                $item_inventory_count = InventoryOrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count') ?? 0;
+                $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count') ?? 0;
 
-                $item_order_count = OrderProduct::find()->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count')?? 0 ;
+                $item_order_count = OrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count')?? 0 ;
 
-                $returned = Returns::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count');
-                $damaged_returned = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
-                $damaged_inactive = Damaged::find()->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
+                $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->sum('count');
+                $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
+                $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$old_product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
 
                 $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned -$damaged_inactive;
 
