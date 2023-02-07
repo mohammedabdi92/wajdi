@@ -156,7 +156,7 @@ class ReportsController extends Controller
             $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $returns_q->andWhere(['>=', 'order.created_at', strtotime( $modelSearch->date_from)]);
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
-            $outlay_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
+            $outlay_q->andWhere(['>=', 'pull_date',  $modelSearch->date_from]);
             $damaged_q_m->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $financial_withdrawal_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
         }
@@ -171,7 +171,7 @@ class ReportsController extends Controller
             $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $returns_q->andWhere(['<=', 'order.created_at', strtotime( $modelSearch->date_to)]);
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
-            $outlay_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
+            $outlay_q->andWhere(['<=', 'pull_date',  $modelSearch->date_to]);
             $damaged_q_m->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $financial_withdrawal_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
         }
