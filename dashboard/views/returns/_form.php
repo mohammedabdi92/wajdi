@@ -28,6 +28,7 @@ $this->registerJsFile(
         'pluginOptions' => ['allowClear' => true],
     ]);
     echo $form->field($model, 'product_id')->widget(\kartik\depdrop\DepDrop::classname(), [
+        'data'=>[$model->product_id=>$model->product->title],
         'type' => DepDrop::TYPE_SELECT2,
         'options' => ['id' => 'product_id', 'placeholder' => 'Select ...'],
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],

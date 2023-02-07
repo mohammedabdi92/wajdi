@@ -46,6 +46,7 @@ class Returns extends \yii\db\ActiveRecord
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
+            [['count'], 'validateCountExist'],
             [[ 'product_id', 'order_id', 'amount', 'count' ,'returner_name'], 'required'],
         ];
     }
@@ -71,6 +72,15 @@ class Returns extends \yii\db\ActiveRecord
         ];
     }
 
+    public function validateCountExist($attr)
+    {
+        if (!empty($this->count) && $this->count > $this->orderProduct->count) {
+            $this->addError($attr, 'الكمية اكبر من الطلب  ' . $this->orderProduct->count);
+        }
+
+
+    }
+
 
     /**
      * {@inheritdoc}
@@ -83,6 +93,11 @@ class Returns extends \yii\db\ActiveRecord
     public function getProduct()
     {
         return $this->hasOne(Product::className(), ['id' => 'product_id']);
+    }
+    public function getOrderProduct()
+    {
+        $order = $this->order;
+        return $this->hasOne(OrderProduct::className(), ['product_id' => 'product_id'])->andOnCondition(['store_id' => $order->store_id]);
     }
     public function getProductTitle()
     {
