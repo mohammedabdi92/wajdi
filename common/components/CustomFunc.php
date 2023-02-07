@@ -43,15 +43,12 @@ class CustomFunc
     {
 
         $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
-
         $item_order_count = OrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
-
         $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->sum('count');
         $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id, 'status' => Damaged::STATUS_RETURNED])->sum('count');
         $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->andWhere(['<>', 'status', Damaged::STATUS_REPLACED])->sum('count');
         $transformTo = TransferOrder::find()->select('count')->where(['to' => $store_id, 'product_id' => $product_id])->sum('count');
         $transformFrom = TransferOrder::find()->select('count')->where(['from' => $store_id, 'product_id' => $product_id])->sum('count');
-
 
         $total = (int)$item_inventory_count + (int)$returned - (int)$item_order_count + (int)$damaged_returned - (int)$damaged_inactive - (int)$transformFrom + (int)$transformTo;
 
@@ -76,21 +73,20 @@ class CustomFunc
 
         if ($old_product_id) {
 
-            $store_id = $old_product_id;
-            $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $old_product_id])->sum('count') ?? 0;
+            $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
+            $item_order_count = OrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
+            $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->sum('count');
+            $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id, 'status' => Damaged::STATUS_RETURNED])->sum('count');
+            $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->andWhere(['<>', 'status', Damaged::STATUS_REPLACED])->sum('count');
+            $transformTo = TransferOrder::find()->select('count')->where(['to' => $store_id, 'product_id' => $product_id])->sum('count');
+            $transformFrom = TransferOrder::find()->select('count')->where(['from' => $store_id, 'product_id' => $product_id])->sum('count');
 
-            $item_order_count = OrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $old_product_id])->sum('count') ?? 0;
+            $total = (int)$item_inventory_count + (int)$returned - (int)$item_order_count + (int)$damaged_returned - (int)$damaged_inactive - (int)$transformFrom + (int)$transformTo;
 
-            $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $old_product_id])->sum('count');
-            $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $old_product_id, 'status' => Damaged::STATUS_RETURNED])->sum('count');
-            $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $old_product_id])->andWhere(['<>', 'status', Damaged::STATUS_REPLACED])->sum('count');
-
-            $total = $item_inventory_count + $returned - $item_order_count + $damaged_returned - $damaged_inactive;
-
-            $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $old_product_id])->one();
+            $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();
             if (empty($inventory)) {
                 $inventory = new Inventory();
-                $inventory->product_id = $old_product_id;
+                $inventory->product_id = $product_id;
                 $inventory->store_id = $store_id;
             }
 
@@ -102,14 +98,8 @@ class CustomFunc
                     ->setHtmlBody("العنصر $product_id اصبح $total")
                     ->send();
             }
-            $inventory->count = $total;
-
-            if ($total != 0) {
-                $inventory->save(false);
-            } else if (!$inventory->isNewRecord) {
-                $inventory->delete();
-            }
-
+            $inventory->count = ($total < 0) ? 0 : $total;
+            $inventory->save(false);
         }
 
 
