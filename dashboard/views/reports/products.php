@@ -102,9 +102,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 <table class="table">
                     <tbody>
                     <tr>
+                        <th style="width:50%">العدد :</th>
+                        <td><?= round($searchModel->sum_count,2)?></td>
+                    </tr>
+                    <tr>
                         <th style="width:50%">سعر الكلفة :</th>
                         <td><?= round($searchModel->sum_price, 2)?></td>
                     </tr>
+
                     <tr>
                         <th style="width:50%">السعر الاول :</th>
                         <td><?= round($searchModel->sum_price_1,2)  ?></td>
@@ -137,10 +142,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="width:50%">ربح السعر الرابع :</th>
                         <td><?= round($searchModel->sum_price_4 - $searchModel->sum_price ,2) ?></td>
                     </tr>
-                    <tr>
-                        <th style="width:50%">العدد :</th>
-                        <td><?= round($searchModel->sum_count,2)?></td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>

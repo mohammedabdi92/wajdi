@@ -98,11 +98,11 @@ class InventorySearch extends Inventory
 
         if($getSums)
         {
-            $this->sum_price = $query->sum('product.price');
-            $this->sum_price_1 = $query->sum('product.price_1');
-            $this->sum_price_2 = $query->sum('product.price_2');
-            $this->sum_price_3 = $query->sum('product.price_3');
-            $this->sum_price_4 = $query->sum('product.price_4');
+            $this->sum_price = $query->sum('(product.price * inventory.count)');
+            $this->sum_price_1 = $query->sum('(product.price_1 * inventory.count)');
+            $this->sum_price_2 = $query->sum('(product.price_2 * inventory.count)');
+            $this->sum_price_3 = $query->sum('(product.price_3 * inventory.count)');
+            $this->sum_price_4 = $query->sum('(product.price_4 * inventory.count)');
             $this->sum_count = $query->sum('count');
         }
         return $dataProvider;
