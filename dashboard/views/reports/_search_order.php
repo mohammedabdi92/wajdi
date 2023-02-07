@@ -17,7 +17,7 @@ use kartik\daterange\DateRangePicker;
         'id'=>'order-product'
     ]); ?>
 
-
+    <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'created_by')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
