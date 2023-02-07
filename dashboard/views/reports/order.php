@@ -120,6 +120,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="width:50%"> مجموع القيمة بعد الخصم:</th>
                         <td><?= $searchModel->total_amount_sum ?></td>
                     </tr>
+                    <tr>
+                        <th style="width:50%"> مجموع الربح:</th>
+                        <td><?= $searchModel->total_profit ?></td>
+                    </tr>
                     </tbody>
                 </table>
             </div>

@@ -20,6 +20,7 @@ class OrderSearch extends Order
     public $repayment_sum ;
     public $total_amount_sum ;
     public $customer_name ;
+    public $total_profit ;
 
 
     /**
@@ -79,13 +80,13 @@ class OrderSearch extends Order
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'customer_id' => $this->customer_id,
-            'total_amount' => $this->total_amount,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'isDeleted' => $this->isDeleted,
+            'order.id' => $this->id,
+            'order.customer_id' => $this->customer_id,
+            'order.total_amount' => $this->total_amount,
+            'order.created_by' => $this->created_by,
+            'order.updated_at' => $this->updated_at,
+            'order.updated_by' => $this->updated_by,
+            'order.isDeleted' => $this->isDeleted,
         ]);
 
         if($this->created_at_from)
@@ -112,6 +113,9 @@ class OrderSearch extends Order
 
         if($getSums)
         {
+            $productQuery = clone $query;
+            $this->total_profit  =   round($productQuery->joinWith('products.product')->sum('(order_product.total_product_amount -order_product.discount)-(product.price * order_product.count) '),2);
+
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');
