@@ -52,6 +52,10 @@ class CustomFunc
 
         $total = (int)$item_inventory_count + (int)$returned - (int)$item_order_count + (int)$damaged_returned - (int)$damaged_inactive - (int)$transformFrom + (int)$transformTo;
 
+
+
+
+
         $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();
         if (empty($inventory)) {
             $inventory = new Inventory();
