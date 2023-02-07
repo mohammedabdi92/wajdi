@@ -121,6 +121,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= $searchModel->total_amount_sum ?></td>
                     </tr>
                     <tr>
+                        <th style="width:50%"> مجموع التكلفة:</th>
+                        <td><?= $searchModel->total_dept ?></td>
+                    </tr>
+                    <tr>
                         <th style="width:50%"> مجموع الربح:</th>
                         <td><?= $searchModel->total_profit ?></td>
                     </tr>
