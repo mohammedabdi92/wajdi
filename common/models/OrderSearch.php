@@ -21,8 +21,6 @@ class OrderSearch extends Order
     public $total_amount_sum ;
     public $customer_name ;
     public $total_profit ;
-    public $t1 ;
-    public $t2 ;
 
 
     /**
