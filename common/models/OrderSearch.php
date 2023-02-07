@@ -107,9 +107,9 @@ class OrderSearch extends Order
         if(!\Yii::$app->user->can('كل المحلات') && empty($this->store_id))
         {
             $stores = \Yii::$app->user->identity->stores;
-            $query->andWhere(['store_id'=>$stores]);
+            $query->andWhere(['order.store_id'=>$stores]);
         }else{
-            $query->andFilterWhere(['store_id'=>$this->store_id]);
+            $query->andFilterWhere(['order.store_id'=>$this->store_id]);
         }
 
         if($getSums)

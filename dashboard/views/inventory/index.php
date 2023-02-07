@@ -147,6 +147,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => $gridColumns,
         'id' => 'w0',
         'rowOptions' =>function ($model){
+            if($model->count == 0){
+                return [
+                    'class' => 'danger  time-set',
+                    'data-text' => ' '
+                ];
+            }
+            if($model->id == 18)
+            {
+                print_r($model->product->min_number);
+                die;
+
+            }
             if(!empty($model->count) && $model->product && $model->count < $model->product->min_number ){
                 return [
                     'class' => 'danger  time-set',
