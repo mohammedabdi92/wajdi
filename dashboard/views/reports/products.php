@@ -35,6 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'format' => 'raw'
         ],
+        'count',
         [
             'attribute' => 'store_id',
             'value' => function($model){
@@ -48,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'product.price_2',
         'product.price_3',
         'product.price_4',
-        'count',
+
         [
             'attribute' => 'created_at',
             'value' => function($model){
