@@ -68,15 +68,15 @@ class InventorySearch extends Inventory
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'product_id' => $this->product_id,
-            'last_product_cost' => $this->last_product_cost,
-            'count' => $this->count,
-            'store_id' => $this->store_id,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
-            'isDeleted' => $this->isDeleted,
+            'inventory.id' => $this->id,
+            'inventory.product_id' => $this->product_id,
+            'inventory.last_product_cost' => $this->last_product_cost,
+            'inventory.count' => $this->count,
+            'inventory.store_id' => $this->store_id,
+            'inventory.created_by' => $this->created_by,
+            'inventory.updated_at' => $this->updated_at,
+            'inventory.updated_by' => $this->updated_by,
+            'inventory.isDeleted' => $this->isDeleted,
         ]);
         if(empty($this->store_id) && !\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
         {
