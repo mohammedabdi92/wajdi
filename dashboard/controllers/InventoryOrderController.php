@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\components\CustomFunc;
 use common\models\User;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -158,7 +159,12 @@ class InventoryOrderController extends BaseController
                 try {
                     if ($flag = $model->save(false)) {
                         if (! empty($deletedIDs)) {
+                            $productIDs =  InventoryOrderProduct::find()->select('product_id')->where(['id'=>$deletedIDs])->asArray()->all();
                             InventoryOrderProduct::deleteAll(['id' => $deletedIDs]);
+                            foreach ($productIDs as $productID)
+                            {
+                                CustomFunc::calculateProductCount($model->store_id,$productID['product_id']);
+                            }
                         }
                         foreach ($model_product as $modelproduct) {
                             $modelproduct->inventory_order_id = $model->id;
