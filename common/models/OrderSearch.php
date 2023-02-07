@@ -21,6 +21,8 @@ class OrderSearch extends Order
     public $total_amount_sum ;
     public $customer_name ;
     public $total_profit ;
+    public $t1 ;
+    public $t2 ;
 
 
     /**
@@ -113,8 +115,12 @@ class OrderSearch extends Order
 
         if($getSums)
         {
+
             $productQuery = clone $query;
-            $this->total_profit  =   round($productQuery->joinWith('products.product')->sum('(order_product.total_product_amount -order_product.discount)-(product.price * order_product.count) '),2);
+            $productQuery->joinWith('products.product');
+//            $this->total_profit  =   round($productQuery->sum('((order_product.total_product_amount - order_product.discount) - (product.price * order_product.count)) '),2);
+            $this->t1 =   round($productQuery->sum('(order_product.total_product_amount - order_product.discount) '),2);
+            $this->t2  =   round($productQuery->sum('(product.price * order_product.count) '),2);
 
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
