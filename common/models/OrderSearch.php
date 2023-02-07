@@ -119,7 +119,7 @@ class OrderSearch extends Order
             $productQuery = clone $query;
             $productQuery->joinWith('products.product');
             $total_amount =  round($query->sum('total_amount'), 2);
-            $this->total_profit  =   round($productQuery->sum('(product.price * order_product.count) '),2) - $total_amount ;
+            $this->total_profit  =  $total_amount -  round($productQuery->sum('(product.price * order_product.count) '),2) ;
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');
