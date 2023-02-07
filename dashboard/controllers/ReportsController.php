@@ -198,7 +198,7 @@ class ReportsController extends Controller
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
-        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince-(double)$returns_mince;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince;
 
 
         $cash_amount =  $box_in - $box_out;
