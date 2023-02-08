@@ -73,7 +73,6 @@ class OrderProductSearch extends OrderProduct
         $query->andFilterWhere([
             'id' => $this->id,
             'order_id' => $this->order_id,
-            'product_id' => $this->product_id,
             'store_id' => $this->store_id,
             'count' => $this->count,
             'count_type' => $this->count_type,
@@ -83,9 +82,14 @@ class OrderProductSearch extends OrderProduct
             'isDeleted' => $this->isDeleted,
         ]);
 
+        if($this->product_id)
+        {
+            $query->andFilterWhere(['product_id' => $this->product_id,]);
+
+        }
         if($this->created_at_from)
         {
-            $query->andFilterWhere(['>=', 'order_product.created_at',strtotime( $this->created_at_from)]);
+            $query->andFilterWhere(['>=', 'order_product.created_at',strtotime( $this->created_at_from." 00:00:00")]);
 
         }
 
@@ -94,6 +98,7 @@ class OrderProductSearch extends OrderProduct
             $query->andFilterWhere(['<=', 'order_product.created_at',strtotime( $this->created_at_to." 23:59:59")]);
         }
 
+//        print_r($query->createCommand()->rawSql);die;
         if($getSums)
         {
             $this->sum_product_price = $query->sum('(product.price * count )');
