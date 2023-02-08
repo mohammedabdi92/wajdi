@@ -111,8 +111,8 @@ $Arabic = new  Arabic();
 
     <tr bgcolor="#eee">
         <td colspan="3"></td>
-        <td colspan="<?=(!empty($model->total_price_discount_product))?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
-        <td colspan="<?=(!empty($model->total_price_discount_product))?2:1?>" align="center"><b> السعر النهائي</b></td>
+        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
+        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b> السعر النهائي</b></td>
         <td colspan="1" align="center"><b><?=$model->total_amount ?></b></td>
     </tr>
 
