@@ -157,7 +157,7 @@ function calculateTotTotals(item) {
     var count = mainBox.find(countItem).val();
     if (count && productCost) {
         var suptotal = parseFloat(productCost) / parseFloat(count);
-        mainBox.find(productCostItem).val(suptotal);
+        mainBox.find(productCostItem).val(parseFloat(suptotal.toFixed(3)));
         var discount_percentage = $('[id$=discount_percentage]').val();
         if (discount_percentage) {
             var discount = (suptotal * (parseFloat(discount_percentage) / 100));
