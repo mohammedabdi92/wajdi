@@ -56,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         [
             'attribute' => 'category_id',
-            'label' => 'نوع المادة',
+            'label' => 'نوع القسم',
             'value' => function ($model) {
                 return $model->product ? $model->product->categoryTitle :'';
             },

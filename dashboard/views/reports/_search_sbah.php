@@ -43,7 +43,7 @@ use yii\widgets\ActiveForm;
     ?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
-    <?= $form->field($model, 'category_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'))->label('نوع المادة') ?>
+    <?= $form->field($model, 'category_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'))->label('نوع القسم') ?>
     <label>تاريخ الانشاء</label>
     <div class="row">
     <div class="col-md-12">
