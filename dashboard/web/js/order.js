@@ -192,7 +192,12 @@ function getBoxId(id){
 $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (item) {
 
 
-    var box_id =  getBoxId($(item.currentTarget.parentNode.parentNode).attr('id')) ;
+    var node_id = $(item.currentTarget.parentNode.parentNode).attr('id');
+    if(node_id == undefined)
+    {
+        node_id = $(item.currentTarget.parentNode.parentNode.parentNode).attr('id');
+    }
+    var box_id =  getBoxId(node_id) ;
     calculateSupTotals($('.item')[box_id]);
 
     calculateTotal();
