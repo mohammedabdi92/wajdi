@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\TransferOrder */
@@ -24,19 +25,19 @@ use yii\widgets\ActiveForm;
             'allowClear' => false,
             'minimumInputLength' => 3,
             'language' => [
-                'errorLoading' => new \yii\web\JsExpression("function () { return 'Waiting for results...'; }"),
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
             ],
             'ajax' => [
                 'url' => $url,
                 'dataType' => 'json',
-                'data' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
-                'results' => new \yii\web\JsExpression('function(params) { return {q:params.term}; }'),
+                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#transferorder-from").val()}; }'),
+                'results' => new JsExpression('function(params) { return {q:params.term}; }'),
                 'cache' => true
 
             ],
-            'escapeMarkup' => new \yii\web\JsExpression('function (markup) { return markup; }'),
-            'templateResult' => new \yii\web\JsExpression('function(product) { return product.text; }'),
-            'templateSelection' => new \yii\web\JsExpression('function (product) { return product.text; }'),
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(product) { return product.text; }'),
+            'templateSelection' => new JsExpression('function (product) { return product.text; }'),
         ],
     ]);
     ?>
