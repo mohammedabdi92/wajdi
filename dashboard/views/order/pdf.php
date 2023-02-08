@@ -57,15 +57,18 @@ $Arabic = new  Arabic();
         <?php endif; ?>
 
     </tr>
-    <?php foreach ($products as $product) : ?>
+    <?php foreach ($products as $key => $product) :
+
+        $model->total_discount += $product->discount;
+        ?>
         <tr>
-            <td align="center"><?= $product->id; ?></td>
+            <td align="center"><?= $key+1; ?></td>
             <td align="center"><?= $product->product->title ?? ''; ?></td>
             <td align="center"><?= $product->count; ?></td>
             <td align="center"><?= $product->product->getCountTypeName('count_type'); ?></td>
             <td align="center"><?= $product->amount; ?></td>
             <td align="center"><?= $product->total_product_amount; ?></td>
-            <?php if (!empty($model->total_price_discount_product)): ?>
+            <?php if (!empty($product->discount)): ?>
                 <td align="center"><?= $product->discount; ?></td>
                 <td align="center"><?= $product->total_product_amount - $product->discount; ?></td>
             <?php endif; ?>
@@ -85,15 +88,15 @@ $Arabic = new  Arabic();
     <tr bgcolor="#eee">
         <td colspan="5"></td>
         <td colspan="2" align="center"><b> القمة المطلوبة</b></td>
-        <td align="center"><b><?= $model->debt + $model->total_amount ?></b></td>
+        <td align="center"><b><?= $model->debt + $model->total_amount +$model->total_discount ?></b></td>
     </tr>
     <?php endif; ?>
 
-    <?php if (!empty($model->total_price_discount_product)): ?>
+    <?php if (!empty($model->total_discount)): ?>
         <tr bgcolor="#eee">
             <td colspan="5"></td>
             <td colspan="2" align="center"><b> مجموع الخصم</b></td>
-            <td align="center"><b><?= $model->total_price_discount_product ?></b></td>
+            <td align="center"><b><?= $model->total_discount ?></b></td>
         </tr>
     <?php endif; ?>
     <?php if (!empty($model->debt)): ?>
@@ -104,16 +107,7 @@ $Arabic = new  Arabic();
         </tr>
     <?php endif; ?>
 
-    <?php if (!empty($model->debt)): ?>
-        <tr bgcolor="#eee">
-            <td colspan="5"></td>
-            <td colspan="2" align="center"><b> القيمة الدين</b></td>
-            <td align="center"><b><?= $model->debt ?></b></td>
-        </tr>
 
-
-
-    <?php endif; ?>
 
     <tr bgcolor="#eee">
         <td colspan="3"></td>
