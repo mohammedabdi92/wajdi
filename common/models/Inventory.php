@@ -25,6 +25,16 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class Inventory extends \common\components\BaseModel
 {
+    const STATUS_ACTIVE = 1;
+    const STATUS_FEW = 2;
+    const STATUS_NOT_ACTIVE = 3;
+    const statusArray = [
+        self::STATUS_ACTIVE=>"متوفرة",
+        self::STATUS_NOT_ACTIVE=>"غير متوفرة",
+        self::STATUS_FEW=>"تحت الحد الادنى",
+    ];
+
+    public $available_status;
     /**
      * {@inheritdoc}
      */
@@ -41,7 +51,7 @@ class Inventory extends \common\components\BaseModel
         return [
             [['product_id', 'store_id', 'count' ], 'required'],
             [['product_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['last_product_cost', 'count'], 'number'],
+            [['last_product_cost', 'count','available_status'], 'number'],
         ];
     }
 
@@ -70,6 +80,7 @@ class Inventory extends \common\components\BaseModel
             'store_id' => Yii::t('app', 'المحل'),
             'last_product_cost' => Yii::t('app', 'Last Product Cost'),
             'count' => Yii::t('app', 'العدد'),
+            'available_status' => Yii::t('app', 'حالة عدد المواد'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
@@ -101,7 +112,11 @@ class Inventory extends \common\components\BaseModel
     }
     public function getMinProductCount(){
 
-            return $this->hasOne(MinProductCount::className(), ['product_id' => 'product_id'])->onCondition(['min_product_count.store_id'=>$this->store_id]);
+            return $this->hasOne(MinProductCount::className(), ['product_id' => 'product_id','store_id'=>'store_id']);
 
+    }
+
+    public  function getStatusText(){
+        return self::statusArray[$this->available_status];
     }
 }

@@ -5,12 +5,14 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Inventory;
+use yii\db\Expression;
 
 /**
  * InventorySearch represents the model behind the search form of `common\models\Inventory`.
  */
 class InventorySearch extends Inventory
 {
+
     public $product_name;
     public $sum_price;
     public $sum_price_1;
@@ -18,13 +20,14 @@ class InventorySearch extends Inventory
     public $sum_price_3;
     public $sum_price_4;
     public $sum_count;
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
             [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at'], 'safe'],
         ];
@@ -50,7 +53,10 @@ class InventorySearch extends Inventory
     {
         $query = Inventory::find();
 
+        $query->select(
+            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*"));
         $query->joinWith('product');
+        $query->joinWith('minProductCount');
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -93,6 +99,10 @@ class InventorySearch extends Inventory
             foreach ($parts as $part){
                 $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
             }
+        }
+        if(!empty($this->available_status))
+        {
+            $query->andFilterHaving(['available_status' =>$this->available_status]);
         }
 
 

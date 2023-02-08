@@ -45,6 +45,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter'=>$stores,
             'format' => 'raw',
         ],
+
+        [
+            'attribute' => 'available_status',
+            'value' => function ($model) {
+                return $model->getStatusText();
+            },
+            'format' => 'raw',
+            'filter' => \common\models\Inventory::statusArray,
+        ],
         [
             'attribute' => 'count',
             'visible' => Yii::$app->user->can('ظهور العدد بمواد الافرع بالمخزن'),
