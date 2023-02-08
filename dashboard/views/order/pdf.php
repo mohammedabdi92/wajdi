@@ -6,6 +6,7 @@
 use yii\helpers\Html;
 use common\components\Arabic;
 
+$have_product_discout = false;
 
 $Arabic = new  Arabic();
 ?>
@@ -59,7 +60,12 @@ $Arabic = new  Arabic();
     </tr>
     <?php foreach ($products as $key => $product) :
 
-        $model->total_discount += $product->discount;
+        if($product->discount)
+        {
+            $model->total_discount += $product->discount;
+            $have_product_discout = true;
+        }
+
         ?>
         <tr>
             <td align="center"><?= $key+1; ?></td>
@@ -111,8 +117,8 @@ $Arabic = new  Arabic();
 
     <tr bgcolor="#eee">
         <td colspan="3"></td>
-        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
-        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b> السعر النهائي</b></td>
+        <td colspan="<?=(!empty($model->total_discount)&& $have_product_discout)?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
+        <td colspan="<?=(!empty($model->total_discount) && $have_product_discout)?2:1?>" align="center"><b> السعر النهائي</b></td>
         <td colspan="1" align="center"><b><?=$model->total_amount ?></b></td>
     </tr>
 
