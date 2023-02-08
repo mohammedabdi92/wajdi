@@ -90,24 +90,18 @@ $Arabic = new  Arabic();
 
     </tr>
 
-    <?php if (!empty($model->total_price_discount_product)): ?>
-    <tr bgcolor="#eee">
-        <td colspan="5"></td>
-        <td colspan="2" align="center"><b> القمة المطلوبة</b></td>
-        <td align="center"><b><?= $model->debt + $model->total_amount +$model->total_discount ?></b></td>
-    </tr>
-    <?php endif; ?>
+
 
     <?php if (!empty($model->total_discount)): ?>
         <tr bgcolor="#eee">
-            <td colspan="<?=(!empty($have_product_discout))?5:4?>"></td>
+            <td colspan="<?=$have_product_discout?5:3?>"></td>
             <td colspan="2" align="center"><b> مجموع الخصم</b></td>
             <td align="center"><b><?= $model->total_discount ?></b></td>
         </tr>
     <?php endif; ?>
     <?php if (!empty($model->debt)): ?>
         <tr bgcolor="#eee">
-            <td colspan="<?=(!empty($have_product_discout))?5:4?>"></td>
+            <td colspan="<?=$have_product_discout?5:3?>"></td>
             <td colspan="2" align="center"><b> الدين</b></td>
             <td align="center"><b><?= $model->debt ?></b></td>
         </tr>
@@ -117,8 +111,8 @@ $Arabic = new  Arabic();
 
     <tr bgcolor="#eee">
         <td colspan="3"></td>
-        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
-        <td colspan="<?=(!empty($model->total_discount))?2:1?>" align="center"><b> السعر النهائي</b></td>
+        <td colspan="<?=$have_product_discout?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
+        <td colspan="<?=$have_product_discout?2:1?>" align="center"><b> السعر النهائي</b></td>
         <td colspan="1" align="center"><b><?=$model->total_amount ?></b></td>
     </tr>
 
