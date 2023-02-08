@@ -20,6 +20,7 @@ class InventorySearch extends Inventory
     public $sum_price_3;
     public $sum_price_4;
     public $sum_count;
+    public $category_id;
 
     /**
      * {@inheritdoc}
@@ -29,7 +30,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id'], 'safe'],
         ];
     }
 
@@ -83,6 +84,7 @@ class InventorySearch extends Inventory
             'inventory.updated_at' => $this->updated_at,
             'inventory.updated_by' => $this->updated_by,
             'inventory.isDeleted' => $this->isDeleted,
+            'product.category_id' => $this->category_id,
         ]);
         if(empty($this->store_id) && !\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
         {

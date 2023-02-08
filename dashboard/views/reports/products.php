@@ -36,7 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw'
         ],
         [
-            'attribute' => 'product.category_id',
+            'attribute' => 'category_id',
+            'label' => 'نوع العد',
             'value' => function ($model) {
                 return $model->product ? $model->product->categoryTitle :'';
             },

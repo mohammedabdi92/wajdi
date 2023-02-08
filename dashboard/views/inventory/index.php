@@ -55,7 +55,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter' => \common\models\Inventory::statusArray,
         ],
         [
-            'attribute' => 'product.category_id',
+            'attribute' => 'category_id',
+            'label' => 'نوع المادة',
             'value' => function ($model) {
                 return $model->product ? $model->product->categoryTitle :'';
             },
