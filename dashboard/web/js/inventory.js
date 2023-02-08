@@ -143,7 +143,7 @@ function calculateSupTotals(item) {
 
             suptotal = tax + suptotal;
         }
-        mainBox.find(product_total_cost_final).val(suptotal);
+        mainBox.find(product_total_cost_final).val(parseFloat(suptotal.toFixed(3)));
     }
 }
 
