@@ -99,4 +99,9 @@ class Inventory extends \common\components\BaseModel
     {
         return $this->product ? $this->product->title : '';
     }
+    public function getMinProductCount(){
+
+            return $this->hasOne(MinProductCount::className(), ['product_id' => 'product_id'])->onCondition(['min_product_count.store_id'=>$this->store_id]);
+
+    }
 }
