@@ -109,16 +109,48 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);
             }
 
+
             ?>
         </div>
+
         <div class="col-md-6">
-            <label>المرجع</label>
+            <?php
+            echo '<label>المرجع</label>';
+            echo \yii\grid\GridView::widget([
+                'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Returns::find()->where(['order_id'=>$model->id])]),
+                'columns' => [
+                    'id',
+                    'count',
+                    [
+                        'attribute' => 'product_name',
+                        'value' => function($model){
+                            return $model->productTitle;
+                        },
+                        'label'=>"المادة",
+                        'format' => 'raw',
 
+                    ],
+                ],
+            ]);
+            echo '<label>التالف</label>';
+            echo \yii\grid\GridView::widget([
+                'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Damaged::find()->where(['order_id'=>$model->id])]),
+                'columns' => [
+                    'id',
+                    'count',
+                    [
+                        'attribute' => 'product_name',
+                        'value' => function($model){
+                            return $model->productTitle;
+                        },
+                        'label'=>"المادة",
+                        'format' => 'raw',
+
+                    ],
+                ],
+            ]);
+            ?>
         </div>
-
     </div>
-    <div class="col-md-6">
-        <label>التالف</label>
 
-    </div>
 </div>
