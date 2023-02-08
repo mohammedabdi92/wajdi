@@ -127,8 +127,8 @@ function calculateSupTotals(item) {
     var countItem = $("[id$=count]");
     var count = mainBox.find(countItem).val();
     if (count && productCost) {
-        var suptotal = parseFloat(count.toFixed(3)) * parseFloat(productCost.toFixed(3));
-        mainBox.find(product_total_cost).val(suptotal.toFixed(3));
+        var suptotal = parseFloat(count) * parseFloat(productCost);
+        mainBox.find(product_total_cost).val( parseFloat(suptotal.toFixed(3)));
         var discount_percentage = $('[id$=discount_percentage]').val();
         if (discount_percentage) {
             var discount = (suptotal * (parseFloat(discount_percentage) / 100));
