@@ -35,6 +35,14 @@ $this->params['breadcrumbs'][] = $this->title;
             },
             'format' => 'raw'
         ],
+        [
+            'attribute' => 'product.category_id',
+            'value' => function ($model) {
+                return $model->product ? $model->product->categoryTitle :'';
+            },
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
         'count',
         [
             'attribute' => 'product.count_type',

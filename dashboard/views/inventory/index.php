@@ -55,6 +55,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter' => \common\models\Inventory::statusArray,
         ],
         [
+            'attribute' => 'product.category_id',
+            'value' => function ($model) {
+                return $model->product ? $model->product->categoryTitle :'';
+            },
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'count',
             'visible' => Yii::$app->user->can('ظهور العدد بمواد الافرع بالمخزن'),
         ],
@@ -66,6 +74,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
             'format' => 'raw',
         ],
+
         [
             'attribute' => 'product.price_1',
             'visible' => Yii::$app->user->can('سعر بيع 1'),
