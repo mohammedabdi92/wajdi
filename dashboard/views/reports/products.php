@@ -37,6 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'count',
         [
+            'attribute' => 'product.count_type',
+            'value' => function ($model) {
+                return $model->product?$model->product->getCountTypeName('count_type'):'';
+            },
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'store_id',
             'value' => function($model){
                 return $model->storeTitle;
@@ -106,6 +114,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="width:50%">العدد :</th>
                         <td><?= round($searchModel->sum_count,2)?></td>
                     </tr>
+
                     <tr>
                         <th style="width:50%">سعر الكلفة :</th>
                         <td><?= round($searchModel->sum_price, 2)?></td>

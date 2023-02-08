@@ -54,7 +54,7 @@ class InventorySearch extends Inventory
         $query = Inventory::find();
 
         $query->select(
-            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*"));
+            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*,product.*"));
         $query->joinWith('product');
         $query->joinWith('minProductCount');
         // add conditions that should always apply here
@@ -113,7 +113,7 @@ class InventorySearch extends Inventory
             $this->sum_price_2 = $query->sum('(product.price_2 * inventory.count)');
             $this->sum_price_3 = $query->sum('(product.price_3 * inventory.count)');
             $this->sum_price_4 = $query->sum('(product.price_4 * inventory.count)');
-            $this->sum_count = $query->sum('count');
+            $this->sum_count = $query->sum('inventory.count');
         }
         return $dataProvider;
     }

@@ -59,6 +59,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'visible' => Yii::$app->user->can('ظهور العدد بمواد الافرع بالمخزن'),
         ],
         [
+            'attribute' => 'product.count_type',
+            'value' => function ($model) {
+                return $model->product ? $model->product->getCountTypeName('count_type'):'';
+            },
+            'filter' => \yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'product.price_1',
             'visible' => Yii::$app->user->can('سعر بيع 1'),
         ],
