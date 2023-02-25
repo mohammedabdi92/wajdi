@@ -97,7 +97,7 @@ class Returns extends \yii\db\ActiveRecord
     public function getOrderProduct()
     {
         $order = $this->order;
-        return $this->hasOne(OrderProduct::className(), ['product_id' => 'product_id'])->andOnCondition(['store_id' => $order->store_id]);
+        return $this->hasOne(OrderProduct::className(), ['product_id' => 'product_id'])->andOnCondition(['order_id' => $order->order_id])->andOnCondition(['store_id' => $order->store_id]);
     }
     public function getProductTitle()
     {
