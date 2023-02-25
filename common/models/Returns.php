@@ -83,7 +83,7 @@ class Returns extends \yii\db\ActiveRecord
         $return = $q->sum('count');
         $remaining =$count - $return ;
         if (!empty($this->count) && $this->count > $remaining ) {
-            $this->addError($attr, 'الكمية اكبر من الطلب  ' . $this->orderProduct->count);
+            $this->addError($attr, 'الكمية اكبر من الطلب  ' . $remaining);
         }
 
 
