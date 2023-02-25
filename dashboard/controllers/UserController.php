@@ -139,6 +139,7 @@ class UserController extends BaseController
     }
     public function actionPresence()
     {
+
         $user =  Yii::$app->getUser();
         $last_login =  Presence::find()->where(['user_id'=>$user->id])->orderBy(['id' => SORT_DESC])->andWhere('`time` LIKE \''.date('Y-m-d').'%\'')->one();
         $submit = \Yii::$app->request->get('submit');
@@ -152,13 +153,17 @@ class UserController extends BaseController
             {
                 $Presence->type = Presence::TYPE_IN;
                 $Presence->save(false);
+
                 Yii::$app->session->setFlash('success', "تم تسجيل دخول");
             }
             if($submit == "out" && ( $last_login->type == Presence::TYPE_IN))
             {
                 $Presence->type = Presence::TYPE_OUT;
                 $Presence->save(false);
-                Yii::$app->session->setFlash('success', "تم تسجيل خروج");
+                Yii::$app->user->logout();
+
+//                Yii::$app->session->setFlash('success', "تم تسجيل خروج");
+                return $this->redirect(['site/login']);
             }
 
         }
