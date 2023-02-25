@@ -99,7 +99,7 @@ function calculateTotal() {
     if(paid)
     {
         total =  parseFloat(paid)-total;
-        $('[id$=remaining]').val(total);
+        $('[id$=remaining]').val(parseFloat(total.toFixed(3)));
     }else {
         $('[id$=remaining]').val(0);
     }
