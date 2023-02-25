@@ -193,7 +193,6 @@ class ReportsController extends Controller
         }
 
 
-        print_r($financial_withdrawal_q->createCommand()->rawSql);die;
 
         $damaged_mince = $damaged_q_m->sum('amount');
         $outlay_mince = $outlay_q->sum('amount');
