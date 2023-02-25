@@ -71,6 +71,7 @@ class ReturnsSearch extends Returns
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+        $query->orderBy(['id'=>SORT_DESC]);
         if($this->product_name)
         {
             $parts = preg_split('/\s+/', $this->product_name);
