@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'value' => function ($model) {
                 return $model->customer->name ?? '';
             },
-            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->all(), 'id', 'name'),
             'format' => 'raw',
         ],
         'total_amount_without_discount',
