@@ -140,6 +140,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]);
+            echo '<label>مجموع :</label>'.\common\models\Returns::find()->where(['order_id'=>$model->id])->count('amount');
+
             echo '<label>التالف</label>';
             echo \yii\grid\GridView::widget([
                 'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Damaged::find()->where(['order_id'=>$model->id])]),
