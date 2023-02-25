@@ -93,7 +93,7 @@ class ReportsController extends Controller
         $searchModel->load($this->request->queryParams);
         $query =  Presence::find()->select([
             '*',
-            'time_out'=>"@time_outs :=(SELECT p2.time FROM presence as p2 where p2.type = 2 AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1)",
+            'time_out'=>"@time_outs :=(SELECT p2.time FROM presence as p2 where p2.type = 2 AND presence.user_id = p2.user.id  AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1)",
             'diff_time_out_mints'=>'TIMESTAMPDIFF(MINUTE,`time`,@time_outs)'
             ])->where(['type'=>Presence::TYPE_IN]);
 
@@ -114,7 +114,7 @@ class ReportsController extends Controller
             'query' => $query,
         ]);
 
-        $searchModel->total_diff_time_out_mints = $query->sum("(TIMESTAMPDIFF(MINUTE,`time`,(SELECT p2.time FROM presence as p2 where p2.type = 2 AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1))  )");
+        $searchModel->total_diff_time_out_mints = $query->sum("(TIMESTAMPDIFF(MINUTE,`time`,(SELECT p2.time FROM presence as p2 where p2.type = 2  AND presence.user_id = p2.user.id AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1))  )");
         if(!empty($searchModel->total_diff_time_out_mints))
         {
             $mins =$searchModel->total_diff_time_out_mints;
