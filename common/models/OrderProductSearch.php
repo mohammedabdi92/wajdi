@@ -56,6 +56,7 @@ class OrderProductSearch extends OrderProduct
             'product' => function (\yii\db\ActiveQuery $query) {
                 $query->select(['id', 'price','title']);
             }]);
+        $query->joinWith('order');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -89,13 +90,13 @@ class OrderProductSearch extends OrderProduct
         }
         if($this->created_at_from)
         {
-            $query->andFilterWhere(['>=', 'order_product.created_at',strtotime( $this->created_at_from." 00:00:00")]);
+            $query->andFilterWhere(['>=', 'order.created_at',strtotime( $this->created_at_from." 00:00:00")]);
 
         }
 
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'order_product.created_at',strtotime( $this->created_at_to." 23:59:59")]);
+            $query->andFilterWhere(['<=', 'order.created_at',strtotime( $this->created_at_to." 23:59:59")]);
         }
 
 //        print_r($query->createCommand()->rawSql);die;
