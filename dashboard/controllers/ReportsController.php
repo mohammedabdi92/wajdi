@@ -135,6 +135,8 @@ class ReportsController extends Controller
         $modelSearch = new cashBoxSearch();
         $modelSearch->load($this->request->queryParams);
 
+        $productQuery = Order::find();
+        $productQuery->joinWith('products.product');
 
         // + orders (damaged)
         $order_q =  Order::find()->select("total_amount");
@@ -151,6 +153,7 @@ class ReportsController extends Controller
 
         if($modelSearch->date_from)
         {
+            $productQuery->andWhere(['>=', 'order.created_at', strtotime( $modelSearch->date_from)]);
             $order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $entries_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
@@ -166,6 +169,7 @@ class ReportsController extends Controller
 
             $modelSearch->date_to .= " 23:59:59";
 
+            $productQuery->andWhere(['<=', 'order.created_at', strtotime( $modelSearch->date_to)]);
             $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $entries_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
@@ -177,6 +181,7 @@ class ReportsController extends Controller
         }
         if($modelSearch->store_id)
         {
+            $productQuery->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $order_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $entries_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $returns_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
@@ -187,6 +192,9 @@ class ReportsController extends Controller
             $financial_withdrawal_q->andWhere(['store_id'=>$modelSearch->store_id]);
         }
 
+
+
+
         $damaged_mince = $damaged_q_m->sum('amount');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
@@ -194,8 +202,16 @@ class ReportsController extends Controller
         $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
         $order_pluse =  $order_q->sum('total_amount');
-
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
+
+        $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id)')  ;
+        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id)')  ;
+        $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
+
+        $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount;
+
+
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
         $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince;
@@ -210,6 +226,7 @@ class ReportsController extends Controller
         return $this->render('cash-box', [
             'modelSearch'=>$modelSearch,
             'cash_amount'=>$cash_amount,
+            'total_profit'=>$total_profit,
             'cash_amount_without_inventory_order'=>$cash_amount_without_inventory_order,
             'box_in'=> round($box_in, 2),
             'box_out'=> round($box_out, 2),
