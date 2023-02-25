@@ -131,6 +131,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'raw',
 
                     ],
+                    'amount',
                     'returner_name',
                     [
                         'attribute' => 'created_at',

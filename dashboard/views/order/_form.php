@@ -280,6 +280,7 @@ $priceList = [];
                             'format' => 'raw',
 
                         ],
+                        'amount',
                         'returner_name',
                         [
                             'attribute' => 'created_at',
