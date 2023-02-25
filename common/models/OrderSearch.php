@@ -22,6 +22,11 @@ class OrderSearch extends Order
     public $customer_name ;
     public $total_profit ;
     public $total_dept;
+    public $total_returns_amount;
+    public $total_profit_returns_amount;
+    public $returns_amount;
+
+
 
 
     /**
@@ -32,7 +37,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id','created_at'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount'], 'safe'],
         ];
     }
 
@@ -114,14 +119,19 @@ class OrderSearch extends Order
 
         if($getSums)
         {
+            $query->select('*,(select sum(returns.amount) from returns where returns.order_id = order.id) as returns_amount');
 
             $productQuery = clone $query;
             $productQuery->joinWith('products.product');
+            $this->total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id)')  ;
+            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id)')  ;
             $total_amount =  round($query->sum('total_amount'), 2);
             $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
 
+
+            $this->total_profit_returns_amount  =  $this->total_returns_amount  - $total_dept_returns_amount ;
             $this->total_dept  =  $total_dept ;
-            $this->total_profit  =  $total_amount -  $total_dept ;
+            $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount;
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');

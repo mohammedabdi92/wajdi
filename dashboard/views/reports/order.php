@@ -44,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'debt',
         'repayment',
         'total_amount',
+        'returns_amount',
         [
             'attribute' => 'created_by',
             'value' => function ($model) {
@@ -125,7 +126,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= $searchModel->total_dept ?></td>
                     </tr>
                     <tr>
-                        <th style="width:50%"> مجموع الربح:</th>
+                        <th style="width:50%"> مجموع قيمة المرجع:</th>
+                        <td><?= $searchModel->total_returns_amount ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%"> مجموع ربح المرجع:</th>
+                        <td><?= $searchModel->total_profit_returns_amount ?></td>
+                    </tr>
+                    <tr>
+                        <th style="width:50%"> مجموع الربح الصافي:</th>
                         <td><?= $searchModel->total_profit ?></td>
                     </tr>
                     </tbody>

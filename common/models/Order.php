@@ -38,6 +38,7 @@ class Order extends \common\components\BaseModel
 {
     public $customer_name ;
     public $phone_number ;
+    public $returns_amount ;
     /**
      * {@inheritdoc}
      */
@@ -63,7 +64,7 @@ class Order extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
@@ -107,6 +108,7 @@ class Order extends \common\components\BaseModel
             'updated_at' =>  'تاريخ التعديل',
             'updated_by' =>  'الشخص المعدل',
             'product_count' =>  'عدد المواد',
+            'returns_amount' =>  'قيمة المرجع',
         ];
     }
 
