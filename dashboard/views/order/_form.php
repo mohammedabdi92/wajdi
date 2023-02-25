@@ -280,6 +280,13 @@ $priceList = [];
                             'format' => 'raw',
 
                         ],
+                        'returner_name',
+                        [
+                            'attribute' => 'created_at',
+                            'value' => function($model){
+                                return \common\components\CustomFunc::getFullDate($model->created_at);
+                            },
+                        ],
                     ],
                 ]);
                 echo '<label>التالف</label>';
