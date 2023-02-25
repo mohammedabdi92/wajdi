@@ -209,7 +209,7 @@ class ReportsController extends Controller
         $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
 
         $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
-        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount;
+
 
 
 
@@ -221,12 +221,14 @@ class ReportsController extends Controller
         $cash_amount = round($cash_amount, 2);
         $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
-
+        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount -$damaged_mince -$outlay_mince;
+        $total_profit_without_damaged_outlay =  $total_profit -$damaged_mince -$outlay_mince;
 
         return $this->render('cash-box', [
             'modelSearch'=>$modelSearch,
             'cash_amount'=>$cash_amount,
-            'total_profit'=>$total_profit,
+            'total_profit'=>round($total_profit,2),
+            'total_profit_without_damaged_outlay'=>round($total_profit_without_damaged_outlay,2),
             'cash_amount_without_inventory_order'=>$cash_amount_without_inventory_order,
             'box_in'=> round($box_in, 2),
             'box_out'=> round($box_out, 2),
