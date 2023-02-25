@@ -65,6 +65,6 @@ class Entries extends \yii\db\ActiveRecord
     }
     public function getStoreTitle()
     {
-        return Constants::getStoreName($this->store_id);
+        return Store::findOne($this->store_id)->name;
     }
 }

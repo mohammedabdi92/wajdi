@@ -146,7 +146,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                         'data' =>[$modelAddress->product_id=>$modelAddress->productTitle],
                                         'options' => ['placeholder' => 'اختر نوع العد .....'],
                                         'pluginOptions' => [
-                                            'allowClear' => true,
+                                            'allowClear' => $modelAddress->isNewRecord,
                                             'minimumInputLength' => 3,
                                             'language' => [
                                                 'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),

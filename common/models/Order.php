@@ -124,7 +124,7 @@ class Order extends \common\components\BaseModel
     }
     public function getStoreTitle()
     {
-        return Constants::getStoreName($this->store_id);
+        return Store::findOne($this->store_id)->name;
     }
     public function beforeSave($insert)
     {
