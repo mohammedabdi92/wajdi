@@ -72,7 +72,7 @@ function calculateTotal() {
             total = total + elementCost;
         }
     });
-    $('[id=order-total_amount_without_discount]').val(total);
+    $('[id=order-total_amount_without_discount]').val(parseFloat(total.toFixed(3)));
 
     var ordertotaldiscount = $("[id=order-total_discount]").val();
     if(!ordertotaldiscount)
@@ -94,7 +94,7 @@ function calculateTotal() {
         total =  total+parseFloat(repayment);
     }
 
-    $('[id=order-total_amount]').val(total);
+    $('[id=order-total_amount]').val(parseFloat(total.toFixed(3)));
     var paid = $('[id$=paid]').val();
     if(paid)
     {
