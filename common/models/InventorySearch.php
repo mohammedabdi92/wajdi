@@ -55,7 +55,7 @@ class InventorySearch extends Inventory
         $query = Inventory::find();
 
         $query->select(
-            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*,product.*"));
+            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*,product.category_id,product.count_type"));
         $query->joinWith('product');
         $query->joinWith('minProductCount');
         // add conditions that should always apply here
