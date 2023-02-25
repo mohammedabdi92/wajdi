@@ -344,6 +344,6 @@ class OrderController extends BaseController
 
         $product_price_for_count =  $product_price * $count;
 
-        return $product_price_for_count;
+        return  round($product_price_for_count, 2) ;
     }
 }
