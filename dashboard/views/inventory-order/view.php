@@ -52,6 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'total_cost',
+            'note',
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {
@@ -76,6 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return \common\components\CustomFunc::getUserName($model->updated_by);
                 },
             ],
+
         ],
     ]);
     ?>

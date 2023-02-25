@@ -59,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'total_amount',
+            'note',
              [
                 'attribute' => 'created_at',
                 'value' => function($model){
