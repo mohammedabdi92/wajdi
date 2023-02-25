@@ -221,7 +221,7 @@ class ReportsController extends Controller
         $cash_amount = round($cash_amount, 2);
         $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
-        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount -$damaged_mince -$outlay_mince;
+        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount ;
         $total_profit_without_damaged_outlay =  $total_profit -$damaged_mince -$outlay_mince;
 
         return $this->render('cash-box', [
