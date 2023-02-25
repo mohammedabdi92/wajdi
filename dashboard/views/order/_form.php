@@ -159,7 +159,7 @@ $priceList = [];
                                         'options' => ['placeholder' => 'اختر المادة .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [
-                                            'allowClear' => true,
+                                            'allowClear' => $modelAddress->isNewRecord,
                                             'minimumInputLength' => 3,
                                             'language' => [
                                                 'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
