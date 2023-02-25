@@ -110,7 +110,6 @@ class InventorySearch extends Inventory
             $query->andFilterHaving(['available_status' =>$this->available_status]);
         }
 
-//        print_r($query->createCommand()->getRawSql());die;
 
         if($getSums)
         {
@@ -121,6 +120,10 @@ class InventorySearch extends Inventory
             $this->sum_price_4 = $query->sum('(product.price_4 * inventory.count)');
             $this->sum_count = $query->sum('inventory.count');
         }
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
         return $dataProvider;
     }
 }
