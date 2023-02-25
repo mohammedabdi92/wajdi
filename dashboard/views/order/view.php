@@ -141,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ],
             ]);
-            echo '<label>مجموع :</label>'.\common\models\Returns::find()->where(['order_id'=>$model->id])->count('amount');
+            echo '<label>مجموع :</label>'.\common\models\Returns::find()->where(['order_id'=>$model->id])->sum('amount').'<br>';
 
             echo '<label>التالف</label>';
             echo \yii\grid\GridView::widget([
