@@ -71,6 +71,7 @@ class OutlaySearch extends Outlay
 
         $query->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'image_name', $this->image_name]);
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }
