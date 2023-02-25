@@ -47,6 +47,21 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'note:ntext',
 
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                },
+                'filter' => \kartik\date\DatePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'language' => 'ar',
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'yyyy-m-d '
+                    ]
+                ]),
+            ],
 //            'created_at',
             //'created_by',
             //'updated_at',
