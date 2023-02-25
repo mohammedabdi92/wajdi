@@ -161,7 +161,7 @@ class ReportsController extends Controller
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $outlay_q->andWhere(['>=', 'pull_date',  $modelSearch->date_from]);
             $damaged_q_m->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
-            $financial_withdrawal_q->andWhere(['>=', 'pull_date', strtotime( $modelSearch->date_from)]);
+            $financial_withdrawal_q->andWhere(['>=', 'pull_date',  $modelSearch->date_from]);
         }
 
         if($modelSearch->date_to)
@@ -177,7 +177,7 @@ class ReportsController extends Controller
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $outlay_q->andWhere(['<=', 'pull_date',  $modelSearch->date_to]);
             $damaged_q_m->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
-            $financial_withdrawal_q->andWhere(['<=', 'pull_date', strtotime( $modelSearch->date_to)]);
+            $financial_withdrawal_q->andWhere(['<=', 'pull_date',  $modelSearch->date_to]);
         }
         if($modelSearch->store_id)
         {
@@ -193,7 +193,7 @@ class ReportsController extends Controller
         }
 
 
-
+        print_r($financial_withdrawal_q->createCommand()->rawSql);die;
 
         $damaged_mince = $damaged_q_m->sum('amount');
         $outlay_mince = $outlay_q->sum('amount');
