@@ -120,9 +120,7 @@ class InventorySearch extends Inventory
             $this->sum_price_4 = $query->sum('(product.price_4 * inventory.count)');
             $this->sum_count = $query->sum('inventory.count');
         }
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+
 
         return $dataProvider;
     }

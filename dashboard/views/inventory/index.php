@@ -11,6 +11,8 @@ $this->title = Yii::t('app', 'مواد الافرع');
 $this->params['breadcrumbs'][] = $this->title;
 
 
+print_r('<pre>');
+print_r($dataProvider->getModels());die;
 ?>
 <div class="inventory-index">
 
