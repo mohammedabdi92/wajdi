@@ -74,7 +74,15 @@ class Returns extends \yii\db\ActiveRecord
 
     public function validateCountExist($attr)
     {
-        if (!empty($this->count) && $this->count > $this->orderProduct->count) {
+        $count = $this->orderProduct->count;
+        $q = self::find()->where(['order_id'=>$this->order_id,'product_id'=>$this->product_id]);
+        if(!$this->isNewRecord)
+        {
+            $q->andWhere(['<>', 'id',$this->id]);
+        }
+        $return = $q->sum('count');
+        $remaining =$count - $return ;
+        if (!empty($this->count) && $this->count > $remaining ) {
             $this->addError($attr, 'الكمية اكبر من الطلب  ' . $this->orderProduct->count);
         }
 
