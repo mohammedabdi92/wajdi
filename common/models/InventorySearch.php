@@ -87,11 +87,11 @@ class InventorySearch extends Inventory
         ]);
         if(empty($this->store_id) && !\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
         {
-            $query->andFilterWhere( ['store_id' => \Yii::$app->user->identity->stores]);
+            $query->andFilterWhere( ['inventory.store_id' => \Yii::$app->user->identity->stores]);
         }
         if(!empty($this->store_id))
         {
-            $query->andFilterWhere( ['store_id' => $this->store_id]);
+            $query->andFilterWhere( ['inventory.store_id' => $this->store_id]);
         }
 
         if(!empty($this->created_at))
@@ -110,6 +110,7 @@ class InventorySearch extends Inventory
             $query->andFilterHaving(['available_status' =>$this->available_status]);
         }
 
+        print_r($query->createCommand()->getRawSql());die;
 
         if($getSums)
         {

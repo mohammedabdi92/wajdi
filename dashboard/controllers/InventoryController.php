@@ -45,6 +45,7 @@ class InventoryController extends BaseController
 
 
 
+
         $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
