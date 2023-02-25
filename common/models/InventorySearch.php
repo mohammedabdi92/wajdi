@@ -110,7 +110,7 @@ class InventorySearch extends Inventory
             $query->andFilterHaving(['available_status' =>$this->available_status]);
         }
 
-        print_r($query->createCommand()->getRawSql());die;
+//        print_r($query->createCommand()->getRawSql());die;
 
         if($getSums)
         {
