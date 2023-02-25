@@ -11,22 +11,39 @@ use yii\widgets\ActiveForm;
 <div class="outlay-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <div class="row">
+        <div class="col-md-6">
     <?= $form->field($model, 'amount')->textInput() ?>
-    <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
-    <?= $form->field($model, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
+        </div>
+        <div class="col-md-6">
+            <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label>تاريخ السحب</label>
+            <?=   \kartik\date\DatePicker::widget([
+                'model' => $model,
+                'attribute' => 'pull_date',
+                'pluginOptions' => [
+                    'autoclose' => true,
+                    'format' => 'yyyy-m-d '
+                ]
+            ]); ?>
+        </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
+    </div>
 
-    <label>تاريخ السحب</label>
-    <?=   \kartik\date\DatePicker::widget([
-        'model' => $model,
-        'attribute' => 'pull_date',
-        'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-m-d '
-        ]
-    ]); ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'note')->textarea(['rows' => 6]) ?>
+
+
+
+
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
