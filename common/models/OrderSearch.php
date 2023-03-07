@@ -25,6 +25,7 @@ class OrderSearch extends Order
     public $total_returns_amount;
     public $total_profit_returns_amount;
     public $returns_amount;
+    public $total_profit_plus_debt;
 
 
 
@@ -37,7 +38,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt'], 'safe'],
         ];
     }
 
@@ -132,6 +133,7 @@ class OrderSearch extends Order
             $this->total_profit_returns_amount  =  $this->total_returns_amount  - $total_dept_returns_amount ;
             $this->total_dept  =  $total_dept ;
             $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount;
+            $this->total_profit_plus_debt  =  $total_amount  - $this->total_profit_returns_amount;
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');
