@@ -123,8 +123,8 @@ class OrderSearch extends Order
 
             $productQuery = clone $query;
             $productQuery->joinWith('products.product');
-            $this->total_returns_amount = $query->sum('(select sum(returns.amount) from returns where returns.order_id = order.id)')  ;
-            $total_dept_returns_amount = $query->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id)')  ;
+            $this->total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and and product.id = returns.product_id )')  ;
+            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id and product.id = returns.product_id )')  ;
             $total_amount =  round($query->sum('total_amount'), 2);
             $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
 
