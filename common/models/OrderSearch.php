@@ -129,14 +129,15 @@ class OrderSearch extends Order
             $total_amount =  round($query->sum('total_amount'), 2);
             $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
 
-
-            $this->total_profit_returns_amount  =  $this->total_returns_amount  - $total_dept_returns_amount ;
-            $this->total_dept  =  $total_dept ;
-            $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount;
-            $this->total_profit_plus_debt  =  $total_amount  - $this->total_profit_returns_amount;
-            $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');
+            $this->total_profit_returns_amount  =  $this->total_returns_amount  - $total_dept_returns_amount ;
+            $this->total_dept  =  $total_dept ;
+            $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount ;
+            $this->total_profit_plus_debt  =  $total_amount -  $total_dept - $this->total_profit_returns_amount +( $this->debt_sum - $this->repayment_sum );
+            $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
+
+
             $this->total_amount_sum = $total_amount;
             $this->total_discount_sum = $query->sum('total_discount') + $query->sum('total_price_discount_product') ;
         }
