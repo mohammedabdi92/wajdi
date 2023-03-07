@@ -26,6 +26,7 @@ class OrderSearch extends Order
     public $total_profit_returns_amount;
     public $returns_amount;
     public $total_profit_plus_debt;
+    public $total_profit_without_debt;
 
 
 
@@ -38,7 +39,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt','total_profit_without_debt'], 'safe'],
         ];
     }
 
@@ -128,6 +129,14 @@ class OrderSearch extends Order
             $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id and order_product.product_id = returns.product_id )')  ;
             $total_amount =  round($query->sum('total_amount'), 2);
             $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+
+            $queryw = clone $query;
+            $queryw->andWhere('order.debt is not null');
+            $productQuery->andWhere('order.debt is not null');
+            $total_amount_without_dept =  round($queryw->sum('total_amount'), 2);
+            $total_dept_without_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+
+            $this->total_profit_without_debt = $total_amount_without_dept - $total_dept_without_dept;
 
             $this->debt_sum = $query->sum('debt');
             $this->repayment_sum = $query->sum('repayment');
