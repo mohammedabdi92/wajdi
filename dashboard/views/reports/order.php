@@ -137,7 +137,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= $searchModel->total_profit ?></td>
                     </tr>
                     <tr>
-                        <th style="width:50%"> مجموع الربح الصافي فبل الدين:</th>
+                        <th style="width:50%"> مجموع الربح الصافي قبل الدين:</th>
                         <td><?= $searchModel->total_profit_plus_debt ?></td>
                     </tr>
                     <tr>
