@@ -131,8 +131,8 @@ class OrderSearch extends Order
             $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
 
             $queryw = clone $query;
-            $queryw->andWhere('order.debt is not null');
-            $productQuery->andWhere('order.debt is not null');
+            $queryw->andWhere('order.debt is  null');
+            $productQuery->andWhere('order.debt is  null');
             $total_amount_without_dept =  round($queryw->sum('total_amount'), 2);
             $total_dept_without_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
 
