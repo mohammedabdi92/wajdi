@@ -201,6 +201,9 @@ class ReportsController extends Controller
         $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
         $order_pluse =  $order_q->sum('total_amount');
+        $order_q->andWhere('order.debt is  null');
+        $orderw_pluse =  $order_q->sum('total_amount');
+        $productQuery->andWhere('order.debt is  null');
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
@@ -208,8 +211,6 @@ class ReportsController extends Controller
         $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
 
         $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
-
-
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
@@ -220,7 +221,7 @@ class ReportsController extends Controller
         $cash_amount = round($cash_amount, 2);
         $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
-        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount ;
+        $total_profit  =  $orderw_pluse -  $total_dept - $total_profit_returns_amount ;
         $total_profit_without_damaged_outlay =  $total_profit -$damaged_mince -$outlay_mince;
 
         return $this->render('cash-box', [
