@@ -67,8 +67,13 @@ class OrderProduct extends \common\components\BaseModel
             $product_id = $this->product_id;
 
             $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id])->sum('count') ?? 0;
+            $q = OrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id]);
+            if($this->order_id)
+            {
+                $q->andWhere(['<>','order_id',$this->order_id]);
+            }
 
-            $item_order_count = OrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','order_id',$this->order_id])->sum('count')?? 0 ;
+            $item_order_count = $q->sum('count')?? 0 ;
 
             $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
             $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
