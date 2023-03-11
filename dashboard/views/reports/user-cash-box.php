@@ -11,7 +11,13 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'مواد الافرع');
 $this->params['breadcrumbs'][] = $this->title;
-
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
 
 
 ?>
@@ -19,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php $form = \yii\widgets\ActiveForm::begin([
         'method' => 'get',
     ]); ?>
-    <?= $form->field($modelSearch, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'))->label("المحل"); ?>
+    <?= $form->field($modelSearch, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'))->label("المحل"); ?>
     <label> التاريخ</label>
     <?= \kartik\daterange\DateRangePicker::widget([
         'model' => $modelSearch,

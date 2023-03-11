@@ -249,6 +249,11 @@ class ReportsController extends Controller
     {
         $modelSearch = new cashBoxSearch();
         $modelSearch->load($this->request->queryParams);
+        if(!\Yii::$app->user->can('كل المحلات') && empty($modelSearch->store_id))
+        {
+            $stores = \Yii::$app->user->identity->stores;
+            $modelSearch->store_id  = $stores;
+        }
 
         $productQuery = Order::find();
         $productQuery->joinWith('products.product');
