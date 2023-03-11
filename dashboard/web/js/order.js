@@ -21,7 +21,7 @@ $(document).on('change', '[id$=-amount]', function (item) {
 
 });
 function checkDiscount(){
-    var totalDiscount =  $('#order-total_discount').val();
+    var totalDiscount =  $('[id$="order-total_discount"]').val();
     var discounts = $('[id$=-discount]');
     if(totalDiscount)
     {
@@ -29,7 +29,7 @@ function checkDiscount(){
             $(element).val('');
             $(element).attr('readonly', true);
         });
-        $('#order-total_price_discount_product').val('');
+        $('[id$="order-total_price_discount_product"]').val('');
     }else {
         discounts.each(function (index, element) {
             $(element).attr('readonly', false);
@@ -48,10 +48,10 @@ function checkDiscount(){
         }
     });
     if(supdis){
-        $('#order-total_price_discount_product').val(supdis);
-        $('#order-total_discount').val('').attr('readonly', true);
+        $('[id$="order-total_price_discount_product"]').val(supdis);
+        $('[id$="order-total_discount"]').val('').attr('readonly', true);
     }else {
-        $('#order-total_discount').attr('readonly', false);
+        $('[id$="order-total_discount"]').attr('readonly', false);
     }
 }
 $(document).on('change', '[id$=debt]', function (item) {
@@ -72,12 +72,12 @@ function calculateTotal() {
             total = total + elementCost;
         }
     });
-    $('[id=order-total_amount_without_discount]').val(parseFloat(total.toFixed(3)));
+    $('[id$=order-total_amount_without_discount]').val(parseFloat(total.toFixed(3)));
 
-    var ordertotaldiscount = $("[id=order-total_discount]").val();
+    var ordertotaldiscount = $("[id$=order-total_discount]").val();
     if(!ordertotaldiscount)
     {
-        ordertotaldiscount = $("[id=order-total_price_discount_product]").val();
+        ordertotaldiscount = $("[id$=order-total_price_discount_product]").val();
     }
     if(ordertotaldiscount)
     {
@@ -94,7 +94,7 @@ function calculateTotal() {
         total =  total+parseFloat(repayment);
     }
 
-    $('[id=order-total_amount]').val(parseFloat(total.toFixed(3)));
+    $('[id$=order-total_amount]').val(parseFloat(total.toFixed(3)));
     var paid = $('[id$=paid]').val();
     if(paid)
     {
@@ -113,14 +113,14 @@ function calculateTotal() {
         }
     });
 
-    $('#order-total_count').val(supdis.toFixed(3));
+    $('[id$="order-total_count"]').val(supdis.toFixed(3));
 }
 
 function calculateSupTotals(item,isAmountChanged = false) {
     var mainBox = $(item);
     var product_id_item = $("select[id$=product_id]");
     var product_id = mainBox.find(product_id_item).val();
-    var store_id =  $("#order-store_id").val();
+    var store_id =  $('[id$="order-store_id"]').val();
     var product_cost_el = $("[id$=-amount]");
     var price_selected  =  mainBox.find($("input[type='radio'][name$='[price_number]']:checked"));
 
@@ -202,16 +202,16 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
 
     calculateTotal();
 });
-$(document).on('change', '#order-store_id', function (item) {
+$(document).on('change', '[id$="order-store_id"]', function (item) {
     $.pjax.reload({container:"#new_country"});
 });
 $(document).on('click',".add-item", function (item) {
-    var num =parseInt( $('#order-product_count').val()) + 1;
-    $('#order-product_count').val(num);
+    var num =parseInt( $('[id$="order-product_count"]').val()) + 1;
+    $('[id$="order-product_count"]').val(num);
 });
 $(document).on('click',".remove-item", function (item) {
-    var num = parseInt( $('#order-product_count').val()) - 1;
-    $('#order-product_count').val(num);
+    var num = parseInt( $('[id$="order-product_count"]').val()) - 1;
+    $('[id$="order-product_count"]').val(num);
 });
 
 $(".dynamicform_wrapper").on("afterInsert", function(e, item) {

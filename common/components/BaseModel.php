@@ -23,5 +23,22 @@ class BaseModel extends \yii\db\ActiveRecord
         $CountType =  CountType::findOne($this->$att);
         return $CountType->name??'';
     }
+    public function cloneModel($className) {
+        $attributes = $this->attributes;
+        $excludeArray =  ['id','created_at','created_by','updated_at','updated_by'];
+        foreach ($excludeArray as $item) {
+            if(isset($attributes[$item]))
+            {
+                unset($attributes[$item]);
+            }
+        }
+
+
+        $newObj = new $className;
+        foreach($attributes as  $attribute => $val) {
+            $newObj->{$attribute} = $val;
+        }
+        return $newObj;
+    }
 
 }

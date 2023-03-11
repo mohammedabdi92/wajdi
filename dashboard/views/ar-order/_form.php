@@ -167,7 +167,7 @@ $priceList = [];
                                             'ajax' => [
                                                 'url' => $url,
                                                 'dataType' => 'json',
-                                                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#order-store_id").val()}; }'),
+                                                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#ar-order-store_id").val()}; }'),
                                                 'results' => new JsExpression('function(params) { return {q:params.term}; }'),
                                                 'cache' => true
 
@@ -312,11 +312,11 @@ $priceList = [];
              ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
-                <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>
-                <br>
-                <br>
+                    <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>
+                    <br>
+                    <br>
 
-                <?= Html::submitButton('حفظ للارشيف', ['class' => 'btn btn-primary','name' => 'draft']) ?>
+                    <?= Html::submitButton('حفظ للارشيف', ['class' => 'btn btn-primary','name' => 'draft']) ?>
 
 
                 <?php endif;?>

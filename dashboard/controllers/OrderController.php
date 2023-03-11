@@ -2,6 +2,8 @@
 
 namespace dashboard\controllers;
 
+use common\models\ArOrder;
+use common\models\ArOrderProduct;
 use common\models\Product;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -78,18 +80,33 @@ class OrderController extends BaseController
      */
     public function actionCreate()
     {
+        $is_draft = false;
+        $post = \Yii::$app->request->post();
+        if(isset($post['draft']))
+        {
+            $is_draft = true;
+
+        }
+        if(isset($post['Order']))
+        {
+            $post['ArOrder'] = $post['Order'];
+        }
+        if(isset($post['OrderProduct']))
+        {
+            $post['ArOrderProduct'] = $post['OrderProduct'];
+        }
+
+
         $model = new Order;
         $model_product = [new OrderProduct()];
-        if ($model->load(\Yii::$app->request->post())) {
+        if ($model->load($post)) {
 
             $model_product = Model::createMultiple(OrderProduct::classname());
-            Model::loadMultiple($model_product, \Yii::$app->request->post());
+            Model::loadMultiple($model_product, $post);
 
             foreach ($model_product as $item) {
                 $item->store_id = $model->store_id;
             }
-//            $model_product[0]->validate();
-//            print_r($model_product[0]->getErrors());die;
             // ajax validation
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -104,28 +121,71 @@ class OrderController extends BaseController
             $valid = Model::validateMultiple($model_product) && $valid;
 
 
-            if ($valid) {
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    if ($flag = $model->save(false)) {
-                        foreach ($model_product as $modelAddress) {
-                            $modelAddress->order_id = $model->id;
-                            $modelAddress->store_id = $model->store_id;
 
-                            if (! ($flag = $modelAddress->save(false))) {
-                                $transaction->rollBack();
-                                break;
+            if ($valid) {
+                if (!$is_draft)
+                {
+                    $transaction = \Yii::$app->db->beginTransaction();
+
+                    try {
+                        if ($flag = $model->save(false)) {
+                            foreach ($model_product as $modelAddress) {
+                                $modelAddress->order_id = $model->id;
+                                $modelAddress->store_id = $model->store_id;
+
+                                if (! ($flag = $modelAddress->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
                             }
                         }
+                        if ($flag) {
+                            $transaction->commit();
+                            return $this->redirect(['view', 'id' => $model->id]);
+                        }
+                    } catch (\Exception $e) {
+                        die($e);
+                        $transaction->rollBack();
                     }
-                    if ($flag) {
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $model->id]);
+                }else{
+
+
+                    $model = new ArOrder;
+                    $model->load($post);
+                    Yii::$app->request->setBodyParams($post);
+                    $model_product = Model::createMultiple(ArOrderProduct::classname());
+
+                    Model::loadMultiple($model_product, $post);
+
+
+                    foreach ($model_product  as $item) {
+                        $item->store_id = $model->store_id;
                     }
-                } catch (\Exception $e) {
-                    die($e);
-                    $transaction->rollBack();
+
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        if ($flag = $model->save(false)) {
+                            foreach ($model_product as $modelAddress) {
+                                $modelAddress->order_id = $model->id;
+                                $modelAddress->store_id = $model->store_id;
+
+                                if (! ($flag = $modelAddress->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+                        }
+                        if ($flag) {
+                            $transaction->commit();
+                            return $this->redirect(['ar-order/view', 'id' => $model->id]);
+                        }
+                    } catch (\Exception $e) {
+                        die($e);
+                        $transaction->rollBack();
+                    }
+
                 }
+
             }
         }
 

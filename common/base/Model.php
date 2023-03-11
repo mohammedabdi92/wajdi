@@ -2,6 +2,7 @@
 
 namespace common\base;
 
+use common\models\ArOrderProduct;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -18,6 +19,7 @@ class Model extends \yii\base\Model
     {
         $model    = new $modelClass;
         $formName = $model->formName();
+
         $post     = Yii::$app->request->post($formName);
         $models   = [];
 
