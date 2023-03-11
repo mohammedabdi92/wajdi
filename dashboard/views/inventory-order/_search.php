@@ -50,7 +50,15 @@ if(Yii::$app->user->can('كل المحلات'))
     ])->label('المادة');
     ?>
 
-    <?= $form->field($model, 'supplier_name') ?>
+    <?= $form->field($model, "supplier_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر المورد .....'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
 
     <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name')) ?>
 

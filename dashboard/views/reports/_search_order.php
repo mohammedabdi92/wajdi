@@ -20,7 +20,16 @@ use kartik\daterange\DateRangePicker;
     <?= $form->field($model, 'id') ?>
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
-    <?= $form->field($model, 'customer_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name')); ?>
+    <?php
+    echo $form->field($model, "customer_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name'),
+        'options' => ['placeholder' => 'اختر العميل .....'
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]);
+    ?>
     <?= $form->field($model, 'created_by')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
 
 
