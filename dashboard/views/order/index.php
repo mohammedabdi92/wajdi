@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use kartik\export\ExportMenu;
+use yii\web\JsExpression;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\OrderSearch */
@@ -12,13 +13,96 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'فواتير المبيعات');
 $this->params['breadcrumbs'][] = $this->title;
+$modelAddress = new  \common\models\OrderProduct();
+$form = new \yii\widgets\ActiveForm();
+$url = \yii\helpers\Url::to(['product/product-list']);
+
+$this->registerJsFile(
+    '@web/js/indexOrder.js',
+    ['depends' => [\yii\web\JqueryAsset::class]]
+);
+
 ?>
+<script>
+
+</script>
 <div class="order-index">
 
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('app', 'انشاء فاتورة بيع'), ['create'], ['class' => 'btn btn-success']) ?>
+    <div class="row item" style=" padding: 9px; border: 1px solid #ddd; ">
+        <div class="row">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-2 " >
+                <?php
+                $stores = [];
+                if(Yii::$app->user->can('كل المحلات'))
+                {
+                    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+                }else{
+                    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+                }
+                $single_store = null ;
+                if(count($stores) == 1)
+                {
+                    $single_store = $stores[0]->id;
+                }
+
+                echo $form->field($modelAddress, 'store_id')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'));
+                ?>
+
+            </div>
+        </div>
+
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 " >
+
+
+            <?php
+            echo $form->field($modelAddress, "product_id")->widget(\kartik\select2\Select2::classname(), [
+                'data' =>[$modelAddress->product_id=>$modelAddress->productTitle],
+                'options' => ['placeholder' => 'اختر المادة .....','onchange' => 'productChange(this)'
+                ],
+                'pluginOptions' => [
+                    'allowClear' => $modelAddress->isNewRecord,
+                    'minimumInputLength' => 3,
+                    'language' => [
+                        'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+                    ],
+                    'ajax' => [
+                        'url' => $url,
+                        'dataType' => 'json',
+                        'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#order-store_id").val()}; }'),
+                        'results' => new JsExpression('function(params) { return {q:params.term}; }'),
+                        'cache' => true
+
+                    ],
+                    'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+                    'templateResult' => new JsExpression('function(product) { return product.text; }'),
+                    'templateSelection' => new JsExpression('function (product) { return product.text; }'),
+                ],
+            ]);
+            ?>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+            <?= $form->field($modelAddress, "count")->textInput() ?>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 " style=" height: 69px; ">
+            <?= $form->field($modelAddress, "price_number")->radioList([])->label('اختر') ?>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+            <?= $form->field($modelAddress, "amount")->textInput(['readonly' => !Yii::$app->user->can('تعديل السعر الافرادي في المبيعات')]) ?>
+        </div>
+        <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+            <?= $form->field($modelAddress, "total_product_amount")->textInput(['readonly' => true])?>
+        </div>
+        <div style=" display: -webkit-inline-box; width: 100%; ">
+            <div class="col-sm-2"> <label> العدد داخل المحل</label> <br><label class="inventory_count" > </label></div>
+
+        </div>
+
+
+    </div>
     </p>
     <?php echo $this->render('_search', ['model' => $searchModel]); ?>
     <?php

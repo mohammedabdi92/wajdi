@@ -315,9 +315,9 @@ $priceList = [];
                 <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>
                 <br>
                 <br>
-
+                <?php if($model->isNewRecord):?>
                 <?= Html::submitButton('حفظ للارشيف', ['class' => 'btn btn-primary','name' => 'draft']) ?>
-
+                <?php endif;?>
 
                 <?php endif;?>
             </div>

@@ -141,10 +141,11 @@ class ArOrderController extends BaseController
                                 $nModelproduct->store_id = $nModel->store_id;
                                 $nModelproduct->save(false);
                             }
-
+                            $model->delete();
+                            return $this->redirect(['order/view', 'id' => $nModel->id]);
 
                         }
-                        return $this->redirect(['order/view', 'id' => $nModel->id]);
+                        return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
 
