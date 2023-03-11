@@ -75,7 +75,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
                 'urlCreator' => function ($action, \common\models\Returns $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف المرجع من العميل للمحل');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف المرجع من العميل للمحل');
+                    },
+                ]
             ],
         ],
     ]); ?>

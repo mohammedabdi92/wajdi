@@ -55,7 +55,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
                 'urlCreator' => function ($action, \common\models\Damaged $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمورد');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمورد');
+                    },
+                ]
             ],
         ],
     ]); ?>

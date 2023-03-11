@@ -106,7 +106,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
                 'urlCreator' => function ($action, \common\models\FinancialWithdrawal $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                 },
+                'visibleButtons' => [
+                    'update' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف المسحوبات من الصندوق');
+                    },
+                    'view' => function ($model) {
+                        return Yii::$app->user->can('تعديل وحذف المسحوبات من الصندوق');
+                    },
+                ]
             ],
         ],
     ]); ?>
