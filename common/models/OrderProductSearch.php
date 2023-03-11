@@ -74,7 +74,7 @@ class OrderProductSearch extends OrderProduct
         $query->andFilterWhere([
             'id' => $this->id,
             'order_id' => $this->order_id,
-            'store_id' => $this->store_id,
+            'order_product.store_id' => $this->store_id,
             'count' => $this->count,
             'count_type' => $this->count_type,
             'order_product.created_by' => $this->created_by,
