@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($model) {
                         return Yii::$app->user->can('تعديل وحذف المصروفات');
                     },
-                    'view' => function ($model) {
+                    'delete' => function ($model) {
                         return Yii::$app->user->can('تعديل وحذف المصروفات');
                     },
                 ]

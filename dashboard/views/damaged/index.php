@@ -60,7 +60,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($model) {
                         return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمورد');
                     },
-                    'view' => function ($model) {
+                    'delete' => function ($model) {
                         return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمورد');
                     },
                 ]
