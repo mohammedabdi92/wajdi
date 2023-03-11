@@ -70,13 +70,17 @@ class OutlayController extends Controller
         $model = new Outlay();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            $model->load($this->request->post());
+            if(empty($model->pull_date)){
+                $model->pull_date = date('Y-m-d');
+            }
+            if ( $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();
         }
-
+        $model->pull_date = date('Y-m-d');
         return $this->render('create', [
             'model' => $model,
         ]);
