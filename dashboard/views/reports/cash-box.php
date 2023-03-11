@@ -100,7 +100,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $cash_amount_without_inventory_order?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">الربح قبل المصروق والتالف:</th>
+                    <th style="width:50%">الربح قبل المصروف والتالف:</th>
                     <td><?= $total_profit?></td>
                 </tr>
                 <tr>
