@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
             ],
             'amount',
+            'put_date',
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {

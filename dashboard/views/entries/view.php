@@ -31,6 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'put_date',
             [
                 'attribute' => 'store_id',
                 'value' => function($model){

@@ -10,7 +10,7 @@ use kartik\export\ExportMenu;
 /* @var $searchModel common\models\OrderSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'ارشيف المبيعات');
+$this->title = Yii::t('app', 'ارشيف فاتورة المبيعات');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="order-index">

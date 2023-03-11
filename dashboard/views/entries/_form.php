@@ -29,6 +29,15 @@ use yii\widgets\ActiveForm;
     ]);?>
 
     <?= $form->field($model, 'amount')->textInput() ?>
+    <label>تاريخ الادخال</label>
+    <?=   \kartik\date\DatePicker::widget([
+        'model' => $model,
+        'attribute' => 'put_date',
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d '
+        ]
+    ]); ?>
 
 
     <div class="form-group">
