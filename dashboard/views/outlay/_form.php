@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <div class="row">
 
-        <?php if(!Yii::$app->user->can('تعديل تاريخ المصروفات')):?>
+        <?php if(Yii::$app->user->can('تعديل تاريخ المصروفات')):?>
         <div class="col-md-6">
             <label>تاريخ السحب</label>
             <?=   \kartik\date\DatePicker::widget([

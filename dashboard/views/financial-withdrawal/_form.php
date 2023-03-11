@@ -24,7 +24,7 @@ if(empty($pull_date))
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
     <?= $form->field($model, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
 
-    <?php if(!Yii::$app->user->can('تعديل تاريخ المسحوبات')):?>
+    <?php if(Yii::$app->user->can('تعديل تاريخ المسحوبات')):?>
         <div class="col-md-6">
             <label>تاريخ السحب</label>
             <?=   \kartik\date\DatePicker::widget([
