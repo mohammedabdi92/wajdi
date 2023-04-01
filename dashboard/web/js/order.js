@@ -206,11 +206,11 @@ $(document).on('change', '[id$="order-store_id"]', function (item) {
     $.pjax.reload({container:"#new_country"});
 });
 $(document).on('click',".add-item", function (item) {
-    var num =parseInt( $('[id$="order-product_count"]').val()) + 1;
+    var num =$(".item.panel.panel-default").length;
     $('[id$="order-product_count"]').val(num);
 });
 $(document).on('click',".remove-item", function (item) {
-    var num = parseInt( $('[id$="order-product_count"]').val()) - 1;
+    var num = $(".item.panel.panel-default").length;
     $('[id$="order-product_count"]').val(num);
 });
 
