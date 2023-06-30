@@ -103,7 +103,7 @@ class InventorySearch extends Inventory
            $date_stagnant_month = strtotime("-$this->stagnant_month month");
             $query->select(
                 new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3  WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END ) AS available_status ,inventory.* , 
-                (CASE  WHEN ( select order_product.id from order_product WHERE order_product.product_id =  inventory.product_id and  created_at > $date_stagnant_month  limit 1 ) THEN 1  ELSE 0 END ) AS is_stagnant")
+                (CASE  WHEN ( select order_product.id from order_product WHERE order_product.product_id =  inventory.product_id  and order_product.store_id =  inventory.store_id  and  created_at > $date_stagnant_month  limit 1 ) THEN 1  ELSE 0 END ) AS is_stagnant")
             );
             $query->andFilterHaving(["is_stagnant"=>0]);
         }
