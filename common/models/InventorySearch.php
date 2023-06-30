@@ -21,6 +21,8 @@ class InventorySearch extends Inventory
     public $sum_price_4;
     public $sum_count;
     public $category_id;
+    public $stagnant_month;
+    public $is_stagnant;
 
     /**
      * {@inheritdoc}
@@ -28,7 +30,7 @@ class InventorySearch extends Inventory
     public function rules()
     {
         return [
-            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status'], 'integer'],
+            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
             [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id'], 'safe'],
         ];
@@ -53,11 +55,21 @@ class InventorySearch extends Inventory
     public function search($params,$getSums=false)
     {
         $query = Inventory::find();
-
         $query->select(
-            new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3 WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END) AS available_status ,inventory.*,product.category_id,product.count_type"));
-        $query->joinWith('product');
-        $query->joinWith('minProductCount');
+            new Expression("(CASE 
+            WHEN ( inventory.count = 0 ) THEN 3 
+            WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END
+            ) AS available_status ,inventory.*")
+        );
+        $query->joinWith([
+            'product' => function (\yii\db\ActiveQuery $query) {
+                $query->select(['id','category_id','price','price_1','price_2','price_3','price_4','count_type','title']);
+            },
+            'minProductCount' => function (\yii\db\ActiveQuery $query) {
+                $query->select(['count']);
+            }
+        ]);
+       
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -85,6 +97,15 @@ class InventorySearch extends Inventory
             'inventory.isDeleted' => $this->isDeleted,
             'product.category_id' => $this->category_id,
         ]);
+        
+        if(!empty($this->stagnant_month))
+        {
+           $date_stagnant_month = strtotime("-$this->stagnant_month month");
+            $query->select(
+                new Expression("(CASE WHEN ( inventory.count = 0 ) THEN 3  WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END ) AS available_status ,inventory.* , (CASE  WHEN ( select id from order_product WHERE  created_at > $date_stagnant_month  limit 1 ) THEN 1  ELSE 0 END ) AS is_stagnant")
+            );
+            $query->andFilterHaving(["is_stagnant"=>0]);
+        }
         if(empty($this->store_id) && !\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
         {
             $query->andFilterWhere( ['inventory.store_id' => \Yii::$app->user->identity->stores]);

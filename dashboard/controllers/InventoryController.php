@@ -52,6 +52,26 @@ class InventoryController extends BaseController
     }
 
     /**
+     * Lists all Inventory models.
+     *
+     * @return string
+     */
+    public function actionStagnant()
+    {
+        $searchModel = new InventorySearch();
+
+        $params = $this->request->queryParams;
+
+        $dataProvider = $searchModel->search($params);
+
+        return $this->render('index_stagnant', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+
+    /**
      * Displays a single Inventory model.
      * @param int $id ID
      * @return string
