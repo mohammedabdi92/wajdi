@@ -16,6 +16,11 @@ use yii\widgets\ActiveForm;
 
 
     <?= $form->field($model, 'stagnant_month')->label('تاريخ الركود بالاشهر للمادة') ?>
+    <?= $form->field($model, 'id')->textInput() ?>
+    <?= $form->field($model, 'product_id')->textInput() ?>
+    <?= $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+$stores);?>
+    <?= $form->field($model, 'available_status')->dropDownList([''=>'اختر  ....']+\common\models\Inventory::statusArray);?>
+    <?= $form->field($model, 'category_id')->dropDownList([''=>'اختر  ....']+\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'))->label('نوع القسم');?>
 
 
     <div class="form-group">

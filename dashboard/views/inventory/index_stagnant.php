@@ -9,7 +9,11 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'مواد راكدة');
 $this->params['breadcrumbs'][] = $this->title;
-
+$stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name');
+    if(!\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
+    {
+        $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1,'id'=>\Yii::$app->user->identity->stores])->all(), 'id', 'name');
+    }
 
 ?>
 <div class="inventory-index">
@@ -18,13 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
     </p>
-    <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php  echo $this->render('_search', ['model' => $searchModel,'stores'=>$stores]); ?>
     <?php
-    $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name');
-    if(!\Yii::$app->user->can('جميع المحلات مواد الافرع المخزن'))
-    {
-        $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1,'id'=>\Yii::$app->user->identity->stores])->all(), 'id', 'name');
-    }
+    
     $gridColumns = [
         ['class' => 'yii\grid\SerialColumn'],
         'id',
@@ -153,7 +153,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => $gridColumns,
         'id' => 'w0',
         'rowOptions' =>function ($model){
