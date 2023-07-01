@@ -15,6 +15,7 @@ use yii\behaviors\TimestampBehavior;
  * @property float|null $product_id
  * @property float|null $count
  * @property float|null $amount
+ * @property float|null $returns_group_id
  * @property int $created_at
  * @property int|null $created_by
  * @property int $updated_at
@@ -44,10 +45,10 @@ class Returns extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by','returns_group_id'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'validateCountExist'],
-            [[ 'product_id', 'order_id', 'amount', 'count' ,'returner_name'], 'required'],
+            [[  'order_id', 'amount', 'count' ], 'required'],
         ];
     }
 
@@ -78,7 +79,7 @@ class Returns extends \yii\db\ActiveRecord
         $q = self::find()->where(['order_id'=>$this->order_id,'product_id'=>$this->product_id]);
         if(!$this->isNewRecord)
         {
-            $q->andWhere(['<>', 'id',$this->id]);
+            $q->andWhere(['<>', 'returns_group_id',$this->returns_group_id]);
         }
         $return = $q->sum('count');
         $remaining =$count - $return ;
