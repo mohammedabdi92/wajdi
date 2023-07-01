@@ -37,7 +37,7 @@ $("[id$='-count']").each(function() {
     totalCount += parseInt(this.value);
 });
 $("[id$='-amount']").each(function() {
-    totalAmount += parseInt(this.value);
+    totalAmount += parseFloat(this.value);
 });
 $('#returnsgroup-total_count').val(totalCount);
 $('#returnsgroup-total_amount').val(totalAmount);
