@@ -9,12 +9,12 @@ $(document).on('change', '[id$=count]', function (item) {
     var product_id = mainBox.find('[id$=product_id]').val();
     var count = $(this).val();
      setAmount(product_id,count,mainBox);
-    
 });
+
 $(document).on('change', '[id$=amount]', function (item) {
     setTotals()
-    
 });
+
 $(document).on('change', '[id$=product_id]', function (item) {
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
     var mainBox =  $($('.item')[box_id]);

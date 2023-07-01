@@ -102,6 +102,7 @@ if($model->order_id)
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 " >
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\depdrop\DepDrop::classname(), [
+                                        'type' => DepDrop::TYPE_SELECT2,
                                         'data' => $product_data,
                                         'pluginOptions' => [
                                             'depends' => ['order_id'],
