@@ -65,6 +65,7 @@ class ReturnsGroupSearch extends ReturnsGroup
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+        $query->orderBy(['id'=>SORT_DESC]);
 
         $query->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'returner_name', $this->returner_name]);
