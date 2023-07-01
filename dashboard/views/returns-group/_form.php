@@ -48,11 +48,7 @@ if($model->order_id)
 
 
     <?php
-    echo $form->field($model, "order_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->select('id')->all(), 'id', 'id'),
-        'options' => ['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....'],
-        'pluginOptions' => ['allowClear' => true],
-    ]);
+    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....']);
   
     ?>
 
