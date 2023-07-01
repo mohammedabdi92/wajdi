@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var common\models\ReturnsGroup $model */
 
-$this->title = 'Update Returns Group: ' . $model->id;
+$this->title = 'تعديل :' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Returns Groups', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
