@@ -177,7 +177,7 @@ class ProductController extends BaseController
             $query = Product::find();
             if($store_id)
             {
-                $query->leftJoin("inventory","product.id = inventory.product_id")->andWhere(['inventory.store_id'=>$store_id]);
+                $query->leftJoin("inventory","product.id = inventory.product_id")->andWhere(['inventory.store_id'=>$store_id])->andWhere(['>', 'inventory.count',0 ]);
             }
             $query->select('product.id, title AS text')
                 ->from('product')
