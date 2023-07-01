@@ -6,9 +6,22 @@ $(document).on('change', '[id=order_id]', function (item) {
 $(document).on('change', '[id$=count]', function (item) {
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
     var mainBox =  $($('.item')[box_id]);
-    var product_id = mainBox.find('[id^=product_id]').val();
+    var product_id = mainBox.find('[id$=product_id]').val();
     var count = $(this).val();
      setAmount(product_id,count,mainBox);
+    
+});
+$(document).on('change', '[id$=amount]', function (item) {
+    setTotals()
+    
+});
+$(document).on('change', '[id$=product_id]', function (item) {
+    var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
+    var mainBox =  $($('.item')[box_id]);
+
+     mainBox.find('[id$='+box_id+'-amount]').val('');
+     mainBox.find('[id$='+box_id+'-count]').val('');
+    setTotals()
     
 });
  function setAmount(product_id,count,mainBox){
@@ -34,10 +47,16 @@ function setTotals(){
     var totalCount=0;
 
 $("[id$='-count']").each(function() {
-    totalCount += parseInt(this.value);
+    if(this.value)
+    {
+        totalCount += parseInt(this.value);
+    }
 });
 $("[id$='-amount']").each(function() {
-    totalAmount += parseFloat(this.value);
+    if(this.value)
+    {
+        totalAmount += parseFloat(this.value);
+    }
 });
 $('#returnsgroup-total_count').val(totalCount);
 $('#returnsgroup-total_amount').val(totalAmount);
@@ -48,16 +67,17 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, wrapper) {
         jQuery(this).html("المادة : " + (index + 1))
     });
     
-    $(wrapper).find("[id^='product_id']").removeAttr("disabled");
-    $(wrapper).find("[id^='product_id']").html("");
-    $("[id^='product_id']:first option").each(function(i,item) {           
-            $(wrapper).find("[id^='product_id']").each(function(x,product)  {
+    $(wrapper).find("[id$='product_id']").removeAttr("disabled");
+    $(wrapper).find("[id$='product_id']").html("");
+    $("[id$='product_id']:first option").each(function(i,item) {           
+            $(wrapper).find("[id$='product_id']").each(function(x,product)  {
             $(item).clone().appendTo(product);
             });
     });
 });
 
 $(".dynamicform_wrapper").on("afterDelete", function(e) {
+    setTotals();
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
         jQuery(this).html("المادة : " + (index + 1))
     });

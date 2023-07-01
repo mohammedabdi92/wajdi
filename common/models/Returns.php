@@ -46,9 +46,11 @@ class Returns extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by','returns_group_id'], 'integer'],
+            [['product_id','returns_group_id'], 'unique'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'validateCountExist'],
             [[  'order_id', 'amount', 'count' ], 'required'],
+          
         ];
     }
 

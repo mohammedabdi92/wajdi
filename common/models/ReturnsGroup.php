@@ -41,6 +41,7 @@ class ReturnsGroup extends \yii\db\ActiveRecord
             [['note', 'returner_name'], 'string'],
             [['total_amount'], 'double'],
             [[  'order_id', 'returner_name' ], 'required'],
+            
         ];
     }
 
@@ -66,7 +67,7 @@ class ReturnsGroup extends \yii\db\ActiveRecord
             'returner_name' => Yii::t('app', 'الشخص المرجع'),
             'note' => Yii::t('app', 'ملاحظة'),
             'total_amount' => Yii::t('app', 'مجموع المرجع'),
-            'total_count' => Yii::t('app', 'عدد المواد'),
+            'total_count' => Yii::t('app', 'عدد القطع'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),

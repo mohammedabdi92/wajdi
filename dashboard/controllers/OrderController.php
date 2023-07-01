@@ -381,7 +381,7 @@ class OrderController extends BaseController
                 }
 
 
-                return ['output' => $dataArray, 'selected' => ''];
+                return ['output' => $dataArray, 'selected' => [''=>'اختر ...']];
             }
         }
         return ['output' => '', 'selected' => ''];

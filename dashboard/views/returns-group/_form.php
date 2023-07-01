@@ -19,7 +19,7 @@ $this->registerJsFile(
 
 
 $url = \yii\helpers\Url::to(['product/product-list']);
-$product_data = [];
+$product_data = [''=>"اختر ..."];
 if($model->order_id)
 {
     $OrderProducts = OrderProduct::find()->where(['order_id'=>$model->order_id])->all();
@@ -43,7 +43,11 @@ if($model->order_id)
     'enableClientValidation'=>false,
     'enableAjaxValidation'=>false,
     'id' => 'dynamic-form'
-    ]); ?>
+    ]); 
+    
+    
+    ?>
+
 
 
 
@@ -98,10 +102,10 @@ if($model->order_id)
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 " >
                                     <?php
                                     echo $form->field($modelAddress, "[{$i}]product_id")->widget(\kartik\depdrop\DepDrop::classname(), [
-                                        'options' => ['id' => 'product_id', 'placeholder' => 'Select ...'],
                                         'data' => $product_data,
                                         'pluginOptions' => [
                                             'depends' => ['order_id'],
+                                            'placeholder' => 'اختر ...',
                                             'url' => Url::to(['/order/order-products']),
                                 
                                         ],
@@ -125,6 +129,11 @@ if($model->order_id)
                     </div>
                 <?php endforeach; ?>
 
+            </div>
+            <div class="panel-heading">
+
+                <button type="button" class="pull-left add-item btn btn-success btn-xs"><i class="fa fa-plus"></i> اضافة مادة </button>
+                <div class="clearfix"></div>
             </div>
 
         </div>
