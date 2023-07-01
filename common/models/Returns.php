@@ -46,7 +46,7 @@ class Returns extends \yii\db\ActiveRecord
     {
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by','returns_group_id'], 'integer'],
-            [['product_id','returns_group_id'], 'unique'],
+            [['product_id'], 'uniqueProduct'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'validateCountExist'],
             [[  'order_id', 'amount', 'count' ], 'required'],
@@ -73,6 +73,19 @@ class Returns extends \yii\db\ActiveRecord
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
         ];
+    }
+
+    public function uniqueProduct($attr)
+    {
+        if (isset($this->product_id) && $this->returns_group_id) {
+            $item_order = self::find()->where(['product_id'=>$this->product_id,'returns_group_id'=>$this->returns_group_id])->andWhere(['<>','id',$this->id??0])->one() ;
+
+            if ($item_order) {
+                $this->addError($attr, 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+            }
+        }
+
+    
     }
 
     public function validateCountExist($attr)

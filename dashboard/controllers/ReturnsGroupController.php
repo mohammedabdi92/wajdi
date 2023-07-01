@@ -72,16 +72,28 @@ class ReturnsGroupController extends Controller
     public function actionCreate()
     {
         $post = \Yii::$app->request->post();
+        
         $model = new ReturnsGroup();
         $model_product = [new Returns()];
         if ($model->load($post)) {
-
+           
             $model_product = Model::createMultiple(Returns::classname());
             Model::loadMultiple($model_product, $post);
 
+            $duplicat =[];
+            if($post['Returns'])
+            {
+                $duplicat = array_count_values(array_column($post['Returns'], 'product_id'));
+            }
             foreach ($model_product as $item) {
                 $item->order_id = $model->order_id;
+                if($item->product_id && isset($duplicat[$item->product_id]) && $duplicat[$item->product_id] > 1)
+                {
+                    $item->addError("product_id", 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+                }
             }
+
+           
             // ajax validation
             if (Yii::$app->request->isAjax) {
                 Yii::$app->response->format = Response::FORMAT_JSON;
@@ -90,10 +102,28 @@ class ReturnsGroupController extends Controller
                     ActiveForm::validate($model)
                 );
             }
-
             // validate all models
             $valid = $model->validate();
+            foreach ($model_product as $key=>$item) {
+                if($item->product_id && isset($duplicat[$item->product_id]) && $duplicat[$item->product_id] > 1)
+                {
+                    $model_product[$key]->addError("product_id", 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+                    $valid = false;
+                }
+            }
+           
+           
             $valid = Model::validateMultiple($model_product) && $valid;
+          
+            if(!$valid){
+                foreach ($model_product as $key=>$item) {
+                    if($item->product_id && isset($duplicat[$item->product_id]) && $duplicat[$item->product_id] > 1)
+                    {
+                        $model_product[$key]->addError("product_id", 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+                        $valid = false;
+                    }
+                }
+            }
             if ($valid) {
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
