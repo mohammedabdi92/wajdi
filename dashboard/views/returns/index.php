@@ -41,6 +41,9 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'count',
             'amount',
+            'total_count',
+            'total_amount',
+
             [
                 'attribute' => 'created_by',
                 'value' => function ($model) {
