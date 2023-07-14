@@ -55,7 +55,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
             <div class="col-md-3 left_col hidden-print">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <b><?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' مجموعة وجدي للاعمار '), Yii::$app->homeUrl,["class"=>"site_title"]) ?></b>
+                        <b><?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' مجموعة وجدي للاعمار '), Yii::$app->homeUrl,["class"=>"site_title",'onclick' =>'return false;']) ?></b>
                     </div>
 
                     <div class="clearfix"></div>
@@ -78,55 +78,14 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                         <div class="menu_section">
                             <h3>القائمة</h3>
                             <?php
-                            echo MenuHelper::renderMenu(MenuHelper::getAssignedMenuCustom(Yii::$app->user->id));
-//                            echo mortezakarimi\gentelellartl\widgets\Menu::widget(
-//                                [
-//                                    "items" => [
-//                                        ["label" => 'الرئيسية', "url" => "/", "icon" => "home"],
-//                                        [
-//                                            "label" => "التقارير",
-//                                            "icon" => "th",
-//                                            "items" => [
-//                                                ["label" => "المخزن", "url" => ["reports/products"]],
-//                                                ["label" => "البيع", "url" => ["reports/order-product"]],
-//                                                ["label" => "المشتريات", "url" => ["reports/inventory-order-product"]],
-//                                            ],
-//                                        ],
-//                                        ["label" => 'بصمة دوام', "url" => "/user/presence", "icon" => "hand-pointer-o"],
-//                                        ["label" => 'المستخدمين', "url" => "/user/index", "icon" => "user"],
-//                                        ["label" => 'اقسام المواد', "url" => "/product-category/index", "icon" => "archive"],
-//
-//                                        ["label" => ' المواد', "url" => "/product/index", "icon" => "archive"],
-//                                        ["label" => 'العملاء', "url" => "/customer/index", "icon" => "male"],
-//                                        ["label" => 'الموردين', "url" => "/supplier/index", "icon" => "briefcase"],
-//                                        ["label" => ' فواتير المشتريات', "url" => "/inventory-order/index", "icon" => "handshake-o"],
-//                                        ["label" => 'فواتير المبيعات', "url" => "/order/index", "icon" => "money"],
-//                                        [
-//                                            "label" => "المخزن",
-//                                            "icon" => "th",
-//                                            "items" => [
-//                                                ["label" => "مواد الافرع", "url" => ["inventory/index"]],
-//                                                ["label" => "النقليات", "url" => ["transfer-order/index"]],
-////                                                ["label" => "پنل", "url" => ["site/panel"]],
-//                                            ],
-//                                        ],
-//                                        [
-//                                            "label" => "اعدادات",
-//                                            "icon" => "th",
-//                                            "items" => [
-//                                                ["label" => "اعدادات النسب", "url" => ["setting/rate"]],
-//                                                ["label" => 'انواع العد', "url" => "/count-type/index"],
-////                                                ["label" => "پنل", "url" => ["site/panel"]],
-//                                            ],
-//                                        ],
-//
-//                                        ["label" => 'البضاعة التالفة', "url" => "/damaged/index", "icon" => "exclamation-triangle"],
-//                                        ["label" => 'المرجع', "url" => "/returns/index", "icon" => "retweet"],
-//                                        ["label" => 'المصروفات', "url" => "/outlay/index", "icon" => "money"],
-//                                        ["label" => 'المسحوبات من الصندوق', "url" => "/financial-withdrawal/index", "icon" => "money"],
-//                                    ],
-//                                ]
-//                            )
+                            echo mortezakarimi\gentelellartl\widgets\Menu::widget(
+                                [
+                                    "items" => [
+                                        ["label" => ' فواتير المبيعات', "url" => ["fk-order/index"], "icon" => "money"],
+                                        ["label" => '  فواتير المشتريات', "url" => ["fk-inventory-order/index"], "icon" => "handshake-o"],
+                                    ],
+                                ]
+                            )
                             ?>
                         </div>
                     </div>
@@ -179,10 +138,6 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                             <li style=" text-align: center; background: #767676; color: white; padding: 0px 10px; ">
                                 <h3><div id="clock"></div></h3>
                                 <h5><div id="date"></div></h5>
-                            </li>
-                            <li style=" text-align: center;  padding: 0px 10px; ">
-
-                                <?= Html::a(Html::tag('span', '...'), ['order/create-fk'],["class"=>"btn "]) ?>
                             </li>
 
 <!--                            notification -->
@@ -256,9 +211,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
 <!--                                </ul>-->
 <!--                            </li>-->
                         </ul>
-
                     </nav>
-
                 </div>
             </div>
             <!-- /top navigation -->

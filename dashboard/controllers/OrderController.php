@@ -4,6 +4,8 @@ namespace dashboard\controllers;
 
 use common\models\ArOrder;
 use common\models\ArOrderProduct;
+use common\models\FkOrder;
+use common\models\InventoryOrder;
 use common\models\Product;
 use kartik\mpdf\Pdf;
 use Yii;
@@ -405,5 +407,42 @@ class OrderController extends BaseController
         $product_price_for_count =  $product_price * $count;
 
         return  round($product_price_for_count, 2) ;
+    }
+    public function actionCreateFk(){
+        $addingFiveMinutes= strtotime('- 15 minute');
+        $orders = Order::find()->andWhere(['>=', 'created_at', $addingFiveMinutes])->asArray()->all();
+
+        foreach ($orders as $order)
+        {
+            $order_id = $order['id'];
+             unset($order['id']);
+            Yii::$app->db->createCommand()->insert('fk_order', $order)->execute();
+            $fk_order_id = \Yii::$app->db->getLastInsertID('fk_order');
+            $products = OrderProduct::find()->andWhere(['order_id'=>$order_id])->asArray()->all();
+            foreach ($products as $product)
+            {
+                unset($product['id']);
+                $product['order_id'] = $fk_order_id;
+                Yii::$app->db->createCommand()->insert('fk_order_product', $product)->execute();
+            }
+
+        }
+        $InventoryOrders = InventoryOrder::find()->andWhere(['>=', 'created_at', $addingFiveMinutes])->asArray()->all();
+        foreach ($InventoryOrders as $order)
+        {
+            $order_id = $order['id'];
+            unset($order['id']);
+            Yii::$app->db->createCommand()->insert('fk_inventory_order', $order)->execute();
+            $fk_order_id = \Yii::$app->db->getLastInsertID('fk_inventory_order');
+            $products = OrderProduct::find()->andWhere(['inventory_order_id'=>$order_id])->asArray()->all();
+            foreach ($products as $product)
+            {
+                unset($product['id']);
+                $product['inventory_order_id'] = $fk_order_id;
+                Yii::$app->db->createCommand()->insert('fk_inventory_order_product', $product)->execute();
+            }
+
+        }
+        return $this->redirect(['fk-order/index']);
     }
 }
