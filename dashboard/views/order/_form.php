@@ -327,9 +327,13 @@ $priceList = [];
         </div>
 
         <?php \yii\widgets\Pjax::end() ?>
-        <?php ActiveForm::end(); ?>
+
 
     </div>
+    <?php ActiveForm::end(); ?>
+</div>
+
+
 
 
 

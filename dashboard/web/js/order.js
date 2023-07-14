@@ -204,6 +204,26 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
 });
 $(document).on('change', '[id$="order-store_id"]', function (item) {
     $.pjax.reload({container:"#new_country"});
+
+});
+$(document).on('pjax:end', function(e) {
+    $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+        jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
+            jQuery(this).html("المادة : " + (index + 1))
+        });
+    });
+
+    $(".dynamicform_wrapper").on("afterDelete", function(e) {
+
+        jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
+            jQuery(this).html("المادة : " + (index + 1))
+        });
+        $('.item').each(function (index, element) {
+            calculateSupTotals(element,true);
+        });
+        checkDiscount();
+        calculateTotal();
+    });
 });
 $(document).on('click',".add-item", function (item) {
     var num =$(".item.panel.panel-default").length;
