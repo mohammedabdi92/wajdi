@@ -180,11 +180,12 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
                                 <h3><div id="clock"></div></h3>
                                 <h5><div id="date"></div></h5>
                             </li>
+                            <?php if(\Yii::$app->user->can('اظهار الانتقال لصفحة الوهمية')):?>
                             <li style=" text-align: center;  padding: 0px 10px; ">
 
                                 <?= Html::a(Html::tag('span', '...'), ['order/create-fk'],["class"=>"btn "]) ?>
                             </li>
-
+                            <?php endif;?>
 <!--                            notification -->
 <!--                            <li role="presentation" class="dropdown">-->
 <!--                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"-->

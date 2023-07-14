@@ -121,6 +121,8 @@ class FkInventoryOrder extends \common\components\BaseModel
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
             'note' => Yii::t('app', 'ملاحظة'),
+            'clone_at' => Yii::t('app', 'تاريخ التنفيذ'),
+            'clone_by' => Yii::t('app', 'المنفذ'),
         ];
     }
 

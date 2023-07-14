@@ -109,6 +109,8 @@ class FkOrder extends \common\components\BaseModel
             'updated_by' =>  'الشخص المعدل',
             'product_count' =>  'عدد المواد',
             'returns_amount' =>  'قيمة المرجع',
+            'clone_at' => Yii::t('app', 'تاريخ التنفيذ'),
+            'clone_by' => Yii::t('app', 'المنفذ'),
         ];
     }
 

@@ -86,6 +86,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
         ],
         [
+            'attribute' => 'clone_by',
+            'value' => function ($model) {
+                return \common\components\CustomFunc::getUserName($model->clone_by);
+            },
+
+        ],
+        [
+            'attribute' => 'clone_at',
+            'value' => function ($model) {
+                return \common\components\CustomFunc::getFullDate($model->clone_at);
+            },
+
+        ],
+        [
             'class' => ActionColumn::className(),
             'urlCreator' => function ($action, \common\models\FkOrder $model, $key, $index, $column) {
                 return Url::toRoute([$action, 'id' => $model->id]);

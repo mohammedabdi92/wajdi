@@ -83,12 +83,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]),
         ],
+
         [
             'attribute' => 'updated_by',
             'value' => function ($model) {
                 return \common\components\CustomFunc::getUserName($model->updated_by);
             },
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')
+        ],
+        [
+            'attribute' => 'clone_by',
+            'value' => function ($model) {
+                return \common\components\CustomFunc::getUserName($model->clone_by);
+            },
+
+        ],
+        [
+            'attribute' => 'clone_at',
+            'value' => function ($model) {
+                return \common\components\CustomFunc::getFullDate($model->clone_at);
+            },
+
         ],
         [
             'class' => ActionColumn::className(),'icons'=>[
