@@ -37,7 +37,13 @@ if($model->order_id)
 ?>
 
 <div class="damaged-form">
-
+<script>
+    function process(input){
+        let value = input.value;
+        let numbers = value.replace(/[^0-9]/g, "");
+        input.value = numbers;
+    }
+</script>
 <?php
  $form = ActiveForm::begin([
     'enableClientValidation'=>false,
@@ -52,7 +58,7 @@ if($model->order_id)
 
 
     <?php
-    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....']);
+    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....', 'oninput'=>"process(this)",'type' => 'number']);
     ?>
 
     <?= $form->field($model, 'returner_name')->textInput() ?>
