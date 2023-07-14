@@ -23,11 +23,7 @@ $this->registerJsFile(
 
     <?php
     $data =($model->product_id)? [$model->product_id=>$model->product->title]:[];
-    echo $form->field($model, "order_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Order::find()->select('id')->all(), 'id', 'id'),
-        'options' => ['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....'],
-        'pluginOptions' => ['allowClear' => true],
-    ]);
+    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....']);
     echo $form->field($model, 'product_id')->widget(\kartik\depdrop\DepDrop::classname(), [
         'data'=>$data,
         'type' => DepDrop::TYPE_SELECT2,

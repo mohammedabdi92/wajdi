@@ -53,7 +53,6 @@ if($model->order_id)
 
     <?php
     echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....']);
-  
     ?>
 
     <?= $form->field($model, 'returner_name')->textInput() ?>
