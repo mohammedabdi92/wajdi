@@ -103,7 +103,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'visibleButtons' => [
                 'update' => function ($model) {
-                    return Yii::$app->user->can('تعديل وحذف فواتير المبيعات');
+                    return Yii::$app->user->can('تعديل فاتورة الارشيف');
                 },
                 'delete' => function ($model) {
                     return Yii::$app->user->can('تعديل وحذف فواتير المبيعات');
