@@ -47,7 +47,7 @@ class FkInventoryOrderProduct extends \common\components\BaseModel
             [['inventory_order_id', 'product_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [[ 'count','tax_percentage'], 'number'],
             [['ready_to_deliver'], 'checkReady'],
-            [[ 'store_id'], 'safe'],
+            [[ 'store_id','clone_by','clone_at'], 'safe'],
             [['product_total_cost', 'product_cost','product_total_cost_final','product_cost_final'], 'double'],
         ];
     }

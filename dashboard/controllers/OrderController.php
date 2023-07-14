@@ -416,6 +416,8 @@ class OrderController extends BaseController
         {
             $order_id = $order['id'];
              unset($order['id']);
+            $order['clone_by'] =  Yii::$app->user->identity->id;
+            $order['clone_at'] =  time();
             Yii::$app->db->createCommand()->insert('fk_order', $order)->execute();
             $fk_order_id = \Yii::$app->db->getLastInsertID('fk_order');
             $products = OrderProduct::find()->andWhere(['order_id'=>$order_id])->asArray()->all();
@@ -423,6 +425,8 @@ class OrderController extends BaseController
             {
                 unset($product['id']);
                 $product['order_id'] = $fk_order_id;
+                $product['clone_by'] =  Yii::$app->user->identity->id;
+                $product['clone_at'] =  time();
                 Yii::$app->db->createCommand()->insert('fk_order_product', $product)->execute();
             }
 
@@ -432,6 +436,8 @@ class OrderController extends BaseController
         {
             $order_id = $order['id'];
             unset($order['id']);
+            $order['clone_by'] =  Yii::$app->user->identity->id;
+            $order['clone_at'] =  time();
             Yii::$app->db->createCommand()->insert('fk_inventory_order', $order)->execute();
             $fk_order_id = \Yii::$app->db->getLastInsertID('fk_inventory_order');
             $products = OrderProduct::find()->andWhere(['inventory_order_id'=>$order_id])->asArray()->all();
@@ -439,6 +445,9 @@ class OrderController extends BaseController
             {
                 unset($product['id']);
                 $product['inventory_order_id'] = $fk_order_id;
+                $product['clone_by'] =  Yii::$app->user->identity->id;
+                $product['clone_at'] =  time();
+
                 Yii::$app->db->createCommand()->insert('fk_inventory_order_product', $product)->execute();
             }
 

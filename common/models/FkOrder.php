@@ -64,7 +64,7 @@ class FkOrder extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','clone_by','clone_at'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
