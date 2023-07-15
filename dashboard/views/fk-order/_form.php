@@ -19,7 +19,12 @@ $this->registerJsFile(
 $url = \yii\helpers\Url::to(['product/product-list']);
 $priceList = [];
 
+$created_at = null;
+if(!empty($model->created_at))
+{
+    $created_at = !is_string($model->created_at)? date('Y-m-d H:i:s',$model->created_at):$model->created_at ;
 
+}
 
 
 ?>
@@ -261,6 +266,14 @@ $priceList = [];
             </div>
 
             <?= $form->field($model, 'note')->textarea() ?>
+            <?=  $form->field($model, 'created_at')->widget(\kartik\datetime\DateTimePicker::class, [
+                'options' => ['value'=>$created_at,'placeholder' => 'Select date and time...'],
+
+                'pluginOptions' => [
+                    'format' => 'yyyy-mm-dd hh:ii:ss',
+                    'todayHighlight' => true
+                ]
+            ]); ?>
 
             <?php
             if(!$model->isNewRecord)

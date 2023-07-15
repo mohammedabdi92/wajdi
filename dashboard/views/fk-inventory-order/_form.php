@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use wbraganca\dynamicform\DynamicFormWidget;
 use kartik\date\DatePicker;
 use yii\web\JsExpression;
+use kartik\datetime\DateTimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\FkInventoryOrder */
@@ -209,6 +210,18 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         <?= $form->field($model, 'debt')->textInput() ?>
         <?= $form->field($model, 'repayment')->textInput() ?>
         <?= $form->field($model, 'total_cost')->textInput(['readonly' => true]) ?>
+        <?= $form->field($model, 'note')->textarea() ?>
+
+
+        <?=  $form->field($model, 'created_at')->widget(DateTimePicker::class, [
+    'options' => ['value'=>!is_string($model->created_at)? date('Y-m-d H:i:s',$model->created_at):$model->created_at,'placeholder' => 'Select date and time...'],
+
+    'pluginOptions' => [
+        'format' => 'yyyy-mm-dd hh:ii:ss',
+        'todayHighlight' => true
+    ]
+]); ?>
+
         <?= $form->field($model, 'note')->textarea() ?>
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>

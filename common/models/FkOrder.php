@@ -54,7 +54,7 @@ class FkOrder extends \common\components\BaseModel
     {
         return [
             [[ 'store_id', 'total_amount' ], 'required'],
-            [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['customer_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['product_count'], 'number'],
             [['customer_id'],'required', 'when' => function($model) {
@@ -64,7 +64,7 @@ class FkOrder extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','clone_by','clone_at'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','clone_by','clone_at', 'created_at'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }

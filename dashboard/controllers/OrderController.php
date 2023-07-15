@@ -410,7 +410,7 @@ class OrderController extends BaseController
         return  round($product_price_for_count, 2) ;
     }
     public function actionCreateFk(){
-        
+
         $addingFiveMinutes= strtotime('- 15 minute');
         $orders = Order::find()->andWhere(['>=', 'created_at', $addingFiveMinutes])->asArray()->all();
 
@@ -462,7 +462,7 @@ class OrderController extends BaseController
             }
              openInNewTab('$url');
 JS;
-        $this->getView ()->registerJs ( $script , \yii\web\View::POS_READY );
+        $this->getView()->registerJs( $script , \yii\web\View::POS_READY );
         return $this->render ( 'external' );
     }
 }

@@ -7,7 +7,6 @@ use common\models\Product;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\base\Model;
-use common\models\Order;
 use common\models\FkOrderProduct;
 use common\models\FkOrderSearch;
 use dashboard\components\BaseController;
@@ -79,18 +78,13 @@ class FkOrderController extends BaseController
     {
         $this->layout = "main-fk";
         $post = \Yii::$app->request->post();
-        $is_draft = false;
-        if(isset($post['draft']))
-        {
-            $is_draft = true;
-        }
 
 
         $model = $this->findModel($id);
         $model_product = $model->products;
         if ($model->load($post)) {
 
-
+            $model->created_at = strtotime($model->created_at);
             $oldIDs = ArrayHelper::map($model_product, 'id', 'id');
             $model_product = Model::createMultiple(FkOrderProduct::classname(), $model_product);
             Model::loadMultiple($model_product, $post);
@@ -134,20 +128,7 @@ class FkOrderController extends BaseController
 
                     if ($flag) {
                         $transaction->commit();
-                        if(!$is_draft)
-                        {
-                            $nModel =  $model->cloneModel("common\models\Order");
-                            $nModel->save(false);
-                            foreach ($model_product as $modelproduct) {
-                                $nModelproduct =  $modelproduct->cloneModel("common\models\OrderProduct");
-                                $nModelproduct->order_id = $nModel->id;
-                                $nModelproduct->store_id = $nModel->store_id;
-                                $nModelproduct->save(false);
-                            }
-                            $model->delete();
-                            return $this->redirect(['order/view', 'id' => $nModel->id]);
 
-                        }
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
@@ -278,7 +259,7 @@ class FkOrderController extends BaseController
 
         return $this->render('create', [
             'model' => $model,
-            'model_product' => (empty($model_product)) ? [new OrderProduct] : $model_product
+            'model_product' => (empty($model_product)) ? [new FkOrderProduct] : $model_product
         ]);
     }
 

@@ -52,11 +52,11 @@ class FkInventoryOrder extends \common\components\BaseModel
     {
         return [
             [[ 'store_id', 'total_cost'], 'required'],
-            [[ 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [[  'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
             [['supplier_id'],'validateSupplierRequired'],
             [['debt','repayment'],'double'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','clone_by','clone_at'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','clone_by','clone_at','created_at'],'safe']
         ];
     }
 

@@ -83,7 +83,9 @@ class FkInventoryOrderController extends BaseController
         $this->layout = "main-fk";
         $model = new FkInventoryOrder;
         $model_product = [new FkInventoryOrderProduct];
+
         if ($model->load(Yii::$app->request->post())) {
+            $model->created_at = strtotime($model->created_at);
 
             $model_product = Model::createMultiple(FkInventoryOrderProduct::classname());
             Model::loadMultiple($model_product, Yii::$app->request->post());
@@ -137,7 +139,11 @@ class FkInventoryOrderController extends BaseController
         $model = $this->findModel($id);
         $model_product = $model->products;
 
+
         if ($model->load(Yii::$app->request->post())) {
+
+            $model->created_at = strtotime($model->created_at);
+
 
             $oldIDs = ArrayHelper::map($model_product, 'id', 'id');
             $model_product = Model::createMultiple(FkInventoryOrderProduct::classname(), $model_product);
@@ -182,6 +188,7 @@ class FkInventoryOrderController extends BaseController
 
                     if ($flag) {
                         $transaction->commit();
+
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
