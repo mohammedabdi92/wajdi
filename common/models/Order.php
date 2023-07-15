@@ -25,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float|null $repayment
  * @property int $created_at
  * @property int $product_count
+ * @property string $dept_note
  * @property string $note
  * @property string $customer_name
  * @property string $phone_number
@@ -64,7 +65,7 @@ class Order extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
@@ -109,6 +110,7 @@ class Order extends \common\components\BaseModel
             'updated_by' =>  'الشخص المعدل',
             'product_count' =>  'عدد المواد',
             'returns_amount' =>  'قيمة المرجع',
+            'dept_note' =>  'ملاحظة الدين',
         ];
     }
 

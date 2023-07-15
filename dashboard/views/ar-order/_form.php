@@ -243,7 +243,7 @@ $priceList = [];
 
             <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
                 <?= $form->field($model, 'debt')->textInput() ?>
-                <?= $form->field($model, 'repayment')->textInput() ?>
+                <?= $form->field($model, 'dept_note')->textarea() ?>
             <?php endif;?>
 
             <div class="panel panel-default">

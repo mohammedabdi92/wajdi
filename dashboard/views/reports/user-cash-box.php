@@ -9,7 +9,7 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\InventorySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'مواد الافرع');
+$this->title = Yii::t('app', ' تقرير صافي الصندوق');
 $this->params['breadcrumbs'][] = $this->title;
 $stores = [];
 if(Yii::$app->user->can('كل المحلات'))
@@ -22,6 +22,7 @@ if(Yii::$app->user->can('كل المحلات'))
 
 ?>
 <div class="inventory-index row">
+    <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
     <?php $form = \yii\widgets\ActiveForm::begin([
         'method' => 'get',
     ]); ?>

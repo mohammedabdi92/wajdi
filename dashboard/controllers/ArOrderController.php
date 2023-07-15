@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\ArOrder;
 use common\models\Product;
+use common\models\Transactions;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\base\Model;
@@ -135,6 +136,20 @@ class ArOrderController extends BaseController
                         {
                             $nModel =  $model->cloneModel("common\models\Order");
                             $nModel->save(false);
+                            if($nModel->debt)
+                            {
+                                $dept_model  =  Transactions::find()->where(['order_id'=>$nModel->id])->one();
+                                if(!$dept_model){
+                                    $dept_model = new Transactions();
+                                }
+                                $dept_model->type = Transactions::TYPE_DEBT;
+                                $dept_model->order_id = $nModel->id;
+                                $dept_model->amount = $nModel->debt;
+                                $dept_model->customer_id = $nModel->customer_id;
+                                $dept_model->note = $nModel->dept_note;
+                                $dept_model->save(false);
+
+                            }
                             foreach ($model_product as $modelproduct) {
                                 $nModelproduct =  $modelproduct->cloneModel("common\models\OrderProduct");
                                 $nModelproduct->order_id = $nModel->id;

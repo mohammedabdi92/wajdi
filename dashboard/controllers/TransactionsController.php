@@ -2,17 +2,16 @@
 
 namespace dashboard\controllers;
 
-use common\models\Customer;
-use common\models\CustomerSearch;
+use common\models\Transactions;
 use common\models\TransactionsSearch;
-use dashboard\components\BaseController;
+use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CustomerController implements the CRUD actions for Customer model.
+ * TransactionsController implements the CRUD actions for Transactions model.
  */
-class CustomerController extends BaseController
+class TransactionsController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +32,13 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Lists all Customer models.
+     * Lists all Transactions models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new CustomerSearch();
+        $searchModel = new TransactionsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,30 +48,26 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Displays a single Customer model.
+     * Displays a single Transactions model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
     {
-        $searchModel = new TransactionsSearch();
-        $params = ['TransactionsSearch'=>['customer_id'=>$id]];
-        $dataProvider = $searchModel->search($params);
         return $this->render('view', [
-            'dataProvider'=>$dataProvider,
             'model' => $this->findModel($id),
         ]);
     }
 
     /**
-     * Creates a new Customer model.
+     * Creates a new Transactions model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Customer();
+        $model = new Transactions();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -88,7 +83,7 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Updates an existing Customer model.
+     * Updates an existing Transactions model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -108,7 +103,7 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Deletes an existing Customer model.
+     * Deletes an existing Transactions model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -122,18 +117,18 @@ class CustomerController extends BaseController
     }
 
     /**
-     * Finds the Customer model based on its primary key value.
+     * Finds the Transactions model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Customer the loaded model
+     * @return Transactions the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Customer::findOne(['id' => $id])) !== null) {
+        if (($model = Transactions::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+        throw new NotFoundHttpException('The requested page does not exist.');
     }
 }

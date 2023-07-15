@@ -8,6 +8,7 @@ $(document).on('change', '[id$=-count]', function (item) {
 
 });
 
+
 $(document).on('change', '[id$=discount]', function (item) {
     checkDiscount();
     calculateTotal();

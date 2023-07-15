@@ -117,6 +117,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         <td><?= $searchModel->repayment_sum ?></td>
                     </tr>
                     <tr>
+                        <th style="width:50%">مجموع الديون  المتبقية:</th>
+                        <td><?= $searchModel->debt_sum - $searchModel->repayment_sum ?></td>
+                    </tr>
+
+                    <tr>
                         <th style="width:50%"> مجموع القيمة بعد الخصم:</th>
                         <td><?= $searchModel->total_amount_sum ?></td>
                     </tr>

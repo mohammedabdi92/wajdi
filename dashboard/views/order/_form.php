@@ -34,7 +34,7 @@ $priceList = [];
     <?= $form->field($model, 'phone_number')->textInput() ?>
     <?php
     echo $form->field($model, "customer_id")->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->all(), 'id', 'name'),
+        'data' =>[''=>"اختر ....."]+\yii\helpers\ArrayHelper::map(\common\models\Customer::find()->select("id,name")->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر نوع العد .....'
         ],
         'pluginOptions' => [
@@ -42,6 +42,27 @@ $priceList = [];
         ],
     ]);
     ?>
+    <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')): ?>
+    <div id="dept_data_contaner">
+        <?= $this->render("_customer_dept_history",["dept_data"=>$dept_data??null]) ?>
+    </div>
+
+    <?php
+
+        $script = <<<JS
+            $(document).on('change', '[id$=-customer_id]', function (item) {
+            if( $(item.currentTarget).val())
+            {
+                $.post("/order/get-customer?id=" + $(item.currentTarget).val() , function (data) {
+                    $("#dept_data_contaner").html(data);
+                });
+            }
+
+        });
+JS;
+        $this->registerJs( $script , \yii\web\View::POS_READY );
+    endif;?>
+
     <?php
     $stores = [];
     if(Yii::$app->user->can('كل المحلات'))
@@ -246,7 +267,7 @@ $priceList = [];
 
             <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
                 <?= $form->field($model, 'debt')->textInput() ?>
-                <?= $form->field($model, 'repayment')->textInput() ?>
+                <?= $form->field($model, 'dept_note')->textarea() ?>
             <?php endif;?>
 
             <div class="panel panel-default">

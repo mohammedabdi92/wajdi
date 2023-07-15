@@ -67,5 +67,68 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]) ?>
+    <p>
+        <h2>
+        حركات الدين
+    </h2>
+    </p>
+    <?= \yii\grid\GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+
+            'id',
+            [
+                'attribute' => 'customer_id',
+                'value' => function ($model) {
+                    return $model->customer->name ?? '';
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'order_id',
+                'value' => function($model)
+                {
+                    return Html::a($model->order_id, '/order/view?id='.$model->order_id,['target'=>'_blank'] );
+                },
+                'format' => 'raw',
+            ],
+            'amount',
+            [
+                'attribute' => 'type',
+                'value' => function($model){
+                    return $model->getTypeText();
+                },
+                'format' => 'raw',
+            ],
+            'note:ntext',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+
+            ],
+            [
+                'attribute' => 'created_by',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getUserName($model->created_by);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                },
+
+            ],
+            [
+                'attribute' => 'updated_by',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getUserName($model->updated_by);
+                },
+
+            ],
+        ],
+    ]); ?>
 
 </div>

@@ -4,9 +4,11 @@ namespace dashboard\controllers;
 
 use common\models\ArOrder;
 use common\models\ArOrderProduct;
+use common\models\Customer;
 use common\models\FkOrder;
 use common\models\InventoryOrder;
 use common\models\Product;
+use common\models\Transactions;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\base\Model;
@@ -132,6 +134,22 @@ class OrderController extends BaseController
 
                     try {
                         if ($flag = $model->save(false)) {
+
+                            if($model->debt)
+                            {
+                                $dept_model  =  Transactions::find()->where(['order_id'=>$model->id])->one();
+                                if(!$dept_model){
+                                    $dept_model = new Transactions();
+                                }
+                                $dept_model->type = Transactions::TYPE_DEBT;
+                                $dept_model->order_id = $model->id;
+                                $dept_model->amount = $model->debt;
+                                $dept_model->customer_id = $model->customer_id;
+                                $dept_model->note = $model->dept_note;
+                                $dept_model->save(false);
+
+                            }
+
                             foreach ($model_product as $modelAddress) {
                                 $modelAddress->order_id = $model->id;
                                 $modelAddress->store_id = $model->store_id;
@@ -167,6 +185,9 @@ class OrderController extends BaseController
 
                     $transaction = \Yii::$app->db->beginTransaction();
                     try {
+                        $model->debt = null;
+                        $model->dept_note = null;
+
                         if ($flag = $model->save(false)) {
                             foreach ($model_product as $modelAddress) {
                                 $modelAddress->order_id = $model->id;
@@ -230,7 +251,26 @@ class OrderController extends BaseController
             if ($valid) {
                 $transaction = \Yii::$app->db->beginTransaction();
                 try {
+
                     if ($flag = $model->save(false)) {
+                        $dept_model  =  Transactions::find()->where(['order_id'=>$model->id])->one();
+                        if($model->debt)
+                        {
+
+                            if(!$dept_model){
+                                $dept_model = new Transactions();
+                            }
+                            $dept_model->type = Transactions::TYPE_DEBT;
+                            $dept_model->order_id = $model->id;
+                            $dept_model->amount = $model->debt;
+                            $dept_model->customer_id = $model->customer_id;
+                            $dept_model->note = $model->dept_note;
+                            $dept_model->save(false);
+
+                        }elseif($dept_model)
+                        {
+                            $dept_model->delete();
+                        }
                         if (! empty($deletedIDs)) {
                             OrderProduct::deleteAll(['id' => $deletedIDs]);
                         }
@@ -257,10 +297,28 @@ class OrderController extends BaseController
             }
         }
 
+        $Customer_REPAYMENT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_REPAYMENT])->sum('amount');
+        $Customer_DEBT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_DEBT])->sum('amount');
+
         return $this->render('update', [
             'model' => $model,
+            'dept_data' =>$Customer_REPAYMENT? ['customer_id'=>$model->customer_id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$model->customer->name]:null,
             'model_product' => (empty($model_product)) ? [new OrderProduct] : $model_product
         ]);
+    }
+
+
+    public function actionGetCustomer($id)
+    {
+        $Customer =   Customer::findOne($id);
+        if(!$Customer)
+        {
+            return '';
+        }
+        $Customer_REPAYMENT =  Transactions::find()->where(['customer_id'=>$id , 'type'=>Transactions::TYPE_REPAYMENT])->sum('amount');
+        $Customer_DEBT =  Transactions::find()->where(['customer_id'=>$id , 'type'=>Transactions::TYPE_DEBT])->sum('amount');
+
+        return $this->renderPartial("_customer_dept_history",["dept_data"=>$Customer_REPAYMENT? ['customer_id'=>$id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$Customer->name]:null]);
     }
 
 
