@@ -15,6 +15,7 @@ use common\models\OrderProduct;
 use common\models\OrderSearch;
 use dashboard\components\BaseController;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -409,6 +410,7 @@ class OrderController extends BaseController
         return  round($product_price_for_count, 2) ;
     }
     public function actionCreateFk(){
+        
         $addingFiveMinutes= strtotime('- 15 minute');
         $orders = Order::find()->andWhere(['>=', 'created_at', $addingFiveMinutes])->asArray()->all();
 
@@ -452,6 +454,15 @@ class OrderController extends BaseController
             }
 
         }
-        return $this->redirect(['fk-order/index']);
+        $url = Url::to(['fk-order/index']);
+        $script = <<<JS
+            function openInNewTab(url) {
+              var win = window.open(url, '_blank','location=yes'+",width="+screen.availWidth+",height="+screen.availHeight);
+              win.focus();
+            }
+             openInNewTab('$url');
+JS;
+        $this->getView ()->registerJs ( $script , \yii\web\View::POS_READY );
+        return $this->render ( 'external' );
     }
 }
