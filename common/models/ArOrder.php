@@ -27,6 +27,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $product_count
  * @property string $note
  * @property string $customer_name
+ * @property string $dept_note
  * @property string $phone_number
  * @property int|null $created_by
  * @property int $updated_at
@@ -64,7 +65,7 @@ class ArOrder extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
