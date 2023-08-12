@@ -112,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'template' => '{view} {update} {delete} {pdf}',  // the default buttons + your custom button
             'buttons' => [
                 'pdf' => function ($url, $model, $key) {     // render your custom button
-                    return Html::a('<i class="fa fa-file-pdf-o " aria-hidden="true" style=" font-size: 2em; "></i>',"report?id=".$model->id,['target'=>'_blank']);
+                    return Html::a('<i class="fa fa-file-pdf-o " aria-hidden="true" style=" font-size: 2em; "></i>',"report?id=".$model->id."&v=".time(),['target'=>'_blank']);
                 }
             ],
             'visibleButtons' => [

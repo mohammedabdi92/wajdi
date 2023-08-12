@@ -262,54 +262,7 @@ $priceList = [];
 
             <?= $form->field($model, 'note')->textarea() ?>
 
-            <?php
-            if(!$model->isNewRecord)
-            {
-                echo '<label>المرجع</label>';
-                echo \yii\grid\GridView::widget([
-                    'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Returns::find()->where(['order_id'=>$model->id])]),
-                    'columns' => [
-                        'id',
-                        'count',
-                        [
-                            'attribute' => 'product_name',
-                            'value' => function($model){
-                                return $model->productTitle;
-                            },
-                            'label'=>"المادة",
-                            'format' => 'raw',
 
-                        ],
-                        'amount',
-                        'returner_name',
-                        [
-                            'attribute' => 'created_at',
-                            'value' => function($model){
-                                return \common\components\CustomFunc::getFullDate($model->created_at);
-                            },
-                        ],
-                    ],
-                ]);
-                echo '<label>مجموع :</label>'.\common\models\Returns::find()->where(['order_id'=>$model->id])->sum('amount').'<br>';
-                echo '<label>التالف</label>';
-                echo \yii\grid\GridView::widget([
-                    'dataProvider' => new \yii\data\ActiveDataProvider([ 'query' => \common\models\Damaged::find()->where(['order_id'=>$model->id])]),
-                    'columns' => [
-                        'id',
-                        'count',
-                        [
-                            'attribute' => 'product_name',
-                            'value' => function($model){
-                                return $model->productTitle;
-                            },
-                            'label'=>"المادة",
-                            'format' => 'raw',
-
-                        ],
-                    ],
-                ]);
-            }
-             ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
                     <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>
