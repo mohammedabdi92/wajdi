@@ -20,6 +20,7 @@ $this->registerJsFile(
 
 $url = \yii\helpers\Url::to(['product/product-list']);
 $product_data = [''=>"اختر ..."];
+$IsDept = "";
 if($model->order_id)
 {
     $OrderProducts = OrderProduct::find()->where(['order_id'=>$model->order_id])->all();
@@ -29,6 +30,11 @@ if($model->order_id)
         foreach ($OrderProducts as $OrderProduct){
             $product_data[$OrderProduct->product_id] = $OrderProduct->product->title;
         }
+    }
+    $order = \common\models\Order::findOne($model->order_id);
+    if($order && $order->debt)
+    {
+        $IsDept = "هذا الطلب يحتوي على دين بقيمة ".$order->debt ;
     }
     
 }
@@ -42,6 +48,19 @@ if($model->order_id)
         let value = input.value;
         let numbers = value.replace(/[^0-9]/g, "");
         input.value = numbers;
+    }
+    function getIsDeptOrder(input){
+        let value = input.value;
+        let numbers = value.replace(/[^0-9]/g, "");
+        $.ajax({url: "<?=Url::to(['/order/is-dept'])?>?id="+numbers, success: function(result){
+                $("#is-dept").html(result);
+                if(result)
+                {
+                    $("#is-dept").show()
+                }else {
+                    $("#is-dept").hide()
+                }
+            }});
     }
 </script>
 <?php
@@ -58,13 +77,24 @@ if($model->order_id)
 
 
     <?php
-    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....', 'oninput'=>"process(this)",'type' => 'number']);
+    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....', 'oninput'=>"process(this)",'onchange' => 'getIsDeptOrder(this)','type' => 'number']);
     ?>
 
     <?= $form->field($model, 'returner_name')->textInput() ?>
     <?= $form->field($model, 'note')->textarea() ?>
 
-
+<div id="is-dept" class="row" style="
+    display: <?=$IsDept?"block":"none"?>;
+    padding: 11px 14px;
+    font-weight: bold;
+    font-size: large;
+    border: 1px solid black;
+    border-width: 3px;
+    margin: 10px 0px;
+    color: blue;
+" >
+    <?=$IsDept?>
+</div>
    
     <div class=" col-md-12">
        

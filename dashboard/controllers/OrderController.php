@@ -523,4 +523,13 @@ JS;
         $this->getView()->registerJs( $script , \yii\web\View::POS_READY );
         return $this->render ( 'external' );
     }
+    public  function actionIsDept($id)
+    {
+        $order = Order::findOne($id);
+        if($order && $order->debt)
+        {
+            return "هذا الطلب يحتوي على دين بقيمة ".$order->debt ;
+        }
+        return false;
+    }
 }
