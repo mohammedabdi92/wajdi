@@ -222,5 +222,5 @@ div[class$="-view"] .table-bordered.detail-view {
     padding: 0px 6px;
 }
 .dropdown-menu {
-    right: auto;
+    /*right: auto;*/
 }
