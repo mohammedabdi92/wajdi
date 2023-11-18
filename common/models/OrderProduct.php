@@ -238,7 +238,7 @@ class OrderProduct extends \common\components\BaseModel
     }
     public function getStoreTitle()
     {
-        return Store::findOne($this->store_id)->name;
+        return Store::findOne($this->store_id)->name??'';
     }
 
 }
