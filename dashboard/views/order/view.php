@@ -10,6 +10,7 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$total_returnd = \common\models\Returns::find()->where(['order_id'=>$model->id])->sum("amount");
 ?>
 <div class="order-view">
 
@@ -66,7 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'repayment',
                 'visible' => Yii::$app->user->can('الدين والسداد فواتير المبيعات'),
             ],
-            'total_amount',
+            [
+                'attribute' => 'total_amount',
+                'value' => function($model) use ($total_returnd) {
+                    return $model->total_amount - $total_returnd;
+                },
+                'format' => 'raw',
+            ],
             'note',
              [
                 'attribute' => 'created_at',
