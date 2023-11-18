@@ -50,10 +50,7 @@ class CustomFunc
         $transformTo = TransferOrder::find()->select('count')->where(['to' => $store_id, 'product_id' => $product_id])->sum('count');
         $transformFrom = TransferOrder::find()->select('count')->where(['from' => $store_id, 'product_id' => $product_id])->sum('count');
 
-        $total = (int)$item_inventory_count + (int)$returned - (int)$item_order_count + (int)$damaged_returned - (int)$damaged_inactive - (int)$transformFrom + (int)$transformTo;
-
-
-
+        $total = (double)$item_inventory_count + (double)$returned - (double)$item_order_count + (double)$damaged_returned - (double)$damaged_inactive - (double)$transformFrom + (double)$transformTo;
 
 
         $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();
