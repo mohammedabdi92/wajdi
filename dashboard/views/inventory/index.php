@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $stores =  \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1,'id'=>\Yii::$app->user->identity->stores])->all(), 'id', 'name');
     }
     $gridColumns = [
-
+        ['class' => 'yii\grid\SerialColumn'],
         'id',
         [
             'attribute' => 'product_name',
