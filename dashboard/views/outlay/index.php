@@ -11,6 +11,13 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'المصروفات');
 $this->params['breadcrumbs'][] = $this->title;
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
 ?>
 <div class="outlay-index">
 
@@ -35,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->storeTitle;
                 },
                 'format' => 'raw',
-                'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
+                'filter' => \yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
             ],
             'amount',
             [

@@ -56,6 +56,13 @@ class OutlaySearch extends Outlay
             // $query->where('0=1');
             return $dataProvider;
         }
+        if(!\Yii::$app->user->can('كل المحلات') && empty($this->store_id))
+        {
+            $stores = \Yii::$app->user->identity->stores;
+            $query->andWhere(['store_id'=>$stores]);
+        }else{
+            $query->andFilterWhere(['store_id'=>$this->store_id]);
+        }
 
         // grid filtering conditions
         $query->andFilterWhere([
