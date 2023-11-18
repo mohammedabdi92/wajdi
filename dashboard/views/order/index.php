@@ -88,7 +88,7 @@ $this->registerJsFile(
             <?= $form->field($modelAddress, "count")->textInput() ?>
         </div>
         <div class="col-4 col-sm-4 col-md-4 col-lg-2 " style=" height: 69px; ">
-            <?= $form->field($modelAddress, "price_number")->radioList([])->label('اختر') ?>
+            <?= $form->field($modelAddress, "price_number")->radioList([],['unselect' => null])->label('اختر') ?>
         </div>
         <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
             <?= $form->field($modelAddress, "amount")->textInput(['readonly' => !Yii::$app->user->can('تعديل السعر الافرادي في المبيعات')]) ?>

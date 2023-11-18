@@ -167,10 +167,15 @@ function calculateSupTotals(item,isAmountChanged = false) {
 }
 
 function productChange(This) {
-    var box_id =  getBoxId($(This).attr('id')) ;
-    var box_product_title = $("#select2-orderproduct-"+box_id+"-product_id-container").attr("title");
-    $('#orderproduct-'+box_id+'-title').val(box_product_title);
-    $.post("/order/price-list?id=" + $(This).val() + "&key=" + $(This).attr('id'), function (data) {
+    let thisid = $(This).attr('id');
+    var box_id =  getBoxId(thisid) ;
+    let isarorder = thisid.includes("arorderproduct");
+   let orderproduct = isarorder?"arorderproduct":"orderproduct"
+   let order = isarorder?"ar-order":"order"
+
+    var box_product_title = $("#select2-"+orderproduct+"-"+box_id+"-product_id-container").attr("title");
+    $('#'+orderproduct+'-'+box_id+'-title').val(box_product_title);
+    $.post("/"+order+"/price-list?id=" + $(This).val() + "&key=" + $(This).attr('id'), function (data) {
         var id = $(This).attr('id');
         var amount = id.replace('product_id', 'amount');
         $("#" + amount).val('');

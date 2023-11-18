@@ -207,7 +207,7 @@ JS;
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
                                 </div>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 " style=" height: 69px; ">
-                                    <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList)->label('اختر') ?>
+                                    <?= $form->field($modelAddress, "[{$i}]price_number")->radioList($priceList,['unselect' => null])->label('اختر') ?>
                                 </div>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]amount")->textInput(['readonly' => !Yii::$app->user->can('تعديل السعر الافرادي في المبيعات')]) ?>
