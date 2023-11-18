@@ -110,6 +110,7 @@ class ArOrder extends \common\components\BaseModel
             'updated_by' =>  'الشخص المعدل',
             'product_count' =>  'عدد المواد',
             'returns_amount' =>  'قيمة المرجع',
+            'dept_note' =>  'ملاحظة الدين',
         ];
     }
 

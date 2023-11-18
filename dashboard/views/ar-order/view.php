@@ -58,6 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            [
+                'attribute' => 'debt',
+                'visible' => Yii::$app->user->can('الدين والسداد فواتير المبيعات'),
+            ],
+            [
+                'attribute' => 'repayment',
+                'visible' => Yii::$app->user->can('الدين والسداد فواتير المبيعات'),
+            ],
             'total_amount',
             'note',
              [
