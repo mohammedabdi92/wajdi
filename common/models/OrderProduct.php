@@ -86,7 +86,7 @@ class OrderProduct extends \common\components\BaseModel
             $current_count = !empty($this->count)?$this->count:0;
             if (($total - $current_count)<0) {
 
-               // $this->addError($attr, 'لا توجد هذه الكمية (الموجود هو '.$total.')');
+               $this->addError($attr, 'لا توجد هذه الكمية (الموجود هو '.$total.')');
             }
         }
     }
