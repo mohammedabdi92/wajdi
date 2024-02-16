@@ -112,6 +112,13 @@ class OrderProductSearch extends OrderProduct
             $this->sum_total_amount_w_discount = $this->sum_total_product_amount - $this->sum_discount;
             $this->sum_profit = $this->sum_total_amount_w_discount - $this->sum_product_price;
 
+            \Yii::info('sum_product_price :-'.$this->sum_product_price);
+            \Yii::info('sum_count :- '.$this->sum_count);
+            \Yii::info('sum_total_product_amount :- '.$this->sum_total_product_amount);
+            \Yii::info('sum_discount :- '.$this->sum_discount);
+            \Yii::info('sum_total_amount_w_discount :- '.$this->sum_total_amount_w_discount);
+            \Yii::info('sum_profit :- '.$this->sum_profit);
+
         }
        
 
