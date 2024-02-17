@@ -133,7 +133,7 @@ class OrderController extends BaseController
                     $transaction = \Yii::$app->db->beginTransaction();
 
                     try {
-                        if ($flag = $model->save(false)) {
+                        if ($flag = $model->save()) {
 
                             if($model->debt)
                             {
@@ -154,7 +154,7 @@ class OrderController extends BaseController
                                 $modelAddress->order_id = $model->id;
                                 $modelAddress->store_id = $model->store_id;
 
-                                if (! ($flag = $modelAddress->save(false))) {
+                                if (! ($flag = $modelAddress->save())) {
                                     $transaction->rollBack();
                                     break;
                                 }

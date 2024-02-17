@@ -97,6 +97,7 @@ class InventoryOrderController extends BaseController
             // validate all models
             $valid = $model->validate();
 
+
             $valid = Model::validateMultiple($model_product) && $valid;
 
             if ($valid) {

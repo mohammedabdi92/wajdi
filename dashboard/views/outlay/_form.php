@@ -19,7 +19,26 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'amount')->textInput() ?>
         </div>
         <div class="col-md-6">
-            <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
+            <?php
+            $stores = [];
+            if(Yii::$app->user->can('كل المحلات'))
+            {
+                $stores = \common\models\Store::find()->where(['status'=>1])->all();
+            }else{
+                $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+            }
+            $single_store = null ;
+            if(count($stores) == 1)
+            {
+                $single_store = $stores[0]->id;
+            }
+            if(empty($model->store_id))
+            {
+                $model->store_id = $single_store;
+            }
+
+            echo $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'));
+            ?>
         </div>
     </div>
 

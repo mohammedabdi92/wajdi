@@ -42,6 +42,7 @@ class CustomFunc
     public static function calculateProductCount($store_id, $product_id, $old_product_id = null)
     {
 
+
         $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
         $item_order_count = OrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
         $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->sum('count');
@@ -49,8 +50,8 @@ class CustomFunc
         $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->andWhere(['<>', 'status', Damaged::STATUS_REPLACED])->sum('count');
         $transformTo = TransferOrder::find()->select('count')->where(['to' => $store_id, 'product_id' => $product_id])->sum('count');
         $transformFrom = TransferOrder::find()->select('count')->where(['from' => $store_id, 'product_id' => $product_id])->sum('count');
-
         $total = (double)$item_inventory_count + (double)$returned - (double)$item_order_count + (double)$damaged_returned - (double)$damaged_inactive - (double)$transformFrom + (double)$transformTo;
+        \Yii::info("item_inventory_count: $item_inventory_count, item_order_count: $item_order_count, returned: $returned, damaged_returned: $damaged_returned, damaged_inactive: $damaged_inactive, transformFrom: $transformFrom, transformTo: $transformTo, total: $total");
 
 
         $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();

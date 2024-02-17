@@ -157,12 +157,12 @@ class ProductController extends BaseController
         $InventoryOrderProduct = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['id' => SORT_DESC])->one();
         if($InventoryOrderProduct)
         {
-            $response['last_price'] =$InventoryOrderProduct->product_cost;
+            $response['last_price'] =$InventoryOrderProduct->product_cost_final;
         }
         $InventoryOrderProductMin = InventoryOrderProduct::find()->where(['product_id'=>$id])->orderBy(['product_cost' => SORT_ASC])->one();
         if($InventoryOrderProductMin)
         {
-            $response['min_price'] =$InventoryOrderProductMin->product_cost;
+            $response['min_price'] =$InventoryOrderProductMin->product_cost_final;
 
         }
         $response['count_type_title'] =$Product->getCountTypeName('count_type');

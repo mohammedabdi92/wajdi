@@ -167,7 +167,7 @@ $priceList = [];
                                             'ajax' => [
                                                 'url' => $url,
                                                 'dataType' => 'json',
-                                                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#ar-order-store_id").val()}; }'),
+                                                'data' => new JsExpression('function(params) { return {q:params.term,store_id:$("#arorder-store_id").val()}; }'),
                                                 'results' => new JsExpression('function(params) { return {q:params.term}; }'),
                                                 'cache' => true
 

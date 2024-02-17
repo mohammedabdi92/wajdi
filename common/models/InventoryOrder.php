@@ -54,21 +54,30 @@ class InventoryOrder extends \common\components\BaseModel
             [[ 'store_id', 'total_cost'], 'required'],
             [[ 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['tax','discount','total_cost','tax_percentage','discount_percentage'], 'double'],
-            [['supplier_id'],'validateSupplierRequired'],
+            [['supplier_id'],'required','when'=>function($model){
+                return empty($model->supplier_name);
+            }],
+            [['supplier_name'],'validateSupplier' ],
+            [['supplier_name'],'string'],
+            [['phone_number'],'string'],
             [['debt','repayment'],'double'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','supplier_id'],'safe']
         ];
     }
 
-    public function validateSupplierRequired($attr) {
+    public function validateSupplier($attribute, $params) {
 
         if(empty($this->supplier_id) && empty($this->supplier_name))
         {
-            $this->addError($attr,'يجب اختيرا مرد');
+            $this->addError('supplier_id','يجب اختيرا المورد');
+        }else if(Supplier::find()->where(['name'=>$this->supplier_name])->orWhere(['phone_number'=>$this->phone_number])->count() != 0)
+        {
+            $this->addError('supplier_name','المورد موجود مسبقا');
         }
     }
     public function beforeSave($insert)
     {
+
         if(!empty($this->supplier_name))
         {
 

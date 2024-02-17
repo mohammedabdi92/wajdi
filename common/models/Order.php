@@ -58,13 +58,10 @@ class Order extends \common\components\BaseModel
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['product_count'], 'number'],
-            [['customer_id'],'required', 'when' => function($model) {
-                if(empty($this->customer_id) && empty($this->customer_name))
-                {
-                    return true;
-                }
-                return false;
+            [['customer_id'],'required','when'=>function($model){
+                return empty($model->customer_name);
             }],
+            [['customer_name'],'validateCustomerRequired' ],
             [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
@@ -112,6 +109,16 @@ class Order extends \common\components\BaseModel
             'returns_amount' =>  'قيمة المرجع',
             'dept_note' =>  'ملاحظة الدين',
         ];
+    }
+    public function validateCustomerRequired($attr) {
+
+        if(empty($this->customer_id) && empty($this->customer_name))
+        {
+            $this->addError('customer_id','يجب اختيرا المورد');
+        }else if(Customer::find()->where(['name'=>$this->customer_name])->orWhere(['phone_number'=>$this->phone_number])->count() != 0)
+        {
+            $this->addError('customer_name','المورد موجود مسبقا');
+        }
     }
 
     /**
