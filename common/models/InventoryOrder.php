@@ -67,10 +67,15 @@ class InventoryOrder extends \common\components\BaseModel
 
     public function validateSupplier($attribute, $params) {
 
+        $cond = ['name'=>$this->supplier_name];
+        if(!empty($this->phone_number))
+        {
+            $cond['phone_number'] =$this->phone_number;
+        }
         if(empty($this->supplier_id) && empty($this->supplier_name))
         {
             $this->addError('supplier_id','يجب اختيرا المورد');
-        }else if(Supplier::find()->where(['name'=>$this->supplier_name])->orWhere(['phone_number'=>$this->phone_number])->count() != 0)
+        }else if(Supplier::find()->where($cond)->count() != 0)
         {
             $this->addError('supplier_name','المورد موجود مسبقا');
         }

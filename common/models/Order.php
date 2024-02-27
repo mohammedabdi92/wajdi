@@ -112,12 +112,17 @@ class Order extends \common\components\BaseModel
     }
     public function validateCustomerRequired($attr) {
 
+        $cond = ['name'=>$this->customer_name];
+        if(!empty($this->phone_number))
+        {
+            $cond['phone_number'] =$this->phone_number;
+        }
         if(empty($this->customer_id) && empty($this->customer_name))
         {
-            $this->addError('customer_id','يجب اختيرا المورد');
-        }else if(Customer::find()->where(['name'=>$this->customer_name])->orWhere(['phone_number'=>$this->phone_number])->count() != 0)
+            $this->addError('customer_id','يجب اختيرا العميل');
+        }else if(Customer::find()->where($cond)->count() != 0)
         {
-            $this->addError('customer_name','المورد موجود مسبقا');
+            $this->addError('customer_name','العميل موجود مسبقا');
         }
     }
 
