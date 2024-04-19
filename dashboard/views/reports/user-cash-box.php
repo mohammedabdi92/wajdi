@@ -1,9 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\InventorySearch */
@@ -28,7 +26,7 @@ if(Yii::$app->user->can('كل المحلات'))
     ]); ?>
     <?= $form->field($modelSearch, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'))->label("المحل"); ?>
     <label> التاريخ</label>
-    <?= \kartik\daterange\DateRangePicker::widget([
+    <?= DateRangePicker::widget([
         'model' => $modelSearch,
         'attribute' => 'date',
         'language' => 'en',
@@ -37,12 +35,14 @@ if(Yii::$app->user->can('كل المحلات'))
         'endAttribute' => 'date_to',
         'pluginOptions' => [
             'timePicker' => true,
-            'timePickerIncrement' => 30,
+//            'timePickerIncrement' => 10,
             'locale' => [
                 'applyLabel' => 'تطبيق',
                 'cancelLabel' => 'الغاء',
-                'format' => 'Y-m-d'
-            ]
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
         ]
     ]); ?>
     <br>

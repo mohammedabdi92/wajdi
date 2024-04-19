@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\InventorySearch */
@@ -44,21 +45,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'store_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name')); ?>
     <?= $form->field($model, 'category_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'))->label('نوع القسم') ?>
-    <label>تاريخ الانشاء</label>
-    <div class="row">
-    <div class="col-md-12">
-    <?=   \kartik\date\DatePicker::widget([
+
+
+    <label> التاريخ</label>
+    <?= DateRangePicker::widget([
         'model' => $model,
-        'attribute' => 'created_at',
-        'language' => 'ar',
+        'attribute' => 'created_at_range',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'created_at_from',
+        'endAttribute' => 'created_at_to',
         'pluginOptions' => [
-                'rtl'=>false,
-            'autoclose' => true,
-            'format' => 'yyyy-m-d '
+            'timePicker' => true,
+//            'timePickerIncrement' => 10,
+            'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
         ]
     ]); ?>
-    </div>
-    </div>
+
+
+    <br>
 
 
 

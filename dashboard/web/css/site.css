@@ -224,3 +224,8 @@ div[class$="-view"] .table-bordered.detail-view {
 .dropdown-menu {
     /*right: auto;*/
 }
+.daterangepicker {
+    /*position: fixed;*/
+    left: 50% !important;
+    transform: translate(-50%, -50%);
+}

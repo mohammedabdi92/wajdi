@@ -23,6 +23,9 @@ class InventorySearch extends Inventory
     public $category_id;
     public $stagnant_month;
     public $is_stagnant;
+    public $created_at_from;
+    public $created_at_to;
+    public $created_at_range;
 
     /**
      * {@inheritdoc}
@@ -32,7 +35,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from'], 'safe'],
         ];
     }
 
@@ -116,10 +119,17 @@ class InventorySearch extends Inventory
             $query->andFilterWhere( ['inventory.store_id' => $this->store_id]);
         }
 
-        if(!empty($this->created_at))
+        if($this->created_at_from)
         {
-            $query->andWhere(['>=','inventory.created_at',strtotime($this->created_at.' 00:00:00')])->andWhere(['<=','inventory.created_at',strtotime($this->created_at.' 24:59:59')]);
+            $query->andFilterWhere(['>=', 'inventory.created_at',strtotime( $this->created_at_from)]);
+
         }
+
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'inventory.created_at',strtotime( $this->created_at_to)]);
+        }
+
         if($this->product_name)
         {
             $parts = preg_split('/\s+/', $this->product_name);

@@ -287,7 +287,6 @@ class ReportsController extends Controller
         if($modelSearch->date_to)
         {
 
-            $modelSearch->date_to .= " 23:59:59";
 
             $productQuery->andWhere(['<=', 'order.created_at', strtotime( $modelSearch->date_to)]);
             $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);

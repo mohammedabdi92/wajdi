@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             },
         ],
         [
-            'attribute' => 'created_at',
+            'attribute' => 'order.created_at',
             'value' => function($model){
                 return \common\components\CustomFunc::getFullDate($model->created_at);
             },

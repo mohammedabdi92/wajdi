@@ -90,13 +90,13 @@ class OrderProductSearch extends OrderProduct
         }
         if($this->created_at_from)
         {
-            $query->andFilterWhere(['>=', 'order.created_at',strtotime( $this->created_at_from." 00:00:00")]);
+            $query->andFilterWhere(['>=', 'order.created_at',strtotime( $this->created_at_from)]);
 
         }
 
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'order.created_at',strtotime( $this->created_at_to." 23:59:59")]);
+            $query->andFilterWhere(['<=', 'order.created_at',strtotime( $this->created_at_to)]);
         }
 
 //        print_r($query->createCommand()->rawSql);die;

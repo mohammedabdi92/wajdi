@@ -65,12 +65,15 @@ use kartik\daterange\DateRangePicker;
         'endAttribute' => 'created_at_to',
         'pluginOptions' => [
             'timePicker' => true,
-            'timePickerIncrement' => 30,
+            'timePickerIncrement' => 1,
             'locale' => [
                 'applyLabel' => 'تطبيق',
                 'cancelLabel' => 'الغاء',
-                'format' => 'Y-m-d'
-            ]
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+
         ]
     ]); ?>
     <br>

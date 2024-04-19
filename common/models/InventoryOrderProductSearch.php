@@ -88,7 +88,7 @@ class InventoryOrderProductSearch extends InventoryOrderProduct
         }
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'inventory_order.created_at',strtotime($this->created_at_to." 23:59:59") ]);
+            $query->andFilterWhere(['<=', 'inventory_order.created_at',strtotime($this->created_at_to) ]);
         }
 
         if($getSums) {
