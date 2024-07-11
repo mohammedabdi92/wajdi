@@ -84,7 +84,6 @@ class TransactionsSearch extends Transactions
             'transactions.order_id' => $this->order_id,
             'transactions.amount' => $this->amount,
             'transactions.type' => $this->type,
-            'transactions.created_at' => $this->created_at,
             'transactions.created_by' => $this->created_by,
             'transactions.updated_at' => $this->updated_at,
             'transactions.updated_by' => $this->updated_by,
