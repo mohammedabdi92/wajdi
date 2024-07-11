@@ -197,7 +197,7 @@ JS;
                                         'options' => ['placeholder' => 'اختر المادة .....','onchange' => 'productChange(this)'
                                         ],
                                         'pluginOptions' => [
-                                            'allowClear' => $modelAddress->isNewRecord,
+                                            'allowClear' => false,
                                             'minimumInputLength' => 3,
                                             'language' => [
                                                 'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
@@ -215,7 +215,8 @@ JS;
                                             'templateSelection' => new JsExpression('function (product) { return product.text; }'),
                                         ],
                                         'pluginEvents' => [
-                                            'select2:open' =>'function(params) {$(".select2-search__field")[0].focus()}'
+                                            'select2:open' =>'function(params) {$(".select2-search__field")[0].focus()}',
+                                            // "select2:unselect" => new JsExpression("function() { console.log('Clear or cancel confirmed'); }"),
                                         ]
                                     ]);
                                     ?>
