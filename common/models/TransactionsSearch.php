@@ -24,7 +24,7 @@ class TransactionsSearch extends Transactions
         return [
             [['id', 'customer_id', 'order_id', 'type', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['amount'], 'number'],
-            [['note','customerName','created_at_from','created_at_to'], 'safe'],
+            [['note','customerName','created_at_from','created_at_to','created_at'], 'safe'],
         ];
     }
 
