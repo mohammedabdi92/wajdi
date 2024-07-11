@@ -54,7 +54,7 @@ class InventoryOrderController extends BaseController
         $dataProvider = $searchModel->search($params);
         if(!empty($searchModel->supplier_id))
         {
-            $searchModel->supplierName = Supplier::findOne($searchModel->supplier_id)?->name;
+            $searchModel->supplierName = Supplier::findOne($searchModel->supplier_id)->name;
         }
 
         return $this->render('index', [
@@ -143,7 +143,7 @@ class InventoryOrderController extends BaseController
         $model_product = $model->products;
         if(!empty($model->supplier_id))
         {
-            $model->supplierName = Supplier::findOne($model->supplier_id)?->name;
+            $model->supplierName = Supplier::findOne($model->supplier_id)->name;
         }
 
 

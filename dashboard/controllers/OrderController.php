@@ -60,7 +60,7 @@ class OrderController extends BaseController
         $dataProvider = $searchModel->search($params);
         if(!empty($searchModel->customer_id))
         {
-            $searchModel->customerName = Customer::findOne($searchModel->customer_id)?->name;
+            $searchModel->customerName = Customer::findOne($searchModel->customer_id)->name;
         }
 
         return $this->render('index', [
@@ -229,7 +229,7 @@ class OrderController extends BaseController
         $model_product = $model->products;
         if(!empty($model->customer_id))
         {
-            $model->customerName = Customer::findOne($model->customer_id)?->name;
+            $model->customerName = Customer::findOne($model->customer_id)->name;
         }
 
         if ($model->load(Yii::$app->request->post())) {
