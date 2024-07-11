@@ -66,6 +66,7 @@ $(document).on('change', '[id$=paid]', function (item) {
 });
 function calculateTotal() {
     var total = 0;
+    var total_cost = 0;
     $('[id$=total_product_amount]').each(function (index, element) {
         var elementCost = parseFloat(element.value);
         if (elementCost) {
@@ -73,6 +74,15 @@ function calculateTotal() {
             total = total + elementCost;
         }
     });
+    $('[id$=-orignal_cost]').each(function (index, element) {
+        debugger;
+        var elementCost = parseFloat(element.value);
+        if (elementCost) {
+            elementCost = Math.round((elementCost + Number.EPSILON) * 100) / 100
+            total_cost = total_cost + elementCost;
+        }
+    });
+
     $('[id$=order-total_amount_without_discount]').val(parseFloat(total.toFixed(3)));
 
     var ordertotaldiscount = $("[id$=order-total_discount]").val();
@@ -96,6 +106,9 @@ function calculateTotal() {
     }
 
     $('[id$=order-total_amount]').val(parseFloat(total.toFixed(3)));
+    var profit = total - total_cost;
+    $('#titleElement_all').attr('title',profit);
+}
     var paid = $('[id$=paid]').val();
     if(paid)
     {
@@ -115,7 +128,7 @@ function calculateTotal() {
     });
 
     $('[id$="order-total_count"]').val(supdis.toFixed(3));
-}
+   
 
 function calculateSupTotals(item,isAmountChanged = false) {
     var mainBox = $(item);
@@ -123,6 +136,7 @@ function calculateSupTotals(item,isAmountChanged = false) {
     var product_id = mainBox.find(product_id_item).val();
     var store_id =  $('[id$="order-store_id"]').val();
     var product_cost_el = $("[id$=-amount]");
+    var product_orignal_cost_el = $("[id$=-orignal_cost]");
     var price_selected  =  mainBox.find($("input[type='radio'][name$='[price_number]']:checked"));
 
     if(product_id )
@@ -134,6 +148,7 @@ function calculateSupTotals(item,isAmountChanged = false) {
             success: function  (result)  {
                 if (result) {
                     result =  JSON.parse(result);
+                    mainBox.find(product_orignal_cost_el).val(result['price']);
                     if(price_selected && !isAmountChanged )
                     {
                         mainBox.find(product_cost_el).val(result['price_'+price_selected.val()]);
@@ -185,6 +200,9 @@ function productChange(This) {
     $.post("/product/get-detials?id=" + $(This).val() , function (data) {
         if (data) {
             result =  JSON.parse(data);
+            $('#orderproduct-'+box_id+'-orignal_cost').val(result.price);
+            $('#titleElement_'+box_id).attr('title', result.price);
+           
             $('#orderproduct-'+box_id+'-count_type_name').val(result['count_type_title']);
         }
     });

@@ -147,14 +147,15 @@ JS;
                                 <br>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+                                    <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+                                    
                                     </div>
                                     <div class="col-md-4">
                                         <?= $form->field($modelAddress, "[{$i}]count_type_name")->textInput(['readonly' => true,'value' =>$modelAddress->productCountType])->label('') ?>
                                     </div>
                                 </div>
 
-                            </h3>
+                            </h3>['id' => 'titleElement']);
 
 
                             <div class="pull-left">
@@ -245,7 +246,19 @@ JS;
                                         <div class="col-sm-2"> <label> المرجع </label> <br><label><?=$returnd_count?></label></div>
                                         <div class="col-sm-2"> <label> التالف </label> <br><label><?=$dameged_count?></label></div>
                                     <?php endif; ?>
+                                    <?php
+                                    if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
+                                        echo Html::tag('h1', '🪙', ['id' => 'titleElement_'.$i,'title'=>$modelAddress->product->price]);
+                                    }
+                                    
+                                    
+                                    ?>
                                 </div>
+                                <?php echo $form->field($modelAddress, "[{$i}]orignal_cost")->hiddenInput(['value'=>$modelAddress->product->price])->label('') ;
+                               
+                                ?>
+                                
+
 
 
                             </div><!-- .row -->
@@ -352,6 +365,12 @@ JS;
                 ]);
             }
              ?>
+            <?php
+            if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
+                echo Html::tag('h1', '🛞', ['id' => 'titleElement_all']);
+            }
+           
+            ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
                 <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>

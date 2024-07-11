@@ -20,6 +20,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $store_id
  * @property float $count
  * @property float $total_product_amount
+ * @property float $orignal_cost
  * @property float $discount
  * @property int $count_type
  * @property int $price_number
@@ -56,7 +57,7 @@ class OrderProduct extends \common\components\BaseModel
             [['ready_to_deliver'], 'checkReady'],
             [['product_id'], 'checkInventory'],
             [['product_id'], 'checkDuplicate'],
-            [['total_product_amount', 'discount'], 'double'],
+            [['total_product_amount', 'discount','orignal_cost'], 'double'],
         ];
     }
 
