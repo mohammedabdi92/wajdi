@@ -37,6 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'amount',
             'note:ntext',
+            'pull_date',
             [
                 'attribute' => 'created_at',
                 'value' => function($model){

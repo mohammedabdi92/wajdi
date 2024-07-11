@@ -48,6 +48,7 @@ class InventoryOrderProduct extends \common\components\BaseModel
             [[ 'count','tax_percentage'], 'number'],
             [['ready_to_deliver'], 'checkReady'],
             [[ 'store_id'], 'safe'],
+            [['product_id'], 'checkDuplicate'],
             [['product_total_cost', 'product_cost','product_total_cost_final','product_cost_final'], 'double'],
         ];
     }
@@ -137,5 +138,15 @@ class InventoryOrderProduct extends \common\components\BaseModel
     public function getStoreTitle()
     {
         return Store::findOne($this->store_id)->name;
+    }
+    public function checkDuplicate($attr, $params) {
+
+        if (isset($this->product_id)) {
+            $item_order = InventoryOrderProduct::find()->where(['inventory_order_id'=>$this->inventory_order_id,'product_id'=>$this->product_id])->andWhere(['<>','id',$this->id??0])->one() ;
+
+            if ($item_order) {
+                $this->addError($attr, 'لا يمكنك اضافة نفس المادة اكثر من مرة');
+            }
+        }
     }
 }
