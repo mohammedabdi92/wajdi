@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\components\CustomFunc;
 use common\models\User;
+use common\models\Supplier;
 use kartik\mpdf\Pdf;
 use Yii;
 use common\models\InventoryOrder;
@@ -51,6 +52,10 @@ class InventoryOrderController extends BaseController
         $params = $this->request->queryParams;
 
         $dataProvider = $searchModel->search($params);
+        if(!empty($searchModel->supplier_id))
+        {
+            $searchModel->supplierName = Supplier::findOne($searchModel->supplier_id)?->name;
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -136,6 +141,11 @@ class InventoryOrderController extends BaseController
         $model = $this->findModel($id);
         $model->total_cost_without_discount = $model->getTotalCostWithoutDis();
         $model_product = $model->products;
+        if(!empty($model->supplier_id))
+        {
+            $model->supplierName = Supplier::findOne($model->supplier_id)?->name;
+        }
+
 
         if ($model->load(Yii::$app->request->post())) {
 

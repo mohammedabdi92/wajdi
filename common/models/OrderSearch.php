@@ -27,6 +27,7 @@ class OrderSearch extends Order
     public $returns_amount;
     public $total_profit_plus_debt;
     public $total_profit_without_debt;
+    public $customerName;
 
 
 
@@ -39,7 +40,7 @@ class OrderSearch extends Order
         return [
             [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt','total_profit_without_debt'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt','total_profit_without_debt','customerName'], 'safe'],
         ];
     }
 

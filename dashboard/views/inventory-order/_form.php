@@ -27,14 +27,32 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         <?= $form->field($model, 'phone_number')->textInput() ?>
 
         <?php
-        echo $form->field($model, 'supplier_id')->widget(\kartik\select2\Select2::classname(), [
-            'data' =>[''=>'اختار المورد .....']+\yii\helpers\ArrayHelper::map(\common\models\Supplier::find()->all(), 'id', 'name'),
-            'options' => ['placeholder' => 'اختر نوع العد .....'],
-            'pluginOptions' => [
-                'allowClear' => true
+    echo $form->field($model, "supplier_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[$model->supplier_id=>$model->supplierName],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
             ],
-        ]);
-        ?>
+            'ajax' => [
+                'url' => \yii\helpers\Url::to(['supplier/get-suppliers']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                'results' => new JsExpression('function(params) { return {q:params.term}; }'),
+                'cache' => true
+
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(product) { return product.text; }'),
+            'templateSelection' => new JsExpression('function (product) { return product.text; }'),
+        ],
+    'pluginEvents' => [
+        'select2:open' =>'function(params) {$(".select2-search__field")[0].focus()}'
+    ]
+        
+    ]);
+    ?>
         <?= $form->field($model, 'inventory_order_id')->textInput() ?>
         <label>تاريخ الفاتورة الورقي</label>
         <?=   DatePicker::widget([

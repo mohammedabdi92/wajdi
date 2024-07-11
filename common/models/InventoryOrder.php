@@ -38,6 +38,7 @@ class InventoryOrder extends \common\components\BaseModel
     public $supplier_name ;
     public $phone_number ;
     public $total_cost_without_discount ;
+    public $supplierName;
     /**
      * {@inheritdoc}
      */
@@ -62,7 +63,7 @@ class InventoryOrder extends \common\components\BaseModel
             [['supplier_name'],'string'],
             [['phone_number'],'string'],
             [['debt','repayment'],'double'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','supplier_id','total_cost_without_discount'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','supplier_id','total_cost_without_discount','supplierName'],'safe']
         ];
     }
 

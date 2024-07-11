@@ -14,6 +14,7 @@ class InventoryOrderSearch extends InventoryOrder
 {
     public $product_id;
     public $supplier_name;
+    public $supplierName;
     /**
      * {@inheritdoc}
      */
@@ -22,7 +23,7 @@ class InventoryOrderSearch extends InventoryOrder
         return [
             [['id', 'supplier_id','store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
-            [['supplier_name','product_id'], 'safe'],
+            [['supplier_name','product_id','supplierName'], 'safe'],
         ];
     }
 

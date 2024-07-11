@@ -56,7 +56,12 @@ class OrderController extends BaseController
     {
         $searchModel = new OrderSearch();
         $params = $this->request->queryParams;
+        
         $dataProvider = $searchModel->search($params);
+        if(!empty($searchModel->customer_id))
+        {
+            $searchModel->customerName = Customer::findOne($searchModel->customer_id)?->name;
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -222,6 +227,10 @@ class OrderController extends BaseController
     {
         $model = $this->findModel($id);
         $model_product = $model->products;
+        if(!empty($model->customer_id))
+        {
+            $model->customerName = Customer::findOne($model->customer_id)?->name;
+        }
 
         if ($model->load(Yii::$app->request->post())) {
 

@@ -121,6 +121,28 @@ class CustomerController extends BaseController
         return $this->redirect(['index']);
     }
 
+    public function actionGetCustomers($q = null, $id = null,$store_id=null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = Customer::find();
+           
+            $query->select('customer.id, name AS text')
+                ->from('customer')
+                ->limit(20);
+            $parts = preg_split('/\s+/', $q);
+            foreach ($parts as $part){
+                $query->andWhere(['like', 'LOWER( customer.name )', "$part"]);
+            }
+            $data = $query->asArray()->all();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Customer::find($id)->name];
+        }
+        return $out;
+    }
     /**
      * Finds the Customer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

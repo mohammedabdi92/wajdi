@@ -116,6 +116,28 @@ class SupplierController extends BaseController
 
         return $this->redirect(['index']);
     }
+    public function actionGetSuppliers($q = null, $id = null,$store_id=null) {
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $out = ['results' => ['id' => '', 'text' => '']];
+        if (!is_null($q)) {
+            $query = Supplier::find();
+           
+            $query->select('supplier.id, name AS text')
+                ->from('supplier')
+                ->limit(20);
+            $parts = preg_split('/\s+/', $q);
+            foreach ($parts as $part){
+                $query->andWhere(['like', 'LOWER( supplier.name )', "$part"]);
+            }
+            $data = $query->asArray()->all();
+            $out['results'] = array_values($data);
+        }
+        elseif ($id > 0) {
+            $out['results'] = ['id' => $id, 'text' => Supplier::find($id)->name];
+        }
+        return $out;
+    }
 
     /**
      * Finds the Supplier model based on its primary key value.
