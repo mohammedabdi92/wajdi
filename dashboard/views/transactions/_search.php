@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\daterange\DateRangePicker;
 
 /** @var yii\web\View $this */
 /** @var common\models\TransactionsSearch $model */
@@ -17,13 +18,34 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'customer_id') ?>
+    <?= $form->field($model, 'customerName') ?>
 
     <?= $form->field($model, 'order_id') ?>
 
-    <?= $form->field($model, 'amount') ?>
+    <?= $form->field($model, 'type')->dropDownList([''=>'...'] + $model::typeArray ); ?>
 
-    <?= $form->field($model, 'type') ?>
+    <label> التاريخ</label>
+    <?= DateRangePicker::widget([
+        'model' => $model,
+        'attribute' => 'created_at',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'created_at_from',
+        'endAttribute' => 'created_at_to',
+        'pluginOptions' => [
+            'timePicker' => true,
+            'timePickerIncrement' => 1,
+            'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+
+        ]
+    ]); ?>
+    <br>
 
     <?php // echo $form->field($model, 'note') ?>
 

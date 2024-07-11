@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'customer_id',
                 'value' => function ($model) {
-                    return $model->customer->name ?? '';
+                    return $model->customer->name ? Html::a($model->customer->name, '/customer/view?id='.$model->customer_id,['target'=>'_blank'] ) : '';
                 },
                 'format' => 'raw',
             ],
