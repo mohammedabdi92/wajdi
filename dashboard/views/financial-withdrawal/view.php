@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
             if(Yii::$app->user->can('تعديل وحذف المسحوبات من الصندوق'))
             {
-                Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                echo Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
             }
         ?>
     </p>
