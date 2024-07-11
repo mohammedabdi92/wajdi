@@ -109,7 +109,7 @@ class InventoryOrderController extends BaseController
                         foreach ($model_product as $modelAddress) {
                             $modelAddress->inventory_order_id = $model->id;
                             $modelAddress->store_id = $model->store_id;
-                            if (! ($flag = $modelAddress->save(false))) {
+                            if (! ($flag = $modelAddress->save())) {
                                 $transaction->rollBack();
                                 break;
                             }
