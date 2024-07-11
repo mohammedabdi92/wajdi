@@ -217,6 +217,10 @@ class OrderController extends BaseController
 
             }
         }
+        if(!empty($model->customer_id))
+        {
+            $model->customerName = Customer::findOne($model->customer_id)->name;
+        }
 
         return $this->render('create', [
             'model' => $model,
