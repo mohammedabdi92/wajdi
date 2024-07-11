@@ -82,6 +82,14 @@ if($model->order_id)
 
     <?= $form->field($model, 'returner_name')->textInput() ?>
     <?= $form->field($model, 'note')->textarea() ?>
+    <div class="row " style=" border-width: medium; border-style: solid; border-color: #34495e; margin: 0px; margin-bottom: 10px;background: #d9d9d9;">
+            
+            <div class=" col-md-2">
+                <?= $form->field($model, 'total_old_amount')->textInput(['readonly' => true,'value'=>$model->total_old_amount??0]) ?>
+            </div>
+            <div class=" col-md-2">
+            </div>
+        </div>
 
 <div id="is-dept" class="row" style="
     display: <?=$IsDept?"block":"none"?>;
@@ -110,7 +118,9 @@ if($model->order_id)
             'formFields' => [
                 'product_id',
                 'count',
-                'amount'
+                'amount',
+                'old_single_amount',
+                'old_amount'
             ],
         ]); ?>
         <div class="panel panel-default">
@@ -125,6 +135,13 @@ if($model->order_id)
                         <div class="panel-heading" >
                             <h3 class="panel-title pull-right" style=" width: 95%; ">
                                 <span class="panel-title-address">مادة: <?= ($i + 1) ?></span>
+                                 
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+                                    </div>
+                                    
+                                </div>
                                 <br>
                             </h3>
                             <div class="pull-left">
@@ -155,7 +172,12 @@ if($model->order_id)
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]count")->textInput() ?>
                                 </div>
-                            
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+                                    <?= $form->field($modelAddress, "[{$i}]old_single_amount")->textInput(['readonly' => true]) ?>
+                                </div>
+                                <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+                                    <?= $form->field($modelAddress, "[{$i}]old_amount")->textInput(['readonly' => true]) ?>
+                                </div>
                                 <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
                                     <?= $form->field($modelAddress, "[{$i}]amount")->textInput() ?>
                                 </div>
@@ -176,6 +198,7 @@ if($model->order_id)
         <?php \wbraganca\dynamicform\DynamicFormWidget::end(); ?>
 
 
+        
         <div class="row " style=" border-width: medium; border-style: solid; border-color: #34495e; margin: 0px; margin-bottom: 10px;">
             <div class=" col-md-2">
                 <?= $form->field($model, 'total_count')->textInput(['readonly' => true,'value'=>$model->total_count??0]) ?>

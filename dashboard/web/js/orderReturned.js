@@ -19,6 +19,9 @@ $(document).on('change', '[id$=product_id]', function (item) {
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
     var mainBox =  $($('.item')[box_id]);
 
+    var box_product_title = $("#select2-returns-"+box_id+"-product_id-container").attr("title");
+    $('#returns-'+box_id+'-title').val(box_product_title);
+
      mainBox.find('[id$='+box_id+'-amount]').val('');
      mainBox.find('[id$='+box_id+'-count]').val('');
     setTotals()
@@ -31,7 +34,9 @@ $(document).on('change', '[id$=product_id]', function (item) {
         if(count)
         {
              $.post("/order/get-product-price?order_id="+order_id+"&product_id="+product_id+"&count="+count, function(data){
-                mainBox.find($("[id$=amount]")).val(data);
+                mainBox.find($("[id$=-amount]")).val(data);
+                mainBox.find($("[id$=-old_single_amount]")).val(data/count);
+                mainBox.find($("[id$=-old_amount]")).val(data);
                 setTotals();
             });
         }
@@ -45,6 +50,7 @@ $(document).on('change', '[id$=product_id]', function (item) {
 function setTotals(){
     var totalAmount=0;
     var totalCount=0;
+    var totalOldAmount = 0;
 
 $("[id$='-count']").each(function() {
     if(this.value)
@@ -58,7 +64,14 @@ $("[id$='-amount']").each(function() {
         totalAmount += parseFloat(this.value);
     }
 });
+$("[id$='-old_amount']").each(function() {
+    if(this.value)
+    {
+        totalOldAmount += parseFloat(this.value);
+    }
+});
 $('#returnsgroup-total_count').val(totalCount);
+$('#returnsgroup-total_old_amount').val(totalOldAmount);
 $('#returnsgroup-total_amount').val(totalAmount);
 
 }

@@ -17,6 +17,8 @@ use yii\behaviors\TimestampBehavior;
  * @property float|null $count
  * @property float|null $amount
  * @property float|null $returns_group_id
+ * @property float|null $old_amount
+ * @property float|null $old_single_amount
  * @property int $created_at
  * @property int|null $created_by
  * @property int $updated_at
@@ -61,6 +63,7 @@ class Returns extends \yii\db\ActiveRecord
             [['product_id'], 'uniqueProduct'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'validateCountExist'],
+            [['old_amount','old_single_amount'], 'double'],
             [[  'order_id', 'amount', 'count' ], 'required'],
           
         ];
@@ -80,6 +83,8 @@ class Returns extends \yii\db\ActiveRecord
             'note' => Yii::t('app', 'ملاحظة'),
             'count' => Yii::t('app', 'العدد'),
             'amount' => Yii::t('app', 'القيمة'),
+            'old_single_amount' => Yii::t('app', 'الافرادي '),
+            'old_amount' => Yii::t('app', 'الاجمالي'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),

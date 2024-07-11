@@ -20,6 +20,7 @@ use common\models\Returns;
  * @property int|null $updated_by
  * @property int|null $total_amount
  * @property int|null $total_count
+ * @property int|null $total_old_amount
  */
 class ReturnsGroup extends \yii\db\ActiveRecord
 {
@@ -39,7 +40,7 @@ class ReturnsGroup extends \yii\db\ActiveRecord
         return [
             [['order_id', 'created_at', 'created_by', 'updated_at', 'updated_by','total_count','order_id'], 'integer'],
             [['note', 'returner_name'], 'string'],
-            [['total_amount'], 'double'],
+            [['total_amount','total_old_amount'], 'double'],
             [[  'order_id', 'returner_name' ], 'required'],
             
         ];
@@ -66,7 +67,8 @@ class ReturnsGroup extends \yii\db\ActiveRecord
             'product_id' => Yii::t('app', 'المادة'),
             'returner_name' => Yii::t('app', 'الشخص المرجع'),
             'note' => Yii::t('app', 'ملاحظة'),
-            'total_amount' => Yii::t('app', 'مجموع المرجع'),
+            'total_amount' => Yii::t('app', ' مجموع المرجع الصافي للعميل'),
+            'total_old_amount' => Yii::t('app', 'مجموع المرجع قبل الخصم'),
             'total_count' => Yii::t('app', 'عدد القطع'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
