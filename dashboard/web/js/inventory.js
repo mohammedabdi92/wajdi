@@ -76,13 +76,14 @@ $(document).on('change', '[id$=repayment]', function (item) {
 });
 function calculateTotals() {
     var total = getTotalWithoutVat();
+    var old_total = total;
 
     var discount_percentage = $('[id$=discount_percentage]').val();
     if (discount_percentage) {
         var discount = (total * (parseFloat(discount_percentage) / 100));
         discount = parseFloat(discount.toFixed(3));
         total =  total-discount;
-        $('[id$=discount]').val(discount);
+        $('[id=discount]').val(discount);
     }
     var tax_percentage = $('[id$=tax_percentage]').val();
     if (tax_percentage) {
@@ -103,6 +104,7 @@ function calculateTotals() {
     }
 
     $('[id$=inventoryorder-total_cost]').val(total);
+    $('[id$=inventoryorder-total_cost_without_discount]').val(old_total);
 
 }
 

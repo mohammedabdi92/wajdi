@@ -37,6 +37,7 @@ class InventoryOrder extends \common\components\BaseModel
 {
     public $supplier_name ;
     public $phone_number ;
+    public $total_cost_without_discount ;
     /**
      * {@inheritdoc}
      */
@@ -61,7 +62,7 @@ class InventoryOrder extends \common\components\BaseModel
             [['supplier_name'],'string'],
             [['phone_number'],'string'],
             [['debt','repayment'],'double'],
-            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','supplier_id'],'safe']
+            [['supplier_name','inventory_order_id','inventory_order_date','total_count','phone_number','note','supplier_id','total_cost_without_discount'],'safe']
         ];
     }
 
@@ -135,6 +136,7 @@ class InventoryOrder extends \common\components\BaseModel
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
             'note' => Yii::t('app', 'ملاحظة'),
+            'total_cost_without_discount'=> Yii::t('app', ' السعر الاجمالي قبل الخصم و الضريبة'),
         ];
     }
 
@@ -180,6 +182,10 @@ class InventoryOrder extends \common\components\BaseModel
     public function getStoreTitle()
     {
         return Store::findOne($this->store_id)->name;
+    }
+    public function getTotalCostWithoutDis()
+    {
+       return InventoryOrderProduct::find()->where(['inventory_order_id'=>$this->id])->sum('product_total_cost');
     }
 
 }

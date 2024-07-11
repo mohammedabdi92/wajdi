@@ -197,7 +197,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
 
     <div class=" col-md-12">
-
+        <?= $form->field($model, 'total_cost_without_discount')->textInput(['readonly' => true]) ?>
         <?= $form->field($model, 'discount_percentage')->textInput() ?>
         <?= $form->field($model, 'discount')->textInput() ?>
 

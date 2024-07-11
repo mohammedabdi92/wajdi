@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            'total_cost_without_discount',
             'total_cost',
             'note',
             [
@@ -91,6 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
         echo DetailView::widget([
             'model' => $item,
             'attributes' => [
+                
                 'count',
                 [
                     'label' => 'نوع العد',
@@ -98,8 +100,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $model->productCountType;
                     },
                 ],
+               
                 'product_cost',
                 'product_total_cost',
+                'product_cost_final',
+                'product_total_cost_final',
 
             ],
         ]);

@@ -66,8 +66,10 @@ class InventoryOrderController extends BaseController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $model->total_cost_without_discount = $model->getTotalCostWithoutDis();
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -132,6 +134,7 @@ class InventoryOrderController extends BaseController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->total_cost_without_discount = $model->getTotalCostWithoutDis();
         $model_product = $model->products;
 
         if ($model->load(Yii::$app->request->post())) {
