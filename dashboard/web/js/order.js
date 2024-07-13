@@ -108,6 +108,7 @@ function calculateTotal() {
     $('[id$=order-total_amount]').val(parseFloat(total.toFixed(3)));
     var profit = total - total_cost;
     $('#titleElement_all').attr('title',profit);
+    $('#titleElement_all').attr('data-original-title',profit);
     $("[id$=-earn_the_bill]").val(profit);
 
 }
@@ -204,6 +205,7 @@ function productChange(This) {
             result =  JSON.parse(data);
             $('#orderproduct-'+box_id+'-orignal_cost').val(result.price);
             $('#titleElement_'+box_id).attr('title', result.price);
+            $('#titleElement_'+box_id).attr('data-original-title', result.price); 
            
             $('#orderproduct-'+box_id+'-count_type_name').val(result['count_type_title']);
         }

@@ -203,13 +203,13 @@ $priceList = [];
                                         <div class="col-sm-2"> <label> المرجع </label> <br><label><?=$returnd_count?></label></div>
                                         <div class="col-sm-2"> <label> التالف </label> <br><label><?=$dameged_count?></label></div>
                                     <?php endif; ?>
-                                    <?php
-                                    if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
-                                        echo Html::tag('h1', '🪙', ['id' => 'titleElement_'.$i,'title'=>$modelAddress->product->price]);
-                                    }
+                                  
+                                    <?php if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')): ?>
+                                        <button type="button" class="btn btn-secondary"  id = 'titleElement_<?= $i ?>' data-toggle="tooltip" data-placement="top" title="<?= (!empty($modelAddress->product)? $modelAddress->product->price:'') ?>">
+                                        🪙
+                                        </button>
                                     
-                                    
-                                    ?>
+                                    <?php  endif;  ?>
                                 </div>
                                 <?php echo $form->field($modelAddress, "[{$i}]orignal_cost")->hiddenInput(['value'=>$modelAddress->product->price])->label('') ;
                                
@@ -272,12 +272,15 @@ $priceList = [];
 
             <?= $form->field($model, 'note')->textarea() ?>
 
-            <?php
-            if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
-                echo Html::tag('h1', '🛞', ['id' => 'titleElement_all','title'=>$model->earn_the_bill]);
-                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
-            }
            
+            <?php if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')): ?>
+                <button type="button" class="btn btn-secondary"  id = "titleElement_all" data-toggle="tooltip" data-placement="top" title="<?= $model->earn_the_bill ?>">
+                             🛞
+                    </button>
+               
+            <?php
+                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
+                endif;
             ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
