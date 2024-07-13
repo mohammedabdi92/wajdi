@@ -108,7 +108,8 @@ function calculateTotal() {
     $('[id$=order-total_amount]').val(parseFloat(total.toFixed(3)));
     var profit = total - total_cost;
     $('#titleElement_all').attr('title',profit);
-    $('#order-earn_the_bill').val(profit);
+    $("[id$=-earn_the_bill]").val(profit);
+
 }
     var paid = $('[id$=paid]').val();
     if(paid)

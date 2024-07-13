@@ -21,6 +21,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property float $count
  * @property float $total_product_amount
  * @property float $discount
+ * @property float $orignal_cost
  * @property int $count_type
  * @property int $price_number
  * @property int $amount
@@ -56,7 +57,7 @@ class ArOrderProduct extends \common\components\BaseModel
             [['ready_to_deliver'], 'checkReady'],
             [['product_id'], 'checkInventory'],
             [['product_id'], 'checkDuplicate'],
-            [['total_product_amount', 'discount'], 'double'],
+            [['total_product_amount', 'discount','orignal_cost'], 'double'],
         ];
     }
 

@@ -203,7 +203,17 @@ $priceList = [];
                                         <div class="col-sm-2"> <label> المرجع </label> <br><label><?=$returnd_count?></label></div>
                                         <div class="col-sm-2"> <label> التالف </label> <br><label><?=$dameged_count?></label></div>
                                     <?php endif; ?>
+                                    <?php
+                                    if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
+                                        echo Html::tag('h1', '🪙', ['id' => 'titleElement_'.$i,'title'=>$modelAddress->product->price]);
+                                    }
+                                    
+                                    
+                                    ?>
                                 </div>
+                                <?php echo $form->field($modelAddress, "[{$i}]orignal_cost")->hiddenInput(['value'=>$modelAddress->product->price])->label('') ;
+                               
+                                ?>
 
 
                             </div><!-- .row -->
@@ -262,7 +272,13 @@ $priceList = [];
 
             <?= $form->field($model, 'note')->textarea() ?>
 
-
+            <?php
+            if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
+                echo Html::tag('h1', '🛞', ['id' => 'titleElement_all','title'=>$model->earn_the_bill]);
+                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
+            }
+           
+            ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
                     <?= Html::submitButton('حفظ', ['class' => 'btn btn-success','name' => 'save']) ?>
