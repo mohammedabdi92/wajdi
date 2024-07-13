@@ -155,7 +155,7 @@ JS;
                                     </div>
                                 </div>
 
-                            </h3>['id' => 'titleElement']);
+                            </h3>
 
 
                             <div class="pull-left">
