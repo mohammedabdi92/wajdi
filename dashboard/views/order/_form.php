@@ -248,13 +248,13 @@ JS;
                                     <?php endif; ?>
                                     <?php
                                     if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
-                                        echo Html::tag('h1', '🪙', ['id' => 'titleElement_'.$i,'title'=>$modelAddress->product->price]);
+                                        echo Html::tag('h1', '🪙', ['id' => 'titleElement_'.$i,'title'=>!empty($modelAddress->product)? $modelAddress->product->price:'']);
                                     }
                                     
                                     
                                     ?>
                                 </div>
-                                <?php echo $form->field($modelAddress, "[{$i}]orignal_cost")->hiddenInput(['value'=>$modelAddress->product->price])->label('') ;
+                                <?php echo $form->field($modelAddress, "[{$i}]orignal_cost")->hiddenInput(['value'=>!empty($modelAddress->product)? $modelAddress->product->price:''])->label('') ;
                                
                                 ?>
                                 
