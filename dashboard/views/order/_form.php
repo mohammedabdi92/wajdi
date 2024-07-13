@@ -367,7 +367,8 @@ JS;
              ?>
             <?php
             if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')){
-                echo Html::tag('h1', '🛞', ['id' => 'titleElement_all']);
+                echo Html::tag('h1', '🛞', ['id' => 'titleElement_all','title'=>$model->earn_the_bill]);
+                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
             }
            
             ?>
