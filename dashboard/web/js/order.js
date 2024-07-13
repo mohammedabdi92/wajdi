@@ -75,7 +75,6 @@ function calculateTotal() {
         }
     });
     $('[id$=-orignal_cost]').each(function (index, element) {
-        debugger;
         var elementCost = parseFloat(element.value);
         if (elementCost) {
             elementCost = Math.round((elementCost + Number.EPSILON) * 100) / 100
