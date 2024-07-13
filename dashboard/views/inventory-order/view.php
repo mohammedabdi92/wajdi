@@ -52,6 +52,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'total_cost_without_discount',
+            'discount_percentage',
+            'tax_percentage',
             'total_cost',
             'note',
             [
