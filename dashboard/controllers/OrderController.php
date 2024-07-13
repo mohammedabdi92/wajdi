@@ -480,6 +480,23 @@ class OrderController extends BaseController
 
         return  round($product_price_for_count, 2) ;
     }
+    public function actionGetDetails($order_id)
+    {
+        $order = Order::findOne($order_id);
+        if ($order === null) {
+            throw new \yii\web\NotFoundHttpException('The requested order does not exist.');
+        }
+        $customer = $order->customer;
+        return $this->asJson([
+            'customer'=>[
+                'id' => $order->customer_id,
+                'name' => $customer ? $customer->name : null,
+                'phone_number' => $customer ? $customer->phone_number : null,
+            ],
+            'created_at' => $order->created_at,
+            'created_by' => \common\components\CustomFunc::getUserName($order->created_by),
+        ]);
+    }
     public function actionCreateFk(){
 
         $addingFiveMinutes= strtotime('- 15 minute');

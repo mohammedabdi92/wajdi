@@ -103,6 +103,19 @@ class InventoryOrderProductController extends BaseController
         ]);
     }
 
+    public function actionGetFinalCost($inventory_order_id,$product_id)
+    {
+        $model = InventoryOrderProduct::find()->where(['inventory_order_id'=>$inventory_order_id,'product_id'=> $product_id])->one();
+        if ($model === null) {
+            throw new \yii\web\NotFoundHttpException('The requested order does not exist.');
+        }
+
+        return $this->asJson([
+            'product_cost_final'=>$model->product_cost_final
+        ]);
+    }
+
+
     /**
      * Deletes an existing InventoryOrderProduct model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

@@ -20,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
 
         <?php
-        if (Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات')) {
+        if (Yii::$app->user->can('انشاء فاتورة المشتريات')) {
             echo Html::a(Yii::t('app', 'انشاء فاتورة مشتريات'), ['create'], ['class' => 'btn btn-success']);
         }
 
@@ -128,10 +128,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
                     },
                     'view' => function ($model) {
-                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                        return Yii::$app->user->can('انشاء فاتورة المشتريات');
                     },
                     'pdf' => function ($model) {
-                        return Yii::$app->user->can('انشاء وتعديل فاتورة المشتريات');
+                        return Yii::$app->user->can('انشاء فاتورة المشتريات');
                     },
             ]
 

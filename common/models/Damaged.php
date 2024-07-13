@@ -12,6 +12,10 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property int $id
  * @property int|null $status
+ * @property int|null $status_note_id
+ * @property int|null $inventory_order_id
+ * @property int|null $customer_note
+ * @property int|null $supplier_note
  * @property int|null $order_id
  * @property float|null $product_id
  * @property float|null $count
@@ -28,13 +32,29 @@ class Damaged extends \yii\db\ActiveRecord
     const STATUS_RETURNED = 3;
     const STATUS_REPLACED = 4;
     const statusArray = [
-        self::STATUS_ACTIVE=>"لم يتم التحديد",
-        self::STATUS_INACTIVE=>"غير قابل للارجاع",
-        self::STATUS_RETURNED=>"تم الارجاع",
-        self::STATUS_REPLACED=>"تم التبديل",
+        self::STATUS_ACTIVE=>"بانتظار التواصل مع المورد",
+        self::STATUS_INACTIVE=>"بانتظار زيارة المورد",
+        self::STATUS_RETURNED=>"بانتضار الرد من المورد",
+        self::STATUS_REPLACED=>"مكتمل",
     ];
     public  function getStatusText(){
         return self::statusArray[$this->status];
+    }
+
+    const STATUS_NOTE_REPLACED_SAME = 1;
+    const STATUS_NOTE_REPLACED_DEFFRENT = 2;
+    const STATUS_NOTE_RETURN_CASH = 3;
+    const STATUS_NOTE_RETURN_WITH_PAY = 4;
+    const STATUS_NOTE_NOT_RETURND = 5;
+    const statusNoteArray = [
+        self::STATUS_NOTE_REPLACED_SAME=>"تم التبديل بنفس المادة",
+        self::STATUS_NOTE_REPLACED_DEFFRENT=>"تم التبديل بمادة اخرى",
+        self::STATUS_NOTE_RETURN_CASH => "تم ارجاع ثمن المادة",
+        self::STATUS_NOTE_RETURN_WITH_PAY => "تم التبديل بدفع الفرق",
+        self::STATUS_NOTE_NOT_RETURND => "لم يتم التبديل او الارجاع"
+    ];
+    public  function getStatusNoteText(){
+        return self::statusNoteArray[$this->status_note_id];
     }
     /**
      * {@inheritdoc}
@@ -58,11 +78,23 @@ class Damaged extends \yii\db\ActiveRecord
     {
         return [
             [['product_id', 'count', 'order_id'], 'required'],
+            [['cost_value', 'total_amount','status_note_id','supplyer_pay_amount','supplyer_price'], 'safe'],
             [['status', 'order_id', 'created_by', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'checkOrderCount'],
+            [['inventory_order_id'], 'checkInventoryOrder', 'on' => 'scenario_supplyer'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
+            [['order_id', 'product_id','count','amount','total_amount'], 'required', 'on' => 'scenario_agent'],
+            [['inventory_order_id', 'supplyer_price','status'], 'required', 'on' => 'scenario_supplyer'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['scenario_agent'] = ['order_id', 'product_id','count','amount','total_amount','cost_value','customer_note'];
+        $scenarios['scenario_supplyer'] = ['customer_note','status','inventory_order_id','supplyer_price','supplyer_pay_amount','supplier_note','status_note_id'];
+        return $scenarios;
     }
 
     public function checkOrderCount($attr, $params) {
@@ -86,6 +118,17 @@ class Damaged extends \yii\db\ActiveRecord
         }
     }
 
+
+    public function checkInventoryOrder($attr, $params) {
+
+        $model = InventoryOrderProduct::find()->where(['inventory_order_id'=>$this->inventory_order_id,'product_id'=> $this->product_id])->one();
+      
+
+        if(!$model){
+            $this->addError($attr, 'لا توجد هذه المادة في فاتورة المشتريات المدخلة');
+        }
+        
+    }
     /**
      * {@inheritdoc}
      */
@@ -94,14 +137,27 @@ class Damaged extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('app', 'الرقم'),
             'status' => Yii::t('app', 'الحالة'),
-            'order_id' => Yii::t('app', 'الطلب'),
+            'order_id' => Yii::t('app', 'رقم فاتورة المبيعات'),
             'product_id' => Yii::t('app', 'المادة'),
             'count' => Yii::t('app', 'العدد'),
-            'amount' => Yii::t('app', 'القيمة'),
+            'amount' => Yii::t('app', 'قيمة المادة'),
+            'status_note_id' => Yii::t('app', ' الاجراء المتخذ'),
+            'supplyer_price' => Yii::t('app', ' سعر الشراء'),
+            'supplyer_pay_amount' => Yii::t('app', ' فرقية التبديل للمورد'),
+            'inventory_order_id' => Yii::t('app', 'رقم فاتورة المشتريات'),
+            'customer_note' => Yii::t('app', 'ملاحظة العميل'),
+            'supplier_note' => Yii::t('app', 'ملاحظة المورد'),
+            'cost_value' => Yii::t('app', 'قيمة  التكاليف من العميل'),
+            'total_amount' => Yii::t('app', 'قيمة المرجعة'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
+
+            
+
+
+
         ];
     }
     public function beforeSave($insert)

@@ -21,7 +21,7 @@ $this->registerJsFile(
 
 
     <?php
-    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....']);
+    echo $form->field($model, "order_id")->textInput(['id' => 'order_id','readonly' => true,'placeholder' => 'اختر رقم الطلب .....']);
     ?>
     <div class="col-xs-12 col-sm-12 invoice-col">
         
@@ -33,9 +33,10 @@ $this->registerJsFile(
     <?php
      $data =($model->product_id)? [$model->product_id=>$model->product->title]:[];
     echo $form->field($model, 'product_id')->widget(\kartik\depdrop\DepDrop::classname(), [
+        
         'data'=>$data,
         'type' => DepDrop::TYPE_SELECT2,
-        'options' => ['id' => 'product_id', 'placeholder' => 'Select ...'],
+        'options' => ['id' => 'product_id','disabled' => true, 'placeholder' => 'Select ...'],
         'select2Options' => ['pluginOptions' => ['allowClear' => true]],
         'pluginOptions' => [
             'depends' => ['order_id'],
@@ -45,12 +46,21 @@ $this->registerJsFile(
     ?>
 
 
-    <?= $form->field($model, 'count')->textInput() ?>
+    <?= $form->field($model, 'count')->textInput(['readonly' => true]) ?>
 
     <?= $form->field($model, 'amount')->textInput(['readonly' => true]) ?>
-    <?= $form->field($model, 'cost_value')->textInput() ?>
+    <?= $form->field($model, 'cost_value')->textInput(['readonly' => true]) ?>
 
-    <?= $form->field($model, 'total_amount')->textInput() ?>
+    <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'customer_note')->textarea() ?>
+    <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
+    
+    <?= $form->field($model, 'inventory_order_id')->textInput() ?>
+    <?= $form->field($model, 'supplyer_price')->textInput() ?>
+    <?= $form->field($model, 'supplyer_pay_amount')->textInput() ?>
+
+    <?= $form->field($model, 'supplier_note')->textarea() ?>
+    <?= $form->field($model, 'status_note_id')->dropDownList([''=>"اختيار ...."]+$model::statusNoteArray); ?>
 
 
 

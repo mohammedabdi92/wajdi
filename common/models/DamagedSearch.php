@@ -61,16 +61,16 @@ class DamagedSearch extends Damaged
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'status' => $this->status,
-            'order_id' => $this->order_id,
-            'product_id' => $this->product_id,
-            'count' => $this->count,
-            'amount' => $this->amount,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+            'damaged.id' => $this->id,
+            'damaged.status' => $this->status,
+            'damaged.order_id' => $this->order_id,
+            'damaged.product_id' => $this->product_id,
+            'damaged.count' => $this->count,
+            'damaged.amount' => $this->amount,
+            'damaged.created_at' => $this->created_at,
+            'damaged.created_by' => $this->created_by,
+            'damaged.updated_at' => $this->updated_at,
+            'damaged.updated_by' => $this->updated_by,
         ]);
         if($this->product_name)
         {
@@ -79,6 +79,7 @@ class DamagedSearch extends Damaged
                 $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
             }
         }
+        $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
     }
 }

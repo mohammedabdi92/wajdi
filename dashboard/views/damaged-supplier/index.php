@@ -11,7 +11,7 @@ use yii\grid\GridView;
 
 
 
-$this->title = Yii::t('app', 'البضاعة التالفة');
+$this->title = Yii::t('app', ' البضاعة التالفة من المحل الى المورد');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -19,9 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a(Yii::t('app', 'انشاء طلب تالف'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
@@ -58,10 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
                  },
                 'visibleButtons' => [
                     'update' => function ($model) {
-                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمحل');
+                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من المحل للمورد');
                     },
                     'delete' => function ($model) {
-                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمحل');
+                        return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من المحل للمورد');
                     },
                 ]
             ],

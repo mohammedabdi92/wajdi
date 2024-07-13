@@ -11,7 +11,7 @@ use yii\filters\VerbFilter;
 /**
  * DamagedController implements the CRUD actions for Damaged model.
  */
-class DamagedController extends Controller
+class DamagedSupplierController extends Controller
 {
     /**
      * @inheritDoc
@@ -68,7 +68,6 @@ class DamagedController extends Controller
     public function actionCreate()
     {
         $model = new Damaged();
-        $model->scenario ='scenario_agent';
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -93,7 +92,7 @@ class DamagedController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $model->scenario ='scenario_agent';
+        $model->scenario = 'scenario_supplyer';
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
