@@ -242,6 +242,24 @@ class InventoryOrderController extends BaseController
         return $this->renderAjax('_product',['model'=>$model]);
     }
 
+    public function actionGetDetails($order_id)
+    {
+        $order = InventoryOrder::findOne($order_id);
+        if ($order === null) {
+            throw new \yii\web\NotFoundHttpException('The requested order does not exist.');
+        }
+        $supplier = $order->supplier;
+        return $this->asJson([
+            'supplier'=>[
+                'id' => $order->supplier_id,
+                'name' => $supplier ? $supplier->name : null,
+                'phone_number' => $supplier ? $supplier->phone_number : null,
+            ],
+            'created_at' => $order->created_at,
+            'created_by' => \common\components\CustomFunc::getUserName($order->created_by),
+        ]);
+    }
+
 
     public function actionReport($id) {
 

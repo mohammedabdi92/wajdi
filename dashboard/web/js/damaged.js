@@ -14,7 +14,18 @@ $(document).on('change', '[id$=-inventory_order_id]', function (item) {
         product_id: product_id
     })
     .done(function(data) {
-           $("#damaged-supplyer_price").val(data.product_cost_final)
+           $("#damaged-supplyer_price").val(data.product_cost_final);
+           $("#damaged-supplyer_price").change();
+           $.get("/inventory-order/get-details?order_id="+inventory_order_id, function(data){
+            // Convert to milliseconds
+            const date = new Date(data.created_at * 1000);
+
+            // Format the date
+            const formattedDate = date.toLocaleString(); 
+            
+            var data = "<span><b dir='ltr'>معلومات الطلب</b></span> <b>اسم المورد:</b> "+data.supplier.name+" <br> <b>رقم المورد:</b> "+data.supplier.phone_number+"  <br> <b>تاريخ انشاء الطلب:</b> "+formattedDate+" <br> <b>البائع :</b>"+data.created_by+"<br>";
+            $("#order_inventory_details").html(data);
+        });
     })
     .fail(function(jqXHR, textStatus, errorThrown) {
         
@@ -71,3 +82,19 @@ $(document).on('change', '[id$=cost_value]', function (item) {
     $('#damaged-total_amount').val(amount-cost_value);
     
 });
+$(document).on('change', '[id$=supplyer_price]', function (item) {
+    setSupplyerCal();
+    
+});
+$(document).on('change', '[id$=supplyer_pay_amount]', function (item) {
+    setSupplyerCal();
+    
+});
+
+function setSupplyerCal(){
+    var supplyer_price = $('#damaged-supplyer_price').val();
+    var supplyer_pay_amount = $('#damaged-supplyer_pay_amount').val();
+
+    $('#damaged-supplyer_total_amount').val(supplyer_price-supplyer_pay_amount);
+
+}

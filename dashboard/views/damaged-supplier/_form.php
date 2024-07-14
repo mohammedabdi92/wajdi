@@ -53,11 +53,20 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'total_amount')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'customer_note')->textarea() ?>
+    <?= $form->field($model, 'inventory_order_id')->textInput() ?>
+    <div class="col-xs-12 col-sm-12 invoice-col">
+        
+        <div id="order_inventory_details">
+
+        </div>
+       
+    </div>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
     
-    <?= $form->field($model, 'inventory_order_id')->textInput() ?>
+   
     <?= $form->field($model, 'supplyer_price')->textInput() ?>
     <?= $form->field($model, 'supplyer_pay_amount')->textInput() ?>
+    <?= $form->field($model, 'supplyer_total_amount')->textInput(['readonly' => true]) ?>
 
     <?= $form->field($model, 'supplier_note')->textarea() ?>
     <?= $form->field($model, 'status_note_id')->dropDownList([''=>"اختيار ...."]+$model::statusNoteArray); ?>

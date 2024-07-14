@@ -14,6 +14,7 @@ use yii\behaviors\TimestampBehavior;
  * @property int|null $status
  * @property int|null $status_note_id
  * @property int|null $inventory_order_id
+ * @property int|null $supplyer_total_amount
  * @property int|null $customer_note
  * @property int|null $supplier_note
  * @property int|null $order_id
@@ -74,26 +75,30 @@ class Damaged extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+   public function rules()
     {
         return [
             [['product_id', 'count', 'order_id'], 'required'],
-            [['cost_value', 'total_amount','status_note_id','supplyer_pay_amount','supplyer_price'], 'safe'],
+            [['cost_value', 'total_amount', 'status_note_id', 'supplyer_pay_amount', 'supplyer_price', 'supplyer_total_amount'], 'safe'],
             [['status', 'order_id', 'created_by', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'checkOrderCount'],
             [['inventory_order_id'], 'checkInventoryOrder', 'on' => 'scenario_supplyer'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            [['order_id', 'product_id','count','amount','total_amount'], 'required', 'on' => 'scenario_agent'],
-            [['inventory_order_id', 'supplyer_price','status'], 'required', 'on' => 'scenario_supplyer'],
+            [['order_id', 'product_id', 'count', 'amount', 'total_amount'], 'required', 'on' => 'scenario_agent'],
+            [['inventory_order_id', 'supplyer_price', 'status','supplyer_total_amount'], 'required', 'on' => 'scenario_supplyer'],
         ];
     }
 
+
+    /**
+     * @inheritdoc
+     */
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['scenario_agent'] = ['order_id', 'product_id','count','amount','total_amount','cost_value','customer_note'];
-        $scenarios['scenario_supplyer'] = ['customer_note','status','inventory_order_id','supplyer_price','supplyer_pay_amount','supplier_note','status_note_id'];
+        $scenarios['scenario_agent'] = ['order_id', 'product_id', 'count', 'amount', 'total_amount', 'cost_value', 'customer_note'];
+        $scenarios['scenario_supplyer'] = ['customer_note', 'status', 'inventory_order_id', 'supplyer_price', 'supplyer_pay_amount', 'supplier_note', 'status_note_id', 'supplyer_total_amount'];
         return $scenarios;
     }
 
@@ -141,6 +146,7 @@ class Damaged extends \yii\db\ActiveRecord
             'product_id' => Yii::t('app', 'المادة'),
             'count' => Yii::t('app', 'العدد'),
             'amount' => Yii::t('app', 'قيمة المادة'),
+            'supplyer_total_amount' => Yii::t('app', 'قيمة المرجع للمحل'),
             'status_note_id' => Yii::t('app', ' الاجراء المتخذ'),
             'supplyer_price' => Yii::t('app', ' سعر الشراء'),
             'supplyer_pay_amount' => Yii::t('app', ' فرقية التبديل للمورد'),
@@ -148,7 +154,7 @@ class Damaged extends \yii\db\ActiveRecord
             'customer_note' => Yii::t('app', 'ملاحظة العميل'),
             'supplier_note' => Yii::t('app', 'ملاحظة المورد'),
             'cost_value' => Yii::t('app', 'قيمة  التكاليف من العميل'),
-            'total_amount' => Yii::t('app', 'قيمة المرجعة'),
+            'total_amount' => Yii::t('app', ' قيمة المرجعة للعميل'),
             'created_at' => Yii::t('app', 'تاريخ الانشاء'),
             'created_by' => Yii::t('app', 'الشخص المنشئ'),
             'updated_at' => Yii::t('app', 'تاريخ التعديل'),
