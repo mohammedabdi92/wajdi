@@ -103,13 +103,10 @@ class Order extends \common\components\BaseModel
             'repayment' =>  'السداد',
             'total_price_discount_product' =>  'مجموع الخصم الافرادي',
             'created_at' =>  'تاريخ الانشاء',
-            'created_by' =>  'الشخص المنشئ',
-            'updated_at' =>  'تاريخ التعديل',
-            'updated_by' =>  'الشخص المعدل',
-            'product_count' =>  'عدد المواد',
-            'returns_amount' =>  'قيمة المرجع',
-            'dept_note' =>  'ملاحظة الدين',
-        ];
+            'created_by' =>  'الشخص المنشئ', '1' => 'بانتظار الصيانة',
+            '2' => 'قيد الصيانة',
+            '3' => 'تم الاستلام',
+            '4' => 'تم التسليم مكتمل',
     }
     public function validateCustomerRequired($attr) {
 

@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use common\models\Damaged;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\DamagedSearch */
@@ -13,6 +14,9 @@ use yii\grid\GridView;
 
 $this->title = Yii::t('app', 'البضاعة التالفة');
 $this->params['breadcrumbs'][] = $this->title;
+
+$totalSum = $dataProvider->query->sum('total_amount');
+$totalcount = $dataProvider->query->sum('count');
 
 ?>
 <div class="damaged-index">
@@ -28,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter' => true,
         'columns' => [
             'id',
 
@@ -41,7 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
 
             ],
-            'count',
+            [
+                'attribute' => 'count',
+                'footer' => $totalcount, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
+            [
+                'attribute' => 'total_amount',
+                'footer' => $totalSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             //'amount',
             //'created_at',
             //'created_by',
