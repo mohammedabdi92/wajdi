@@ -159,18 +159,18 @@ function calculateTotTotals(item) {
     var count = mainBox.find(countItem).val();
     if (count && productCost) {
         var suptotal = parseFloat(productCost) / parseFloat(count);
-        mainBox.find(productCostItem).val(parseFloat(suptotal.toFixed(3)));
+        mainBox.find(productCostItem).val(parseFloat(suptotal.toFixed(5)));
         var discount_percentage = $('[id$=discount_percentage]').val();
         if (discount_percentage) {
             var discount = (suptotal * (parseFloat(discount_percentage) / 100));
-            discount = parseFloat(discount.toFixed(3));
+            discount = parseFloat(discount.toFixed(5));
 
             suptotal =  suptotal-discount;
         }
         var tax_percentage = $('[id$=tax_percentage]').val();
         if (tax_percentage) {
             var tax = (suptotal * (parseFloat(tax_percentage) / 100));
-            tax = parseFloat(tax.toFixed(3));
+            tax = parseFloat(tax.toFixed(5));
             suptotal = tax + suptotal;
         }
         mainBox.find(productCostItemfinal).val(suptotal);

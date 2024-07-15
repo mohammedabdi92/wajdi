@@ -18,6 +18,10 @@ if(Yii::$app->user->can('كل المحلات'))
 }else{
     $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
 }
+
+
+$totalSum = $dataProvider->query->sum('amount');
+
 ?>
 <div class="outlay-index">
 
@@ -32,6 +36,7 @@ if(Yii::$app->user->can('كل المحلات'))
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter' => Yii::$app->user->can('اظهار المجموع في المصروفات'),
         'columns' => [
 
 
@@ -44,7 +49,11 @@ if(Yii::$app->user->can('كل المحلات'))
                 'format' => 'raw',
                 'filter' => \yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
             ],
-            'amount',
+            [
+                'attribute' => 'amount',
+                'footer' => $totalSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             [
                 'attribute' => 'user_id',
                 'value' => function ($model) {

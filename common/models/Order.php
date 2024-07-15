@@ -89,8 +89,8 @@ class Order extends \common\components\BaseModel
         return [
             'id' =>  'الرقم',
             'customer_id' =>  'العميل',
-            'phone_number' =>  'رقم الهاتف',
-            'customer_name' =>  'اسم العميل',
+            'phone_number' =>  ' رقم الهاتف جديد',
+            'customer_name' =>  ' اسم العميل جديد',
             'store_id' =>  'المحل',
             'total_amount_without_discount' =>  'السعر الاجمالي',
             'total_amount' =>  'السعر النهائي المطلوب',

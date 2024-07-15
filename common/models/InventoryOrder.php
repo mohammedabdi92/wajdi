@@ -119,8 +119,8 @@ class InventoryOrder extends \common\components\BaseModel
         return [
             'id' => Yii::t('app', 'الرقم'),
             'supplier_id' => Yii::t('app', 'المورد'),
-            'phone_number' => Yii::t('app', 'رقم الهاتف'),
-            'supplier_name' => Yii::t('app', 'اسم المورد'),
+            'phone_number' => Yii::t('app', 'رقم الهاتف جديد'),
+            'supplier_name' => Yii::t('app', 'اسم المورد جديد'),
             'inventory_order_id' => Yii::t('app', 'رقم الفاتورة الورقي'),
             'inventory_order_date' => Yii::t('app', 'تاريخ الفاتورة الورقي'),
             'store_id' => Yii::t('app', 'المحل'),

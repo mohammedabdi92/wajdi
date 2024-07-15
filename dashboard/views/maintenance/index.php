@@ -12,6 +12,8 @@ use yii\grid\GridView;
 
 $this->title = 'مواد قيد الصيانة';
 $this->params['breadcrumbs'][] = $this->title;
+$itemCountSum = $dataProvider->query->sum('item_count');
+$costDifferenceSum = $dataProvider->query->sum('cost_difference');
 ?>
 <div class="maintenance-index">
 
@@ -26,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter' => Yii::$app->user->can('اظهار المجاميع في مواد الصيانة'),
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
            
@@ -36,7 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->client->name ?? '';
                 },
             ],
-            'item_count',
+            [
+                'attribute' => 'item_count',
+                'footer' => $itemCountSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             'client_note:ntext',
             [
                 'attribute'=> 'status',
@@ -53,7 +60,11 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             //'maintenance_note:ntext',
             //'maintenance_cost',
-            'cost_difference',
+            [
+                'attribute' => 'cost_difference',
+                'footer' => $costDifferenceSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             //'created_at',
             //'created_by',
             //'updated_at',
