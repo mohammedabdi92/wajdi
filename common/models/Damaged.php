@@ -28,6 +28,7 @@ use yii\behaviors\TimestampBehavior;
  */
 class Damaged extends \yii\db\ActiveRecord
 {
+    public $store_id;
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
     const STATUS_RETURNED = 3;
@@ -141,6 +142,7 @@ class Damaged extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'الرقم'),
+            'store_id' => Yii::t('app', 'المحل'),
             'status' => Yii::t('app', 'الحالة'),
             'order_id' => Yii::t('app', 'رقم فاتورة المبيعات'),
             'product_id' => Yii::t('app', 'المادة'),
@@ -187,6 +189,10 @@ class Damaged extends \yii\db\ActiveRecord
     public function getOrder()
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
+    public function getStoreTitle()
+    {
+        return Store::findOne($this->store_id)->name;
     }
     public function getProductTitle()
     {

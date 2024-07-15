@@ -48,7 +48,7 @@ function getdetails(){
             // Format the date
             const formattedDate = date.toLocaleString(); 
             
-            var data = "<span><b dir='ltr'>معلومات الطلب</b></span> <b>اسم العميل:</b> "+data.customer.name+" <br> <b>رقم العميل:</b> "+data.customer.phone_number+"  <br> <b>تاريخ انشاء الطلب:</b> "+formattedDate+" <br> <b>البائع :</b>"+data.created_by+"<br>";
+            var data = "<span><b dir='ltr'>معلومات الطلب<br></b></span> <b>اسم المحل:</b> "+data.store_name+" <br>  <b>اسم العميل:</b> "+data.customer.name+" <br> <b>رقم العميل:</b> "+data.customer.phone_number+"  <br> <b>تاريخ انشاء الطلب:</b> "+formattedDate+" <br> <b>البائع :</b>"+data.created_by+"<br>";
             $("#order_details").html(data);
         });
     }else{

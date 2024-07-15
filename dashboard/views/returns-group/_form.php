@@ -16,7 +16,7 @@ $this->registerJsFile(
     '@web/js/orderReturned.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
-
+$model->store_id = $model->order->store_id ?? '';
 
 $url = \yii\helpers\Url::to(['product/product-list']);
 $product_data = [''=>"اختر ..."];
@@ -48,6 +48,10 @@ if($model->order_id)
         let value = input.value;
         let numbers = value.replace(/[^0-9]/g, "");
         input.value = numbers;
+        $.ajax({url: "<?=Url::to(['/order/get-store'])?>?order_id="+numbers, success: function(result){
+                $("#store-name").html(result);
+                
+        }});
     }
     function getIsDeptOrder(input){
         let value = input.value;
@@ -79,7 +83,13 @@ if($model->order_id)
     <?php
     echo $form->field($model, "order_id")->textInput(['id' => 'order_id','placeholder' => 'اختر رقم الطلب .....', 'oninput'=>"process(this)",'onchange' => 'getIsDeptOrder(this)','type' => 'number']);
     ?>
+    <div class="form-group field-order_id required">
+        <label class="control-label" >المحل : </label>
+        <label class="control-label" id="store-name" ><?=$model->store_id ?$model->storeTitle:''?> </label>
 
+
+        <div class="help-block"></div>
+    </div>
     <?= $form->field($model, 'returner_name')->textInput() ?>
     <?= $form->field($model, 'note')->textarea() ?>
     <div class="row " style=" border-width: medium; border-style: solid; border-color: #34495e; margin: 0px; margin-bottom: 10px;background: #d9d9d9;">

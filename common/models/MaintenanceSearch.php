@@ -17,7 +17,7 @@ class MaintenanceSearch extends Maintenance
     public function rules()
     {
         return [
-            [['id', 'client_id', 'item_count', 'service_center_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'client_id', 'item_count', 'service_center_id', 'created_at', 'created_by', 'updated_at', 'updated_by','store_id'], 'integer'],
             [['client_note', 'status', 'maintenance_note'], 'safe'],
             [['amount_paid', 'maintenance_cost', 'cost_difference'], 'number'],
         ];
@@ -60,6 +60,7 @@ class MaintenanceSearch extends Maintenance
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'store_id' => $this->store_id,
             'client_id' => $this->client_id,
             'item_count' => $this->item_count,
             'amount_paid' => $this->amount_paid,

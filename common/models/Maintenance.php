@@ -12,6 +12,7 @@ use yii\behaviors\BlameableBehavior;
  *
  * @property int $id
  * @property int $client_id
+ * @property int $store_id
  * @property int $item_count
  * @property string|null $client_note
  * @property string $status
@@ -61,7 +62,7 @@ class Maintenance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['client_id','product_name', 'item_count', 'status', 'service_center_id'], 'required'],
+            [['client_id','product_name', 'item_count', 'status', 'service_center_id', 'store_id'], 'required'],
             [['client_id', 'item_count', 'service_center_id', 'created_by'], 'integer'],
             [['amount_paid', 'maintenance_cost', 'cost_difference'], 'number'],
             [['client_note', 'maintenance_note'], 'string'],
@@ -92,6 +93,7 @@ class Maintenance extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'client_id'  => 'اسم العميل',
+            'store_id'  => 'المحل',
             'product_name' => 'اسم المادة',
             'item_count' => 'العدد',
             'client_note' => ' ملاحظة العميل  ',
@@ -114,5 +116,9 @@ class Maintenance extends \yii\db\ActiveRecord
     public function getClient()
     { 
         return $this->hasOne(Customer::class, ['id' => 'client_id']);
+    }
+    public function getStoreTitle()
+    {
+        return Store::findOne($this->store_id)->name;
     }
 }

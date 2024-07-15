@@ -17,6 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
 $totalSum = $dataProvider->query->sum('supplyer_total_amount');
 $totalcount = $dataProvider->query->sum('count');
 
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
+
 ?>
 <div class="damaged-index">
 
@@ -32,6 +40,14 @@ $totalcount = $dataProvider->query->sum('count');
         'showFooter' => true,
         'columns' => [
             'id',
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
+            ],
             [
                 'attribute' => 'order_id',
                 'value' => function ($model) {

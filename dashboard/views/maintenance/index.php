@@ -14,6 +14,14 @@ $this->title = 'مواد قيد الصيانة';
 $this->params['breadcrumbs'][] = $this->title;
 $itemCountSum = $dataProvider->query->sum('item_count');
 $costDifferenceSum = $dataProvider->query->sum('cost_difference');
+
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
 ?>
 <div class="maintenance-index">
 
@@ -33,6 +41,14 @@ $costDifferenceSum = $dataProvider->query->sum('cost_difference');
             ['class' => 'yii\grid\SerialColumn'],
            
             'id',
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
+            ],
             [
                 'attribute' => 'client_id',
                 'value' => function ($model) {

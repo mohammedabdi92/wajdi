@@ -20,7 +20,7 @@ class DamagedSearch extends Damaged
         return [
             [['id', 'status', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
-            [['product_name'], 'safe'],
+            [['product_name','store_id'], 'safe'],
         ];
     }
 
@@ -44,7 +44,14 @@ class DamagedSearch extends Damaged
     {
         $query = Damaged::find();
 
-        $query->joinWith('product');
+        $query->select(
+            "damaged.*,order.store_id as store_id"
+        );
+        $query->joinWith([
+            'order' => function (\yii\db\ActiveQuery $query) {
+                $query->select(['store_id']);
+            },'product'
+        ]);
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -62,6 +69,7 @@ class DamagedSearch extends Damaged
         // grid filtering conditions
         $query->andFilterWhere([
             'damaged.id' => $this->id,
+            'order.store_id' => $this->store_id,
             'damaged.status' => $this->status,
             'damaged.order_id' => $this->order_id,
             'damaged.product_id' => $this->product_id,

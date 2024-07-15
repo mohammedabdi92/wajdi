@@ -28,6 +28,27 @@ $this->registerJsFile(
     <?php $form = ActiveForm::begin([
         'enableClientValidation' => false
     ]); ?>
+     <?php
+    $stores = [];
+    if(Yii::$app->user->can('كل المحلات'))
+    {
+        $stores = \common\models\Store::find()->where(['status'=>1])->all();
+    }else{
+        $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+    }
+    $single_store = null ;
+    if(count($stores) == 1)
+    {
+        $single_store = $stores[0]->id;
+    }
+    if(empty($model->store_id))
+    {
+        $model->store_id = $single_store;
+    }
+
+    echo $form->field($model, 'store_id')->dropDownList([''=>'اختر المحل ....']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name'));
+    ?>
+    
     <?php
     echo $form->field($model, "client_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[$model->client_id=>$model->client ? $model->client->name : ''],
@@ -64,7 +85,7 @@ $this->registerJsFile(
     <?= $form->field($model, 'client_note')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'status')->dropDownList($model::statusArray) ?>
-
+   
 
  
     <?php

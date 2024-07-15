@@ -11,6 +11,7 @@ use common\models\ReturnsGroup;
  */
 class ReturnsGroupSearch extends ReturnsGroup
 {
+   
     /**
      * {@inheritdoc}
      */
@@ -18,7 +19,7 @@ class ReturnsGroupSearch extends ReturnsGroup
     {
         return [
             [['id', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['note', 'returner_name'], 'safe'],
+            [['note', 'returner_name','store_id'], 'safe'],
         ];
     }
 
@@ -47,7 +48,14 @@ class ReturnsGroupSearch extends ReturnsGroup
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
-
+        $query->select(
+            "returns_group.* ,order.store_id as store_id"
+        );
+        $query->joinWith([
+            'order' => function (\yii\db\ActiveQuery $query) {
+                $query->select(['store_id']);
+            },
+        ]);
         $this->load($params);
 
         if (!$this->validate()) {
@@ -60,12 +68,14 @@ class ReturnsGroupSearch extends ReturnsGroup
         $query->andFilterWhere([
             'id' => $this->id,
             'order_id' => $this->order_id,
+            'order.store_id' => $this->store_id,
             'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
         $query->orderBy(['id'=>SORT_DESC]);
+        // print_r( $query->createCommand()->getRawSql() );die;
 
         $query->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'returner_name', $this->returner_name]);

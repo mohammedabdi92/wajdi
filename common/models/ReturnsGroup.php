@@ -24,6 +24,7 @@ use common\models\Returns;
  */
 class ReturnsGroup extends \yii\db\ActiveRecord
 {
+    public $store_id;
     /**
      * {@inheritdoc}
      */
@@ -65,6 +66,7 @@ class ReturnsGroup extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'الرقم'),
             'order_id' => Yii::t('app', 'الطلب'),
             'product_id' => Yii::t('app', 'المادة'),
+            'store_id' => Yii::t('app', 'المحل'),
             'returner_name' => Yii::t('app', 'الشخص المرجع'),
             'note' => Yii::t('app', 'ملاحظة'),
             'total_amount' => Yii::t('app', ' مجموع المرجع الصافي للعميل'),
@@ -79,5 +81,13 @@ class ReturnsGroup extends \yii\db\ActiveRecord
     public function getReturns()
     {
         return $this->hasMany(Returns::className(), ['returns_group_id' => 'id']);
+    }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
+    public function getStoreTitle()
+    {
+        return Store::findOne($this->store_id)->name;
     }
 }

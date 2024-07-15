@@ -508,9 +508,15 @@ class OrderController extends BaseController
                 'name' => $customer ? $customer->name : null,
                 'phone_number' => $customer ? $customer->phone_number : null,
             ],
+            'store_name'=> $order->getStoreTitle(),
             'created_at' => $order->created_at,
             'created_by' => \common\components\CustomFunc::getUserName($order->created_by),
         ]);
+    }
+    public function actionGetStore($order_id)
+    {
+        $order = Order::findOne($order_id);
+        return $order->storeTitle??'';
     }
     public function actionCreateFk(){
 
