@@ -83,7 +83,7 @@ function calculateTotals() {
         var discount = (total * (parseFloat(discount_percentage) / 100));
         discount = parseFloat(discount.toFixed(3));
         total =  total-discount;
-        $('[id=discount]').val(discount);
+        $('[id$=-discount]').val(discount);
     }
     var tax_percentage = $('[id$=tax_percentage]').val();
     if (tax_percentage) {
