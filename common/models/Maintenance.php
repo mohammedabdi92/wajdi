@@ -91,7 +91,7 @@ class Maintenance extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'الرقم',
             'client_id'  => 'اسم العميل',
             'store_id'  => 'المحل',
             'product_name' => 'اسم المادة',
