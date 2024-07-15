@@ -38,7 +38,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
 //    print_r("<pre>");
 //    print_r(Yii::$app->requestedRoute);die;
     ?>
-    <?php if( in_array(Yii::$app->requestedRoute,['inventory-order/create','inventory-order/update','order/create','order/update','ar-order/update']) ) :?>
+    <?php if( in_array(Yii::$app->requestedRoute,['inventory-order/create','inventory-order/update','order/create','order/update','ar-order/update','returns-group/create']) ) :?>
     <script>
 
         window.onbeforeunload = popup;

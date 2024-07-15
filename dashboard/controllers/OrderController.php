@@ -129,6 +129,21 @@ class OrderController extends BaseController
             // validate all models
             $valid = $model->validate();
             $valid = Model::validateMultiple($model_product) && $valid;
+            $productIds = ArrayHelper::getColumn($model_product, 'product_id');
+            $productIdCounts = array_count_values($productIds);
+
+            $duplicates = array_filter($productIdCounts, function($count) {
+                return $count > 1;
+            });
+            
+            if (!empty($duplicates)) {
+                foreach ($model_product as $model_p) {
+                    if (isset($duplicates[$model_p->product_id])) {
+                        $model_p->addError('product_id','لا يمكنك اضافة نفس المادة اكثر من مرة');
+                    }
+                }
+                $valid = false;
+            }
 
 
 
@@ -193,12 +208,12 @@ class OrderController extends BaseController
                         $model->debt = null;
                         $model->dept_note = null;
 
-                        if ($flag = $model->save(false)) {
+                        if ($flag = $model->save()) {
                             foreach ($model_product as $modelAddress) {
                                 $modelAddress->order_id = $model->id;
                                 $modelAddress->store_id = $model->store_id;
 
-                                if (! ($flag = $modelAddress->save(false))) {
+                                if (! ($flag = $modelAddress->save())) {
                                     $transaction->rollBack();
                                     break;
                                 }

@@ -18,8 +18,8 @@ $this->registerJsFile(
 
 $url = \yii\helpers\Url::to(['product/product-list']);
 $priceList = [];
-
-
+// print "<pre>";
+// print_r($model->id);die;
 
 
 ?>
