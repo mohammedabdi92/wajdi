@@ -78,6 +78,7 @@ class TransferOrderSearch extends TransferOrder
                 $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
             }
         }
+        $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
     }
 }

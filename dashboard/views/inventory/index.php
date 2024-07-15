@@ -30,12 +30,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'id',
         [
             'attribute' => 'product_name',
-            'value' => function($model){
-                return $model->productTitle;
+            'value' => function ($model) {
+                return $model->productTitle ? Html::a($model->productTitle, '/product/view?id='.$model->product_id,['target'=>'_blank'] ) : '';
             },
             'label'=>"المادة",
             'format' => 'raw',
-
         ],
         [
             'attribute' => 'store_id',

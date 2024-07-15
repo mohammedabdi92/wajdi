@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             'id',
-            'order_id',
+            [
+                'attribute' => 'order_id',
+                'value' => function ($model) {
+                    return $model->order_id ? Html::a($model->order_id, '/order/view?id='.$model->order_id,['target'=>'_blank'] ) : '';
+                },
+                'format' => 'raw',
+            ],
             'returner_name',
             'total_count',
             'total_amount',
