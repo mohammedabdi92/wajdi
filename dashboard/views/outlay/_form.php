@@ -59,7 +59,7 @@ use yii\widgets\ActiveForm;
         </div>
         <?php endif;?>
     <div class="col-md-6">
-        <?= $form->field($model, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')); ?>
+        <?= $form->field($model, 'user_id')->dropDownList( [''=>'اختر ....'] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->where(['status'=>10])->all(), 'id', 'full_name')); ?>
     </div>
 
         <div class="col-md-6">
