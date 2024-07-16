@@ -15,15 +15,20 @@ class InventoryOrderSearch extends InventoryOrder
     public $product_id;
     public $supplier_name;
     public $supplierName;
+    public $created_at_from;
+    public $created_at_to;
+
+    public $updated_at_from;
+    public $updated_at_to;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'supplier_id','store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'supplier_id','store_id',  'created_by','updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
-            [['supplier_name','product_id','supplierName'], 'safe'],
+            [['supplier_name', 'updated_at', 'created_at','product_id','supplierName','created_at_from','created_at_to','updated_at_from','updated_at_to'], 'safe'],
         ];
     }
 
@@ -72,15 +77,30 @@ class InventoryOrderSearch extends InventoryOrder
             }
         }
 
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'inventory_order.created_at',strtotime( $this->created_at_from)]);
+        }
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'inventory_order.created_at',strtotime($this->created_at_to) ]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'inventory_order.updated_at',strtotime( $this->updated_at_from)]);
+        }
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'inventory_order.updated_at',strtotime($this->updated_at_to) ]);
+        }
+
 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'supplier_id' => $this->supplier_id,
             'total_cost' => $this->total_cost,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
             'isDeleted' => $this->isDeleted,
         ]);
@@ -97,7 +117,7 @@ class InventoryOrderSearch extends InventoryOrder
             $query->andFilterWhere(['store_id'=>$this->store_id]);
         }
         $query->orderBy(['id'=>SORT_DESC]);
-
+        // print_r($query->createCommand()->getRawSql());die;
         return $dataProvider;
     }
     public function getProduct()

@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\web\JsExpression;
+use kartik\daterange\DateRangePicker;
 
 
 /* @var $this yii\web\View */
@@ -85,26 +86,55 @@ if(Yii::$app->user->can('كل المحلات'))
     <?= $form->field($model, 'total_amount') ?>
 
     <label>تاريخ الانشاء</label>
-    <?=   \kartik\date\DatePicker::widget([
+    <?= DateRangePicker::widget([
         'model' => $model,
         'attribute' => 'created_at',
-        'language' => 'ar',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'created_at_from',
+        'endAttribute' => 'created_at_to',
         'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-m-d '
+            'timePicker' => true,
+            'timePickerIncrement' => 1,
+            'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+
         ]
     ]); ?>
+    <br>
+
+
+   
     <?php  echo $form->field($model, 'created_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+
     <label>تاريخ التعديل</label>
-    <?=   \kartik\date\DatePicker::widget([
+    <?= DateRangePicker::widget([
         'model' => $model,
         'attribute' => 'updated_at',
-        'language' => 'ar',
+        'language' => 'en',
+        'convertFormat' => true,
+        'startAttribute' => 'updated_at_from',
+        'endAttribute' => 'updated_at_to',
         'pluginOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-m-d '
+            'timePicker' => true,
+            'timePickerIncrement' => 1,
+            'locale' => [
+                'applyLabel' => 'تطبيق',
+                'cancelLabel' => 'الغاء',
+                'format' => 'Y-m-d H:i:s',
+            ],
+            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+
         ]
     ]); ?>
+    <br>
+    
     <?php  echo $form->field($model, 'updated_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
 
     <?php // echo $form->field($model, 'created_at') ?>

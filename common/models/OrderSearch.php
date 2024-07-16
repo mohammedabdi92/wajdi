@@ -14,6 +14,9 @@ class OrderSearch extends Order
     public $product_id;
     public $created_at_from;
     public $created_at_to;
+
+    public $updated_at_from;
+    public $updated_at_to;
     public $total_amount_without_discount_sum;
     public $total_discount_sum ;
     public $debt_sum ;
@@ -38,9 +41,9 @@ class OrderSearch extends Order
     public function rules()
     {
         return [
-            [['id', 'customer_id', 'store_id' , 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['id', 'customer_id', 'store_id' , 'created_by', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
-            [['created_at_from','created_at_to','customer_name','product_id','created_at','returns_amount','total_profit_plus_debt','total_profit_without_debt','customerName'], 'safe'],
+            [['created_at_from','created_at_to','customer_name','product_id','created_at','updated_at','returns_amount','total_profit_plus_debt','total_profit_without_debt','customerName','updated_at_from','updated_at_to'], 'safe'],
         ];
     }
 
@@ -93,7 +96,6 @@ class OrderSearch extends Order
             'order.customer_id' => $this->customer_id,
             'order.total_amount' => $this->total_amount,
             'order.created_by' => $this->created_by,
-            'order.updated_at' => $this->updated_at,
             'order.updated_by' => $this->updated_by,
             'order.isDeleted' => $this->isDeleted,
         ]);
@@ -104,7 +106,15 @@ class OrderSearch extends Order
         }
         if($this->created_at_to)
         {
-            $query->andFilterWhere(['<=', 'order.created_at',strtotime($this->created_at_to." 23:59:59") ]);
+            $query->andFilterWhere(['<=', 'order.created_at',strtotime($this->created_at_to) ]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'order.updated_at',strtotime( $this->updated_at_from)]);
+        }
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'order.updated_at',strtotime($this->updated_at_to) ]);
         }
 
         if($this->product_id)
@@ -152,6 +162,7 @@ class OrderSearch extends Order
             $this->total_discount_sum = $query->sum('total_discount') + $query->sum('total_price_discount_product') ;
         }
         $query->orderBy(['id'=>SORT_DESC]);
+        // print_r($query->cre  ateCommand()->getRawSql());die;
         return $dataProvider;
     }
     public function getProduct()
