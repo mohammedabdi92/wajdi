@@ -11,7 +11,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
-
+use common\components\CustomFunc;
 /**
  * ReturnsGroupController implements the CRUD actions for ReturnsGroup model.
  */
@@ -190,7 +190,16 @@ class ReturnsGroupController extends Controller
                 try {
                     if ($flag = $model->save(false)) {
                         if (! empty($deletedIDs)) {
+                          
+                            $productIDs =  Returns::find()->select('product_id')->where(['id'=>$deletedIDs])->asArray()->all();
+                            
+                           
                             Returns::deleteAll(['id' => $deletedIDs]);
+                            foreach ($productIDs as $productID)
+                            {
+                                
+                                CustomFunc::calculateProductCount($model->order->store_id,$productID['product_id']);
+                            }
                         }
                         foreach ($model_product as $modelproduct) {
                             $modelproduct->returns_group_id = $model->id;

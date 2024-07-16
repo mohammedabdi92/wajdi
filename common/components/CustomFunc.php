@@ -42,6 +42,7 @@ class CustomFunc
     public static function calculateProductCount($store_id, $product_id, $old_product_id = null)
     {
 
+        // var_dump($store_id, $product_id, $old_product_id = null);die;
 
         $item_inventory_count = InventoryOrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
         $item_order_count = OrderProduct::find()->select('count')->where(['store_id' => $store_id, 'product_id' => $product_id])->sum('count') ?? 0;
