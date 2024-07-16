@@ -35,6 +35,8 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
 class Product extends \common\components\BaseModel
 {
     public $imageFile;
+    public $last_price;
+    public $min_price;
 
     public $min_counts = [];
     const STATUS_ACTIVE = 1;
@@ -68,7 +70,7 @@ class Product extends \common\components\BaseModel
             [['title'], 'unique'],
             [['title'], 'trim'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts'], 'safe'],
+            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price'], 'safe'],
         ];
     }
 
@@ -98,6 +100,8 @@ class Product extends \common\components\BaseModel
             'count_type' => Yii::t('app', 'نوع العد'),
             'price' => Yii::t('app', 'السعر'),
             'min_number' => Yii::t('app', 'الحد الادنى للعدد'),
+            'last_price' => Yii::t('app', 'اخر سعر'),
+            'min_price' => Yii::t('app', 'اقل سعر'),
             'price_1' => Yii::t('app', 'السعر الاول'),
             'price_2' => Yii::t('app', 'السعر الثاني'),
             'price_3' => Yii::t('app', 'السعر الثالث'),

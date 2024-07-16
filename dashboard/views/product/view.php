@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use common\models\InventoryOrderProduct;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
@@ -10,6 +11,17 @@ $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$InventoryOrderProduct = InventoryOrderProduct::find()->where(['product_id'=>$model->id])->orderBy(['id' => SORT_DESC])->one();
+if($InventoryOrderProduct)
+{
+    $model->last_price =$InventoryOrderProduct->product_cost_final;
+}
+$InventoryOrderProductMin = InventoryOrderProduct::find()->where(['product_id'=>$model->id])->orderBy(['product_cost' => SORT_ASC])->one();
+if($InventoryOrderProductMin)
+{
+    $model->min_price =$InventoryOrderProductMin->product_cost_final;
+
+}
 ?>
 <div class="product-view">
 
@@ -47,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
+            
             'price',
             [
                 'attribute' => 'price_1',
@@ -68,6 +81,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'image_name',
                 'value'=>$model->getImageUrl(),
                 'format' => ['image',['width'=>'100','height'=>'100']],
+            ],
+            [
+                'attribute'=>'min_price',
+                'visible'=>Yii::$app->user->can('اظهار اخر واقل سعر في عرض المواد'),
+            ],
+            [
+                'attribute'=>'last_price',
+                'visible'=>Yii::$app->user->can('اظهار اخر واقل سعر في عرض المواد'),
             ],
             [
                 'attribute' => 'min_number',
