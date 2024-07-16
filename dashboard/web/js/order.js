@@ -286,8 +286,6 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
 });
 
 $(document).on('select2:open',"select[id$=-product_id]", function (item) {
-    var inp = $('.select2-search__field');
-    $(item).find(inp).trigger('focus');
-    // $('.select2-search__field').trigger('focus');
+    $(".select2-search__field")[0].focus()
 });
 
