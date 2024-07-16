@@ -90,4 +90,15 @@ class ReturnsGroup extends \yii\db\ActiveRecord
     {
         return Store::findOne($this->store_id)->name;
     }
+    public function beforeDelete()
+    {
+       $returns =  $this->returns;
+       foreach ($returns as $return)
+       {
+           $return->delete();
+
+       }
+
+        return parent::beforeDelete();
+    }
 }
