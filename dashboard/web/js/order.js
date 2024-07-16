@@ -106,6 +106,12 @@ function calculateTotal() {
 
     $('[id$=order-total_amount]').val(parseFloat(total.toFixed(3)));
     var profit = total - total_cost;
+    if(profit < 0)
+    {
+        $('#order_status').html('انتبه الفاتورة خسرانة');
+    }else{
+        $('#order_status').html('');
+    }
     $('#titleElement_all').attr('title',profit);
     $('#titleElement_all').attr('data-original-title',profit);
     $("[id$=-earn_the_bill]").val(profit);

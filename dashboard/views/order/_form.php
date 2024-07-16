@@ -371,6 +371,14 @@ JS;
                 ]);
             }
              ?>
+             <?php if(Yii::$app->user->can('اظهار خسارة الفاتورة بالمبيعات') ): ?>
+                <div class="form-group ">
+<h1 class="control-label" id = "order_status" style=" color: red; "></h1>
+
+</div>
+             
+               
+            <?php endif;?>
             <?php if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')): ?>
                 <button type="button" class="btn btn-secondary"  id = "titleElement_all" data-toggle="tooltip" data-placement="top" title="<?= $model->earn_the_bill ?>">
                              🛞
