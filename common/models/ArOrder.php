@@ -60,6 +60,7 @@ class ArOrder extends \common\components\BaseModel
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['product_count'], 'number'],
+            [['earn_the_bill'], 'validateEarnTheBill'],
             [['customer_id'],'required', 'when' => function($model) {
                 if(empty($this->customer_id) && empty($this->customer_name))
                 {
@@ -129,6 +130,14 @@ class ArOrder extends \common\components\BaseModel
     public function getStoreTitle()
     {
         return Store::findOne($this->store_id)->name;
+    }
+    public function validateEarnTheBill($attr) {
+
+        if($this->earn_the_bill < 0 && Yii::$app->user->can('منع حفظ الفاتورة الخسرانة') && empty( $this->debt))
+        {
+            $this->addError('earn_the_bill','لا يمكن حفظ الفاتورة الخسرانة');
+            Yii::$app->session->setFlash('error', "لا يمكن حفظ الفاتورة الخسرانة"); 
+        }
     }
     public function beforeSave($insert)
     {

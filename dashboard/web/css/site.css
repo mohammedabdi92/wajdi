@@ -229,3 +229,6 @@ div[class$="-view"] .table-bordered.detail-view {
     left: 50% !important;
     transform: translate(-50%, -50%);
 }
+.alert-danger{
+    display: -webkit-box;
+}

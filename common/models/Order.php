@@ -59,6 +59,7 @@ class Order extends \common\components\BaseModel
             [['customer_id', 'store_id', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['total_amount'], 'number'],
             [['product_count'], 'number'],
+            [['earn_the_bill'], 'validateEarnTheBill'],
             [['customer_id'],'required','when'=>function($model){
                 return empty($model->customer_name);
             }],
@@ -124,6 +125,15 @@ class Order extends \common\components\BaseModel
         }else if(Customer::find()->where($cond)->count() != 0)
         {
             $this->addError('customer_name','العميل موجود مسبقا');
+        }
+    }
+
+    public function validateEarnTheBill($attr) {
+
+        if($this->earn_the_bill < 0 && Yii::$app->user->can('منع حفظ الفاتورة الخسرانة') && empty( $this->debt))
+        {
+            $this->addError('earn_the_bill','لا يمكن حفظ الفاتورة الخسرانة');
+            Yii::$app->session->setFlash('error', "لا يمكن حفظ الفاتورة الخسرانة"); 
         }
     }
 
