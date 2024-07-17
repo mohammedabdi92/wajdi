@@ -116,7 +116,7 @@ function calculateTotal() {
     $('#titleElement_all').attr('data-original-title',profit);
     $("[id$=-earn_the_bill]").val(profit);
 
-}
+
     var paid = $('[id$=paid]').val();
     if(paid)
     {
@@ -136,6 +136,8 @@ function calculateTotal() {
     });
 
     $('[id$="order-total_count"]').val(supdis.toFixed(3));
+
+}
    
 
 function calculateSupTotals(item,isAmountChanged = false) {
