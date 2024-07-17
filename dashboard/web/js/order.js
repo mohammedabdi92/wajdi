@@ -291,3 +291,18 @@ $(document).on('select2:open',"select[id$=-product_id]", function (item) {
     $(".select2-search__field")[0].focus()
 });
 
+function initializeTooltips() {
+    // Initialize all tooltips
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // Enable tooltip on click for mobile devices
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        $('[data-toggle="tooltip"]').on('click', function() {
+            $(this).tooltip('show');
+        });
+    }
+}
+
+$(document).on('pjax:success', function() {
+    initializeTooltips();
+});
