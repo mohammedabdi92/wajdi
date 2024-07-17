@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Store;
 use common\models\StoreSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * StoreController implements the CRUD actions for Store model.
  */
-class StoreController extends Controller
+class StoreController extends BaseController
 {
     /**
      * @inheritDoc

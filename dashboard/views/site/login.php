@@ -48,6 +48,14 @@ $bundle = mortezakarimi\gentelellartl\assets\Asset::register($this);
                     ]
                 ]); ?>
                 <h1> مجموعة وجدي للاعمار </h1>
+
+                <?php if (Yii::$app->session->hasFlash('error')): ?>
+                    <div class="alert alert-danger alert-dismissable">  
+                        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+                        <h4><i class="icon fa fa-exclamation"> </i></h4> 
+                         <?= Yii::$app->session->getFlash('error') ?>
+                    </div>
+                <?php endif; ?>
                 <div class="row">
                     <?= $form->field($model, 'username')->textInput(['placeholder' => "اسم المستخدم", 'autocomplete' => 'off'])->label(false) ?>
                 </div>

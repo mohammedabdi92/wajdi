@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Transactions;
 use common\models\TransactionsSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * TransactionsController implements the CRUD actions for Transactions model.
  */
-class TransactionsController extends Controller
+class TransactionsController extends BaseController
 {
     /**
      * @inheritDoc

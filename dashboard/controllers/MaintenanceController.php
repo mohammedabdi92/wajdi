@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Maintenance;
 use common\models\MaintenanceSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * MaintenanceController implements the CRUD actions for Maintenance model.
  */
-class MaintenanceController extends Controller
+class MaintenanceController extends BaseController
 {
     /**
      * @inheritDoc

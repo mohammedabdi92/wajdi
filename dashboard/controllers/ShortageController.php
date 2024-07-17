@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Shortage;
 use common\models\ShortageSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ShortageController implements the CRUD actions for Shortage model.
  */
-class ShortageController extends Controller
+class ShortageController extends BaseController
 {
     /**
      * @inheritDoc

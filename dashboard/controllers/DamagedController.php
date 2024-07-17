@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Damaged;
 use common\models\DamagedSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * DamagedController implements the CRUD actions for Damaged model.
  */
-class DamagedController extends Controller
+class DamagedController extends BaseController
 {
     /**
      * @inheritDoc

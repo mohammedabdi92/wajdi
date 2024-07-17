@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use dashboard\components\BaseController;
 use Yii;
 use common\models\FinancialWithdrawal;
 use common\models\FinancialWithdrawalSearch;
@@ -12,7 +13,7 @@ use yii\filters\VerbFilter;
 /**
  * FinancialWithdrawalController implements the CRUD actions for FinancialWithdrawal model.
  */
-class FinancialWithdrawalController extends Controller
+class FinancialWithdrawalController extends BaseController
 {
     /**
      * @inheritDoc

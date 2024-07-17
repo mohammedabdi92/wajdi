@@ -16,12 +16,13 @@ use common\models\Outlay;
 use common\models\Presence;
 use common\models\ProductSearch;
 use common\models\Returns;
+use dashboard\components\BaseController;
 use dashboard\models\cashBoxSearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 
-class ReportsController extends Controller
+class ReportsController extends BaseController
 {
 
     /**

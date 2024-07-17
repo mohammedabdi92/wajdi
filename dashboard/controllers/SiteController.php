@@ -6,6 +6,7 @@ use common\models\LoginForm;
 use common\models\OrderProduct;
 use common\models\Presence;
 use common\models\User;
+use dashboard\components\BaseController;
 use Yii;
 use yii\db\Query;
 use yii\filters\VerbFilter;
@@ -16,37 +17,12 @@ use yii\web\Response;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends BaseController
 {
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }
-
+   
     /**
      * {@inheritdoc}
      */

@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Posts;
 use common\models\PostsSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * PostsController implements the CRUD actions for Posts model.
  */
-class PostsController extends Controller
+class PostsController extends BaseController
 {
     /**
      * @inheritDoc

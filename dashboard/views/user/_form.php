@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 use dashboard\admin\AdminAsset;
 use yii\helpers\Json;
 use yii\helpers\Url;
+use kartik\time\TimePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
@@ -30,6 +31,23 @@ list(,$url) = Yii::$app->assetManager->publish('@dashboard/admin/assets');
         'options' => ['placeholder' => 'اختر .....','multiple' => true],
         'pluginOptions' => ['allowClear' => true],
     ]); ?>
+
+<?=  $form->field($model, "days")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[''=>"اختر ....."]+$model::daysArray,
+        'options' => ['placeholder' => 'اختر .....','multiple' => true],
+        'pluginOptions' => ['allowClear' => true],
+]); ?>
+<div class="row">
+    <div class="col-md-6">
+        <?= $form->field($model, 'in_time')->textInput(['type' => 'time', 'dir' => 'rtl']) ?>
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'out_time')->textInput(['type' => 'time', 'dir' => 'rtl']) ?>
+    </div>
+    <button type="button" class="btn btn-secondary" onclick="document.getElementById('user-in_time').value = '';document.getElementById('user-out_time').value = '';">
+        محو وقت الدخول والخروج
+    </button>
+</div>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
     * اذا قمت بتعبئة هذا الحقل سيتغير كلمت السر للمستخدم
     <?= $form->field($model, 'password_text')->textInput() ?>

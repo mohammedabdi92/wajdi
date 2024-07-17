@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Presence;
 use common\models\PresenceSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * PresenceController implements the CRUD actions for Presence model.
  */
-class PresenceController extends Controller
+class PresenceController extends BaseController
 {
     /**
      * @inheritDoc

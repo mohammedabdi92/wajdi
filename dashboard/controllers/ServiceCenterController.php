@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\ServiceCenter;
 use common\models\ServiceCenterSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ServiceCenterController implements the CRUD actions for ServiceCenter model.
  */
-class ServiceCenterController extends Controller
+class ServiceCenterController extends BaseController
 {
     /**
      * @inheritDoc

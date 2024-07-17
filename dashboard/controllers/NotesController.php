@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Notes;
 use common\models\NotesSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * NotesController implements the CRUD actions for Notes model.
  */
-class NotesController extends Controller
+class NotesController extends BaseController
 {
     /**
      * @inheritDoc

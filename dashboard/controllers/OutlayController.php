@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Outlay;
 use common\models\OutlaySearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * OutlayController implements the CRUD actions for Outlay model.
  */
-class OutlayController extends Controller
+class OutlayController extends BaseController
 {
     /**
      * @inheritDoc

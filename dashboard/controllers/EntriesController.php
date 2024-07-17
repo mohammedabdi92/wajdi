@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Entries;
 use common\models\EntriesSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * EntriesController implements the CRUD actions for Entries model.
  */
-class EntriesController extends Controller
+class EntriesController extends BaseController
 {
     /**
      * @inheritDoc

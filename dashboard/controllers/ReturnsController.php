@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\Returns;
 use common\models\ReturnsSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * ReturnsController implements the CRUD actions for Returns model.
  */
-class ReturnsController extends Controller
+class ReturnsController extends BaseController
 {
     /**
      * @inheritDoc

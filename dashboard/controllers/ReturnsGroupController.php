@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use dashboard\components\BaseController;
 use Yii;
 use common\models\ReturnsGroup;
 use common\models\Returns;
@@ -15,7 +16,7 @@ use common\components\CustomFunc;
 /**
  * ReturnsGroupController implements the CRUD actions for ReturnsGroup model.
  */
-class ReturnsGroupController extends Controller
+class ReturnsGroupController extends BaseController
 {
     /**
      * @inheritDoc

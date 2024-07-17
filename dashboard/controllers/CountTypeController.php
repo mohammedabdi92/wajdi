@@ -4,6 +4,7 @@ namespace dashboard\controllers;
 
 use common\models\CountType;
 use common\models\CountTypeSearch;
+use dashboard\components\BaseController;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -11,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * CountTypeController implements the CRUD actions for CountType model.
  */
-class CountTypeController extends Controller
+class CountTypeController extends BaseController
 {
     /**
      * @inheritDoc
