@@ -238,7 +238,7 @@ $(document).on('change', 'input[type=radio][name$="[price_number]"]', function (
     calculateTotal();
 });
 $(document).on('change', '[id$="order-store_id"]', function (item) {
-    $.pjax.reload({container:"#new_country"});
+    $.pjax.reload({container: "#new_country", timeout: 5000});
 
 });
 $(document).on('pjax:end', function(e) {
