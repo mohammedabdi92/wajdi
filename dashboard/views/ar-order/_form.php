@@ -279,8 +279,9 @@ $priceList = [];
                     </button>
                
             <?php
-                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
+               
                 endif;
+                echo $form->field($model, "earn_the_bill")->hiddenInput()->label('');
             ?>
             <div class="form-group">
                 <?php if(!Yii::$app->user->can('عدم حفظ فاتورة المبيعات')):?>
