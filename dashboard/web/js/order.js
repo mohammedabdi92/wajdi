@@ -273,6 +273,10 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
         jQuery(this).html("المادة : " + (index + 1))
     });
+    $('[id^="titleElement_"]').each(function(index) {
+        $(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
+    });
+    initializeTooltips();
 });
 
 $(".dynamicform_wrapper").on("afterDelete", function(e) {
@@ -280,6 +284,10 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
         jQuery(this).html("المادة : " + (index + 1))
     });
+    $('[id^="titleElement_"]').each(function(index) {
+        $(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
+    });
+    initializeTooltips();
     $('.item').each(function (index, element) {
         calculateSupTotals(element,true);
     });
