@@ -57,10 +57,14 @@ class CustomerController extends BaseController
     public function actionView($id)
     {
         $searchModel = new TransactionsSearch();
-        $params = ['TransactionsSearch'=>['customer_id'=>$id]];
+        $params = ['TransactionsSearch'=>['customer_id'=>$id,'type'=>1]];
         $dataProvider = $searchModel->search($params);
+        $searchModel2 = new TransactionsSearch();
+        $params2 = ['TransactionsSearch'=>['customer_id'=>$id,'type'=>2]];
+        $dataProvider2 = $searchModel2->search($params2);
         return $this->render('view', [
             'dataProvider'=>$dataProvider,
+            'dataProvider2'=>$dataProvider2,
             'model' => $this->findModel($id),
         ]);
     }
