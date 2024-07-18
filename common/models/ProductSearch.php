@@ -18,7 +18,7 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['title','price_1','price_2','price_3','price_4','status'], 'safe'],
+            [['title','price_1','price_2','price_3','price_4','status','item_code'], 'safe'],
         ];
     }
 
@@ -80,7 +80,10 @@ class ProductSearch extends Product
                 $query->andFilterWhere(['like', 'LOWER( title )', "$part"]);
             }
         }
-       
+        if($this->item_code)
+        {
+            $query->andFilterWhere(['like', 'LOWER( item_code )', "$this->item_code"]);
+        }       
 
         return $dataProvider;
     }

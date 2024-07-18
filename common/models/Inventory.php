@@ -25,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  */
 class Inventory extends \common\components\BaseModel
 {
+    public $item_code;
     const STATUS_ACTIVE = 1;
     const STATUS_FEW = 2;
     const STATUS_NOT_ACTIVE = 3;

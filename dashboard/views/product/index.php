@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => ['image', ['width' => '100', 'height' => '100']],
         ],
         'title:ntext',
+        'item_code',
         [
             'attribute' => 'status',
             'value' => function ($model) {

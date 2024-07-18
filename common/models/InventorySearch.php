@@ -30,6 +30,7 @@ class InventorySearch extends Inventory
     
     public $created_at_range;
 
+
     /**
      * {@inheritdoc}
      */
@@ -38,7 +39,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_by', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from','item_code'], 'safe'],
         ];
     }
 
@@ -65,11 +66,11 @@ class InventorySearch extends Inventory
             new Expression("(CASE 
             WHEN ( inventory.count = 0 ) THEN 3 
             WHEN ( min_product_count.count IS NOT NULL and min_product_count.count > inventory.count ) THEN 2 ELSE 1 END
-            ) AS available_status ,inventory.*")
+            ) AS available_status ,product.item_code as item_code,inventory.*")
         );
         $query->joinWith([
             'product' => function (\yii\db\ActiveQuery $query) {
-                $query->select(['id','category_id','price','price_1','price_2','price_3','price_4','count_type','title']);
+                $query->select(['id','category_id','price','price_1','price_2','price_3','price_4','count_type','title','item_code']);
             },
             'minProductCount' => function (\yii\db\ActiveQuery $query) {
                 $query->select(['count']);
@@ -126,6 +127,10 @@ class InventorySearch extends Inventory
             $query->andFilterWhere(['>=', 'inventory.created_at',strtotime( $this->created_at_from)]);
 
         }
+        if($this->item_code)
+        {
+            $query->andFilterWhere(['like', 'LOWER( product.item_code )', "$this->item_code"]);
+        }       
 
         if($this->created_at_to)
         {

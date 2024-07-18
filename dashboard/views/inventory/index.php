@@ -38,6 +38,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw',
         ],
         [
+            'attribute' => 'item_code',
+           
+            'label'=>"الكود",
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'store_id',
             'value' => function($model){
                 return $model->storeTitle;
