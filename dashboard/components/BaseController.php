@@ -16,15 +16,22 @@ class BaseController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [],
+                        'actions' => ['login'],
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    
+                    if (Yii::$app->user->isGuest) {
+                        return Yii::$app->response->redirect(['site/login']);
+                    } else {
+                        throw new \yii\web\ForbiddenHttpException('You are not allowed to access this page');
+                    }
+                },
             ],
             'timeValidation' => [
                 'class' => TimeValidationBehavior::class,
