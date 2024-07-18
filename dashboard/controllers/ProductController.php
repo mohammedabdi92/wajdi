@@ -183,8 +183,13 @@ class ProductController extends BaseController
                 ->from('product')
                 ->limit(20);
             $parts = preg_split('/\s+/', $q);
-            foreach ($parts as $part){
-                $query->andWhere(['like', 'LOWER( product.title )', "$part"]);
+            if( count($parts) == 1 && is_numeric($parts[0])  )
+            {
+                $query->andWhere(['like', 'LOWER( product.item_code )', "$parts[0]"]);
+            }else{
+                foreach ($parts as $part){
+                    $query->andWhere(['like', 'LOWER( product.title )', "$part"]);
+                }
             }
             $data = $query->asArray()->all();
             $out['results'] = array_values($data);

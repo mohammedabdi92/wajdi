@@ -70,7 +70,7 @@ class Product extends \common\components\BaseModel
             [['title'], 'unique'],
             [['title'], 'trim'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price'], 'safe'],
+            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price','item_code'], 'safe'],
         ];
     }
 
@@ -98,6 +98,7 @@ class Product extends \common\components\BaseModel
             'title' => Yii::t('app', 'الاسم'),
             'category_id' => Yii::t('app', 'قسم'),
             'count_type' => Yii::t('app', 'نوع العد'),
+            'item_code' => Yii::t('app', 'الكود'),
             'price' => Yii::t('app', 'السعر'),
             'min_number' => Yii::t('app', 'الحد الادنى للعدد'),
             'last_price' => Yii::t('app', 'اخر سعر'),

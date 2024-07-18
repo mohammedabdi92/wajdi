@@ -27,6 +27,7 @@ $this->registerJsFile(
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput() ?>
+    <?= $form->field($model, 'item_code')->textInput() ?>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
 
@@ -51,6 +52,7 @@ $this->registerJsFile(
     ?>
 
 
+   
     <?= $form->field($model, 'price_pf_vat')->textInput()->label('السعر قبل الضريبه والخصم') ?>
     <?= $form->field($model, 'vat')->textInput()->label('الضريبة %') ?>
     <?= $form->field($model, 'price_discount_percent')->textInput()->label('نسبة الخصم %') ?>
