@@ -377,7 +377,7 @@ JS;
                
             <?php endif;?>
             <?php if(Yii::$app->user->can('اظهار التكلفة والربح في فاتورة المبيعات والارشيف')): ?>
-                <button type="button" class="btn btn-secondary"  id = "titleElement_all" data-toggle="tooltip" data-placement="top" title="<?= $model->earn_the_bill ?>">
+                <button type="button" class="btn btn-secondary"  id = "titleElement1_all" data-toggle="tooltip" data-placement="top" title="<?= $model->earn_the_bill ?>">
                              🛞
                     </button>
                

@@ -112,8 +112,8 @@ function calculateTotal() {
     }else{
         $('#order_status').html('');
     }
-    $('#titleElement_all').attr('title',profit);
-    $('#titleElement_all').attr('data-original-title',profit);
+    $('#titleElement1_all').attr('title',profit);
+    $('#titleElement1_all').attr('data-original-title',profit);
     $("[id$=-earn_the_bill]").val(profit);
 
 
