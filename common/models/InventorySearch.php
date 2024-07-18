@@ -25,6 +25,9 @@ class InventorySearch extends Inventory
     public $is_stagnant;
     public $created_at_from;
     public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
+    
     public $created_at_range;
 
     /**
@@ -33,9 +36,9 @@ class InventorySearch extends Inventory
     public function rules()
     {
         return [
-            [['id', 'product_id', 'store_id', 'created_by', 'updated_at', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
+            [['id', 'product_id', 'store_id', 'created_by', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
         ];
     }
 
@@ -95,7 +98,6 @@ class InventorySearch extends Inventory
             'inventory.last_product_cost' => $this->last_product_cost,
             'inventory.count' => $this->count,
             'inventory.created_by' => $this->created_by,
-            'inventory.updated_at' => $this->updated_at,
             'inventory.updated_by' => $this->updated_by,
             'inventory.isDeleted' => $this->isDeleted,
             'product.category_id' => $this->category_id,
@@ -129,6 +131,16 @@ class InventorySearch extends Inventory
         {
             $query->andFilterWhere(['<=', 'inventory.created_at',strtotime( $this->created_at_to)]);
         }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'inventory.updated_at',strtotime( $this->updated_at_from)]);
+
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'inventory.updated_at',strtotime( $this->updated_at_to)]);
+        }
 
         if($this->product_name)
         {
@@ -152,7 +164,7 @@ class InventorySearch extends Inventory
             $this->sum_price_4 = $query->sum('(product.price_4 * inventory.count)');
             $this->sum_count = $query->sum('inventory.count');
         }
-
+//  print_r($query->createCommand()->getRawSql());die;
 
         return $dataProvider;
     }
