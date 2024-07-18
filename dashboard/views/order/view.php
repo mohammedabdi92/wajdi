@@ -17,7 +17,14 @@ $total_returnd = \common\models\Returns::find()->where(['order_id'=>$model->id])
     <h1 style="padding-bottom: 10px;padding-top: 10px;"><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
+    <?=  Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary'])?>
+    <?php
+        if(Yii::$app->user->can('نسخ فاتورة المبيعات الى الارشيف'))
+        {
+            echo Html::a(Yii::t('app', 'نسخ الى الارشيف'), ['ar-copy', 'id' => $model->id], ['class' => 'btn btn btn-info']);
+        }
+    ?>
+        
         <?php
         if(Yii::$app->user->can('تعديل وحذف فواتير المبيعات'))
         {

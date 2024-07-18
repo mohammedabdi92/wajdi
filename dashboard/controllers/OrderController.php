@@ -406,11 +406,6 @@ class OrderController extends BaseController
 
         // setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
-            // set to use core fonts only
-            'mode' => Pdf::MODE_UTF8,
-            // A4 paper format
-            'format' => Pdf::FORMAT_A4,
-            // portrait orientation
             'orientation' => Pdf::ORIENT_PORTRAIT,
             // stream to browser inline
             'destination' => Pdf::DEST_BROWSER,
@@ -582,5 +577,23 @@ JS;
             return "هذا الطلب يحتوي على دين بقيمة ".$order->debt ;
         }
         return false;
+    }
+    public function actionArCopy($id){
+        
+        $model = Order::findOne($id);
+        $model_product = $model->products;
+        $nModel =  $model->cloneModel("common\models\ArOrder");
+        $nModel->debt = null ;
+        $nModel->save(false);
+     
+        foreach ($model_product as $modelproduct) {
+            $nModelproduct =  $modelproduct->cloneModel("common\models\ArOrderProduct");
+            $nModelproduct->order_id = $nModel->id;
+            $nModelproduct->store_id = $nModel->store_id;
+            $nModelproduct->save(false);
+        }
+        return $this->redirect(['ar-order/view', 'id' => $nModel->id]);
+
+
     }
 }
