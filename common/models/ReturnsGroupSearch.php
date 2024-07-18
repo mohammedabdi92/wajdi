@@ -12,14 +12,16 @@ use common\models\ReturnsGroup;
 class ReturnsGroupSearch extends ReturnsGroup
 {
    
+    public $created_at_from;
+    public $created_at_to;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['note', 'returner_name','store_id'], 'safe'],
+            [['id', 'order_id', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['note', 'returner_name','store_id','created_at_from','created_at_to','created_at'], 'safe'],
         ];
     }
 
@@ -64,12 +66,20 @@ class ReturnsGroupSearch extends ReturnsGroup
             return $dataProvider;
         }
 
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'returns_group.created_at',strtotime( $this->created_at_from)]);
+        }
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'returns_group.created_at',strtotime($this->created_at_to) ]);
+        }
+
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
             'order_id' => $this->order_id,
             'order.store_id' => $this->store_id,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,

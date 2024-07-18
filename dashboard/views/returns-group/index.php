@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use common\models\ReturnsGroup;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\ReturnsSearch */
@@ -67,13 +68,24 @@ if(Yii::$app->user->can('كل المحلات'))
                 'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
-                'filter' => \kartik\date\DatePicker::widget([
+                'filter' =>DateRangePicker::widget([
                     'model' => $searchModel,
                     'attribute' => 'created_at',
-                    'language' => 'ar',
+                    'language' => 'en',
+                    'convertFormat' => true,
+                    'startAttribute' => 'created_at_from',
+                    'endAttribute' => 'created_at_to',
                     'pluginOptions' => [
-                        'autoclose' => true,
-                        'format' => 'yyyy-m-d '
+                        'timePicker' => true,
+                        'timePickerIncrement' => 1,
+                        'locale' => [
+                            'applyLabel' => 'تطبيق',
+                            'cancelLabel' => 'الغاء',
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                        'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+                        'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+            
                     ]
                 ]),
             ],
