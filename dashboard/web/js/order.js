@@ -241,10 +241,35 @@ $(document).on('change', '[id$="order-store_id"]', function (item) {
     $.pjax.reload({container: "#new_country", timeout: 5000});
 
 });
-$(document).on('pjax:end', function(e) {
+
+
+$(document).on('pjax:end', function () {
+    // Unbind namespaced events first to avoid duplicates
+    $('#dynamic-form').off('click' , '.add-item');
+    $('#dynamic-form').off('click' , '.remove-item');
+
+ 
+  var dynamicform_var  = window[ $('.dynamicform_wrapper').attr('data-dynamicform')]
+    // Bind the add-item event with namespace
+    $('#dynamic-form').on('click' , '.add-item', function(e) {
+        e.preventDefault();
+        $(".dynamicform_wrapper").triggerHandler("beforeInsert", [$(this)]);
+        $(".dynamicform_wrapper").yiiDynamicForm("addItem", dynamicform_var, e, $(this));
+    });
+
+    // Bind the remove-item event with namespace
+    $('#dynamic-form').on('click' , '.remove-item', function(e) {
+        e.preventDefault();
+        $(".dynamicform_wrapper").yiiDynamicForm("deleteItem", dynamicform_var, e, $(this));
+    });
+
     $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
         jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
             jQuery(this).html("المادة : " + (index + 1))
+        });
+        jQuery('[id^="titleElement_"]').each(function(index) {
+            console.log('titleElement_' + (index));
+            jQuery(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
         });
     });
 
@@ -253,13 +278,20 @@ $(document).on('pjax:end', function(e) {
         jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
             jQuery(this).html("المادة : " + (index + 1))
         });
+        jQuery('[id^="titleElement_"]').each(function(index) {
+            console.log('titleElement_' + (index));
+            jQuery(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
+        });
         $('.item').each(function (index, element) {
             calculateSupTotals(element,true);
         });
         checkDiscount();
         calculateTotal();
     });
+
+   
 });
+
 $(document).on('click',".add-item", function (item) {
     var num =$(".item.panel.panel-default").length;
     $('[id$="order-product_count"]').val(num);
@@ -269,11 +301,12 @@ $(document).on('click',".remove-item", function (item) {
     $('[id$="order-product_count"]').val(num);
 });
 
-$(".dynamicform_wrapper").on("afterInsert", function(e, item) {
+ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     jQuery(".dynamicform_wrapper .panel-title-address").each(function(index) {
         jQuery(this).html("المادة : " + (index + 1))
     });
     $('[id^="titleElement_"]').each(function(index) {
+        console.log('titleElement_' + (index));
         $(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
     });
     initializeTooltips();
