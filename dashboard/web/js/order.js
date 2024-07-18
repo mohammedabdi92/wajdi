@@ -271,6 +271,7 @@ $(document).on('pjax:end', function () {
             console.log('titleElement_' + (index));
             jQuery(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
         });
+        initializeTooltips();
     });
 
     $(".dynamicform_wrapper").on("afterDelete", function(e) {
@@ -282,12 +283,15 @@ $(document).on('pjax:end', function () {
             console.log('titleElement_' + (index));
             jQuery(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
         });
+        initializeTooltips();
         $('.item').each(function (index, element) {
             calculateSupTotals(element,true);
         });
         checkDiscount();
         calculateTotal();
+       
     });
+
 
    
 });
@@ -306,7 +310,6 @@ $(document).on('click',".remove-item", function (item) {
         jQuery(this).html("المادة : " + (index + 1))
     });
     $('[id^="titleElement_"]').each(function(index) {
-        console.log('titleElement_' + (index));
         $(this).attr('id', 'titleElement_' + (index)); // Use a combination of timestamp and index for uniqueness
     });
     initializeTooltips();
