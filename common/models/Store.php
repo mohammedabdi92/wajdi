@@ -35,7 +35,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['inv_footer_left','inv_footer_right'], 'required'],
+            [['inv_footer_left','inv_footer_right'], 'safe'],
             [['name','status'], 'required'],
             [['name'], 'string', 'max' => 255],
         ];
