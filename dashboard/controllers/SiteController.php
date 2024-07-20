@@ -74,6 +74,15 @@ class SiteController extends BaseController
             'model' => $model,
         ]);
     }
+    public function actionSend()
+    {
+        Yii::$app->mailer->compose()
+        ->setFrom('info@wajdi.top')
+        ->setTo('mohammed.abadi92@gmail.com')
+        ->setSubject('Test Email')
+        ->setTextBody('This is a test email.')
+        ->send();
+    }
 
     /**
      * Logout action.
