@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
+    <?= $form->field($model, 'inv_footer_left')->textarea(['rows' => 4]) ?>
+    <?= $form->field($model, 'inv_footer_right')->textarea(['rows' => 4]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('حفظ', ['class' => 'btn btn-success']) ?>

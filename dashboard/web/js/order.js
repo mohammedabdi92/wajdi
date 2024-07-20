@@ -78,7 +78,7 @@ function calculateTotal() {
         var elementCost = parseFloat(element.value);
         if (elementCost) {
             elementCost = Math.round((elementCost + Number.EPSILON) * 100) / 100
-            total_cost = total_cost + elementCost * $("#orderproduct-"+index+"-count").val() ;
+            total_cost = total_cost + elementCost * $('[id$="-'+index+'-count"]').val() ;
         }
     });
 

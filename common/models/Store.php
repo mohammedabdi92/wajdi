@@ -35,6 +35,7 @@ class Store extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['inv_footer_left','inv_footer_right'], 'required'],
             [['name','status'], 'required'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -48,6 +49,8 @@ class Store extends \yii\db\ActiveRecord
         return [
             'id' => 'الرقم',
             'name' => 'الاسم',
+            'inv_footer_left' => 'ملاحظة اسفل الفاتورة شمال',
+            'inv_footer_right' => 'ملاحظة اسفل الفاتورة يمين',
             'status' => Yii::t('app', 'الحالة'),
 
         ];

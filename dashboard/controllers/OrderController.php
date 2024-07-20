@@ -398,51 +398,92 @@ class OrderController extends BaseController
         $model = $this->findModel($id);
         $products = $model->products;
 
-        // get your HTML raw content without any layouts or scripts
-        $content = $this->renderPartial('pdf',['model'=>$model,'products'=>$products]);
+        $ammount = 0;
+        $ammount_without_discount = 0;
+        $count_a = 0;
+        $count = 0;
+        foreach($products as $key => $product) {
+            $discount = 0;
+           
+           
+            $returns_ammount =  \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=> $product->product_id])->sum('amount');
+            $returns_count =  \common\models\Returns::find()->where(['order_id'=>$model->id,'product_id'=> $product->product_id])->sum('count');
+            if($returns_ammount && $returns_count)
+            {
+                $discount =  $product->amount - ($returns_ammount/$returns_count);
+                
+                $products[$key]->total_product_amount -=   $returns_ammount + ($discount*$returns_count);
+                $products[$key]->count -= $returns_count;
+                $count += $returns_count;
+                $ammount +=  $returns_ammount;
+                $ammount_without_discount += $returns_ammount + ($discount*$returns_count);
+            }
+            $Damaged_ammount =  \common\models\Damaged::find()->where(['order_id'=>$model->id,'product_id'=> $product->product_id])->sum('amount');
+            $Damaged_count =  \common\models\Damaged::find()->where(['order_id'=>$model->id,'product_id'=> $product->product_id])->sum('count');
+            if($Damaged_ammount && $Damaged_count)
+            {
+                $discount =  $product->amount - ($Damaged_ammount/$Damaged_count);
+                $products[$key]->total_product_amount -=   $Damaged_ammount + ($discount*$Damaged_count);
+                $products[$key]->count -= $Damaged_count;
+                $count += $Damaged_count;
+                $ammount +=  $Damaged_ammount;
+                $ammount_without_discount += $Damaged_ammount + ($discount*$Damaged_count);
+            }
+            if($products[$key]->count < 1 )
+            {
+                unset($products[$key]);
+             
+            }
+           
 
+         
+        }
+        $products = array_values($products);
+        if(!empty($ammount))
+        {
+            $dis = $ammount_without_discount -$ammount;
+            $model->total_count -= $count;
+            $model->total_discount -= $dis;
+            $model->total_amount_without_discount -= $ammount_without_discount;
+            $model->total_amount -= $ammount;
+        }
+        // Get your HTML raw content without any layouts or scripts
+        $content = $this->renderPartial('pdf', ['model' => $model, 'products' => $products]);
 
-
-
-        // setup kartik\mpdf\Pdf component
+        // Setup kartik\mpdf\Pdf component
         $pdf = new Pdf([
+            'mode' => Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
             'orientation' => Pdf::ORIENT_PORTRAIT,
-            // stream to browser inline
             'destination' => Pdf::DEST_BROWSER,
-            // your html content input
             'content' => $content,
-            // format content from your own css file if needed or use the
-            // enhanced bootstrap css built by Krajee for mPDF formatting
-            'cssFile' => '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css',
-            // any css to be embedded if required
+            'cssFile' =>[ '@vendor/kartik-v/yii2-mpdf/src/assets/kv-mpdf-bootstrap.min.css', '@dashboard/web/css/pdf.css'],
             'cssInline' => '.kv-heading-1{font-size:18px}',
-            // set mPDF properties on the fly
             'options' => [
-                'title' => 'فاتورة بيع '.$model->id,
-                'subject' => 'فاتورة بيع '.$model->id,
+                'title' => 'فاتورة بيع ' . $model->id,
+                'subject' => 'فاتورة بيع ' . $model->id,
                 'default_font' => 'cairo',
             ],
-            // call mPDF methods on the fly
             'methods' => [
-                'SetHeader'=>['| {PAGENO} |'],
-                'SetFooter'=>['| {PAGENO} |'],
+                'SetHeader' => ['| {PAGENO} |'],
+                'SetFooter' => [$model->store->inv_footer_left.' | {PAGENO} |  '.$model->store->inv_footer_right],
             ],
-
-
         ]);
-        $pdf->options = array_merge($pdf->options , [
-            'fontDir' =>  [ Yii::$app->basePath.'/../dashboard/web/fonts/'],  // make sure you refer the right physical path
-            'fontdata' =>  [
+
+        $pdf->options = array_merge($pdf->options, [
+            'fontDir' => [Yii::$app->basePath . '/../dashboard/web/fonts/'],  // Ensure the correct physical path
+            'fontdata' => [
                 'cairo' => [
                     'R' => 'cairo-v4-arabic_latin-regular.ttf',
                     'I' => 'cairo-v4-arabic_latin-700.ttf',
                     'useOTL' => 0xFF,
                     'useKashida' => 75,
-                ]
+                ],
             ],
             'default_font' => 'cairo',
         ]);
-        // return the pdf output as per the destination setting
+
+        // Return the pdf output as per the destination setting
         return $pdf->render();
     }
     public function actionOrderProducts()

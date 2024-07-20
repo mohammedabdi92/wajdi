@@ -11,6 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Orders'), 'url' => [
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 $total_returnd = \common\models\Returns::find()->where(['order_id'=>$model->id])->sum("amount");
+$total_Damaged= \common\models\Damaged::find()->where(['order_id'=>$model->id])->sum("amount");
 ?>
 <div class="order-view">
 
@@ -76,8 +77,8 @@ $total_returnd = \common\models\Returns::find()->where(['order_id'=>$model->id])
             ],
             [
                 'attribute' => 'total_amount',
-                'value' => function($model) use ($total_returnd) {
-                    return $model->total_amount - $total_returnd;
+                'value' => function($model) use ($total_returnd,$total_Damaged) {
+                    return $model->total_amount - $total_returnd-$total_Damaged;
                 },
                 'format' => 'raw',
             ],
@@ -179,6 +180,13 @@ $total_returnd = \common\models\Returns::find()->where(['order_id'=>$model->id])
                         'label'=>"المادة",
                         'format' => 'raw',
 
+                    ],
+                    'amount',
+                    [
+                        'attribute' => 'created_at',
+                        'value' => function($model){
+                            return \common\components\CustomFunc::getFullDate($model->created_at);
+                        },
                     ],
                 ],
             ]);

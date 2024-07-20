@@ -173,6 +173,10 @@ class Order extends \common\components\BaseModel
     {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
+    public function getStore()
+    {
+        return $this->hasOne(Store::className(), ['id' => 'store_id']);
+    }
 
     public function beforeDelete()
     {

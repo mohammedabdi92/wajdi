@@ -1,119 +1,142 @@
 <?php
 /* @var $this yii\web\View */
-
 /* @var $model \common\models\InventoryOrder */
+/* @var $products array */
 
 use yii\helpers\Html;
 use common\components\Arabic;
 
-$have_product_discout = false;
+$Arabic = new Arabic();
 
-$Arabic = new  Arabic();
 ?>
+<!DOCTYPE html>
+<html lang="ar">
 
-<table border="0" width="100%" style="padding-bottom: 20px">
-    <tr>
-        <td align="center">
-            وجدي للاعمار ومواد البناء
-        </td>
-    </tr>
-</table>
+<head>
+    <meta charset="UTF-8">
 
-<table border="0" width="100%" dir="rtl">
-    <tr>
-        <td bgcolor="#eee" width="33.3%">
-            رقم الفاتورة : <?= $model->id; ?><br>
-            اسم المشتري : <?= $model->customerTitle; ?><br>
-            رقم المشتري : <?= $model->customer->phone_number ?? ''; ?><br>
+</head>
 
-        </td>
-        <td align="center" width="33.3%">
-            <?php echo Html::img('@web/images/site/icons/vip.svg'); ?>
-        </td>
-        <td bgcolor="#eee" width="33.3%">
-            اسم مصدر الفاتورة : <?= $model->getUserName('created_by'); ?><br>
-            تاريخ الاصدار : <?= $model->getDate('created_at'); ?><br>
-            اسم المحل : <?= $model->storeTitle ?><br>
-        </td>
-    </tr>
-</table>
-<!-- silahkan update data penerbit invoice di bawah ini -->
+<body>
 
 
-<br><br>
+    <table class="invoice-info">
+        <tr>
+            <td style="width: 33.3%;">
+                <table style=" font-size: small; ">
+                    <tr>
+                        <th style="text-align: right;width: 32.3%;font-size: small;">رقم الفاتورة</th>
+                        <td style=" font-size: small; "><?= Html::encode($model->id); ?></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right; font-size: small;">اسم المشتري</th>
+                        <td style=" font-size: small; "><?= Html::encode($model->customerTitle); ?></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right; font-size: small;">رقم المشتري</th>
+                        <td style=" font-size: small; "><?= Html::encode($model->customer->phone_number ?? ''); ?></td>
+                    </tr>
+                </table>
+            </td>
+            <td class="center" style="width: 33.3%;">
+                <div class="invoice-header">
+                    <p>اهلا وسهلا بكم </p><br>
+                    <p>كل ما يلزم البناء تحت سقف واحد</p><br>
+                </div>
+                <?= Html::img('@web/images/site/icons/wajdi.png',[  'width' => 100,
+    'height' => 100]); ?>
 
+                <div class="invoice-header">
+                    <p><?= Html::encode($model->storeTitle ?? ''); ?></p>
+                </div>
+            </td>
+            <td style="width: 33.3%;">
+                <table s>
+                    <tr>
+                        <th style="text-align: right;width: 32.3%;font-size: small;"> مصدر الفاتورة</th>
+                        <td style=" font-size: small; "><?= Html::encode($model->getUserName('created_by')); ?></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right;font-size: small;">تاريخ الاصدار</th>
+                        <td style=" font-size: 10px; "><?= Html::encode($model->getDate('created_at')); ?></td>
+                    </tr>
+                    <tr>
+                        <th style="text-align: right;font-size: small;">اسم المحل</th>
+                        <td style=" font-size: 10px; "><?= Html::encode($model->storeTitle ?? ''); ?></td>
+                    </tr>
+                   
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table class="invoice-products">
+        <thead>
+            <tr class="summary-item">
+                <th>الرقم</th>
+                <th>المادة</th>
+                <th>العدد</th>
+                <th>الوحدة</th>
+                <th>السعر الافرادي</th>
+                <th>السعر الاجمالي</th>
+                <?php if (!empty($model->total_price_discount_product)): ?>
+                    <th>الخصم</th>
+                    <th>السعر بعد الخصم</th>
+                <?php endif; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($products as $key => $product): ?>
+                <?php if ($product->discount) {
+                    $model->total_discount += $product->discount;
+                } ?>
+                <tr>
+                    <td><?= Html::encode($key + 1); ?></td>
+                    <td><?= Html::encode($product->product->title ?? ''); ?></td>
+                    <td><?= Html::encode($product->count); ?></td>
+                    <td><?= Html::encode($product->product->getCountTypeName('count_type')); ?></td>
+                    <td><?= Html::encode($product->amount); ?></td>
+                    <td><?= Html::encode($product->total_product_amount); ?></td>
+                    <?php if (!empty($product->discount)): ?>
+                        <td><?= Html::encode($product->discount); ?></td>
+                        <td><?= Html::encode($product->total_product_amount - $product->discount); ?></td>
+                    <?php endif; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-<!--<h3>Transaction</h3>-->
-<table width="100%" cellpadding="5" cellspacing="0" border="1" dir="rtl">
-    <tr bgcolor="#eee">
-        <th align="center">الرقم</th>
-        <th align="center">المادة</th>
-        <th align="center">العدد</th>
-        <th align="center">الوحدة</th>
-        <th align="center">السعر الافرادي</th>
-        <th align="center">السعر الاجمالي</th>
-        <?php if (!empty($model->total_price_discount_product)): ?>
-            <th align="center">الخصم</th>
-            <th align="center">السعر بعد الخصم</th>
+    <table class="invoice-summary" style="text-align: left; width:100%">
+
+        <tr class="summary-item">
+            <td style="text-align: right; width:25%"><b>عدد القطع الاجمالي:</b> </td>
+            <td style="text-align: right; width:15%"> <?= Html::encode($model->total_count); ?></td>
+        </tr>
+
+        <?php if (!empty($model->total_discount)): ?>
+            <tr class="summary-item">
+                <td style="text-align: right;"><b>السعر قبل الخصم:</b> </td>
+                <td style="text-align: right;"><?= Html::encode($model->total_amount_without_discount); ?></td>
+             
+            </tr>
+
+            <tr class="summary-item">
+                <td style="text-align: right;"><b>مجموع الخصم:</b></td>
+                <td style="text-align: right;"> <?= Html::encode($model->total_discount); ?></td>
+            </tr>
         <?php endif; ?>
 
-    </tr>
-    <?php foreach ($products as $key => $product) :
-
-        if($product->discount)
-        {
-            $model->total_discount += $product->discount;
-            $have_product_discout = true;
-        }
-
-        ?>
-        <tr>
-            <td align="center"><?= $key+1; ?></td>
-            <td align="center"><?= $product->product->title ?? ''; ?></td>
-            <td align="center"><?= $product->count; ?></td>
-            <td align="center"><?= $product->product->getCountTypeName('count_type'); ?></td>
-            <td align="center"><?= $product->amount; ?></td>
-            <td align="center"><?= $product->total_product_amount; ?></td>
-            <?php if (!empty($product->discount)): ?>
-                <td align="center"><?= $product->discount; ?></td>
-                <td align="center"><?= $product->total_product_amount - $product->discount; ?></td>
-            <?php endif; ?>
-
-
+        <tr class="summary-item">
+            <td style="text-align: right;"><b>السعر النهائي:</b> </td>
+            <td style="text-align: right;"><?= Html::encode($model->total_amount); ?></td>
+            <td class="center" style="text-align: right;">
+                <?php echo $Arabic->money2str($model->total_amount, 'KWD', 'ar') ?></td>
         </tr>
 
-    <?php endforeach; ?>
-    <tr bgcolor="#eee">
-        <td colspan="2" align="right"><b> عدد القطع الاجمالي</b></td>
-        <td align="center"><b><?= $model->total_count ?></b></td>
-
-
-    </tr>
+    </table>
+    <p>استلمت المواد كاملة وخالية من اي عيوب &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  اسم وتوقيع المستلم _________________________</p>
 
 
 
-    <?php if (!empty($model->total_discount)): ?>
-        <tr bgcolor="#eee">
-            <td colspan="<?=$have_product_discout?5:3?>"></td>
-            <td colspan="2" align="center"><b> مجموع الخصم</b></td>
-            <td align="center"><b><?= $model->total_discount ?></b></td>
-        </tr>
-    <?php endif; ?>
-    <?php if (!empty($model->debt)): ?>
-        <tr bgcolor="#eee">
-            <td colspan="<?=$have_product_discout?5:3?>"></td>
-            <td colspan="2" align="center"><b> الدين</b></td>
-            <td align="center"><b><?= $model->debt ?></b></td>
-        </tr>
-    <?php endif; ?>
+</body>
 
-
-
-    <tr bgcolor="#eee">
-        <td colspan="3"></td>
-        <td colspan="<?=$have_product_discout?2:1?>" align="center"><b><?=$Arabic->money2str($model->total_amount, 'KWD', 'ar')  ?></b></td>
-        <td colspan="<?=$have_product_discout?2:1?>" align="center"><b> السعر النهائي</b></td>
-        <td colspan="1" align="center"><b><?=$model->total_amount ?></b></td>
-    </tr>
-
-</table>
+</html>
