@@ -429,7 +429,7 @@ class OrderController extends BaseController
                 $ammount +=  $Damaged_ammount;
                 $ammount_without_discount += $Damaged_ammount + ($discount*$Damaged_count);
             }
-            if($products[$key]->count < 1 )
+            if($products[$key]->count <=  0 )
             {
                 unset($products[$key]);
              

@@ -135,7 +135,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
                                 <br>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true,'value' =>$modelAddress->productTitle])->label('') ?>
+                                        <?= $form->field($modelAddress, "[{$i}]title")->textInput(['readonly' => true ,'value' =>$modelAddress->productTitle ,'onclick'=>"window.open('/product/view?id='+$(this).attr('product_id'), '_blank');"])->label('') ?>
                                     </div>
                                     <div class="col-md-4">
                                         <?= $form->field($modelAddress, "[{$i}]count_type")->textInput(['readonly' => true,'value' =>$modelAddress->productCountType])->label('') ?>

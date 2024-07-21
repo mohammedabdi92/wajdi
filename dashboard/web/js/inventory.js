@@ -179,8 +179,9 @@ function calculateTotTotals(item) {
 }
 
 $(document).on('change', '[id$=product_id]', function (item) {
+    var product_value = $(item.currentTarget).val();
     var box_id =  getBoxId($(item.currentTarget).attr('id')) ;
-
+    $("#inventoryorderproduct-"+box_id+"-title").attr("onclick","window.open('/product/view?id="+product_value+"', '_blank');");
     getProductDetails($('.item')[box_id]);
 
     var box_product_title = $("#select2-inventoryorderproduct-"+box_id+"-product_id-container").attr("title");

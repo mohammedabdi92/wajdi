@@ -30,9 +30,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ['class' => 'yii\grid\SerialColumn'],
         'id',
         [
+            'attribute' => 'product_id',
+            'value' => function ($model) {
+                return $model->product_id ? Html::a($model->product_id, '/product/view?id='.$model->product_id,['target'=>'_blank'] ) : '';
+            },
+            'label'=>"المادة",
+            'format' => 'raw',
+        ],
+        [
             'attribute' => 'product_name',
             'value' => function ($model) {
-                return $model->productTitle ? Html::a($model->productTitle, '/product/view?id='.$model->product_id,['target'=>'_blank'] ) : '';
+                return $model->productTitle ;
             },
             'label'=>"المادة",
             'format' => 'raw',

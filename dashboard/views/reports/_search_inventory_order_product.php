@@ -21,7 +21,7 @@ use kartik\daterange\DateRangePicker;
     $url = \yii\helpers\Url::to(['product/product-list']);
     echo $form->field($model, "product_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[$model->product_id=>$model->productTitle],
-        'options' => ['placeholder' => 'اختر نوع العد .....'],
+        'options' => ['placeholder' => 'اختر المادة .....'],
         'pluginOptions' => [
             'allowClear' => true,
             'minimumInputLength' => 3,
