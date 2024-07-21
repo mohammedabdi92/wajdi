@@ -69,6 +69,7 @@ class SeparationsSearch extends Separations
             'count_from' => $this->count_from,
             'count_to' => $this->count_to,
         ]);
+        $query->orderBy(['id'=>SORT_DESC]);
 
         return $dataProvider;
     }

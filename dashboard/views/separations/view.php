@@ -18,13 +18,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
     <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
 
-        <?= Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'هل انت متاكد من الحذف ؟'),
-                'method' => 'post',
-            ],
-        ]) ?>
+        <?php 
+        if(Yii::$app->user->can('حذف طلب فرط وجمع المواد'))
+        {
+            echo Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => Yii::t('app', 'هل انت متاكد من الحذف ؟'),
+                    'method' => 'post',
+                ],
+            ]) ;
+        }
+        ?>
     </p>
 
     <?= DetailView::widget([

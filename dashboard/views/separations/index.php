@@ -93,8 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return  false ;
                     },
                     'delete' => function ($model) {
-                        return  true ;
-                        // return Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمحل');
+                        return Yii::$app->user->can('حذف طلب فرط وجمع المواد');
                     },
                 ]
             ],
