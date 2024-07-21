@@ -235,3 +235,7 @@ $(".dynamicform_wrapper").on("afterDelete", function(e) {
     calculateTotals();
 
 });
+
+$(document).on('select2:open',"select[id$=-product_id]", function (item) {
+    $(".select2-search__field")[0].focus()
+});

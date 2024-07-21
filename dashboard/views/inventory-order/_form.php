@@ -47,9 +47,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
             'templateResult' => new JsExpression('function(product) { return product.text; }'),
             'templateSelection' => new JsExpression('function (product) { return product.text; }'),
         ],
-    'pluginEvents' => [
-        'select2:open' =>'function(params) {$(".select2-search__field")[0].focus()}'
-    ]
+   
         
     ]);
     ?>
