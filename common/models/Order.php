@@ -16,6 +16,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $customer_id
  * @property int $store_id
  * @property float $remaining
+ * @property float $order_cost
  * @property float $paid
  * @property float $total_amount
  * @property float $total_count
@@ -64,7 +65,7 @@ class Order extends \common\components\BaseModel
                 return empty($model->customer_name);
             }],
             [['customer_name'],'validateCustomerRequired' ],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note','customerName','earn_the_bill'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note','customerName','earn_the_bill','order_cost'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }
@@ -192,5 +193,11 @@ class Order extends \common\components\BaseModel
     public function getCustomerTitle()
     {
         return $this->customer ? $this->customer->name : '';
+    }
+
+    public function updateOrderCost()
+    {
+        $order_cost = OrderProduct::find()->where(['order_id'=> $this->id])->sum('items_cost');
+        Order::updateAll(['order_cost' => $order_cost],['id' => $this->id]);
     }
 }

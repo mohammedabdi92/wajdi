@@ -150,7 +150,6 @@ class OrderSearch extends Order
             $this->total_profit_without_debt = $total_amount_without_dept - $total_dept_without_dept;
 
             $this->debt_sum = $query->sum('debt');
-            $this->repayment_sum = $query->sum('repayment');
             $this->total_profit_returns_amount  =  $this->total_returns_amount  - $total_dept_returns_amount ;
             $this->total_dept  =  $total_dept ;
             $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount ;

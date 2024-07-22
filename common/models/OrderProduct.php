@@ -18,6 +18,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property int $order_id
  * @property int $product_id
  * @property int $store_id
+ * @property float $items_cost
  * @property float $count
  * @property float $total_product_amount
  * @property float $orignal_cost
@@ -53,7 +54,7 @@ class OrderProduct extends \common\components\BaseModel
             [['product_id', 'count', 'price_number', 'amount'], 'required'],
             [['order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['count'], 'number'],
-            [['count_type_name'], 'safe'],
+            [['count_type_name','items_cost'], 'safe'],
             [['ready_to_deliver'], 'checkReady'],
             [['product_id'], 'checkInventory'],
             [['product_id'], 'checkDuplicate'],
@@ -108,6 +109,7 @@ class OrderProduct extends \common\components\BaseModel
             }
         }
     }
+    
 
     public function afterSave($insert, $changedAttributes)
     {
@@ -236,6 +238,15 @@ class OrderProduct extends \common\components\BaseModel
 
         return $prices;
 
+    }
+    public function beforeSave($insert)
+    {
+        if($this->isNewRecord)
+        {
+            $this->items_cost =  $this->product->price * $this->count;
+
+        }
+        return parent::beforeSave($insert);
     }
     public function getStoreTitle()
     {

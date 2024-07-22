@@ -134,14 +134,12 @@ class ArOrderSearch extends ArOrder
             $this->total_profit  =  $total_amount -  $total_dept - $this->total_profit_returns_amount;
             $this->total_amount_without_discount_sum = $query->sum('total_amount_without_discount');
             $this->debt_sum = $query->sum('debt');
-            $this->repayment_sum = $query->sum('repayment');
             $this->total_amount_sum = $total_amount;
             $this->total_discount_sum = $query->sum('total_discount') + $query->sum('total_price_discount_product') ;
 
             \Yii::info('total_amount_without_discount_sum :-'.$this->total_amount_without_discount_sum);
             \Yii::info('total_discount_sum :- '.$this->total_discount_sum);
             \Yii::info( 'debt_sum :- '.$this->debt_sum);
-            \Yii::info( 'repayment_sum :- '.$this->repayment_sum);
             \Yii::info( 'total_amount_sum :- '.$this->total_amount_sum);
             \Yii::info( 'total_profit :- '.$this->total_profit);
             \Yii::info( 'total_dept :- '.$this->total_dept);

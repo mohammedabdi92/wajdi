@@ -129,6 +129,7 @@ class OrderController extends BaseController
             // validate all models
             $valid = $model->validate();
             $valid = Model::validateMultiple($model_product) && $valid;
+            
             $productIds = ArrayHelper::getColumn($model_product, 'product_id');
             $productIdCounts = array_count_values($productIds);
 
@@ -144,7 +145,7 @@ class OrderController extends BaseController
                 }
                 $valid = false;
             }
-
+          
 
 
             if ($valid) {
@@ -154,7 +155,7 @@ class OrderController extends BaseController
 
                     try {
                         if ($flag = $model->save()) {
-
+                          
                             if($model->debt)
                             {
                                 $dept_model  =  Transactions::find()->where(['order_id'=>$model->id])->one();
@@ -175,6 +176,9 @@ class OrderController extends BaseController
                                 $modelAddress->store_id = $model->store_id;
 
                                 if (! ($flag = $modelAddress->save())) {
+                                    // var_dump($flag);
+                                    // print "<pre>";
+                                    // print_r($modelAddress->attributes);die;
                                     $transaction->rollBack();
                                     break;
                                 }
@@ -182,6 +186,7 @@ class OrderController extends BaseController
                         }
                         if ($flag) {
                             $transaction->commit();
+                            $model->updateOrderCost();
                             return $this->redirect(['view', 'id' => $model->id]);
                         }
                     } catch (\Exception $e) {
@@ -221,6 +226,7 @@ class OrderController extends BaseController
                         }
                         if ($flag) {
                             $transaction->commit();
+                            $model->updateOrderCost();
                             return $this->redirect(['ar-order/view', 'id' => $model->id]);
                         }
                     } catch (\Exception $e) {
@@ -236,7 +242,7 @@ class OrderController extends BaseController
         {
             $model->customerName = Customer::findOne($model->customer_id)->name;
         }
-
+     
         return $this->render('create', [
             'model' => $model,
             'model_product' => (empty($model_product)) ? [new OrderProduct] : $model_product
@@ -315,6 +321,8 @@ class OrderController extends BaseController
 
                     if ($flag) {
                         $transaction->commit();
+                        $model->updateOrderCost();
+
                         return $this->redirect(['view', 'id' => $model->id]);
                     }
                 } catch (\Exception $e) {
@@ -328,6 +336,7 @@ class OrderController extends BaseController
         $Customer_REPAYMENT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_REPAYMENT])->sum('amount');
         $Customer_DEBT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_DEBT])->sum('amount');
 
+    
         return $this->render('update', [
             'model' => $model,
             'dept_data' =>$Customer_REPAYMENT? ['customer_id'=>$model->customer_id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$model->customer->name]:null,

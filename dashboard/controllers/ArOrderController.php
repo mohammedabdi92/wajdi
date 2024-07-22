@@ -157,6 +157,7 @@ class ArOrderController extends BaseController
                                 $nModelproduct->save(false);
                             }
                             $model->delete();
+                            $nModel->updateOrderCost();
                             return $this->redirect(['order/view', 'id' => $nModel->id]);
 
                         }
