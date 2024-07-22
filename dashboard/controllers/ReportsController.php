@@ -208,11 +208,11 @@ class ReportsController extends BaseController
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
+        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * (order_product.items_cost/order_product.count)) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
         $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
 
         $productQuery->andWhere('order.debt is  null');
-        $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+        $total_dept =  round($productQuery->sum('order_product.items_cost'),2);
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;
@@ -327,11 +327,11 @@ class ReportsController extends BaseController
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
+        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count *  (order_product.items_cost/order_product.count)) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
         $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
 
         $productQuery->andWhere('order.debt is  null');
-        $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+        $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus;

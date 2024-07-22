@@ -1,12 +1,15 @@
 <?php
 
+use common\models\Inventory;
+use common\models\Product;
+use common\models\Store;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use common\models\InventoryOrderProduct;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Product */
-
+$store_id = Yii::$app->request->get('store_id');
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Products'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -122,5 +125,17 @@ if($InventoryOrderProductMin)
             ],
         ],
     ]) ?>
+    <br>
+    <b>الاعداد في المخزن</b>
+<br>
+    <?php 
+    $ps = Inventory::find()->where(['product_id'=>$model->id])->all();
+    foreach($ps as $p){
+        $s = ($p->store_id == $store_id) ?'style="color:blue;"':'';
+        echo "<b ".$s.">". $p->storeTitle ."  = " .$p->count ."<b> <br>";
+
+    }
+    
+    ?>
 
 </div>

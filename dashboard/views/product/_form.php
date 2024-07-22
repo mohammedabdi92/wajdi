@@ -17,10 +17,10 @@ $this->registerJsFile(
 );
 ?>
 <script>
-    var price_profit_rate_1 = <?=$price1?>;
-    var price_profit_rate_2 = <?=$price2?>;
-    var price_profit_rate_3 = <?=$price3?>;
-    var price_profit_rate_4 = <?=$price4?>;
+    var price_profit_rate_1 = <?= $price1 ?>;
+    var price_profit_rate_2 = <?= $price2 ?>;
+    var price_profit_rate_3 = <?= $price3 ?>;
+    var price_profit_rate_4 = <?= $price4 ?>;
 </script>
 <div class="product-form">
 
@@ -33,7 +33,7 @@ $this->registerJsFile(
 
     <?php
     echo $form->field($model, 'category_id')->widget(\kartik\select2\Select2::classname(), [
-        'data' => [''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
+        'data' => ['' => 'اختر ......'] + \yii\helpers\ArrayHelper::map(\common\models\ProductCategory::find()->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر القسم .....'],
         'pluginOptions' => [
             'allowClear' => true
@@ -43,7 +43,7 @@ $this->registerJsFile(
 
     <?php
     echo $form->field($model, 'count_type')->widget(\kartik\select2\Select2::classname(), [
-        'data' =>[''=>'اختر ......']+\yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
+        'data' => ['' => 'اختر ......'] + \yii\helpers\ArrayHelper::map(\common\models\CountType::find()->all(), 'id', 'name'),
         'options' => ['placeholder' => 'اختر نوع العد .....'],
         'pluginOptions' => [
             'allowClear' => true
@@ -52,7 +52,7 @@ $this->registerJsFile(
     ?>
 
 
-   
+
     <?= $form->field($model, 'price_pf_vat')->textInput()->label('السعر قبل الضريبه والخصم') ?>
     <?= $form->field($model, 'vat')->textInput()->label('الضريبة %') ?>
     <?= $form->field($model, 'price_discount_percent')->textInput()->label('نسبة الخصم %') ?>
@@ -61,21 +61,50 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'price')->textInput()->label('السعر ') ?>
 
-    <?= $form->field($model, 'price_1')->textInput()->label('السعر الاول '.($price1*100).'%') ?>
+    <?= $form->field($model, 'price_1')->textInput()->label('السعر الاول ' . ($price1 * 100) . '%') ?>
 
-    <?= $form->field($model, 'price_2')->textInput()->label('السعر الثاني '.($price2*100).'%') ?>
+    <?= $form->field($model, 'price_2')->textInput()->label('السعر الثاني ' . ($price2 * 100) . '%') ?>
 
-    <?= $form->field($model, 'price_3')->textInput()->label('السعر الثالث '.($price3*100).'%') ?>
+    <?= $form->field($model, 'price_3')->textInput()->label('السعر الثالث ' . ($price3 * 100) . '%') ?>
 
-    <?= $form->field($model, 'price_4')->textInput()->label('السعر الرابع '.($price4*100).'%') ?>
+    <?= $form->field($model, 'price_4')->textInput()->label('السعر الرابع ' . ($price4 * 100) . '%') ?>
 
-
-    <?php foreach (\common\models\Store::find()->where(['status'=>1])->all() as $store):  ?>
-
-    <div class="row col-md-2">
-       <b> <?= $store->name ?></b>
-        <?= $form->field($model, 'min_counts['.$store->id.']')->textInput() ?>
+    <div class="row" style=" border: 3px solid; margin: 15px 0px ">
+        <div class="row">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-2 ">
+                <b>&nbsp;&nbsp;&nbsp;الاسعار القادمة </b>
+            </div>
+        </div>
+        <br>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+            <?= $form->field($model, 'count_next')->textInput() ?>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+            <?= $form->field($model, 'price_next')->textInput() ?>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6 ">
+            <?= $form->field($model, 'price_1_next')->textInput() ?>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+            <?= $form->field($model, 'price_2_next')->textInput() ?>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+            <?= $form->field($model, 'price_3_next')->textInput() ?>
+        </div>
+        <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+            <?= $form->field($model, 'price_4_next')->textInput() ?>
+        </div>
     </div>
+
+
+
+
+    <?php foreach (\common\models\Store::find()->where(['status' => 1])->all() as $store): ?>
+
+        <div class="row col-md-2">
+            <b> <?= $store->name ?></b>
+            <?= $form->field($model, 'min_counts[' . $store->id . ']')->textInput() ?>
+        </div>
 
     <?php endforeach; ?>
     <br>
@@ -91,11 +120,11 @@ $this->registerJsFile(
     echo $form->field($model, 'imageFile')->widget(\kartik\file\FileInput::classname(), [
         'options' => ['accept' => 'image/*'],
         'pluginOptions' => [
-            'initialPreview'=>$model->getImageUrl()??false,
+            'initialPreview' => $model->getImageUrl() ?? false,
             'initialPreviewAsData' => true,
-            'showCaption' => true ,
-            'showRemove' => false ,
-            'showUpload' => false ,
+            'showCaption' => true,
+            'showRemove' => false,
+            'showUpload' => false,
         ]
     ]);
     ?>

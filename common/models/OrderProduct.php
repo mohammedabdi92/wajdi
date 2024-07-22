@@ -245,6 +245,37 @@ class OrderProduct extends \common\components\BaseModel
         {
             $this->items_cost =  $this->product->price * $this->count;
 
+            if($this->product->count_next){
+                $this->product->count_next -= $this->count;
+                if($this->product->count_next <= 0)
+                {
+                    $this->product->count_next = null ;
+                    if($this->product->price_next){
+                        $this->product->price = $this->product->price_next;
+                        $this->product->price_next= null;
+                    }
+                    if($this->product->price_1_next){
+                        $this->product->price_1 = $this->product->price_1_next;
+                        $this->product->price_1_next = null;
+                    }
+                    if($this->product->price_2_next){
+                        $this->product->price_2 = $this->product->price_2_next;
+                        $this->product->price_2_next = null;
+                    }
+                    if($this->product->price_3_next){
+                        $this->product->price_3 = $this->product->price_3_next;
+                        $this->product->price_3_next = null;
+                    }
+                    if($this->product->price_4_next){
+                        $this->product->price_4 = $this->product->price_4_next;
+                        $this->product->price_4_next = null;
+                    }
+
+
+                }
+                $this->product->save(false);
+            }
+
         }
         return parent::beforeSave($insert);
     }

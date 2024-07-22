@@ -69,8 +69,9 @@ class Product extends \common\components\BaseModel
             [['title'], 'string'],
             [['title'], 'unique'],
             [['title'], 'trim'],
+            [['count_next'], 'checkNext'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price','item_code'], 'safe'],
+            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price','item_code','price_next','price_1_next','price_2_next','price_3_next','price_4_next','count_next'], 'safe'],
         ];
     }
 
@@ -114,6 +115,14 @@ class Product extends \common\components\BaseModel
             'updated_by' => Yii::t('app', 'الشخص المعدل'),
             'min_counts' => Yii::t('app', 'الحد الادنى'),
             'status' => Yii::t('app', 'الحالة'),
+            'count_next' => Yii::t('app', 'العدد المتبقي لتعديل السعر'),
+            'price_1_next' => Yii::t('app', 'السعر الاول القادم'),
+            'price_2_next' => Yii::t('app', 'السعر الثاني القادم'),
+            'price_3_next' => Yii::t('app', 'السعر الثالث القادم'),
+            'price_4_next' => Yii::t('app', 'السعر الرابع القادم'),
+            'price_next' => Yii::t('app', 'السعر القادم'),
+
+            
         ];
     }
 
@@ -207,6 +216,20 @@ class Product extends \common\components\BaseModel
             return $prices;
 
     }
+    public function checkNext($attr) {
+
+       if(!empty($this->count_next) && empty($this->price_next)&& empty($this->price_1_next) && empty($this->price_2_next) && empty($this->price_3_next)&& empty($this->price_4_next)){
+        $this->addError('price_next','يجب اختيرا احدى القيم القادمة');
+
+        $this->addError('price_1_next','يجب اختيرا احدى القيم القادمة');
+        $this->addError('price_2_next','يجب اختيرا احدى القيم القادمة');
+        $this->addError('price_3_next','يجب اختيرا احدى القيم القادمة');
+        $this->addError('price_4_next','يجب اختيرا احدى القيم القادمة');
+
+
+       }
+    }
+
 
 
 }

@@ -170,6 +170,19 @@ class Returns extends \yii\db\ActiveRecord
 
 
     }
+    public function beforeSave($insert)
+    {
+        if($this->isNewRecord)
+        {
+
+            if($this->product->count_next){
+                $this->product->count_next += $this->count;
+                $this->product->save(false);
+            }
+
+        }
+        return parent::beforeSave($insert);
+    }
 
     public function afterDelete()
     {

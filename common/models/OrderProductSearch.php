@@ -103,7 +103,7 @@ class OrderProductSearch extends OrderProduct
         if($getSums)
         {
             $sumQuery = clone $query ;
-            $this->sum_product_price = $sumQuery->sum('(product.price * count )');
+            $this->sum_product_price = $sumQuery->sum('order_product.items_cost');
 
             $this->sum_count = $sumQuery->sum('count');
             $this->sum_total_product_amount = $sumQuery->sum('total_product_amount');

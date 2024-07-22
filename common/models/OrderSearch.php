@@ -137,15 +137,15 @@ class OrderSearch extends Order
             $productQuery = clone $query;
             $productQuery->joinWith('products.product');
             $this->total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id )')  ;
-            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id and order_product.product_id = returns.product_id )')  ;
+            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * (order_product.items_cost/order_product.count)) from returns where returns.order_id = order.id and order_product.product_id = returns.product_id )')  ;
             $total_amount =  round($query->sum('total_amount'), 2);
-            $total_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+            $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
             $queryw = clone $query;
             $queryw->andWhere('order.debt is  null');
             $productQuery->andWhere('order.debt is  null');
             $total_amount_without_dept =  round($queryw->sum('total_amount'), 2);
-            $total_dept_without_dept =  round($productQuery->sum('(product.price * order_product.count) '),2);
+            $total_dept_without_dept =  round($productQuery->sum('(order_product.items_cost) '),2);
 
             $this->total_profit_without_debt = $total_amount_without_dept - $total_dept_without_dept;
 
