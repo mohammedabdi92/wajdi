@@ -21,7 +21,8 @@ class CostsController extends Controller
             }
            
             $Order::updateAll(['order_cost' => $order_cost],['id' => $Order->id]);
-            print_r($Order->id);die;
+            print_r($Order->id);
+            print PHP_EOL;
         }
     }
 }
