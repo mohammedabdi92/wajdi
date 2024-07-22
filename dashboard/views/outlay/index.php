@@ -64,13 +64,13 @@ $totalSum = $dataProvider->query->sum('amount');
             'note:ntext',
 
             [
-                'attribute' => 'updated_at',
+                'attribute' => 'created_at',
                 'value' => function ($model) {
-                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
                 },
                 'filter' => \kartik\date\DatePicker::widget([
                     'model' => $searchModel,
-                    'attribute' => 'updated_at',
+                    'attribute' => 'created_at',
                     'language' => 'ar',
                     'pluginOptions' => [
                         'autoclose' => true,

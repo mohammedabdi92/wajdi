@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use Yii;
 use common\models\Outlay;
 use common\models\OutlaySearch;
 use dashboard\components\BaseController;
@@ -40,7 +41,16 @@ class OutlayController extends BaseController
     public function actionIndex()
     {
         $searchModel = new OutlaySearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $params = $this->request->queryParams;
+       
+        if(Yii::$app->user->can('اظهار المصروفات لشخص المدخل فقط'))
+        {
+            $params['OutlaySearch']['created_by'] = \Yii::$app->user->identity->id ;
+
+        }
+        $dataProvider = $searchModel->search($params);
+       
+
 
         return $this->render('index', [
             'searchModel' => $searchModel,
