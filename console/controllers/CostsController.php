@@ -17,7 +17,7 @@ class CostsController extends Controller
             $products = $Order->products;
             foreach($products as $product){
                 $product::updateAll(['items_cost'=> $product->product->price],['id'=> $product->id]);
-                $order_cost +=  $product->product->price;
+                $order_cost +=  $product->product->price * $product->count;
             }
            
             $Order::updateAll(['order_cost' => $order_cost],['id' => $Order->id]);
