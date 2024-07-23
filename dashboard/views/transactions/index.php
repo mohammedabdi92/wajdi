@@ -12,6 +12,8 @@ use yii\grid\GridView;
 
 $this->title = 'حركات الدين';
 $this->params['breadcrumbs'][] = $this->title;
+$totalSum = $dataProvider->query->sum('amount');
+$totalSum = round($totalSum, 2); 
 ?>
 <div class="transactions-index">
 
@@ -25,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-//        'filterModel' => $searchModel,
+        'showFooter' => Yii::$app->user->can('اظهار المجموع بدفتر الدين'),
         'columns' => [
 
             'id',
@@ -44,7 +46,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-            'amount',
+            [
+                'attribute' => 'amount',
+                'footer' => $totalSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             [
                 'attribute' => 'type',
                 'value' => function($model){

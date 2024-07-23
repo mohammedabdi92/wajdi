@@ -12,6 +12,7 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'البيع');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="order-product-index">
 
@@ -124,10 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <th style="width:50%">الاجمالي بعد الخصم :</th>
                         <td><?= $searchModel->sum_total_amount_w_discount?></td>
                     </tr>
-                    <tr>
-                        <th style="width:50%">الاجمالي الربح :</th>
-                        <td><?= $searchModel->sum_profit?></td>
-                    </tr>
+                    
                     </tbody>
                 </table>
             </div>
