@@ -25,6 +25,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  */
 class Transactions extends \yii\db\ActiveRecord
 {
+    
 
     const  TYPE_DEBT = 1;
     const TYPE_REPAYMENT = 2;

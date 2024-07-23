@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\models\Customer;
 use common\models\Transactions;
 use common\models\TransactionsSearch;
 use dashboard\components\BaseController;
@@ -41,6 +42,10 @@ class TransactionsController extends BaseController
     {
         $searchModel = new TransactionsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
+        if(!empty($searchModel->customer_id))
+        {
+            $searchModel->customerName = Customer::findOne($searchModel->customer_id)->name;
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
