@@ -20,6 +20,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
 
 <div class="inventory-order-form">
     <?php $form = ActiveForm::begin(['enableClientValidation'=>false,'id' => 'dynamic-form']); ?>
+    <?php  if(!Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') || $model->isNewRecord ) : ?>
     <div class=" col-md-12">
 
 
@@ -231,8 +232,15 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         </div>
     </div>
 
+    <?php endif; ?>
 
-
+    <?php  if(Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') && !$model->isNewRecord ) : ?>
+        <?= $form->field($model, 'debt')->textInput(['readonly' => true]) ?>
+        <?= $form->field($model, 'repayment')->textInput() ?>
+        <div class="form-group">
+            <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
+        </div>
+    <?php endif; ?>
     <?php ActiveForm::end(); ?>
 
 </div>

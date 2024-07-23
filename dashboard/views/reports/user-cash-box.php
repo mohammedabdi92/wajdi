@@ -66,6 +66,10 @@ if(Yii::$app->user->can('كل المحلات'))
                     <th style="width:50%">المبيعات :</th>
                     <td><?= $order_pluse?></td>
                 </tr>
+                <tr>
+                    <th style="width:50%">السداد :</th>
+                    <td><?= $transactions_r_plus?></td>
+                </tr>
 
                 <tr>
                     <th style="width:50%">التوالف المرجعة :</th>

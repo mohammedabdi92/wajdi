@@ -141,7 +141,8 @@ if(Yii::$app->user->can('كل المحلات'))
 
     <?php // echo $form->field($model, 'updated_by') ?>
 
-    <?php // echo $form->field($model, 'isDeleted') ?>
+    <?php  echo $form->field($model, 'is_debt')->checkbox(['label' => 'الدين']) ?>
+    <?php  echo $form->field($model, 'is_repayment')->checkbox(['label' => 'السداد']) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'بحث'), ['class' => 'btn btn-primary']) ?>

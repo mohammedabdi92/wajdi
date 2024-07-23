@@ -20,6 +20,9 @@ class InventoryOrderSearch extends InventoryOrder
 
     public $updated_at_from;
     public $updated_at_to;
+
+    public $is_debt;
+    public $is_repayment;
     /**
      * {@inheritdoc}
      */
@@ -28,7 +31,7 @@ class InventoryOrderSearch extends InventoryOrder
         return [
             [['id', 'supplier_id','store_id',  'created_by','updated_by', 'isDeleted'], 'integer'],
             [['total_cost'], 'number'],
-            [['supplier_name', 'updated_at', 'created_at','product_id','supplierName','created_at_from','created_at_to','updated_at_from','updated_at_to'], 'safe'],
+            [['supplier_name', 'updated_at', 'created_at','product_id','supplierName','created_at_from','created_at_to','updated_at_from','updated_at_to','is_debt','is_repayment'], 'safe'],
         ];
     }
 
@@ -76,6 +79,18 @@ class InventoryOrderSearch extends InventoryOrder
                 $this->supplier_id = 1000000000000;
             }
         }
+
+        //IS NOT NULL
+
+        if($this->is_debt)
+        {
+            $query->andWhere('inventory_order.debt is not null');
+        }
+        if($this->is_repayment)
+        {
+            $query->andWhere('inventory_order.repayment is not null');
+        }
+
 
         if($this->created_at_from)
         {

@@ -7,6 +7,7 @@ use kartik\daterange\DateRangePicker;
 /** @var yii\web\View $this */
 /** @var common\models\TransactionsSearch $model */
 /** @var yii\widgets\ActiveForm $form */
+
 ?>
 
 <div class="transactions-search">
@@ -21,6 +22,8 @@ use kartik\daterange\DateRangePicker;
     <?= $form->field($model, 'customerName') ?>
 
     <?= $form->field($model, 'order_id') ?>
+
+   
 
     <?= $form->field($model, 'type')->dropDownList([''=>'...'] + $model::typeArray ); ?>
 

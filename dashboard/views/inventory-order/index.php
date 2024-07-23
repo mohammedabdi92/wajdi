@@ -46,6 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status' => 1])->all(), 'id', 'name'),
         ],
         'total_cost',
+        'debt',
+        'repayment',
         [
             'attribute' => 'created_at',
             'value' => function ($model) {
@@ -107,10 +109,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'visibleButtons' => [
                     'update' => function ($model) {
-                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
+                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات') || Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') ;
                     },
                     'delete' => function ($model) {
-                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات');
+                        return Yii::$app->user->can('تعديل وحذف فواتير المشتريات') ;
                     },
                     'view' => function ($model) {
                         return Yii::$app->user->can('انشاء فاتورة المشتريات');

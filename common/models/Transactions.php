@@ -12,6 +12,7 @@ use yii2tech\ar\softdelete\SoftDeleteBehavior;
  *
  * @property int $id
  * @property int $customer_id
+ * @property int $store_id
  * @property int|null $order_id
  * @property float|null $amount
  * @property int|null $type
@@ -63,8 +64,8 @@ class Transactions extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_id','amount'], 'required'],
-            [['customer_id', 'order_id', 'type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
+            [['customer_id','amount','store_id'], 'required'],
+            [['customer_id', 'order_id', 'type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['amount'], 'number'],
             [['note'], 'string'],
         ];
@@ -80,6 +81,7 @@ class Transactions extends \yii\db\ActiveRecord
             'customer_id' => 'العميل',
             'order_id' => 'الطلب',
             'amount' => 'القيمة',
+            'store_id' => 'المحل',
             'type' => 'نوع الحركة',
             'note' => 'ملاحظة',
             'created_at' =>  'تاريخ الانشاء',
@@ -93,6 +95,11 @@ class Transactions extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
     }
+    public function getOrder()
+    {
+        return $this->hasOne(Order::className(), ['id' => 'order_id']);
+    }
+
 
 
     /**

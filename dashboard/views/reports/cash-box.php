@@ -70,6 +70,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $order_pluse?></td>
                 </tr>
                 <tr>
+                    <th style="width:50%">الدين:</th>
+                    <td><?= $debt_sum?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">السداد :</th>
+                    <td><?= $transactions_r_plus?></td>
+                </tr>
+                <tr>
                     <th style="width:50%"> المدخلات على الصندوق :</th>
                     <td><?= $entries_pluse?></td>
                 </tr>
@@ -102,12 +110,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th style="width:50%">صافي الصندوق بدون المشتريات:</th>
                     <td><?= $cash_amount_without_inventory_order?></td>
                 </tr>
+               
                 <tr>
-                    <th style="width:50%">الربح قبل المصروف والتالف:</th>
+                    <th style="width:50%">الربح الفواتير:</th>
                     <td><?= $total_profit?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">الربح الصافي:</th>
+                    <th style="width:50%">الربح الصافي :</th>
+                    <td><?= $total_profit_without_damaged_outlay + $debt_sum?></td>
+                </tr>
+                
+                <tr>
+                    <th style="width:50%">الربح الصافي مع خصم الدين:</th>
                     <td><?= $total_profit_without_damaged_outlay?></td>
                 </tr>
 

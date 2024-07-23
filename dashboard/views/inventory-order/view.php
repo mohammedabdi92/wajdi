@@ -18,9 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
         <?php
-        if(Yii::$app->user->can('تعديل وحذف فواتير المشتريات'))
+        if(Yii::$app->user->can('تعديل وحذف فواتير المشتريات') ||  Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') )
         {
             echo Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+           
+        }
+        if(Yii::$app->user->can('تعديل وحذف فواتير المشتريات'))
+        {
             echo Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
                 'data' => [
