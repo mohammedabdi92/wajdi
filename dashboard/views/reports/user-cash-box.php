@@ -71,10 +71,7 @@ if(Yii::$app->user->can('كل المحلات'))
                     <td><?= $transactions_r_plus?></td>
                 </tr>
 
-                <tr>
-                    <th style="width:50%">التوالف المرجعة :</th>
-                    <td><?= $damaged_plus?></td>
-                </tr>
+                
 
                 <tr>
                     <th style="width:50%">المشتريات :</th>
@@ -89,7 +86,7 @@ if(Yii::$app->user->can('كل المحلات'))
                     <td><?= $financial_withdrawal_mince?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">التوالف الغير مرجعة :</th>
+                    <th style="width:50%">التوالف  :</th>
                     <td><?= $damaged_mince?></td>
                 </tr>
                 <tr>

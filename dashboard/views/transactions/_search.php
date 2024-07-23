@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\daterange\DateRangePicker;
+use yii\web\JsExpression;
 
 /** @var yii\web\View $this */
 /** @var common\models\TransactionsSearch $model */
@@ -19,7 +20,37 @@ use kartik\daterange\DateRangePicker;
 
     <?= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'customerName') ?>
+    <?php
+    echo $form->field($model, "customer_id")->widget(\kartik\select2\Select2::classname(), [
+        'data' =>[$model->customer_id=>$model->customerName],
+        'options' => [
+            'placeholder' => 'اختر ...', // Add a placeholder
+            'allowClear' => true, // Ensure allowClear is true
+        ],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'minimumInputLength' => 3,
+            'language' => [
+                'errorLoading' => new JsExpression("function () { return 'Waiting for results...'; }"),
+            ],
+            'ajax' => [
+                'url' => \yii\helpers\Url::to(['customer/get-customers']),
+                'dataType' => 'json',
+                'data' => new JsExpression('function(params) { return {q:params.term}; }'),
+                'results' => new JsExpression('function(params) { return {q:params.term}; }'),
+                'cache' => true
+
+            ],
+            'escapeMarkup' => new JsExpression('function (markup) { return markup; }'),
+            'templateResult' => new JsExpression('function(product) { return product.text; }'),
+            'templateSelection' => new JsExpression('function (product) { return product.text; }'),
+        ],
+    'pluginEvents' => [
+        'select2:open' =>'function(params) {$(".select2-search__field")[0].focus()}'
+    ]
+        
+    ]);
+    ?>
 
     <?= $form->field($model, 'order_id') ?>
 

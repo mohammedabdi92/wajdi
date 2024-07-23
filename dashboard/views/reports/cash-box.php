@@ -81,11 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <th style="width:50%"> المدخلات على الصندوق :</th>
                     <td><?= $entries_pluse?></td>
                 </tr>
-                <tr>
-                    <th style="width:50%">التوالف المرجعة :</th>
-                    <td><?= $damaged_plus?></td>
-                </tr>
-
+              
                 <tr>
                     <th style="width:50%">المشتريات :</th>
                     <td><?= $inventory_order_mince?></td>
@@ -99,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $financial_withdrawal_mince?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">التوالف الغير مرجعة :</th>
+                    <th style="width:50%">التوالف  :</th>
                     <td><?= $damaged_mince?></td>
                 </tr>
                 <tr>

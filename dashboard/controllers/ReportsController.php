@@ -145,14 +145,19 @@ class ReportsController extends BaseController
         $transactions_r_q = Transactions::find()->select('amount')->joinWith('order')->where(['type'=>Transactions::TYPE_REPAYMENT]);
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
-        $damaged_q =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_RETURNED]);
+        $damaged_q =  Damaged::find()->select('amount')->joinWith('order')->where([
+            'or',
+            ['status_note_id' => null],
+            ['status_note_id' => Damaged::STATUS_NOTE_NOT_RETURND]
+        ]);
+        $damaged_q_m = Damaged::find()->select('supplyer_pay_amount')->joinWith('order')->where(['status_note_id' => Damaged::STATUS_NOTE_RETURN_WITH_PAY]);
 
 
         // - inventory-order(dep) , outlay,returns,damaged
         $inventory_order_q =  InventoryOrder::find()->select('total_cost');
         $returns_q =  Returns::find()->select('amount')->joinWith('order');
         $outlay_q =  Outlay::find()->select('amount');
-        $damaged_q_m =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_INACTIVE]);
+       
         $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
 
         if($modelSearch->date_from)
@@ -201,10 +206,10 @@ class ReportsController extends BaseController
 
 
         // print_r($transactions_r_q->createCommand()->getRawSql());die;
-        $damaged_mince = $damaged_q_m->sum('amount');
+        $damaged_mince = $damaged_q->sum('amount');
+        $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
-        $damaged_plus = $damaged_q->sum('amount');
         $transactions_r_plus = $transactions_r_q->sum('amount');
         $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
@@ -220,7 +225,7 @@ class ReportsController extends BaseController
         $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
 
-        $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus + (double)$transactions_r_plus ;
+        $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$transactions_r_plus ;
         $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince;
 
 
@@ -244,7 +249,6 @@ class ReportsController extends BaseController
             'transactions_r_plus'=>round($transactions_r_plus, 2),
             'entries_pluse'=> round($entries_pluse, 2),
             'returns_mince'=> round($returns_mince, 2),
-            'damaged_plus'=> round($damaged_plus, 2),
             'inventory_order_mince'=>round($inventory_order_mince, 2),
             'outlay_mince'=> round($outlay_mince, 2),
             'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
@@ -271,14 +275,19 @@ class ReportsController extends BaseController
         $transactions_r_q = Transactions::find()->select('amount')->joinWith('order')->where(['type'=>Transactions::TYPE_REPAYMENT]);
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
-        $damaged_q =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_RETURNED]);
+        $damaged_q =  Damaged::find()->select('amount')->joinWith('order')->where([
+            'or',
+            ['status_note_id' => null],
+            ['status_note_id' => Damaged::STATUS_NOTE_NOT_RETURND]
+        ]);
+        $damaged_q_m = Damaged::find()->select('supplyer_pay_amount')->joinWith('order')->where(['status_note_id' => Damaged::STATUS_NOTE_RETURN_WITH_PAY]);
+
 
 
         // - inventory-order(dep) , outlay,returns,damaged
         $inventory_order_q =  InventoryOrder::find()->select('total_cost');
         $returns_q =  Returns::find()->select('amount')->joinWith('order');
         $outlay_q =  Outlay::find()->select('amount');
-        $damaged_q_m =  Damaged::find()->select('amount')->joinWith('order')->where(['status'=>Damaged::STATUS_INACTIVE]);
         $financial_withdrawal_q =  FinancialWithdrawal::find()->select('amount')->where(['status'=>FinancialWithdrawal::STATUS_NOT_PAYED]);
 
         if($modelSearch->date_from)
@@ -327,10 +336,10 @@ class ReportsController extends BaseController
 
 
         // print_r($transactions_r_q->createCommand()->getRawSql());die;
-        $damaged_mince = $damaged_q_m->sum('amount');
+        $damaged_mince = $damaged_q->sum('amount');
+        $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
-        $damaged_plus = $damaged_q->sum('amount');
         $transactions_r_plus = $transactions_r_q->sum('amount');
         $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
@@ -346,7 +355,7 @@ class ReportsController extends BaseController
         $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
 
-        $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$damaged_plus + (double)$transactions_r_plus ;
+        $box_in = (double)$order_pluse + (double)$entries_pluse  + (double)$transactions_r_plus ;
         $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince;
 
 
@@ -369,7 +378,6 @@ class ReportsController extends BaseController
             'transactions_r_plus'=>round($transactions_r_plus, 2),
             'entries_pluse'=> round($entries_pluse, 2),
             'returns_mince'=> round($returns_mince, 2),
-            'damaged_plus'=> round($damaged_plus, 2),
             'inventory_order_mince'=>round($inventory_order_mince, 2),
             'outlay_mince'=> round($outlay_mince, 2),
             'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
