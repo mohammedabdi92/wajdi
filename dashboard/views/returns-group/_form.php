@@ -57,12 +57,13 @@ if($model->order_id)
         let value = input.value;
         let numbers = value.replace(/[^0-9]/g, "");
         $.ajax({url: "<?=Url::to(['/order/is-dept'])?>?id="+numbers, success: function(result){
-                $("#is-dept").html(result);
+            debugger;
+                $(".is-dept").html(result);
                 if(result)
                 {
-                    $("#is-dept").show()
+                    $(".is-dept").show()
                 }else {
-                    $("#is-dept").hide()
+                    $(".is-dept").hide()
                 }
             }});
     }
@@ -101,7 +102,7 @@ if($model->order_id)
             </div>
         </div>
 
-<div id="is-dept" class="row" style="
+<div class="is-dept" class="row" style="
     display: <?=$IsDept?"block":"none"?>;
     padding: 11px 14px;
     font-weight: bold;
@@ -109,7 +110,7 @@ if($model->order_id)
     border: 1px solid black;
     border-width: 3px;
     margin: 10px 0px;
-    color: blue;
+    color: red;
 " >
     <?=$IsDept?>
 </div>
@@ -227,6 +228,18 @@ if($model->order_id)
             <div class="form-group">
        
     </div>
+        </div>
+        <div class="is-dept" class="row" style="
+            display: <?=$IsDept?"block":"none"?>;
+            padding: 11px 14px;
+            font-weight: bold;
+            font-size: large;
+            border: 1px solid black;
+            border-width: 3px;
+            margin: 10px 0px;
+            color: red;
+        " >
+            <?=$IsDept?>
         </div>
 
         <?= Html::submitButton(Yii::t('app', 'حفظ'), ['class' => 'btn btn-success']) ?>
