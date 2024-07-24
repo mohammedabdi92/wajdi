@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\components\CustomFunc;
 use common\models\ArOrder;
 use common\models\ArOrderProduct;
 use common\models\Customer;
@@ -56,6 +57,18 @@ class OrderController extends BaseController
     {
         $searchModel = new OrderSearch();
         $params = $this->request->queryParams;
+        if(!empty($params) && empty($params['OrderSearch']['created_at']))
+        {
+            $params['OrderSearch']['created_at_from'] = '';
+        }
+
+
+        // Check if search parameters are empty or if all parameters are empty
+        $areParamsEmpty = empty($params) || array_filter($params['OrderSearch']) === [];
+        if($areParamsEmpty)
+        {
+            $params['OrderSearch']['created_at_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
         
         $dataProvider = $searchModel->search($params);
         if(!empty($searchModel->customer_id))

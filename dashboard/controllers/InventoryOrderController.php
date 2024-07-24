@@ -50,6 +50,19 @@ class InventoryOrderController extends BaseController
     {
         $searchModel = new InventoryOrderSearch();
         $params = $this->request->queryParams;
+        if(!empty($params) && empty($params['InventoryOrderSearch']['created_at']))
+        {
+            $params['InventoryOrderSearch']['created_at_from'] = '';
+        }
+
+
+        // Check if search parameters are empty or if all parameters are empty
+        $areParamsEmpty = empty($params) || array_filter($params['InventoryOrderSearch']) === [];
+        if($areParamsEmpty)
+        {
+            $params['InventoryOrderSearch']['created_at_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+        // var_dump( $params);die;
 
         $dataProvider = $searchModel->search($params);
         if(!empty($searchModel->supplier_id))

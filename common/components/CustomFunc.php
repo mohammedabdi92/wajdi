@@ -146,4 +146,14 @@ class CustomFunc
 
         return $formattedDate;
     }
+    public static function getLast30Days()
+    {
+        $endDate = new \DateTime(); // Current date and time
+        $startDate = (clone $endDate)->modify('-30 days'); // 30 days ago from current date
+
+        // Format start date with the current time
+        $formattedStartDate = $startDate->format('Y-m-d H:i:s');
+
+        return $formattedStartDate;
+    }
 }

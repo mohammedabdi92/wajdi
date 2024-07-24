@@ -81,10 +81,15 @@ if(Yii::$app->user->can('كل المحلات'))
     ]);
     ?>
 
-    <?= $form->field($model, 'store_id')->dropDownList([''=>'المحل ... ']+\yii\helpers\ArrayHelper::map($stores, 'id', 'name')) ?>
+<?php
+    if (count($stores) > 1) {
+        echo $form->field($model, 'store_id')->dropDownList(['' => 'المحل ... '] + \yii\helpers\ArrayHelper::map($stores, 'id', 'name'));
+    }
+    ?>
 
     <?= $form->field($model, 'total_amount') ?>
 
+    <?php if (Yii::$app->user->can('تعديل تاريخ البحث في المبيعات')): ?>
     <label>تاريخ الانشاء</label>
     <?= DateRangePicker::widget([
         'model' => $model,
@@ -94,23 +99,23 @@ if(Yii::$app->user->can('كل المحلات'))
         'startAttribute' => 'created_at_from',
         'endAttribute' => 'created_at_to',
         'pluginOptions' => [
-            'timePicker' => true,
-            'timePickerIncrement' => 1,
-            'locale' => [
-                'applyLabel' => 'تطبيق',
-                'cancelLabel' => 'الغاء',
-                'format' => 'Y-m-d H:i:s',
-            ],
-            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
-            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
-
-        ]
+                'timePicker' => true,
+                'timePickerIncrement' => 1,
+                'locale' => [
+                        'applyLabel' => 'تطبيق',
+                        'cancelLabel' => 'الغاء',
+                        'format' => 'Y-m-d H:i:s',
+                    ],
+                'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+                'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+    
+            ]
     ]); ?>
     <br>
 
 
-   
-    <?php  echo $form->field($model, 'created_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+
+    <?php echo $form->field($model, 'created_by')->dropDownList(['' => "..."] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
 
     <label>تاريخ التعديل</label>
     <?= DateRangePicker::widget([
@@ -121,21 +126,21 @@ if(Yii::$app->user->can('كل المحلات'))
         'startAttribute' => 'updated_at_from',
         'endAttribute' => 'updated_at_to',
         'pluginOptions' => [
-            'timePicker' => true,
-            'timePickerIncrement' => 1,
-            'locale' => [
-                'applyLabel' => 'تطبيق',
-                'cancelLabel' => 'الغاء',
-                'format' => 'Y-m-d H:i:s',
-            ],
-            'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
-            'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
-
-        ]
+                'timePicker' => true,
+                'timePickerIncrement' => 1,
+                'locale' => [
+                        'applyLabel' => 'تطبيق',
+                        'cancelLabel' => 'الغاء',
+                        'format' => 'Y-m-d H:i:s',
+                    ],
+                'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+                'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+    
+            ]
     ]); ?>
     <br>
-    
-    <?php  echo $form->field($model, 'updated_by')->dropDownList([''=>"..."]+\yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+    <?php echo $form->field($model, 'updated_by')->dropDownList(['' => "..."] + \yii\helpers\ArrayHelper::map(\common\models\User::find()->all(), 'id', 'full_name')) ?>
+    <?php endif; ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
