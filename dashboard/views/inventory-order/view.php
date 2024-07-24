@@ -58,8 +58,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'total_cost_without_discount',
             'discount_percentage',
             'tax_percentage',
+            'debt',
+            'repayment',
             'total_cost',
             'note',
+            [
+                'attribute' => 'repayment_date',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->repayment_date);
+                },
+            ],
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {
@@ -75,7 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
             ],
             [

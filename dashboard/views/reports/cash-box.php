@@ -87,6 +87,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $inventory_order_mince?></td>
                 </tr>
                 <tr>
+                    <th style="width:50%">ذمم للموردين :</th>
+                    <td><?= $inventory_debt?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">سداد للموردين :</th>
+                    <td><?= $inventory_repayment?></td>
+                </tr>
+                <tr>
                     <th style="width:50%">المصروفات :</th>
                     <td><?= $outlay_mince?></td>
                 </tr>

@@ -182,7 +182,8 @@ class ReportsController extends BaseController
 
 
         // - inventory-order(dep) , outlay,returns,damaged
-        $inventory_order_q =  InventoryOrder::find()->select('total_cost');
+        $inventory_order_q =  InventoryOrder::find()->select('total_cost,debt');
+        $inventory_order_repayment_q =  InventoryOrder::find()->select('repayment');
         $returns_q =  Returns::find()->select('amount')->joinWith('order');
         $outlay_q =  Outlay::find()->select('amount');
        
@@ -197,6 +198,7 @@ class ReportsController extends BaseController
             $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $returns_q->andWhere(['>=', 'returns.created_at', strtotime( $modelSearch->date_from)]);
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
+            $inventory_order_repayment_q->andWhere(['>=', 'repayment_date', strtotime( $modelSearch->date_from)]);
             $outlay_q->andWhere(['>=', 'pull_date',  $modelSearch->date_from]);
             $damaged_q_m->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $financial_withdrawal_q->andWhere(['>=', 'pull_date',  $modelSearch->date_from]);
@@ -213,6 +215,7 @@ class ReportsController extends BaseController
             $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $returns_q->andWhere(['<=', 'returns.created_at', strtotime( $modelSearch->date_to)]);
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
+            $inventory_order_repayment_q->andWhere(['<=', 'repayment_date', strtotime( $modelSearch->date_to)]);
             $outlay_q->andWhere(['<=', 'pull_date',  $modelSearch->date_to]);
             $damaged_q_m->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $financial_withdrawal_q->andWhere(['<=', 'pull_date',  $modelSearch->date_to]);
@@ -226,6 +229,7 @@ class ReportsController extends BaseController
             $returns_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $damaged_q->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $inventory_order_q->andWhere(['store_id'=>$modelSearch->store_id]);
+            $inventory_order_repayment_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $outlay_q->andWhere(['store_id'=>$modelSearch->store_id]);
             $damaged_q_m->andWhere(['order.store_id'=>$modelSearch->store_id]);
             $financial_withdrawal_q->andWhere(['store_id'=>$modelSearch->store_id]);
@@ -238,12 +242,14 @@ class ReportsController extends BaseController
         $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
+      
         $transactions_r_plus = $transactions_r_q->sum('amount');
         $returns_mince = $returns_q->sum('amount');
         $entries_pluse =  $entries_q->sum('amount');
         $order_pluse =  $order_q->sum('total_amount');
         $debt_sum =  $order_q->sum('debt');
-
+        $inventory_debt = $inventory_order_q->sum('debt');
+        $inventory_repayment = $inventory_order_repayment_q->sum('repayment');
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
@@ -254,7 +260,7 @@ class ReportsController extends BaseController
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$transactions_r_plus ;
-        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince +(double)$inventory_repayment ;
 
 
         $cash_amount =  $box_in - $box_out;
@@ -273,6 +279,8 @@ class ReportsController extends BaseController
             'box_in'=> round($box_in, 2),
             'debt_sum'=> round($debt_sum, 2),
             'box_out'=> round($box_out, 2),
+            'inventory_debt'=> round($inventory_debt, 2),
+            'inventory_repayment'=> round($inventory_repayment, 2),
             'order_pluse'=>round($order_pluse, 2),
             'transactions_r_plus'=>round($transactions_r_plus, 2),
             'entries_pluse'=> round($entries_pluse, 2),

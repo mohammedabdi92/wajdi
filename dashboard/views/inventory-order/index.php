@@ -12,6 +12,12 @@ use kartik\export\ExportMenu;
 
 $this->title = Yii::t('app', 'فواتير المشتريات');
 $this->params['breadcrumbs'][] = $this->title;
+$totalSum = $dataProvider->query->sum('debt');
+$totalSum = round($totalSum, 2); // Rounds to 2 decimal places
+$totalSum2 = $dataProvider->query->sum('repayment');
+$totalSum2 = round($totalSum2, 2); // Rounds to 2 decimal places
+$totalSum3 = $dataProvider->query->sum('total_cost');
+$totalSum3 = round($totalSum3, 2);
 ?>
 <div class="inventory-order-index">
 
@@ -45,9 +51,21 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'raw',
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status' => 1])->all(), 'id', 'name'),
         ],
-        'total_cost',
-        'debt',
-        'repayment',
+        [
+            'attribute' => 'total_cost',
+            'footer' => $totalSum3, // Format the total sum
+            'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+        ],
+        [
+            'attribute' => 'debt',
+            'footer' => $totalSum, // Format the total sum
+            'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+        ],
+        [
+            'attribute' => 'repayment',
+            'footer' => $totalSum2, // Format the total sum
+            'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+        ],
         [
             'attribute' => 'created_at',
             'value' => function ($model) {
@@ -157,6 +175,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
 //        'filterModel' => $searchModel,
+        'showFooter' => Yii::$app->user->can('اظهار المجاميع في فاتورة المشتريات'),
         'columns' => $gridColumns,
         'id' => 'w0',
     ]);
