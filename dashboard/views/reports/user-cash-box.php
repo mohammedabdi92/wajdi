@@ -81,10 +81,7 @@ if(Yii::$app->user->can('كل المحلات'))
                     <th style="width:50%">المصروفات :</th>
                     <td><?= $outlay_mince?></td>
                 </tr>
-                <tr>
-                    <th style="width:50%">المسحوبات :</th>
-                    <td><?= $financial_withdrawal_mince?></td>
-                </tr>
+             
                 <tr>
                     <th style="width:50%">التوالف  :</th>
                     <td><?= $damaged_mince?></td>
