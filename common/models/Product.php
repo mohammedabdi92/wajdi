@@ -15,6 +15,7 @@ use yii2tech\ar\softdelete\SoftDeleteQueryBehavior;
  * @property string $title
  * @property string $image_name
  * @property int $category_id
+ * @property int $item_location
  * @property int $count_type
  * @property int $created_at
  * @property float $price
@@ -71,7 +72,7 @@ class Product extends \common\components\BaseModel
             [['title'], 'trim'],
             [['count_next'], 'checkNext'],
             [['category_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
-            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price','item_code','price_next','price_1_next','price_2_next','price_3_next','price_4_next','count_next'], 'safe'],
+            [['price_pf_vat','vat','price_discount_percent','price_discount_amount','min_counts','last_price','min_price','item_code','price_next','price_1_next','price_2_next','price_3_next','price_4_next','count_next','item_location'], 'safe'],
         ];
     }
 
@@ -101,6 +102,7 @@ class Product extends \common\components\BaseModel
             'count_type' => Yii::t('app', 'نوع العد'),
             'item_code' => Yii::t('app', 'الكود'),
             'price' => Yii::t('app', 'السعر'),
+            'item_location' => Yii::t('app', 'موقع المادة'),
             'min_number' => Yii::t('app', 'الحد الادنى للعدد'),
             'last_price' => Yii::t('app', 'اخر سعر'),
             'min_price' => Yii::t('app', 'اقل سعر'),

@@ -28,6 +28,7 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'title')->textInput() ?>
     <?= $form->field($model, 'item_code')->textInput() ?>
+    <?= $form->field($model, 'item_location')->textarea(['rows' => 4])?>
     <?= $form->field($model, 'status')->dropDownList($model::statusArray); ?>
 
 

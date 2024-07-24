@@ -42,6 +42,7 @@ if($InventoryOrderProductMin)
             'id',
             'title:ntext',
             "item_code",
+            "item_location",
             [
                 'attribute' => 'status',
                 'value' => function($model){
