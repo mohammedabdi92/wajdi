@@ -56,7 +56,7 @@ class CustomFunc
         $SeparationsTo = Separations::find()->select('count_to')->where(['store_id' => $store_id, 'product_id_to' => $product_id])->sum('count_to');
         $SeparationsFrom = Separations::find()->select('count_from')->where(['store_id' => $store_id, 'product_id_from' => $product_id])->sum('count_from');
 
-        $total = (double)$item_inventory_count + (double)$returned - (double)$item_order_count + (double)$damaged_returned - (double)$damaged_inactive - (double)$transformFrom - (double)$SeparationsFrom + (double)$transformTo + (double)$SeparationsTo;
+        $total = (double) $item_inventory_count + (double) $returned - (double) $item_order_count + (double) $damaged_returned - (double) $damaged_inactive - (double) $transformFrom - (double) $SeparationsFrom + (double) $transformTo + (double) $SeparationsTo;
         \Yii::info("item_inventory_count: $item_inventory_count, item_order_count: $item_order_count, returned: $returned, damaged_returned: $damaged_returned, damaged_inactive: $damaged_inactive, transformFrom: $transformFrom, transformTo: $transformTo, total: $total");
 
 
@@ -91,7 +91,7 @@ class CustomFunc
             $SeparationsTo = Separations::find()->select('count_to')->where(['store_id' => $store_id, 'product_id_to' => $product_id])->sum('count_to');
             $SeparationsFrom = Separations::find()->select('count_from')->where(['store_id' => $store_id, 'product_id_from' => $product_id])->sum('count_from');
 
-            $total = (int)$item_inventory_count + (int)$returned - (int)$item_order_count + (int)$damaged_returned - (int)$damaged_inactive - (int)$transformFrom + (int)$transformTo - (int)$SeparationsFrom + (int)$SeparationsTo;
+            $total = (int) $item_inventory_count + (int) $returned - (int) $item_order_count + (int) $damaged_returned - (int) $damaged_inactive - (int) $transformFrom + (int) $transformTo - (int) $SeparationsFrom + (int) $SeparationsTo;
 
             $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();
             if (empty($inventory)) {
@@ -136,5 +136,14 @@ class CustomFunc
     public static function calculateOrderProduct($order_id)
     {
 
+    }
+    public static function getFirstDayOfThisMonth()
+    {
+        $firstDayOfMonth = new \DateTime('first day of this month');
+
+        // Format the date as needed (e.g., 'Y-m-d' for '2024-07-01')
+        $formattedDate = $firstDayOfMonth->format('Y-m-d  00:00:00');
+
+        return $formattedDate;
     }
 }

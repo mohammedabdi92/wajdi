@@ -2,6 +2,7 @@
 
 namespace dashboard\controllers;
 
+use common\components\CustomFunc;
 use common\models\Damaged;
 use common\models\Entries;
 use common\models\FinancialWithdrawal;
@@ -49,8 +50,9 @@ class ReportsController extends BaseController
     public function actionProducts(){
 
         $searchModel = new InventorySearch();
-        $dataProvider = $searchModel->search($this->request->queryParams,true);
-
+        $params = $this->request->queryParams;
+    
+        $dataProvider = $searchModel->search($params,true);
         return $this->render('products', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -59,7 +61,11 @@ class ReportsController extends BaseController
     public function actionOrderProduct(){
 
         $searchModel = new OrderProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams,true);
+        $params = $this->request->queryParams;
+        if((!empty($params['OrderProductSearch']) && empty($params['OrderProductSearch']['created_at_from'])) || empty($params['OrderProductSearch'] )){
+            $params['OrderProductSearch']['created_at_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+        $dataProvider = $searchModel->search($params,true);
 
         return $this->render('order-product', [
             'searchModel' => $searchModel,
@@ -69,7 +75,12 @@ class ReportsController extends BaseController
     public function actionOrder(){
 
         $searchModel = new OrderSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams,true);
+        $params = $this->request->queryParams;
+        if((!empty($params['OrderSearch']) && empty($params['OrderSearch']['created_at_from'])) || empty($params['OrderSearch'] )){
+            $params['OrderSearch']['created_at_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+
+        $dataProvider = $searchModel->search($params,true);
 
         return $this->render('order', [
             'searchModel' => $searchModel,
@@ -81,7 +92,12 @@ class ReportsController extends BaseController
     {
 
         $searchModel = new InventoryOrderProductSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams, true);
+        $params = $this->request->queryParams;
+        if((!empty($params['InventoryOrderProductSearch']) && empty($params['InventoryOrderProductSearch']['created_at_from'])) || empty($params['InventoryOrderProductSearch'] )){
+            $params['InventoryOrderProductSearch']['created_at_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+
+        $dataProvider = $searchModel->search($params,true);
 
         return $this->render('inventory-order-product', [
             'searchModel' => $searchModel,
@@ -92,7 +108,13 @@ class ReportsController extends BaseController
     {
 
         $searchModel = new Presence();
-        $searchModel->load($this->request->queryParams);
+        $params = $this->request->queryParams;
+        if((!empty($params['Presence']) && empty($params['Presence']['time_from'])) || empty($params['Presence'] )){
+            $params['Presence']['time_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+
+
+        $searchModel->load($params);
         $query =  Presence::find()->select([
             '*',
             'time_out'=>"@time_outs :=(SELECT p2.time FROM presence as p2 where p2.type = 2 AND presence.user_id = p2.user_id  AND p2.time >= presence.time AND `time` LIKE CONCAT('%' ,CONCAT( DATE(presence.time) , '%'))  LIMIT 1)",
@@ -135,7 +157,13 @@ class ReportsController extends BaseController
     public function actionCashBox()
     {
         $modelSearch = new cashBoxSearch();
-        $modelSearch->load($this->request->queryParams);
+        $params = $this->request->queryParams;
+        if((!empty($params['cashBoxSearch']) && empty($params['cashBoxSearch']['date_from'])) || empty($params['cashBoxSearch'] )){
+            $params['cashBoxSearch']['date_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+
+
+        $modelSearch->load($params);
 
         $productQuery = Order::find();
         $productQuery->joinWith('products.product');
@@ -260,7 +288,13 @@ class ReportsController extends BaseController
     public function actionUserCashBox()
     {
         $modelSearch = new cashBoxSearch();
-        $modelSearch->load($this->request->queryParams);
+        $params = $this->request->queryParams;
+        if((!empty($params['cashBoxSearch']) && empty($params['cashBoxSearch']['date_from'])) || empty($params['cashBoxSearch'] )){
+            $params['cashBoxSearch']['date_from'] =   CustomFunc::getFirstDayOfThisMonth();
+        }
+
+
+        $modelSearch->load($params);
         if(!\Yii::$app->user->can('كل المحلات') && empty($modelSearch->store_id))
         {
             $stores = \Yii::$app->user->identity->stores;
