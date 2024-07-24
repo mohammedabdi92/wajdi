@@ -99,12 +99,12 @@ class Separations extends \yii\db\ActiveRecord
     }
     public function getProductToTitle()
     {
-        return $this->productFrom ? $this->productFrom->title : '';
+        return $this->productTo ? $this->productTo->title : '';
     }
 
     public function getProductFromTitle()
     {
-        return $this->productTo ? $this->productTo->title : '';
+        return $this->productFrom ? $this->productFrom->title : '';
     }
     public function getStore()
     {
