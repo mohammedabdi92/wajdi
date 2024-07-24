@@ -156,37 +156,37 @@ $this->registerJs($js);
             <div class="row tile_count">
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> البيع</span>
-                    <div class="count"><?= $orderAmount ?? 0 ?></div>
+                    <div class="count"><?= round($orderAmount ?? 0, 2) ?></div>
 
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> مجموع الخصم </span>
-                    <div class="count"><?= $totalDiscount ?? 0 ?></div>
+                    <div class="count"><?= round($totalDiscount ?? 0, 2) ?></div>
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> قيمة المرجع</span>
-                    <div class="count"> <?= $returnsAmount ?? 0 ?></div>
+                    <div class="count"> <?= round($returnsAmount ?? 0 , 2)?></div>
 
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> المصروف</span>
-                    <div class="count"><?= $outlayAmount ?? 0 ?></div>
+                    <div class="count"><?= round($outlayAmount ?? 0, 2) ?></div>
 
                 </div>
 
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> الدين</span>
-                    <div class="count"><?= $debtAmount ?? 0 ?></div>
+                    <div class="count"><?= round($debtAmount ?? 0, 2) ?></div>
 
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> السداد</span>
-                    <div class="count"><?= $repaymentAmount ?? 0 ?></div>
+                    <div class="count"><?= round($repaymentAmount ?? 0, 2) ?></div>
 
                 </div>
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> الشراء</span>
-                    <div class="count"><?= $inventoryOrderAmount ?? 0 ?></div>
+                    <div class="count"><?= round($inventoryOrderAmount ?? 0, 2) ?></div>
 
                 </div>
 
