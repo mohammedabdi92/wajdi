@@ -63,7 +63,7 @@ class PresenceSearch extends Presence
             'time' => $this->time,
             'type' => $this->type,
         ]);
-
+        $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
     }
 }
