@@ -43,7 +43,6 @@ class ArOrder extends \common\components\BaseModel
 
     public $customerName ;
     public $order_cost;
-    public $items_cost ;
     /**
      * {@inheritdoc}
      */
@@ -70,7 +69,7 @@ class ArOrder extends \common\components\BaseModel
                 }
                 return false;
             }],
-            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note','earn_the_bill','customerName','order_cost','items_cost'],'safe'],
+            [['total_price_discount_product','total_count','note','phone_number','customer_name','product_count','returns_amount','dept_note','earn_the_bill','customerName','order_cost'],'safe'],
             [['total_discount','total_amount_without_discount','debt','repayment','remaining','paid'], 'double'],
         ];
     }

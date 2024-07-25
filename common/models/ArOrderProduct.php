@@ -36,6 +36,8 @@ class ArOrderProduct extends \common\components\BaseModel
     public $ready_to_deliver ;
     public $count_type_name ;
 
+    public $items_cost ;
+
     /**
      * {@inheritdoc}
      */
@@ -53,7 +55,7 @@ class ArOrderProduct extends \common\components\BaseModel
             [['product_id', 'count', 'price_number', 'amount'], 'required'],
             [['order_id', 'product_id', 'count_type', 'created_at', 'created_by', 'updated_at', 'updated_by', 'isDeleted','store_id'], 'integer'],
             [['count'], 'number'],
-            [['count_type_name'], 'safe'],
+            [['count_type_name','items_cost'], 'safe'],
             [['ready_to_deliver'], 'checkReady'],
             [['product_id'], 'checkInventory'],
             [['product_id'], 'checkDuplicate'],
