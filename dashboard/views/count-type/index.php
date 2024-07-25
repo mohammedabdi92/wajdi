@@ -36,9 +36,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'raw',
             ],
-            'created_at',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+                
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
+                },
+                
+            ],
 //            'created_by',
-            'updated_at',
             //'updated_by',
             [
                 'class' => ActionColumn::className(),'icons'=>[
