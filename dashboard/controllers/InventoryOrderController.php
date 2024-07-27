@@ -158,9 +158,9 @@ class InventoryOrderController extends BaseController
         {
             $model->supplierName = Supplier::findOne($model->supplier_id)->name;
         }
-
-
-        if ($model->load(Yii::$app->request->post())) {
+        
+        if ($model->load(Yii::$app->request->post()) && !Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات')) {
+         
 
             $oldIDs = ArrayHelper::map($model_product, 'id', 'id');
             $model_product = Model::createMultiple(InventoryOrderProduct::classname(), $model_product);
@@ -211,6 +211,10 @@ class InventoryOrderController extends BaseController
                     print_r($e->getMessage());die;
                     $transaction->rollBack();
                 }
+            }
+        }else{
+            if(!empty(Yii::$app->request->post()) && Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') && $model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
