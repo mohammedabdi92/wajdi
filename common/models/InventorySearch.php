@@ -39,7 +39,7 @@ class InventorySearch extends Inventory
         return [
             [['id', 'product_id', 'store_id', 'created_by', 'updated_by', 'isDeleted','available_status','stagnant_month','is_stagnant'], 'integer'],
             [['last_product_cost', 'count'], 'number'],
-            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','created_at','category_id','created_at_range','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from','item_code'], 'safe'],
+            [['sum_price','sum_price_1', 'sum_price_2', 'sum_price_3', 'sum_price_4','sum_count','product_name','category_id','created_at_range','created_at','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from','item_code'], 'safe'],
         ];
     }
 

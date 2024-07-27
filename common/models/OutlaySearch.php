@@ -11,15 +11,21 @@ use common\models\Outlay;
  */
 class OutlaySearch extends Outlay
 {
+    public $created_at_from;
+    public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
+    
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'created_at', 'created_by', 'updated_at','store_id','user_id', 'updated_by'], 'integer'],
+            [['id', 'created_by','store_id','user_id', 'updated_by'], 'integer'],
             [['amount'], 'number'],
-            [['note', 'image_name'], 'safe'],
+            [['note', 'image_name','created_at','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
         ];
     }
 
@@ -70,11 +76,31 @@ class OutlaySearch extends Outlay
             'amount' => $this->amount,
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'created_at',strtotime( $this->created_at_from)]);
+
+        }
+       
+
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'created_at',strtotime( $this->created_at_to)]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'updated_at',strtotime( $this->updated_at_from)]);
+
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'updated_at',strtotime( $this->updated_at_to)]);
+        }
 
         $query->andFilterWhere(['like', 'note', $this->note])
             ->andFilterWhere(['like', 'image_name', $this->image_name]);

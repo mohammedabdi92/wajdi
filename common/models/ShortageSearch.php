@@ -12,14 +12,20 @@ use common\models\Shortage;
 class ShortageSearch extends Shortage
 {
     public $product_name;
+    public $created_at_from;
+    public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
+    
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'store_id', 'product_id', 'count', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['note','product_name'], 'safe'],
+            [['id', 'store_id', 'product_id', 'count', 'created_by', 'updated_by'], 'integer'],
+            [['created_at','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from','note','product_name'], 'safe'],
         ];
     }
 
@@ -60,15 +66,36 @@ class ShortageSearch extends Shortage
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'store_id' => $this->store_id,
-            'product_id' => $this->product_id,
-            'count' => $this->count,
-            'created_at' => $this->created_at,
-            'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
-            'updated_by' => $this->updated_by,
+            'shortage.id' => $this->id,
+            'shortage.store_id' => $this->store_id,
+            'shortage.product_id' => $this->product_id,
+            'shortage.count' => $this->count,
+            'shortage.created_by' => $this->created_by,
+            'shortage.updated_by' => $this->updated_by,
         ]);
+
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'shortage.created_at',strtotime( $this->created_at_from)]);
+
+        }
+       
+
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'shortage.created_at',strtotime( $this->created_at_to)]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'shortage.updated_at',strtotime( $this->updated_at_from)]);
+
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'shortage.updated_at',strtotime( $this->updated_at_to)]);
+        }
+
         if($this->product_name)
         {
             $parts = preg_split('/\s+/', $this->product_name);

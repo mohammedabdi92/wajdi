@@ -11,15 +11,20 @@ use common\models\FinancialWithdrawal;
  */
 class FinancialWithdrawalSearch extends FinancialWithdrawal
 {
+    public $created_at_from;
+    public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
+    
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'created_at','user_id', 'created_by','store_id', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'status','user_id', 'created_by','store_id',  'updated_by'], 'integer'],
             [['amount'], 'number'],
-            [['note'], 'safe'],
+            [['note','created_at','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
         ];
     }
 
@@ -64,11 +69,31 @@ class FinancialWithdrawalSearch extends FinancialWithdrawal
             'status' => $this->status,
             'store_id' => $this->store_id,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at,
             'created_by' => $this->created_by,
-            'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'created_at',strtotime( $this->created_at_from)]);
+
+        }
+       
+
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'created_at',strtotime( $this->created_at_to)]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'updated_at',strtotime( $this->updated_at_from)]);
+
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'updated_at',strtotime( $this->updated_at_to)]);
+        }
+
 
         $query->andFilterWhere(['like', 'note', $this->note]);
 
