@@ -12,6 +12,14 @@ use yii\grid\GridView;
 
 $this->title = 'فرط وتجميع المواد';
 $this->params['breadcrumbs'][] = $this->title;
+$stores = [];
+if(Yii::$app->user->can('كل المحلات'))
+{
+    $stores = \common\models\Store::find()->where(['status'=>1])->all();
+}else{
+    $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
+}
+
 ?>
 <div class="separations-index">
 
@@ -29,6 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
 
             'id',
+            [
+                'attribute' => 'store_id',
+                'value' => function($model){
+                    return $model->storeTitle;
+                },
+                'format' => 'raw',
+                'filter' => \yii\helpers\ArrayHelper::map($stores, 'id', 'name'),
+            ],
             'product_id_from',
             [
                 'attribute' => 'product_from_name',
