@@ -239,7 +239,6 @@ class OrderController extends BaseController
                         }
                         if ($flag) {
                             $transaction->commit();
-                            $model->updateOrderCost();
                             return $this->redirect(['ar-order/view', 'id' => $model->id]);
                         }
                     } catch (\Exception $e) {
