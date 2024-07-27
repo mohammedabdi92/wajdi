@@ -94,6 +94,8 @@ class DamagedSupplierController extends BaseController
     {
         $model = $this->findModel($id);
         $model->scenario = 'scenario_supplyer';
+      
+            
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

@@ -85,6 +85,7 @@ class Damaged extends \yii\db\ActiveRecord
             [['product_id', 'count', 'amount'], 'number'],
             [['count'], 'checkOrderCount'],
             [['inventory_order_id'], 'checkInventoryOrder', 'on' => 'scenario_supplyer'],
+            [['status_note_id','status'], 'checkStatus', 'on' => 'scenario_supplyer'],
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             [['order_id', 'product_id', 'count', 'amount', 'total_amount'], 'required', 'on' => 'scenario_agent'],
             [['inventory_order_id', 'supplyer_price', 'status','supplyer_total_amount'], 'required', 'on' => 'scenario_supplyer'],
@@ -132,6 +133,18 @@ class Damaged extends \yii\db\ActiveRecord
 
         if(!$model){
             $this->addError($attr, 'لا توجد هذه المادة في فاتورة المشتريات المدخلة');
+        }
+        
+    }
+    public function checkStatus($attr, $params) {
+
+        if(empty($this->status_note_id) && $this->status == self::STATUS_REPLACED)
+        {
+            $this->addError('status_note_id', 'يجب اختيار الاجراء المتخذ');
+        }
+        if(!empty($this->status_note_id) && $this->status != self::STATUS_REPLACED)
+        {
+            $this->addError('status_note_id', 'لا يمكنك اختيار الاجراء وحالة الطلب ليسة مكتملة');
         }
         
     }
