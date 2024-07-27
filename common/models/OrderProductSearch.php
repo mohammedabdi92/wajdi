@@ -121,7 +121,7 @@ class OrderProductSearch extends OrderProduct
 
         }
        
-
+        $query->orderBy(['id'=>SORT_DESC]);
         return $dataProvider;
     }
 }
