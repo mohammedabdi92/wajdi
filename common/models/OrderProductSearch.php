@@ -107,7 +107,7 @@ class OrderProductSearch extends OrderProduct
 
             $this->sum_count = $sumQuery->sum('count');
             $this->sum_total_product_amount = $sumQuery->sum('total_product_amount');
-            $this->sum_discount = $sumQuery->sum('discount') + $sumQuery->select('order.*')->groupBy('order.id')->sum('total_discount');
+            $this->sum_discount = $sumQuery->sum('discount');
 
             $this->sum_total_amount_w_discount = $this->sum_total_product_amount - $this->sum_discount;
             $this->sum_profit = $this->sum_total_amount_w_discount - $this->sum_product_price;
