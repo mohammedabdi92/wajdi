@@ -48,9 +48,7 @@ class DamagedSearch extends Damaged
             "damaged.*,order.store_id as store_id"
         );
         $query->joinWith([
-            'order' => function (\yii\db\ActiveQuery $query) {
-                $query->select(['store_id']);
-            },'product'
+            'order' ,'product'
         ]);
         // add conditions that should always apply here
 

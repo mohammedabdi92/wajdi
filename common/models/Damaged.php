@@ -203,6 +203,11 @@ class Damaged extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Order::className(), ['id' => 'order_id']);
     }
+    public function getInventoryOrder()
+    {
+        return $this->hasOne(InventoryOrder::className(), ['id' => 'inventory_order_id']);
+    }
+
     public function getStoreTitle()
     {
         return Store::findOne($this->store_id)->name;

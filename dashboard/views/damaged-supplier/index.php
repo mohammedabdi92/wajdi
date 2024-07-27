@@ -56,6 +56,12 @@ if(Yii::$app->user->can('كل المحلات'))
                 'format' => 'raw',
             ],
             [
+                'value'=> function($model){ 
+                    return $model->order->customer->name??'';
+                },
+                'label'=>'اسم العميل'
+            ],
+            [
                 'attribute' => 'product_name',
                 'value' => function($model){
                     return $model->productTitle;
@@ -63,6 +69,19 @@ if(Yii::$app->user->can('كل المحلات'))
                 'label'=>"المادة",
                 'format' => 'raw',
 
+            ],
+            [
+                'attribute' => 'inventory_order_id',
+                'value' => function ($model) {
+                    return $model->inventory_order_id ? Html::a($model->inventory_order_id, '/inventory-order/view?id='.$model->inventory_order_id,['target'=>'_blank'] ) : '';
+                },
+                'format' => 'raw',
+            ],
+            [
+                'value'=> function($model){ 
+                    return $model->inventoryOrder->supplierTitle??'';
+                },
+                'label'=>'اسم المورد'
             ],
             [
                 'attribute' => 'count',
