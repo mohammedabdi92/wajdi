@@ -31,20 +31,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'product_id_from',
             [
-                'attribute' => 'product_id_from',
+                'attribute' => 'product_from_name',
                 'value' => function($model){
                     return $model->productFromTitle ? Html::a($model->productFromTitle, '/product/view?id='.$model->product_id_from,['target'=>'_blank'] ) : '';
                 },
+                'label'=>' اسم المادة المحول منها',
                 'format' => 'raw',
 
             ],
             'count_from',
             'product_id_to',
             [
-                'attribute' => 'product_id_to',
+                'attribute' => 'product_to_name',
                 'value' => function($model){
                     return $model->productToTitle ? Html::a($model->productToTitle, '/product/view?id='.$model->product_id_to,['target'=>'_blank'] ) : '';
                 },
+                'label'=>' اسم المادة المحول اليها',
                 'format' => 'raw',
 
             ],
