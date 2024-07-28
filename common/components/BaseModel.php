@@ -40,5 +40,17 @@ class BaseModel extends \yii\db\ActiveRecord
         }
         return $newObj;
     }
+    public function isAttributeChanged($name, $identical = true)
+    {
+        if (isset($this->attributes[$name], $this->oldAttributes[$name])) {
+            if ($identical) {
+                return $this->attributes[$name] != $this->oldAttributes[$name];
+            }
+
+            return $this->attributes[$name] != $this->oldAttributes[$name];
+        }
+
+        return isset($this->attributes[$name]) || isset($this->oldAttributes[$name]);
+    }
 
 }

@@ -5,6 +5,7 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Maintenance;
+use yii\db\Expression;
 
 /**
  * MaintenanceSearch represents the model behind the search form of `common\models\Maintenance`.
@@ -72,10 +73,12 @@ class MaintenanceSearch extends Maintenance
             'updated_at' => $this->updated_at,
             'updated_by' => $this->updated_by,
         ]);
+        
 
         $query->andFilterWhere(['like', 'client_note', $this->client_note])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'maintenance_note', $this->maintenance_note]);
+        $query->orderBy(new Expression('CASE WHEN status = 4 THEN 1 ELSE 0 END, id DESC'));
 
         return $dataProvider;
     }

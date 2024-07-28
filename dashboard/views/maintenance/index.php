@@ -37,8 +37,19 @@ if(Yii::$app->user->can('كل المحلات'))
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'showFooter' => Yii::$app->user->can('اظهار المجاميع في مواد الصيانة'),
+        'rowOptions' =>function ($model){
+
+            if($model->status == 4){
+                return [
+                    'class' => 'danger  time-set',
+                    'data-text' => ' '
+                ];
+            }
+            return ['class' => 'time-set-notSet'];
+
+
+        },
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
            
             'id',
             [

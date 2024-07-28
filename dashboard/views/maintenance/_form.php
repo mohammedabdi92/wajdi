@@ -15,7 +15,6 @@ use yii\web\JsExpression;
 // Fetch service centers
 $serviceCenters = ServiceCenter::find()->all();
 $serviceCenterList = ArrayHelper::map($serviceCenters, 'id', 'name');
-
 $this->registerJsFile(
     '@web/js/maintenance.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
@@ -118,7 +117,7 @@ $this->registerJsFile(
 
     <?= $form->field($model, 'maintenance_cost')->textInput() ?>
 
-    <?= $form->field($model, 'amount_paid')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'amount_paid')->textInput() ?>
 
     <?= $form->field($model, 'cost_difference')->textInput(['readonly' => true]) ?>
 

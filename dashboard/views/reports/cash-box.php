@@ -95,6 +95,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $inventory_repayment?></td>
                 </tr>
                 <tr>
+                    <th style="width:50%">كلف الصيانة :</th>
+                    <td><?= $maintenance_cost_mince?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">واردات الصيانة :</th>
+                    <td><?= $maintenance_paid_pluse?></td>
+                </tr>
+                <tr>
                     <th style="width:50%">المصروفات :</th>
                     <td><?= $outlay_mince?></td>
                 </tr>
@@ -105,6 +113,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <th style="width:50%">التوالف  :</th>
                     <td><?= $damaged_mince?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">واردات التوالف :</th>
+                    <td><?= $damaged_plus?></td>
                 </tr>
                 <tr>
                     <th style="width:50%"> المرجعة :</th>
