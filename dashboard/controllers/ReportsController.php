@@ -237,7 +237,7 @@ class ReportsController extends BaseController
 
 
 
-        // print_r($transactions_r_q->createCommand()->getRawSql());die;
+        // print_r($order_q->createCommand()->getRawSql());die;
         $damaged_mince = $damaged_q->sum('amount');
         $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $outlay_mince = $outlay_q->sum('amount');

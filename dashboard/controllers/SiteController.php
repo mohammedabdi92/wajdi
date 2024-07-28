@@ -101,35 +101,35 @@ class SiteController extends BaseController
         foreach ($outlaysData as $data) {
             $outlaysAmounts[$data['day'] - 1] = $data['amount'];
         }
-        $specificDay = date('Y-m-d'); // Replace with the day you're interested in
+        $specificDay = date('Y-m-d 00:00:00'); // Replace with the day you're interested in
 
         $totalDiscount = Order::find()
             ->select(['SUM(total_discount) AS total_discount'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $returnsAmount = Returns::find()->select(['SUM(amount) AS amount'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $orderAmount = Order::find()
             ->select(['SUM(total_amount) AS total_amount'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])
             ->scalar(); // Use scalar() to get the single value
             
         $inventoryOrderAmount = InventoryOrder::find()
             ->select(['SUM(total_cost) AS total_cost'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $debtAmount = Order::find()
             ->select(['SUM(debt) AS debt'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $repaymentAmount = Transactions::find()
             ->select(['SUM(amount) AS amount'])
-            ->where(['DATE(FROM_UNIXTIME(created_at))' => $specificDay,'type'=>Transactions::TYPE_REPAYMENT])
+            ->where(['>=', 'created_at', strtotime(  $specificDay)])->andWhere(['type'=>Transactions::TYPE_REPAYMENT])
             ->scalar(); // Use scalar() to get the single value
         $outlayAmount = Outlay::find()
             ->select(['SUM(amount) AS amount'])
-            ->where(['DATE(pull_date)' => $specificDay])
+            ->where(['>=', 'pull_date',   $specificDay])
             ->scalar(); // Use scalar() to get the single value
           
        
