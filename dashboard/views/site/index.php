@@ -11,6 +11,8 @@ $days = Json::encode($days);
 $orderAmounts = Json::encode($orderAmounts);
 $inventoryAmounts = Json::encode($inventoryAmounts);
 $outlaysAmounts = Json::encode($outlaysAmounts);
+$debtsAmounts = Json::encode($debtsAmounts);
+$repaymentsAmounts = Json::encode($repaymentsAmounts);
 
 $js = <<<JS
     var ctx = document.getElementById('chart').getContext('2d');
@@ -61,6 +63,39 @@ $js = <<<JS
                     fill: false
                 },
               
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    var ctx3 = document.getElementById('chart3').getContext('2d');
+    var chart3 = new Chart(ctx3, {
+        type: 'line',
+        data: {
+            labels: $days,
+            datasets: [
+                {
+                    label: 'الدين',
+                    data: $debtsAmounts,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false
+                },
+                {
+                    label: 'السداد',
+                    data: $repaymentsAmounts,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: false
+                }
             ]
         },
         options: {
@@ -222,6 +257,23 @@ $this->registerJs($js);
                         <div class="demo-container">
 
                             <canvas id="chart2"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="dashboard_graph x_panel">
+                    <div class="row x_title">
+                        <div class="col-md-12">
+                            <h3>الدين والسداد
+                            </h3>
+                        </div>
+
+                    </div>
+                    <div class="x_content">
+                        <div class="demo-container">
+
+                            <canvas id="chart3"></canvas>
                         </div>
                     </div>
                 </div>

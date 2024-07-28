@@ -50,46 +50,71 @@ class SiteController extends BaseController
     public function actionIndex()
     {
 
-        $currentMonth = date('m');
-        $currentYear = date('Y');
+
+
+        $m = date('m');
+        $y = date('Y');
+        $dt = strtotime("$y-$m-01 00:00:00");
 
         // Fetch order amounts for each day of the month
         $orderData = Yii::$app->db->createCommand("
-       SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(total_amount) AS total_amount1
+        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(total_amount) AS total_amount1
         FROM `order`
-        WHERE MONTH(FROM_UNIXTIME(created_at)) = MONTH(CURDATE())
-        AND YEAR(FROM_UNIXTIME(created_at)) = YEAR(CURDATE())
+        WHERE created_at >= $dt
         GROUP BY DAY(FROM_UNIXTIME(created_at))
         ORDER BY day;
-
-
-        
          ")->queryAll();
 
         // Fetch inventory order amounts for each day of the month
         $inventoryData = Yii::$app->db->createCommand("
         SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(total_cost) AS total_cost1
         FROM inventory_order
-        WHERE MONTH(FROM_UNIXTIME(created_at)) = MONTH(CURDATE())
-        AND YEAR(FROM_UNIXTIME(created_at)) = YEAR(CURDATE())
+        WHERE created_at >= $dt
         GROUP BY DAY(FROM_UNIXTIME(created_at))
         ORDER BY day;
-    ")->queryAll();
+        ")->queryAll();
 
         $outlaysData = Yii::$app->db->createCommand("
         SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
         FROM `outlays`
-        WHERE MONTH(FROM_UNIXTIME(created_at)) = MONTH(CURDATE())
-        AND YEAR(FROM_UNIXTIME(created_at)) = YEAR(CURDATE())
+        WHERE created_at >= $dt
         GROUP BY DAY(FROM_UNIXTIME(created_at))
         ORDER BY day;
-    ")->queryAll();
+        ")->queryAll();
+
+
+         $debtData = Yii::$app->db->createCommand("
+        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
+        FROM `transactions`
+        WHERE created_at >= $dt and type = 1
+        GROUP BY DAY(FROM_UNIXTIME(created_at))
+        ORDER BY day;
+         ")->queryAll();
+         $repaymentData = Yii::$app->db->createCommand("
+         SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
+         FROM `transactions`
+         WHERE created_at >= $dt and type = 1
+         GROUP BY DAY(FROM_UNIXTIME(created_at))
+         ORDER BY day;
+          ")->queryAll();
+
+       
 
         // Convert data to a suitable format for chart
         $days = range(1, date('t')); // Days of the month
         $orderAmounts = array_fill(0, count($days), 0);
         $inventoryAmounts = array_fill(0, count($days), 0);
         $outlaysAmounts = array_fill(0, count($days), 0);
+        $debtsAmounts = array_fill(0, count($days), 0);
+        $repaymentsAmounts = array_fill(0, count($days), 0);
+        foreach ($debtData as $data) {
+            $debtsAmounts[$data['day'] - 1] = $data['amount'];
+        }
+
+        foreach ($repaymentData as $data) {
+            $debtsAmounts[$data['day'] - 1] = $data['amount'];
+        }
+
 
         foreach ($orderData as $data) {
             $orderAmounts[$data['day'] - 1] = $data['total_amount1'];
@@ -105,34 +130,34 @@ class SiteController extends BaseController
 
         $totalDiscount = Order::find()
             ->select(['SUM(total_discount) AS total_discount'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])
+            ->where(['>=', 'created_at', strtotime($specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $returnsAmount = Returns::find()->select(['SUM(amount) AS amount'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])
+            ->where(['>=', 'created_at', strtotime($specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $orderAmount = Order::find()
             ->select(['SUM(total_amount) AS total_amount'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])
+            ->where(['>=', 'created_at', strtotime($specificDay)])
             ->scalar(); // Use scalar() to get the single value
-            
+
         $inventoryOrderAmount = InventoryOrder::find()
             ->select(['SUM(total_cost) AS total_cost'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])
+            ->where(['>=', 'created_at', strtotime($specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $debtAmount = Order::find()
             ->select(['SUM(debt) AS debt'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])
+            ->where(['>=', 'created_at', strtotime($specificDay)])
             ->scalar(); // Use scalar() to get the single value
         $repaymentAmount = Transactions::find()
             ->select(['SUM(amount) AS amount'])
-            ->where(['>=', 'created_at', strtotime(  $specificDay)])->andWhere(['type'=>Transactions::TYPE_REPAYMENT])
+            ->where(['>=', 'created_at', strtotime($specificDay)])->andWhere(['type' => Transactions::TYPE_REPAYMENT])
             ->scalar(); // Use scalar() to get the single value
         $outlayAmount = Outlay::find()
             ->select(['SUM(amount) AS amount'])
-            ->where(['>=', 'pull_date',   $specificDay])
+            ->where(['>=', 'pull_date', $specificDay])
             ->scalar(); // Use scalar() to get the single value
-          
-       
+
+
 
         return $this->render('index', [
             'days' => $days,
@@ -146,6 +171,8 @@ class SiteController extends BaseController
             "debtAmount" => $debtAmount,
             "repaymentAmount" => $repaymentAmount,
             "outlayAmount" => $outlayAmount,
+            "debtsAmounts" => $debtsAmounts,
+            "repaymentsAmounts" => $repaymentsAmounts,
         ]);
 
         // return $this->render('index');
