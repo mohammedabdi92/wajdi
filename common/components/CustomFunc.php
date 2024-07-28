@@ -52,7 +52,6 @@ class CustomFunc
         $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id' => $store_id, 'product_id' => $product_id])->andWhere(['<>', 'status', Damaged::STATUS_REPLACED])->sum('count');
         $transformTo = TransferOrder::find()->select('count')->where(['to' => $store_id, 'product_id' => $product_id])->sum('count');
         $transformFrom = TransferOrder::find()->select('count')->where(['from' => $store_id, 'product_id' => $product_id])->sum('count');
-
         $SeparationsTo = Separations::find()->select('count_to')->where(['store_id' => $store_id, 'product_id_to' => $product_id])->sum('count_to');
         $SeparationsFrom = Separations::find()->select('count_from')->where(['store_id' => $store_id, 'product_id_from' => $product_id])->sum('count_from');
 
@@ -91,7 +90,8 @@ class CustomFunc
             $SeparationsTo = Separations::find()->select('count_to')->where(['store_id' => $store_id, 'product_id_to' => $product_id])->sum('count_to');
             $SeparationsFrom = Separations::find()->select('count_from')->where(['store_id' => $store_id, 'product_id_from' => $product_id])->sum('count_from');
 
-            $total = (int) $item_inventory_count + (int) $returned - (int) $item_order_count + (int) $damaged_returned - (int) $damaged_inactive - (int) $transformFrom + (int) $transformTo - (int) $SeparationsFrom + (int) $SeparationsTo;
+
+            $total = (double) $item_inventory_count + (double) $returned - (double) $item_order_count + (double) $damaged_returned - (double) $damaged_inactive - (double) $transformFrom + (double) $transformTo - (double) $SeparationsFrom + (double) $SeparationsTo;
 
             $inventory = Inventory::find()->where(['store_id' => $store_id, 'product_id' => $product_id])->one();
             if (empty($inventory)) {
