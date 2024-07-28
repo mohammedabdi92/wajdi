@@ -252,7 +252,7 @@ class OrderController extends BaseController
         }
         if(!empty($model->customer_id))
         {
-            $model->customerName = Customer::findOne($model->customer_id)->name;
+            $model->customerName = $model->customer->name??'';
         }
      
         return $this->render('create', [
@@ -266,7 +266,7 @@ class OrderController extends BaseController
         $model_product = $model->products;
         if(!empty($model->customer_id))
         {
-            $model->customerName = Customer::findOne($model->customer_id)->name;
+            $model->customerName = $model->customer->name??'';
         }
 
         if ($model->load(Yii::$app->request->post())) {
