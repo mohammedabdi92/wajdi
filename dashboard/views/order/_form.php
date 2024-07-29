@@ -157,6 +157,10 @@ JS;
                                     <div class="col-md-4">
                                         <?= $form->field($modelAddress, "[{$i}]count_type_name")->textInput(['readonly' => true,'value' =>$modelAddress->productCountType])->label('') ?>
                                     </div>
+                                    <div class="col-md-12">
+                                    <?= $form->field($modelAddress, "[{$i}]item_location")->textInput(['readonly' => true,'value' =>$modelAddress->product->item_location??''])->label('') ?>
+                                    
+                                    </div>
                                 </div>
 
                             </h3>

@@ -21,8 +21,15 @@ $this->registerJsFile(
     '@web/js/indexOrder.js',
     ['depends' => [\yii\web\JqueryAsset::class]]
 );
+$totalSum = 0;
+if(Yii::$app->user->can('اظهار المجموع في صفحة البيع')){
+    $totalSum = $dataProvider->query->sum('total_amount');
+    $totalSum = round($totalSum, 2); // Rounds to 2 decimal places
+}
+
 
 ?>
+
 <script>
 
 </script>
@@ -125,7 +132,11 @@ $this->registerJsFile(
             'format' => 'raw',
             'filter' => \yii\helpers\ArrayHelper::map(\common\models\Store::find()->where(['status'=>1])->all(), 'id', 'name'),
         ],
-        'total_amount',
+        [
+            'attribute' => 'total_amount',
+            'footer' => $totalSum, // Format the total sum
+            'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+        ],
 
         [
             'attribute' => 'created_at',
@@ -228,6 +239,7 @@ $this->registerJsFile(
 
     <?= \yii\grid\GridView::widget([
         'dataProvider' => $dataProvider,
+        'showFooter' => Yii::$app->user->can('اظهار المجموع في صفحة البيع'),
 //        'filterModel' => $searchModel,
         'columns' => $gridColumns,
         'id' => 'w0',

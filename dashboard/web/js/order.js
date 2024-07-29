@@ -215,6 +215,7 @@ function productChange(This) {
             $('#titleElement_'+box_id).attr('data-original-title', result.price); 
            
             $('#orderproduct-'+box_id+'-count_type_name').val(result['count_type_title']);
+            $('#orderproduct-'+box_id+'-item_location').val(result['item_location']);
         }
     });
 

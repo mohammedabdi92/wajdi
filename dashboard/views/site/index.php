@@ -188,7 +188,7 @@ $this->registerJs($js);
             <?php endif; ?>
             <?php if (Yii::$app->user->can('اظهار مخطط التقارير بالرئيسية')): ?>
 
-            <div class="row tile_count">
+            <div class="col-md-12 col-sm-12 col-xs-12 tile_count">
                 <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
                     <span class="count_top"><i class="fa fa-dollar"></i> البيع</span>
                     <div class="count"><?= round($orderAmount ?? 0, 2) ?></div>

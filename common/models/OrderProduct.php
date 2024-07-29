@@ -37,6 +37,8 @@ class OrderProduct extends \common\components\BaseModel
     public $ready_to_deliver ;
     public $count_type_name ;
 
+    public $item_location ;
+
     /**
      * {@inheritdoc}
      */

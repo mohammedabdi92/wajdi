@@ -21,6 +21,19 @@ if(Yii::$app->user->can('كل المحلات'))
 }else{
     $stores = \common\models\Store::find()->where(['status'=>1,'id'=>Yii::$app->user->identity->stores])->all();
 }
+$totalSum = 0;
+$totalSum2 = 0;
+if(Yii::$app->user->can('اظهار المجموع في المرجع')){
+    $totalSum = $dataProvider->query->sum('total_amount');
+    $totalSum = round($totalSum, 2); // Rounds to 2 decimal places
+
+    $totalSum2 = $dataProvider->query->sum('total_count');
+    $totalSum2 = round($totalSum2, 2); // Rounds to 2 decimal places
+}
+
+
+// 'total_count',
+            // 'total_amount',
 ?>
 <div class="returns-index">
 
@@ -35,6 +48,7 @@ if(Yii::$app->user->can('كل المحلات'))
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'showFooter' => Yii::$app->user->can('اظهار المجموع في المرجع'),
         'columns' => [
 
             'id',
@@ -54,8 +68,16 @@ if(Yii::$app->user->can('كل المحلات'))
                 'format' => 'raw',
             ],
             'returner_name',
-            'total_count',
-            'total_amount',
+            [
+                'attribute' => 'total_count',
+                'footer' => $totalSum2, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
+            [
+                'attribute' => 'total_amount',
+                'footer' => $totalSum, // Format the total sum
+                'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
             [
                 'attribute' => 'created_by',
                 'value' => function ($model) {
