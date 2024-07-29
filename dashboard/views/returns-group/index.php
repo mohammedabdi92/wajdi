@@ -24,7 +24,7 @@ if(Yii::$app->user->can('كل المحلات'))
 $totalSum = 0;
 $totalSum2 = 0;
 if(Yii::$app->user->can('اظهار المجموع في المرجع')){
-    $totalSum = $dataProvider->query->sum('total_amount');
+    $totalSum = $dataProvider->query->sum('returns_group.total_amount');
     $totalSum = round($totalSum, 2); // Rounds to 2 decimal places
 
     $totalSum2 = $dataProvider->query->sum('returns_group.total_count');
