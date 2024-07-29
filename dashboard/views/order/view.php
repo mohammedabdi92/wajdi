@@ -82,6 +82,7 @@ $total_Damaged= \common\models\Damaged::find()->where(['order_id'=>$model->id])-
                 },
                 'format' => 'raw',
             ],
+            'dept_note',
             'note',
              [
                 'attribute' => 'created_at',
