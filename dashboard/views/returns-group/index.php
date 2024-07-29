@@ -27,7 +27,7 @@ if(Yii::$app->user->can('اظهار المجموع في المرجع')){
     $totalSum = $dataProvider->query->sum('total_amount');
     $totalSum = round($totalSum, 2); // Rounds to 2 decimal places
 
-    $totalSum2 = $dataProvider->query->sum('total_count');
+    $totalSum2 = $dataProvider->query->sum('returns_group.total_count');
     $totalSum2 = round($totalSum2, 2); // Rounds to 2 decimal places
 }
 
