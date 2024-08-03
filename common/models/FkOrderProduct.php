@@ -72,12 +72,11 @@ class FkOrderProduct extends \common\components\BaseModel
             $item_order_count = FkOrderProduct::find()->select('count')->where(['store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','order_id',$this->order_id])->sum('count')?? 0 ;
 
             $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
-            $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
             $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
             $transformTo =  TransferOrder::find()->select('count')->where(['to'=>$store_id,'product_id'=>$product_id])->sum('count');
             $transformFrom =  TransferOrder::find()->select('count')->where(['from'=>$store_id,'product_id'=>$product_id])->sum('count');
 
-            $total = $item_inventory_count +$returned -$item_order_count  +$damaged_returned - $damaged_inactive - $transformFrom+$transformTo;
+            $total = $item_inventory_count +$returned -$item_order_count   - $damaged_inactive - $transformFrom+$transformTo;
 
             $current_count = !empty($this->count)?$this->count:0;
             if (($total - $current_count)<0) {

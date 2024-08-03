@@ -5,6 +5,7 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Damaged;
+use yii\db\Expression;
 
 /**
  * DamagedSearch represents the model behind the search form of `common\models\Damaged`.
@@ -85,7 +86,7 @@ class DamagedSearch extends Damaged
                 $query->andFilterWhere(['like', 'LOWER( product.title )', "$part"]);
             }
         }
-        $query->orderBy(['id'=>SORT_DESC]);
+        $query->orderBy(new Expression('CASE WHEN damaged.status = 4 THEN 1 ELSE 0 END, damaged.id DESC'));
         return $dataProvider;
     }
 }

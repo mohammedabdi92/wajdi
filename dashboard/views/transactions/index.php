@@ -119,10 +119,10 @@ $totalSum = round($totalSum, 2);
 
             'visibleButtons' => [
                 'update' => function ($model) {
-                    return $model->type == Transactions::TYPE_REPAYMENT;
+                    return $model->type == Transactions::TYPE_REPAYMENT && Yii::$app->user->can('تعديل وحذف السداد من حركات الدين');
                 },
                 'delete' => function ($model) {
-                    return $model->type == Transactions::TYPE_REPAYMENT;
+                    return $model->type == Transactions::TYPE_REPAYMENT && Yii::$app->user->can('تعديل وحذف السداد من حركات الدين');
                 }
             ]
         ],

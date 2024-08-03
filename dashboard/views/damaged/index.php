@@ -41,6 +41,18 @@ if(Yii::$app->user->can('كل المحلات'))
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'showFooter' => true,
+        'rowOptions' =>function ($model){
+
+            if($model->status == 4){
+                return [
+                    'class' => 'danger  time-set',
+                    'data-text' => ' '
+                ];
+            }
+            return ['class' => 'time-set-notSet'];
+
+
+        },
         'columns' => [
             'id',
             [
@@ -95,6 +107,13 @@ if(Yii::$app->user->can('كل المحلات'))
                 'attribute' => 'total_amount',
                 'footer' => $totalSum, // Format the total sum
                 'footerOptions' => ['style' => 'font-weight: bold;'], // Optional: make the footer bold
+            ],
+            [
+                'attribute' => 'status',
+                'value'=> function($model){ 
+                    return $model->getStatusText();
+                },
+                'filter' =>\common\models\Damaged::statusArray,
             ],
             //'amount',
             //'created_at',

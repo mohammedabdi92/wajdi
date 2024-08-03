@@ -56,6 +56,7 @@ if(Yii::$app->user->can('كل المحلات'))
      <?php
     echo $form->field($model, "customer_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[$model->customer_id=>$model->customerName],
+        'options' => ['placeholder' => 'اختر  .....'],
         'pluginOptions' => [
             'allowClear' => true,
             'minimumInputLength' => 3,

@@ -14,7 +14,8 @@ $(document).on('change', '[id$=-inventory_order_id]', function (item) {
         product_id: product_id
     })
     .done(function(data) {
-           $("#damaged-supplyer_price").val(data.product_cost_final);
+
+           $("#damaged-supplyer_price").val(data.product_cost_final*$('#damaged-count').val());
            $("#damaged-supplyer_price").change();
            $.get("/inventory-order/get-details?order_id="+inventory_order_id, function(data){
             // Convert to milliseconds

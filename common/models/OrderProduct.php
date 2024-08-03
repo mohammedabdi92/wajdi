@@ -80,15 +80,13 @@ class OrderProduct extends \common\components\BaseModel
             $item_order_count = $q->sum('count')?? 0 ;
 
             $returned = Returns::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->sum('count');
-            $damaged_returned = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id,'status'=>Damaged::STATUS_RETURNED])->sum('count');
-            $damaged_inactive = Damaged::find()->select('count')->joinWith('order')->where(['order.store_id'=>$store_id,'product_id'=>$product_id])->andWhere(['<>','status',Damaged::STATUS_REPLACED]) ->sum('count');
             $transformTo =  TransferOrder::find()->select('count')->where(['to'=>$store_id,'product_id'=>$product_id])->sum('count');
             $transformFrom =  TransferOrder::find()->select('count')->where(['from'=>$store_id,'product_id'=>$product_id])->sum('count');
             $SeparationsTo = Separations::find()->select('count_to')->where(['store_id' => $store_id, 'product_id_to' => $product_id])->sum('count_to');
             $SeparationsFrom = Separations::find()->select('count_from')->where(['store_id' => $store_id, 'product_id_from' => $product_id])->sum('count_from');
             
 
-            $total = (double) $item_inventory_count + (double) $returned - (double) $item_order_count + (double) $damaged_returned - (double) $damaged_inactive - (double) $transformFrom + (double) $transformTo - (double) $SeparationsFrom + (double) $SeparationsTo;
+            $total = (double) $item_inventory_count + (double) $returned - (double) $item_order_count   - (double) $transformFrom + (double) $transformTo - (double) $SeparationsFrom + (double) $SeparationsTo;
 
             $current_count = !empty($this->count)?$this->count:0;
             if (($total - $current_count)<0) {

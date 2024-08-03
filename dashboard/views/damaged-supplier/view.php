@@ -37,6 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'cost_value',
             'total_amount',
             [
+                'attribute' => 'status',
+                'value'=> function($model){ 
+                    return $model->getStatusText();
+                },
+            ],
+            [
                 'attribute' => 'created_at',
                 'value' => function($model){
                     return \common\components\CustomFunc::getFullDate($model->created_at);

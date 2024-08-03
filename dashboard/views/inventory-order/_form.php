@@ -30,6 +30,7 @@ $url = \yii\helpers\Url::to(['product/product-list']);
         <?php
     echo $form->field($model, "supplier_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[$model->supplier_id=>$model->supplierName],
+        'options' => ['placeholder' => 'اختر  .....'],
         'pluginOptions' => [
             'allowClear' => true,
             'minimumInputLength' => 3,

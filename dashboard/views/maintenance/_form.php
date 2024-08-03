@@ -51,6 +51,7 @@ $this->registerJsFile(
     <?php
     echo $form->field($model, "client_id")->widget(\kartik\select2\Select2::classname(), [
         'data' =>[$model->client_id=>$model->client ? $model->client->name : ''],
+        'options' => ['placeholder' => 'اختر  .....'],
         'pluginOptions' => [
             'allowClear' => true,
             'minimumInputLength' => 3,
