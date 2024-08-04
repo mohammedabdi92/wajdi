@@ -58,27 +58,27 @@ class SiteController extends BaseController
 
         // Fetch order amounts for each day of the month
         $orderData = Yii::$app->db->createCommand("
-        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(total_amount) AS total_amount1
+        SELECT DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00')) AS day, SUM(total_amount) AS total_amount1
         FROM `order`
         WHERE created_at >= $dt
-        GROUP BY DAY(FROM_UNIXTIME(created_at))
+        GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
         ORDER BY day;
          ")->queryAll();
 
         // Fetch inventory order amounts for each day of the month
         $inventoryData = Yii::$app->db->createCommand("
-        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(total_cost) AS total_cost1
+        SELECT DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00')) AS day, SUM(total_cost) AS total_cost1
         FROM inventory_order
         WHERE created_at >= $dt
-        GROUP BY DAY(FROM_UNIXTIME(created_at))
+        GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
         ORDER BY day;
         ")->queryAll();
 
         $outlaysData = Yii::$app->db->createCommand("
-        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
+        SELECT DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00')) AS day, SUM(amount) AS amount
         FROM `outlays`
         WHERE created_at >= $dt
-        GROUP BY DAY(FROM_UNIXTIME(created_at))
+        GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
         ORDER BY day;
         ")->queryAll();
 
@@ -87,14 +87,14 @@ class SiteController extends BaseController
         SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
         FROM `transactions`
         WHERE created_at >= $dt and type = 1
-        GROUP BY DAY(FROM_UNIXTIME(created_at))
+        GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
         ORDER BY day;
          ")->queryAll();
          $repaymentData = Yii::$app->db->createCommand("
-         SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
+         SELECT DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00')) AS day, SUM(amount) AS amount
          FROM `transactions`
          WHERE created_at >= $dt and type = 1
-         GROUP BY DAY(FROM_UNIXTIME(created_at))
+         GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
          ORDER BY day;
           ")->queryAll();
 
