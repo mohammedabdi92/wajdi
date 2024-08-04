@@ -41,7 +41,7 @@ class Damaged extends \common\components\BaseModel
         self::STATUS_REPLACED=>"مكتمل",
     ];
     public  function getStatusText(){
-        return self::statusArray[$this->status];
+        return self::statusArray[$this->status]??'';
     }
 
     const STATUS_NOTE_REPLACED_SAME = 1;
