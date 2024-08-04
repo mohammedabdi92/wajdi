@@ -471,6 +471,7 @@ class ReportsController extends BaseController
             'outlay_mince'=> round($outlay_mince, 2),
             'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
             'damaged_mince'=> round($damaged_mince, 2),
+            'debt_sum'=>$debt_sum
         ]);
     }
 

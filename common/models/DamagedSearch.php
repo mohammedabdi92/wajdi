@@ -13,6 +13,8 @@ use yii\db\Expression;
 class DamagedSearch extends Damaged
 {
     public $product_name;
+    public $customer_name;
+    public $supplier_name;
     /**
      * {@inheritdoc}
      */
@@ -21,7 +23,7 @@ class DamagedSearch extends Damaged
         return [
             [['id', 'status', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
-            [['product_name','store_id'], 'safe'],
+            [['product_name','store_id','customer_name','supplier_name'], 'safe'],
         ];
     }
 
@@ -49,7 +51,7 @@ class DamagedSearch extends Damaged
             "damaged.*,order.store_id as store_id"
         );
         $query->joinWith([
-            'order' ,'product'
+            'order' ,'product','inventoryOrder'
         ]);
         // add conditions that should always apply here
 
@@ -64,7 +66,20 @@ class DamagedSearch extends Damaged
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        if(!empty($this->customer_name))
+        {
+            $users =  Customer::find()->select('id')->where(" name like '%$this->customer_name%' ")->column();
+           if($users){
+               $query->andFilterWhere(['order.customer_id' => $users]);
+           }
+        }
+        if(!empty($this->supplier_name))
+        {
+            $users2 =  Supplier::find()->select('id')->where(" name like '%$this->supplier_name%' ")->column();
+           if($users2){
+               $query->andFilterWhere(['inventory_order.supplier_id' => $users2]);
+           }
+        }
         // grid filtering conditions
         $query->andFilterWhere([
             'damaged.id' => $this->id,

@@ -68,6 +68,7 @@ if(Yii::$app->user->can('كل المحلات'))
                 'format' => 'raw',
             ],
             [
+                'attribute' => 'customer_name',
                 'value'=> function($model){ 
                     return $model->order->customer->name??'';
                 },
@@ -90,6 +91,7 @@ if(Yii::$app->user->can('كل المحلات'))
                 'format' => 'raw',
             ],
             [
+                'attribute' => 'supplier_name',
                 'value'=> function($model){ 
                     return $model->inventoryOrder->supplierTitle??'';
                 },

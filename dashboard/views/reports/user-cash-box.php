@@ -92,7 +92,7 @@ if(Yii::$app->user->can('كل المحلات'))
                 </tr>
                 <tr>
                     <th style="width:50%">الربح الصافي:</th>
-                    <td><?= $total_profit_without_damaged_outlay?></td>
+                    <td><?= $total_profit_without_damaged_outlay + $debt_sum?></td>
                 </tr>
 
 
