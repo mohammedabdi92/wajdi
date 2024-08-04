@@ -102,9 +102,13 @@ class TransactionsController extends BaseController
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
+        
+        $Customer_REPAYMENT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_REPAYMENT])->sum('amount');
+        $Customer_DEBT =  Transactions::find()->where(['customer_id'=>$model->customer_id , 'type'=>Transactions::TYPE_DEBT])->sum('amount');
 
         return $this->render('update', [
             'model' => $model,
+            'dept_data' =>$Customer_REPAYMENT? ['customer_id'=>$model->customer_id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$model->customer->name]:null,
         ]);
     }
 

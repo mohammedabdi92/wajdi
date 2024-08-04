@@ -81,7 +81,7 @@ $priceList = [];
         });
 JS;
         $this->registerJs( $script , \yii\web\View::POS_READY );
-    endif;?>
+    endif; ?>
 
     <?php
     $stores = [];

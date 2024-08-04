@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'رجوع'), ['index'], ['class' => 'btn btn-primary']) ?>
         <?php
-        if( $model->type == \common\models\Transactions::TYPE_REPAYMENT)
+        if( $model->type == \common\models\Transactions::TYPE_REPAYMENT && Yii::$app->user->can('تعديل وحذف السداد من حركات الدين'))
         {
             echo Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
             echo Html::a(Yii::t('app', 'حذف'), ['delete', 'id' => $model->id], [

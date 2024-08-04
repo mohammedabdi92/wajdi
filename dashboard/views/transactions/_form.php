@@ -31,6 +31,25 @@ if(Yii::$app->user->can('كل المحلات'))
         ],
     ]);
     ?>
+     <div id="dept_data_contaner">
+        <?= $this->render("_customer_dept_history",["dept_data"=>$dept_data??null]) ?>
+    </div>
+
+ <?php
+
+$script = <<<JS
+    $(document).on('change', '[id$=-customer_id]', function (item) {
+    if( $(item.currentTarget).val())
+    {
+        $.post("/order/get-customer?id=" + $(item.currentTarget).val() , function (data) {
+            $("#dept_data_contaner").html(data);
+        });
+    }
+
+});
+JS;
+$this->registerJs( $script , \yii\web\View::POS_READY );
+ ?>
 
 
     <?= $form->field($model, 'amount')->textInput() ?>
