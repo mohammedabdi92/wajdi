@@ -213,7 +213,9 @@ class InventoryOrderController extends BaseController
                 }
             }
         }else{
-            if(!empty(Yii::$app->request->post()) && Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') && $model->save()){
+            if(!empty(Yii::$app->request->post()) && Yii::$app->user->can('تعديل السداد فقط في فاتورة المشتريات') ){
+                $model->total_cost =  $model->total_cost - $model->oldAttributes['repayment'] + $model->repayment ;
+                $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
