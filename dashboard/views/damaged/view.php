@@ -21,8 +21,11 @@ $this->params['breadcrumbs'][] = $this->title;
         if(Yii::$app->user->can('تعديل وحذف بضاعة تالفة من العميل للمحل'))
         {
           echo  Html::a(Yii::t('app', 'تعديل'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+          
         }
          ?>
+        <?= Html::a(Yii::t('app', 'انشاء فاتورة بيع'), ['order/create'], ['class' => 'btn btn-success']) ?>
+
     </p>
 
     <?= DetailView::widget([
