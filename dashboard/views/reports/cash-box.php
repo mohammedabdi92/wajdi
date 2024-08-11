@@ -111,8 +111,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $financial_withdrawal_mince?></td>
                 </tr>
                 <tr>
-                    <th style="width:50%">التوالف  :</th>
+                    <th style="width:50%">توالف العميل  :</th>
                     <td><?= $damaged_mince?></td>
+                </tr>
+                <tr>
+                    <th style="width:50%">توالف المورد  :</th>
+                    <td><?= $damaged_s_mince?></td>
                 </tr>
                 <tr>
                     <th style="width:50%">واردات التوالف :</th>
