@@ -117,7 +117,7 @@ if(Yii::$app->user->can('كل المحلات'))
             [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
-                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                    return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
                 'filter' =>false    
             ],
