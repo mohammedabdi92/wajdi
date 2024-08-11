@@ -36,10 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'amount',
             'cost_value',
             'total_amount',
+            'customer_note',
+            'inventory_order_id',
+            'supplyer_price',
+            'supplyer_pay_amount',
+            'total_amount',
+            'supplier_note',
             [
                 'attribute' => 'status',
                 'value'=> function($model){ 
                     return $model->getStatusText();
+                },
+            ],
+            [
+                'attribute' => 'status_note_id',
+                'value'=> function($model){ 
+                    return $model->getStatusNoteText();
                 },
             ],
             [
