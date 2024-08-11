@@ -114,6 +114,13 @@ if(Yii::$app->user->can('كل المحلات'))
                 },
                 'filter' =>\common\models\Damaged::statusArray,
             ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+                'filter' =>false    
+            ],
             //'amount',
             //'created_at',
             //'created_by',

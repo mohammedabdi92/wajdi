@@ -5,6 +5,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use common\models\Damaged;
+use kartik\daterange\DateRangePicker;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\DamagedSearch */
@@ -114,6 +115,13 @@ if(Yii::$app->user->can('كل المحلات'))
                     return $model->getStatusText();
                 },
                 'filter' =>\common\models\Damaged::statusArray,
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return \common\components\CustomFunc::getFullDate($model->created_at);
+                },
+                'filter' =>false    
             ],
             //'amount',
             //'created_at',
