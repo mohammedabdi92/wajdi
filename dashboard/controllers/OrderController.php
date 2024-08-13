@@ -367,7 +367,7 @@ class OrderController extends BaseController
         $Customer_REPAYMENT =  Transactions::find()->where(['customer_id'=>$id , 'type'=>Transactions::TYPE_REPAYMENT])->sum('amount');
         $Customer_DEBT =  Transactions::find()->where(['customer_id'=>$id , 'type'=>Transactions::TYPE_DEBT])->sum('amount');
 
-        return $this->renderPartial("_customer_dept_history",["dept_data"=>$Customer_REPAYMENT? ['customer_id'=>$id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$Customer->name]:null]);
+        return $this->renderPartial("_customer_dept_history",["dept_data"=>$Customer_DEBT? ['customer_id'=>$id ,'repayment_amount'=>$Customer_REPAYMENT,'debt_amount'=> $Customer_DEBT ,'customer_name'=>$Customer->name]:null]);
     }
 
 
