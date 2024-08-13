@@ -197,7 +197,7 @@ class ReportsController extends BaseController
             $order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $transactions_r_q->andWhere(['>=', 'transactions.created_at', strtotime( $modelSearch->date_from)]);
             $entries_q->andWhere(['>=', 'put_date', $modelSearch->date_from]);
-            $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
+            $damaged_q->andWhere(['>=', 'damaged.created_at', strtotime( $modelSearch->date_from)]);
             $damaged_q_p->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $returns_q->andWhere(['>=', 'returns.created_at', strtotime( $modelSearch->date_from)]);
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
@@ -219,7 +219,7 @@ class ReportsController extends BaseController
             $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $transactions_r_q->andWhere(['<=', 'transactions.created_at', strtotime( $modelSearch->date_to)]);
             $entries_q->andWhere(['<=', 'put_date', $modelSearch->date_to]);
-            $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
+            $damaged_q->andWhere(['<=', 'damaged.created_at', strtotime( $modelSearch->date_to)]);
             $damaged_q_p->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $returns_q->andWhere(['<=', 'returns.created_at', strtotime( $modelSearch->date_to)]);
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
@@ -257,7 +257,7 @@ class ReportsController extends BaseController
         
         // print_r($order_q->createCommand()->getRawSql());die;
         $damaged_mince = $damaged_q->sum('amount');
-        $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
+        // $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $damaged_plus = $damaged_q_c->sum('cost_value');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
