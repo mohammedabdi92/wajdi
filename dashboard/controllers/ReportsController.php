@@ -177,7 +177,7 @@ class ReportsController extends BaseController
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
         $damaged_q =  Damaged::find()->select('amount')->joinWith('order');
-        $damaged_q_p =  Damaged::find()->select('supplyer_price')->joinWith('order')->where( ['is not','status_note_id', null]);
+        $damaged_q_p =  Damaged::find()->select('supplyer_price,supplyer_pay_amount')->joinWith('order')->where( ['is not','status_note_id', null]);
         $damaged_q_m = Damaged::find()->select('supplyer_pay_amount')->joinWith('order')->where(['status_note_id' => Damaged::STATUS_NOTE_RETURN_WITH_PAY]);
         $damaged_q_c = Damaged::find()->select('cost_value')->joinWith('order');
 
@@ -254,6 +254,7 @@ class ReportsController extends BaseController
 
 
         $damaged_s_mince = $damaged_q_p->sum('supplyer_price');
+        $damaged_s_p_mince = $damaged_q_p->sum('supplyer_pay_amount');
         
         // print_r($order_q->createCommand()->getRawSql());die;
         $damaged_mince = $damaged_q->sum('amount');
@@ -281,7 +282,7 @@ class ReportsController extends BaseController
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$transactions_r_plus  + (double)$maintenance_paid_pluse + (double)$damaged_plus + (double) $damaged_s_mince ;
-        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince+(double)$maintenance_cost_mince +(double)$inventory_repayment  ;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince+(double)$maintenance_cost_mince +(double)$inventory_repayment+$damaged_s_p_mince  ;
 
 
         $cash_amount =  $box_in - $box_out;
@@ -310,6 +311,7 @@ class ReportsController extends BaseController
             'outlay_mince'=> round($outlay_mince, 2),
             'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
             'damaged_mince'=> round($damaged_mince, 2),
+            'damaged_s_p_mince'=> round($damaged_s_p_mince, 2),
             'damaged_s_mince'=> round($damaged_s_mince, 2),
             'maintenance_cost_mince'=> round($maintenance_cost_mince, 2),
             'maintenance_paid_pluse'=> round($maintenance_paid_pluse, 2),
