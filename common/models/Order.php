@@ -170,6 +170,10 @@ class Order extends \common\components\BaseModel
     {
         return $this->hasMany(OrderProduct::className(), ['order_id' => 'id']);
     }
+    public function getTransactions()
+    {
+        return $this->hasMany(Transactions::className(), ['order_id' => 'id']);
+    }
     public function getCustomer()
     {
         return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
@@ -186,7 +190,11 @@ class Order extends \common\components\BaseModel
         {
             $product->delete();
         }
-
+        $transactions =  $this->transactions;
+        foreach ($transactions as $transaction)
+        {
+            $transaction->delete();
+        }
         return parent::beforeDelete();
     }
 
