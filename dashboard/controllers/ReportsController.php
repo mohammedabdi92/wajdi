@@ -315,6 +315,7 @@ class ReportsController extends BaseController
             'damaged_s_mince'=> round($damaged_s_mince, 2),
             'maintenance_cost_mince'=> round($maintenance_cost_mince, 2),
             'maintenance_paid_pluse'=> round($maintenance_paid_pluse, 2),
+            'total_profit_returns_amount'=> round($total_profit_returns_amount, 2),
             'damaged_plus'=> round($damaged_plus, 2),
         ]);
     }

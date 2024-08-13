@@ -131,6 +131,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     <td><?= $returns_mince?></td>
                 </tr>
                 <tr>
+                    <th style="width:50%"> واردات المرجعة  :</th>
+                    <td><?= $total_profit_returns_amount?></td>
+                </tr>
+                <tr>
                     <th style="width:50%">صافي الصندوق بدون المشتريات:</th>
                     <td><?= $cash_amount_without_inventory_order?></td>
                 </tr>
