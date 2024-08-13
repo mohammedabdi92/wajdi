@@ -57,7 +57,7 @@ class Damaged extends \common\components\BaseModel
         self::STATUS_NOTE_NOT_RETURND => "لم يتم التبديل او الارجاع"
     ];
     public  function getStatusNoteText(){
-        return self::statusNoteArray[$this->status_note_id];
+        return self::statusNoteArray[$this->status_note_id]??'';
     }
     /**
      * {@inheritdoc}
