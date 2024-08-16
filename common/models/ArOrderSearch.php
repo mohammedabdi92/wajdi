@@ -124,7 +124,7 @@ class ArOrderSearch extends ArOrder
             $productQuery = clone $query;
             $productQuery->joinWith('products.product');
             $this->total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id)')  ;
-            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count * product.price) from returns where returns.order_id = order.id)')  ;
+            $total_dept_returns_amount = $productQuery->sum('(select sum(returns.old_amount) from returns where returns.order_id = order.id)')  ;
             $total_amount =  round($query->sum('total_amount'), 2);
             $total_dept =  round($productQuery->sum('(product.price * ar_order_product.count) '),2);
 
