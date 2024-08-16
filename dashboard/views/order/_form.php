@@ -303,8 +303,14 @@ JS;
 
 
             <?php if(Yii::$app->user->can('الدين والسداد فواتير المبيعات')):?>
+                <div class="panel panel-default" style=" border-color: blue; ">
+
+                <div class="panel-body">
                 <?= $form->field($model, 'debt')->textInput() ?>
                 <?= $form->field($model, 'dept_note')->textarea() ?>
+                </div>
+
+</div>
             <?php endif;?>
 
             <div class="panel panel-default">
