@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'inventory_order_id',
             'supplyer_price',
             'supplyer_pay_amount',
-            'total_amount',
+            'supplyer_total_amount',
             'supplier_note',
             [
                 'attribute' => 'status',
