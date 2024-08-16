@@ -177,7 +177,7 @@ class ReportsController extends BaseController
         $order_q =  Order::find()->select("total_amount");
         $entries_q = Entries::find()->select("amount");
         $damaged_q =  Damaged::find()->select('amount')->joinWith('order');
-        $damaged_q_p =  Damaged::find()->select('supplyer_price,supplyer_pay_amount')->joinWith('order')->where( ['is not','status_note_id', null]);
+        $damaged_q_p =  Damaged::find()->select('supplyer_price')->joinWith('order')->where( ['is not','status_note_id', null]);
         $damaged_q_m = Damaged::find()->select('supplyer_pay_amount')->joinWith('order')->where(['status_note_id' => Damaged::STATUS_NOTE_RETURN_WITH_PAY]);
         $damaged_q_c = Damaged::find()->select('cost_value')->joinWith('order');
 
@@ -254,7 +254,8 @@ class ReportsController extends BaseController
 
 
         $damaged_s_mince = $damaged_q_p->sum('supplyer_price');
-        $damaged_s_p_mince = $damaged_q_p->sum('supplyer_pay_amount');
+        $damaged_s_p_mince = $damaged_q_m->sum('supplyer_pay_amount');
+        
         
         // print_r($order_q->createCommand()->getRawSql());die;
         $damaged_mince = $damaged_q->sum('amount');
