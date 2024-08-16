@@ -275,7 +275,7 @@ class ReportsController extends BaseController
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count *  (order_product.items_cost/order_product.count)) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
+        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.old_amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
         $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
 
         $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
