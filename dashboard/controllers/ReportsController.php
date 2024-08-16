@@ -379,7 +379,7 @@ class ReportsController extends BaseController
             $order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
             $transactions_r_q->andWhere(['>=', 'transactions.created_at', strtotime( $modelSearch->date_from)]);
             $entries_q->andWhere(['>=', 'put_date', $modelSearch->date_from]);
-            $damaged_q->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
+            $damaged_q->andWhere(['>=', 'damaged.created_at', strtotime( $modelSearch->date_from)]);
             $damaged_q_p->andWhere(['>=', 'damaged.updated_at', strtotime( $modelSearch->date_from)]);
             $returns_q->andWhere(['>=', 'returns.created_at', strtotime( $modelSearch->date_from)]);
             $inventory_order_q->andWhere(['>=', 'created_at', strtotime( $modelSearch->date_from)]);
@@ -401,7 +401,7 @@ class ReportsController extends BaseController
             $order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
             $transactions_r_q->andWhere(['<=', 'transactions.created_at', strtotime( $modelSearch->date_to)]);
             $entries_q->andWhere(['<=', 'put_date', $modelSearch->date_to]);
-            $damaged_q->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
+            $damaged_q->andWhere(['<=', 'damaged.created_at', strtotime( $modelSearch->date_to)]);
             $damaged_q_p->andWhere(['<=', 'damaged.updated_at', strtotime( $modelSearch->date_to)]);
             $returns_q->andWhere(['<=', 'returns.created_at', strtotime( $modelSearch->date_to)]);
             $inventory_order_q->andWhere(['<=', 'created_at', strtotime( $modelSearch->date_to)]);
@@ -436,10 +436,11 @@ class ReportsController extends BaseController
 
 
         $damaged_s_mince = $damaged_q_p->sum('supplyer_price');
+        $damaged_s_p_mince = $damaged_q_m->sum('supplyer_pay_amount');
         
         // print_r($order_q->createCommand()->getRawSql());die;
         $damaged_mince = $damaged_q->sum('amount');
-        $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
+        // $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $damaged_plus = $damaged_q_c->sum('cost_value');
         $outlay_mince = $outlay_q->sum('amount');
         $inventory_order_mince = $inventory_order_q->sum('total_cost');
@@ -456,21 +457,21 @@ class ReportsController extends BaseController
         $financial_withdrawal_mince = $financial_withdrawal_q->sum('amount');
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.count *  (order_product.items_cost/order_product.count)) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
+        $total_dept_returns_amount = $productQuery->sum('(select sum(returns.old_amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
+        $total_profit_returns_amount  =    $total_dept_returns_amount - $total_returns_amount;
 
         $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
 
         $box_in = (double)$order_pluse + (double)$entries_pluse + (double)$transactions_r_plus  + (double)$maintenance_paid_pluse + (double)$damaged_plus + (double) $damaged_s_mince ;
-        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince+(double)$maintenance_cost_mince +(double)$inventory_repayment  ;
+        $box_out =   (double)$inventory_order_mince + (double)$outlay_mince + (double)$damaged_mince + (double)$financial_withdrawal_mince+(double)$returns_mince+(double)$maintenance_cost_mince +(double)$inventory_repayment+$damaged_s_p_mince  ;
 
 
         $cash_amount =  $box_in - $box_out;
         $cash_amount = round($cash_amount, 2);
         $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
-        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount + $debt_sum  ;
+        $total_profit  =  $order_pluse -  $total_dept + $total_profit_returns_amount + $debt_sum  ;
         $total_profit_without_damaged_outlay =  $total_profit -$damaged_mince -$outlay_mince - $debt_sum +$damaged_plus +(double) $damaged_s_mince  + ($maintenance_paid_pluse- $maintenance_cost_mince);
 
         return $this->render('user-cash-box', [
@@ -480,7 +481,10 @@ class ReportsController extends BaseController
             'total_profit_without_damaged_outlay'=>round($total_profit_without_damaged_outlay,2),
             'cash_amount_without_inventory_order'=>$cash_amount_without_inventory_order,
             'box_in'=> round($box_in, 2),
+            'debt_sum'=> round($debt_sum, 2),
             'box_out'=> round($box_out, 2),
+            'inventory_debt'=> round($inventory_debt, 2),
+            'inventory_repayment'=> round($inventory_repayment, 2),
             'order_pluse'=>round($order_pluse, 2),
             'transactions_r_plus'=>round($transactions_r_plus, 2),
             'entries_pluse'=> round($entries_pluse, 2),
@@ -489,8 +493,14 @@ class ReportsController extends BaseController
             'outlay_mince'=> round($outlay_mince, 2),
             'financial_withdrawal_mince'=> round($financial_withdrawal_mince, 2),
             'damaged_mince'=> round($damaged_mince, 2),
-            'debt_sum'=>$debt_sum
+            'damaged_s_p_mince'=> round($damaged_s_p_mince, 2),
+            'damaged_s_mince'=> round($damaged_s_mince, 2),
+            'maintenance_cost_mince'=> round($maintenance_cost_mince, 2),
+            'maintenance_paid_pluse'=> round($maintenance_paid_pluse, 2),
+            'total_profit_returns_amount'=> round($total_profit_returns_amount, 2),
+            'damaged_plus'=> round($damaged_plus, 2),
         ]);
+       
     }
 
 }
