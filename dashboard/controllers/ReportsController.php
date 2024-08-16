@@ -276,7 +276,7 @@ class ReportsController extends BaseController
 
         $total_returns_amount = $productQuery->sum('(select sum(returns.amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
         $total_dept_returns_amount = $productQuery->sum('(select sum(returns.old_amount) from returns where returns.order_id = order.id and  order_product.product_id = returns.product_id)')  ;
-        $total_profit_returns_amount  =  $total_returns_amount  - $total_dept_returns_amount ;
+        $total_profit_returns_amount  =    $total_dept_returns_amount - $total_returns_amount;
 
         $total_dept =  round($productQuery->sum('order_product.items_cost '),2);
 
@@ -289,7 +289,7 @@ class ReportsController extends BaseController
         $cash_amount = round($cash_amount, 2);
         $cash_amount_without_inventory_order = round( $cash_amount+$inventory_order_mince, 2);
 
-        $total_profit  =  $order_pluse -  $total_dept - $total_profit_returns_amount + $debt_sum  ;
+        $total_profit  =  $order_pluse -  $total_dept + $total_profit_returns_amount + $debt_sum  ;
         $total_profit_without_damaged_outlay =  $total_profit -$damaged_mince -$outlay_mince - $debt_sum +$damaged_plus +(double) $damaged_s_mince  + ($maintenance_paid_pluse- $maintenance_cost_mince);
 
         return $this->render('cash-box', [
