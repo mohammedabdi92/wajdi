@@ -84,16 +84,24 @@ class SiteController extends BaseController
 
 
          $debtData = Yii::$app->db->createCommand("
-        SELECT DAY(FROM_UNIXTIME(created_at)) AS day, SUM(amount) AS amount
-        FROM `transactions`
-        WHERE created_at >= $dt and type = 1
-        GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
-        ORDER BY day;
+            SELECT 
+                DAY(CONVERT_TZ(FROM_UNIXTIME(o.created_at), '+00:00', '+03:00')) AS day, 
+                SUM(t.amount) AS amount
+            FROM 
+                `transactions` t
+            JOIN 
+                `order` o ON t.order_id = o.id  
+            WHERE 
+                o.created_at >= $dt AND t.type = 1
+            GROUP BY 
+                DAY(CONVERT_TZ(FROM_UNIXTIME(o.created_at), '+00:00', '+03:00'))
+            ORDER BY 
+                day;
          ")->queryAll();
          $repaymentData = Yii::$app->db->createCommand("
          SELECT DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00')) AS day, SUM(amount) AS amount
          FROM `transactions`
-         WHERE created_at >= $dt and type = 1
+         WHERE created_at >= $dt and type = 2
          GROUP BY DAY(CONVERT_TZ(FROM_UNIXTIME(created_at), '+00:00', '+03:00'))
          ORDER BY day;
           ")->queryAll();
@@ -112,7 +120,7 @@ class SiteController extends BaseController
         }
 
         foreach ($repaymentData as $data) {
-            $debtsAmounts[$data['day'] - 1] = $data['amount'];
+            $repaymentsAmounts[$data['day'] - 1] = $data['amount'];
         }
 
 
