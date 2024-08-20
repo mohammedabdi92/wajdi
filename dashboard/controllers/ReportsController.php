@@ -265,7 +265,7 @@ class ReportsController extends BaseController
         // $damaged_mince += $damaged_q_m->sum('supplyer_pay_amount');
         $damaged_plus = $damaged_q_c->sum('cost_value');
         $outlay_mince = $outlay_q->sum('amount');
-        $inventory_order_mince = $inventory_order_q->sum('total_cost - repayment');
+        $inventory_order_mince = $inventory_order_q->sum('total_cost - COALESCE(repayment, 0)');
         $maintenance_cost_mince = $maintenance_cost_q->sum('maintenance_cost');
         $maintenance_paid_pluse = $maintenance_paid_q->sum('amount_paid');
       
