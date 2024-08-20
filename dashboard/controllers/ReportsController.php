@@ -188,7 +188,7 @@ class ReportsController extends BaseController
 
 
         // - inventory-order(dep) , outlay,returns,damaged
-        $inventory_order_q =  InventoryOrder::find()->select('total_cost,debt');
+        $inventory_order_q =  InventoryOrder::find()->select('total_cost,debt,repayment');
         $inventory_order_repayment_q =  InventoryOrder::find()->select('repayment');
         $returns_q =  Returns::find()->select('amount')->joinWith('order');
         $outlay_q =  Outlay::find()->select('amount');
