@@ -15,6 +15,8 @@ class TransactionsSearch extends Transactions
     public $customerName;
     public $created_at_from;
     public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
     // public $customer.name;
     /**
      * {@inheritdoc}
@@ -24,7 +26,7 @@ class TransactionsSearch extends Transactions
         return [
             [['id', 'customer_id', 'order_id', 'type', 'created_by', 'updated_at', 'updated_by', 'isDeleted'], 'integer'],
             [['amount'], 'number'],
-            [['note','customerName','created_at_from','created_at_to','created_at'], 'safe'],
+            [['note','customerName','created_at_from','created_at_to','created_at','updated_at_from','updated_at_to'], 'safe'],
         ];
     }
 
@@ -104,7 +106,17 @@ class TransactionsSearch extends Transactions
         {
             $query->andFilterWhere(['<=', 'transactions.created_at',strtotime( $this->created_at_to)]);
         }
+      
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'transactions.updated_at',strtotime( $this->updated_at_from)]);
 
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'transactions.updated_at',strtotime( $this->updated_at_to)]);
+        }
         // print_r($query->createCommand()->getRawSql());die;
 
 

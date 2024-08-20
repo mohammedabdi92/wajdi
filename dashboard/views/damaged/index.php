@@ -99,6 +99,7 @@ if(Yii::$app->user->can('كل المحلات'))
                 },
                 'label'=>'اسم المورد'
             ],
+            'amount',
             [
                 'attribute' => 'count',
                 'footer' => $totalcount, // Format the total sum
@@ -116,12 +117,38 @@ if(Yii::$app->user->can('كل المحلات'))
                 },
                 'filter' =>\common\models\Damaged::statusArray,
             ],
-            [
+             [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
                     return \common\components\CustomFunc::getFullDate($model->updated_at);
                 },
-                'filter' =>false    
+                'filter' =>DateRangePicker::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'updated_at',
+                    'language' => 'en',
+                    'convertFormat' => true,
+                    'startAttribute' => 'updated_at_from',
+                    'endAttribute' => 'updated_at_to',
+                    'pluginOptions' => [
+                        'timePicker' => true,
+                        'timePickerIncrement' => 1,
+                        'locale' => [
+                            'applyLabel' => 'تطبيق',
+                            'cancelLabel' => 'الغاء',
+                            'format' => 'Y-m-d H:i:s',
+                        ],
+                        'startDate' => date('Y-m-d 00:00:00'), // Start of the day (12:00 AM)
+                        'endDate' => date('Y-m-d 23:59:59'), // 12:00 PM of the same day
+            
+                    ],
+                    'pluginEvents' => [
+                        'cancel.daterangepicker' => 'function(ev, picker) {
+                            $("[id$=-updated_at]").val("").trigger("change");
+                            $("[id$=-updated_at_from]").val("").trigger("change");
+                            $("[id$=-updated_at_to]").val("").trigger("change");
+                        }',
+                    ],
+                ]),
             ],
             //'amount',
             //'created_at',

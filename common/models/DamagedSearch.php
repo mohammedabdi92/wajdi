@@ -15,15 +15,20 @@ class DamagedSearch extends Damaged
     public $product_name;
     public $customer_name;
     public $supplier_name;
+
+    public $created_at_from;
+    public $created_at_to;
+    public $updated_at_from;
+    public $updated_at_to;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id', 'status', 'order_id', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['id', 'status', 'order_id', 'created_by', 'updated_by'], 'integer'],
             [['product_id', 'count', 'amount'], 'number'],
-            [['product_name','store_id','customer_name','supplier_name'], 'safe'],
+            [['product_name','store_id','customer_name','supplier_name','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
         ];
     }
 
@@ -89,11 +94,31 @@ class DamagedSearch extends Damaged
             'damaged.product_id' => $this->product_id,
             'damaged.count' => $this->count,
             'damaged.amount' => $this->amount,
-            'damaged.created_at' => $this->created_at,
             'damaged.created_by' => $this->created_by,
-            'damaged.updated_at' => $this->updated_at,
             'damaged.updated_by' => $this->updated_by,
         ]);
+
+        if($this->created_at_from)
+        {
+            $query->andFilterWhere(['>=', 'damaged.created_at',strtotime( $this->created_at_from)]);
+
+        }
+       
+
+        if($this->created_at_to)
+        {
+            $query->andFilterWhere(['<=', 'damaged.created_at',strtotime( $this->created_at_to)]);
+        }
+        if($this->updated_at_from)
+        {
+            $query->andFilterWhere(['>=', 'damaged.updated_at',strtotime( $this->updated_at_from)]);
+
+        }
+
+        if($this->updated_at_to)
+        {
+            $query->andFilterWhere(['<=', 'damaged.updated_at',strtotime( $this->updated_at_to)]);
+        }
         if($this->product_name)
         {
             $parts = preg_split('/\s+/', $this->product_name);

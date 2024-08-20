@@ -25,7 +25,7 @@ class OutlaySearch extends Outlay
         return [
             [['id', 'created_by','store_id','user_id', 'updated_by'], 'integer'],
             [['amount'], 'number'],
-            [['note', 'image_name','created_at','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
+            [['note', 'image_name','created_at_to','created_at_from', 'updated_at','updated_at_to','updated_at_from'], 'safe'],
         ];
     }
 
