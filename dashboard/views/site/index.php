@@ -120,32 +120,7 @@ $this->registerJs($js);
         <div class="clearfix"></div>
 
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    <div class="x_title" style="text-align: center;    font-size: large; font-weight: bold;">
-                        بسم الله الرحمن الرحيم
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li><a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="dashboard-widget-content"
-                            style="font-size: large;    font-family: 'Glyphicons Halflings'; text-align: center;">
-                            ﴿ وَلَقَدْ مَكَّنَّٰكُمْ فِى ٱلْأَرْضِ وَجَعَلْنَا لَكُمْ فِيهَا مَعَٰيِشَ ۗ قَلِيلًا مَّا
-                            تَشْكُرُونَ ﴾
-
-                            <br>
-                            <br>
-                            "أنا ثالِثُ الشرِيكيْنِ ما لَمْ يَخُنْ أحدُهُما صاحِبَهُ ؛ فإذا خانَ خَرَجْتُ من بينِهِما
-                            وجاءَ الشَّيطانُ "
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
             <?php if (Yii::$app->user->can('ظهور المنشورات على الرئيسية')): ?>
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
