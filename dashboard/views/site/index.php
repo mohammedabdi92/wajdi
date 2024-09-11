@@ -2,7 +2,7 @@
 use yii\helpers\Json;
 
 /** @var yii\web\View $this */
-$this->title = 'وجدي لمواد البناء';
+$this->title = 'Optical System';
 
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
