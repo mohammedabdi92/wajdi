@@ -47,7 +47,7 @@ $bundle = mortezakarimi\gentelellartl\assets\Asset::register($this);
                         ]
                     ]
                 ]); ?>
-                <h1> مجموعة وجدي للاعمار </h1>
+                <h1> Optical System </h1>
 
                 <?php if (Yii::$app->session->hasFlash('error')): ?>
                     <div class="alert alert-danger alert-dismissable">  

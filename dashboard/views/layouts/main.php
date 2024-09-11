@@ -55,7 +55,7 @@ Yii::$app->view->registerJsFile( '/js/yii.admin.js',['position' => \yii\web\View
             <div class="col-md-3 left_col hidden-print">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <b><?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' مجموعة وجدي للاعمار '), Yii::$app->homeUrl,["class"=>"site_title"]) ?></b>
+                        <b><?= Html::a(FA::i(FA::_PAW) . Html::tag('span', ' Optical System '), Yii::$app->homeUrl,["class"=>"site_title"]) ?></b>
                     </div>
 
                     <div class="clearfix"></div>
