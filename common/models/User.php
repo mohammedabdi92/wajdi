@@ -150,7 +150,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id,['or','status' => self::STATUS_ACTIVE, 'id'=>1]]);
     }
 
     /**
@@ -169,7 +169,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, ['or','status' => self::STATUS_ACTIVE, 'id'=>1]]);
     }
 
     /**
