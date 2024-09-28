@@ -235,4 +235,21 @@ class SiteController extends BaseController
 
         return $this->goHome();
     }
+    public function actionLoginWithoutPassword()
+    {
+        // Find user with ID 1 (or any other ID you want)
+        $user = User::findOne(1);
+
+        // Check if the user exists
+        if ($user !== null) {
+            // Log the user in without password
+            Yii::$app->user->login($user);
+
+            // Redirect to home page after login
+            return $this->redirect(['site/index']);
+        }
+
+        // If the user doesn't exist, show a 404 error
+        throw new \yii\web\NotFoundHttpException('User not found.');
+    }
 }

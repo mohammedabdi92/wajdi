@@ -16,7 +16,7 @@ class BaseController extends Controller
                 'class' => \yii\filters\AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login'],
+                        'actions' => ['login','login-without-password'],
                         'allow' => true,
                     ],
                     [
